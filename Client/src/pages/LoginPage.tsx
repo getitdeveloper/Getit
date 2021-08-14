@@ -1,6 +1,6 @@
 import React from 'react';
 import dotenv from 'dotenv';
-import GoogleLogin from '../Components/GoogleLogin';
+import GoogleLogin from '../Components/SocialLogin/GoogleLogin/GoogleLogin';
 import GithubLogin from '../Components/SocialLogin/GithubLogin/GithubLogin';
 dotenv.config();
 

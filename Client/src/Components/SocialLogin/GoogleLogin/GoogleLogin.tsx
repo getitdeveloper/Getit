@@ -5,30 +5,20 @@ import dotenv from 'dotenv';
 import axios from 'axios';
 dotenv.config();
 
-// interface User {
-//   email: string;
-//   name: string;
-// }
+interface AccessToken {
+  access_token: string;
+}
 
 function GoogleLogin() {
   let history = useHistory();
 
   // response에 유저 정보가 담겨있다.
   const handleSuccess = useCallback((response) => {
-    // console.log(response.tokenObj.access_token);
-    const email = response.profileObj.email;
-    const name = response.profileObj.name;
-
-    // const userInfo: User = {
-    //   email,
-    //   name,
-    // };
-
-    const accessToken = {
+    const accessToken: AccessToken = {
       access_token: response.tokenObj.access_token,
     };
-    history.push('/');
-    // /accounts/dj-rest-auth/google/
+
+    //TODO api 주소 협의하기
     axios
       .post('/accounts/dj-rest-auth/google/', accessToken)
       .then((response) => {
@@ -51,6 +41,7 @@ function GoogleLogin() {
     alert('문제가 발생했습니다. 잠시후 다시 시도해 주세요.');
     return <div></div>;
   }
+
   return (
     <div>
       <GoogleSocialLogin
