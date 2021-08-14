@@ -1,7 +1,7 @@
 import MainPage from "../pages/MainPage";
 
 
-function OAuth2RedirectHandler(){
+function KakaoOAuth2Callback(){
 
     //카카오 인가 코드 받아오기
     let code = new URL(window.location.href).searchParams.get("code");
@@ -10,4 +10,4 @@ function OAuth2RedirectHandler(){
 
 }
 
-export default OAuth2RedirectHandler;
+export default KakaoOAuth2Callback;

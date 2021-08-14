@@ -2,7 +2,7 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import MainPage from '../pages/MainPage';
 import LoginPage from '../pages/LoginPage';
-import OAuth2RedirectHandler from './OAuth2RedirectHandler';
+import KakaoOAuth2Callback from './KakaoOAuth2Callback';
 
 function Routes() {
   return (
@@ -10,7 +10,7 @@ function Routes() {
       <Switch>
         <Route exact path="/" component={MainPage} />
         <Route exact path="/login" component={LoginPage} />
-        <Route path="/callback/kakao" component={OAuth2RedirectHandler}/>
+        <Route exact path="/callback/kakao" component={KakaoOAuth2Callback}/>
       </Switch>
     </div>
   );
