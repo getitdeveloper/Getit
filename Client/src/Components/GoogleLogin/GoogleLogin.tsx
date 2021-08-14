@@ -9,24 +9,40 @@ interface User {
     name: string;
   }
 
+interface GoogleToken{
+  googleId : string;
+  google_email : string;
+  google_token : string;
+}
+
 function GoogleSocialLogin(){
     // response에 유저 정보가 담겨있다.
   const handleSuccess = useCallback((response) => {
-    // console.log(response);
-    const email = response.profileObj.email;
+    console.log(response.accessToken);
+    const googleId = response.googleId;
+    const google_email = response.profileObj.email;
+    const google_token = response.accessToken;
     const name = response.profileObj.name;
 
-    const userInfo: User = {
-      email,
-      name,
-    };
+    // const userInfo: User = {
+    //   email,
+    //   name,
+    // };
+
+    const googleToken: GoogleToken = {
+      googleId,
+      google_email,
+      google_token,
+    }
 
     axios
-      .post('/account/login', userInfo)
+      .post('/accounts/google/store', googleToken)
       .then((response) => {
+        //console.log(response)
         // 성공
       })
       .catch((error) => {
+        //console.log(error.err_msg)
         // 실패
       });
   }, []);
