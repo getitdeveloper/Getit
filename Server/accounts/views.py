@@ -58,7 +58,9 @@ class github_callback(View):
         if error is not None:
             raise JSONDecodeError(error)
         # print(user_json)
+        print(user_json)
         email = user_json.get("email")
+
         """
         Signup or Signin Request
         """
@@ -76,6 +78,8 @@ class github_callback(View):
 class GithubLogin(SocialLoginView):
     adapter_class = GitHubOAuth2Adapter
     client_class = OAuth2Client
+
+
 
 @method_decorator(csrf_exempt, name='dispatch')
 class kakao_callback(View):
