@@ -1,5 +1,5 @@
-import GoogleSocialLogin from '../Components/GoogleLogin/GoogleLogin';
-import KakaoLogin from '../Components/KakaoLogin/KakaoLogin';
+import GoogleSocialLogin from '../Auth/GoogleLogin/GoogleLogin';
+import KakaoLogin from '../Auth/KakaoLogin/KakaoLogin';
 
 function LoginPage() {
 
