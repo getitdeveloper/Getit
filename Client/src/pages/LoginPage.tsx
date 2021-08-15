@@ -1,6 +1,6 @@
+import GithubLogin from '../Auth/GithubLogin/GithubLogin';
 import GoogleSocialLogin from '../Auth/GoogleLogin/GoogleLogin';
 import KakaoLogin from '../Auth/KakaoLogin/KakaoLogin';
-import GithubLogin from '../Components/SocialLogin/GithubLogin/GithubLogin';
 
 function LoginPage() {
 

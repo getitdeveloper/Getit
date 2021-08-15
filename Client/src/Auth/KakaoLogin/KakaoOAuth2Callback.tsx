@@ -1,4 +1,4 @@
-import MainPage from "../pages/MainPage";
+import MainPage from "../../pages/MainPage";
 import axios from 'axios';
 
 function KakaoOAuth2Callback(){

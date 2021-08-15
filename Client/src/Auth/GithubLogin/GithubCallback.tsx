@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import MainPage from '../../../pages/MainPage';
+import MainPage from '../../pages/MainPage';
 import axios from 'axios';
 
 function GithubCallback() {

@@ -2,8 +2,8 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import MainPage from '../pages/MainPage';
 import LoginPage from '../pages/LoginPage';
-import KakaoOAuth2Callback from './KakaoOAuth2Callback';
-import GithubCallback from './SocialLogin/GithubLogin/GithubCallback';
+import KakaoOAuth2Callback from '../Auth/KakaoLogin/KakaoOAuth2Callback';
+import GithubCallback from '../Auth/GithubLogin/GithubCallback';
 
 function Routes() {
   return (
