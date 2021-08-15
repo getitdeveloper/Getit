@@ -190,5 +190,12 @@ SOCIALACCOUNT_PROVIDERS = {
             'secret': '453425234523456',
             'key': ''
         }
+    },
+    'github': {
+        'APP': {
+            'client_id': '1124512412423',
+            'secret': '453425234523456',
+            'key': ''
+        }
     }
 }
