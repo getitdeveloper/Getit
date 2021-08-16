@@ -58,6 +58,7 @@ THIRD_PARTY_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.github',
+    'allauth.socialaccount.providers.kakao',
 
     'dj_rest_auth',
     'dj_rest_auth.registration',
@@ -195,6 +196,13 @@ SOCIALACCOUNT_PROVIDERS = {
         'APP': {
             'client_id': '1124512412423',
             'secret': '453425234523456',
+            'key': ''
+        }
+    },
+'github': {
+        'APP': {
+            'client_id': '1ads2412423',
+            'secret': '453425234ads456',
             'key': ''
         }
     }

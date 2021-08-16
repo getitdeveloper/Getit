@@ -24,6 +24,7 @@ class HelloWorldView(APIView):
         user = request.user
         return Response(data={"message":"hello world", "user": user.username, "title": user.title}, status=status.HTTP_200_OK)
 
+@method_decorator(csrf_exempt, name='dispatch')
 class GoogleLogin(SocialLoginView):
     permission_classes = (permissions.AllowAny,)
     adapter_class = GoogleOAuth2Adapter
@@ -79,34 +80,36 @@ class GithubLogin(SocialLoginView):
     adapter_class = GitHubOAuth2Adapter
     client_class = OAuth2Client
 
-
-
 @method_decorator(csrf_exempt, name='dispatch')
 class kakao_callback(View):
     def post(self, request):
         requestData = json.loads(request.body)
+        print(requestData)
         code = requestData['code']
+        API_KEY = requestData['API_KEY']
+        REDIRECT_URI = requestData['REDIRECT_URI']
         print(code)
+        print(REDIRECT_URI)
         """
         Access Token Request
         """
-        token_req = requests.get(
-            f"https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id=3affab566e26b3ff9d09506f3876dd18&redirect_uri=http://127.0.0.1:3000/callback/kakao/&code={code}", headers={'Accept': 'application/json'})
+        token_req = requests.get(f"https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id={API_KEY}&redirect_uri={REDIRECT_URI}&code={code}", headers={'Accept': 'application/json'})
         token_req_json = token_req.json()
+        print(token_req_json)
         error = token_req_json.get("error")
         if error is not None:
             raise JSONDecodeError(error)
         access_token = token_req_json.get('access_token')
+        print(access_token)
         """
         Email Request
         """
-        user_req = requests.get(f"https://kapi.kakao.com/v2/user/me",
-                            headers={"Authorization": f"Bearer {access_token}"})
+        user_req = requests.get(f"https://kapi.kakao.com/v2/user/me", headers={"Authorization": f"Bearer {access_token}"})
         user_json = user_req.json()
         error = user_json.get("error")
         if error is not None:
             raise JSONDecodeError(error)
-        # print(user_json)
+        print(user_json)
         email = user_json.get("email")
         """
         Signup or Signin Request
