@@ -1,0 +1,11 @@
+. {
+  margin: 0px;
+  box-sizing: border-box;
+}
+
+.logo {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
