@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
-
+import os
 from pathlib import Path
 from datetime import timedelta
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -45,6 +45,7 @@ DJANGO_APPS = [
 PROJECT_APPS = [
     'accounts',
     'profiles',
+    'tags',
 ]
 
 THIRD_PARTY_APPS = [
@@ -199,7 +200,7 @@ SOCIALACCOUNT_PROVIDERS = {
             'key': ''
         }
     },
-'github': {
+    'kakao': {
         'APP': {
             'client_id': '1ads2412423',
             'secret': '453425234ads456',
@@ -207,3 +208,6 @@ SOCIALACCOUNT_PROVIDERS = {
         }
     }
 }
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

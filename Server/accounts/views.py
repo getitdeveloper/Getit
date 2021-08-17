@@ -84,7 +84,6 @@ class GithubLogin(SocialLoginView):
 class kakao_callback(View):
     def post(self, request):
         requestData = json.loads(request.body)
-        print(requestData)
         code = requestData['code']
         API_KEY = requestData['API_KEY']
         REDIRECT_URI = requestData['REDIRECT_URI']
@@ -111,13 +110,16 @@ class kakao_callback(View):
             raise JSONDecodeError(error)
         print(user_json)
         email = user_json.get("email")
+        print(email)
+
         """
         Signup or Signin Request
         """
-        data = {'access_token': access_token, 'code': code}
+        data = {'access_token': access_token}
         accept = requests.post(
             f"http://127.0.0.1:8000/accounts/kakao/login/finish/", data=data)
         accept_status = accept.status_code
+        print(accept_status)
         if accept_status != 200:
             return JsonResponse({'err_msg': 'failed to signin'}, status=accept_status)
         accept_json = accept.json()
