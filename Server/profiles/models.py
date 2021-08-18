@@ -3,6 +3,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 from accounts.models import User
+from boards.models import Board
 from tags.models import Tag
 
 
@@ -33,7 +34,6 @@ class Profile(models.Model):
     def __str__(self):
         return self.nickname
 
-
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
@@ -42,3 +42,21 @@ def create_user_profile(sender, instance, created, **kwargs):
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
     instance.profile.save()
+
+class Group(models.Model):
+    STATUS_CHOICE = (
+        (1, "진행중"),
+        (2, "완료")
+    )
+    board = models.OneToOneField(Board, on_delete=models.CASCADE)
+    title = models.CharField(max_length=20, null=False)
+    status = models.CharField(choices=STATUS_CHOICE, null=False, default=1)
+    member = models.ForeignKey(User, on_delete=models.CASCADE)
+    content = models.TextField(null=False)
+    image = models.ImageField(upload_to='group', null=True)
+    stack = models.ForeignKey(Tag, on_delete=models.CASCADE, null=True)
+    is_leader = models.BooleanField(null=False, default='False')
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title
