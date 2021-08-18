@@ -1,4 +1,5 @@
 import * as React from 'react'
+import './KakaoLogin';
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -9,7 +10,9 @@ function KakaoLogin(){
 
     return(
         <div>
-            <a href={KAKAO_AUTH_URL}>kakao login</a>
+            <a href={KAKAO_AUTH_URL} className="kakaobtn">
+                <img src="././images/kakao.png" alt="blabla"></img>
+            </a>
         </div>
     )
 }

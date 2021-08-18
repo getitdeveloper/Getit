@@ -4,11 +4,6 @@ import dotenv from 'dotenv';
 import axios from 'axios';
 dotenv.config();
 
-interface User {
-    email: string;
-    name: string;
-  }
-
 interface GoogleToken{
   googleId : string;
   google_email : string;
@@ -22,12 +17,6 @@ function GoogleSocialLogin(){
     const googleId = response.googleId;
     const google_email = response.profileObj.email;
     const google_token = response.accessToken;
-    const name = response.profileObj.name;
-
-    // const userInfo: User = {
-    //   email,
-    //   name,
-    // };
 
     const googleToken: GoogleToken = {
       googleId,
