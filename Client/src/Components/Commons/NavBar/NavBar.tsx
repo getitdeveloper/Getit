@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Paper, Tab, Tabs } from '@material-ui/core';
+import { Tab, Tabs } from '@material-ui/core';
 import './NavBar.css'
 
 function NavBar(){

@@ -1,8 +1,7 @@
 import * as React from 'react';
-import SearchBar from "./SearchBar";
+import SearchBar from "../SearchBar/SearchBar";
 import './Header.css'
-import { Button } from "@material-ui/core";
-import LoginDialog from "../LoginDialog/LoginDialog";
+import LoginDialog from "../../LoginDialog/LoginDialog";
 
 function Header(){
 
@@ -15,14 +14,13 @@ function Header(){
     return(
         <div>
             <div className="logo">
-                <p></p>
-                <p className="logotext">로고</p>
-                <Button variant="outlined" color="primary" onClick={()=>setOpen(true)}>
+                <p className="logotext">Get IT</p>
+                <SearchBar/>
+                <button onClick={()=>setOpen(true)} className="loginbtn">
                     Login
-                </Button>
+                </button>
                 <LoginDialog open={open} onClose={handleClose}/>
             </div>
-            <SearchBar/>
         </div>
     )
 

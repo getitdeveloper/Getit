@@ -3,16 +3,16 @@ import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
 const SearchBarCSS = makeStyles((theme: Theme) =>
   createStyles({
     box:{
+      width: '36.875rem',
       display:'flex',
       justifyContent: 'space-around',
-      margin: '20px 0px'
     },
     search: {
       position: 'relative',
       borderRadius: '23px',
       backgroundColor: '#f5f5f5',
       marginLeft: 0,
-      width: '50%',
+      width: '100%'
     },
     searchIcon: {
       padding: theme.spacing(0, 2),

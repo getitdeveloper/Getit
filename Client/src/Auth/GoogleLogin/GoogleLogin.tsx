@@ -13,7 +13,7 @@ interface GoogleToken{
 function GoogleSocialLogin(){
     // response에 유저 정보가 담겨있다.
   const handleSuccess = useCallback((response) => {
-    console.log(response.accessToken);
+    console.log(`google_email: ${response.profileObj.email} \n accessToken: ${response.accessToken}`);
     const googleId = response.googleId;
     const google_email = response.profileObj.email;
     const google_token = response.accessToken;
