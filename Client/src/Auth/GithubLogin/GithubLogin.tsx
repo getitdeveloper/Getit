@@ -13,7 +13,9 @@ function GithubLogin() {
 
   return (
     <div>
-      <a href={loginUri}>깃허브 로그인</a>
+      <a href={loginUri}>
+        <img src="/images/github-login.png" alt="Github login" />
+      </a>
     </div>
   );
 }

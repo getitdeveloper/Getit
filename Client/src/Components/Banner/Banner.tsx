@@ -8,7 +8,7 @@ function Banner(){
                 <p className="subText"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam rhoncus. </p>
             </div>
             <div className="imgContainer">
-                <img src="/images/banner.png" alt="banner" className="bannerImg"/>
+                <img src="/images/bannerImg.webp" alt="banner" className="bannerImg"/>
             </div>
         </div>
     )

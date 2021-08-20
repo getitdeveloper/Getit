@@ -10,6 +10,12 @@ interface GoogleToken{
   google_token : string;
 }
 
+const useStyle = {
+  'background-color' : 'transparent',
+  'border' : '0px',
+  'cursor': 'pointer'
+}
+
 function GoogleSocialLogin(){
     // response에 유저 정보가 담겨있다.
   const handleSuccess = useCallback((response) => {
@@ -51,7 +57,11 @@ function GoogleSocialLogin(){
   return (
       <GoogleLogin
         clientId={clientId}
-        buttonText="Login With Google"
+        render={renderProps => (
+          <button onClick={renderProps.onClick} disabled={renderProps.disabled} style={useStyle}> 
+            <img src="/images/google-login.png" alt="Google login" />
+          </button>
+        )}
         onSuccess={handleSuccess}
         onFailure={handleFailure}
         cookiePolicy={'single_host_origin'}

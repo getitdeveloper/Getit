@@ -11,7 +11,7 @@ function KakaoLogin(){
     return(
         <div>
             <a href={KAKAO_AUTH_URL} className="kakaobtn">
-                <img src="././images/kakao.png" alt="blabla"></img>
+                <img src="/images/kakao-login.svg" alt="Kakao login" />
             </a>
         </div>
     )
