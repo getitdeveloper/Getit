@@ -2,11 +2,8 @@ const express = require('express');
 const app = express();
 const morgan = require('morgan');
 const cors = require('cors');
-const axios = require('axios');
 
-// respond with "hello world" when a GET request is made to the homepage
-
-app.use(morgan());
+app.use(morgan('dev'));
 app.use(
   cors({
     origin: 'http://localhost:3000',
@@ -15,34 +12,22 @@ app.use(
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.post('/api', function (req, res) {
-  axios
-    .post('https://github.com/login/oauth/access_token', req.body, {
-      headers: {
-        'content-type': 'application/json',
-        Accept: 'application/json',
-      },
-    })
-    .then((res) => {
-      console.log('성공 ==> ', res.data);
-      axios
-        .get('https://api.github.com/user', {
-          headers: {
-            Authorization: `token ${res.data.access_token}`,
-          },
-        })
-        .then((res) => {
-          console.log('최종 데이터 ===> ', res);
-        })
-        .catch((error) => {
-          console('데이터 에러 ===>', error);
-        });
-    })
-    .catch((error) => {
-      console.log('에러 ==> ', error);
+app.post('/api/test/login', function (req, res) {
+  console.log('데이터 ===> ', req.body);
+
+  if (req.body.social === 'google') {
+    res.status(200).json({
+      nickname: 'Google',
     });
-  console.log(req.body);
-  res.send('hello world');
+  } else if (req.body.social === 'github') {
+    res.status(200).json({
+      nickname: 'Github',
+    });
+  } else {
+    res.status(200).json({
+      nickname: 'Kakao',
+    });
+  }
 });
 
 const port = 8000;
