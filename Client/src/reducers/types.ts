@@ -12,7 +12,7 @@ import {
 
 // 초기 상태값 타입
 export interface InitialState {
-  me: { nickname?: string } | null;
+  user: { nickname?: string } | null;
   userInfoRequest: boolean;
   userInfoSuccess: boolean;
   userInfoFailure: string | null;

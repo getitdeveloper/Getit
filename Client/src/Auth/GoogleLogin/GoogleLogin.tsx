@@ -5,12 +5,18 @@ import { useDispatch } from 'react-redux';
 import { USER_LOGIN_REQUEST } from '../../reducers/user';
 dotenv.config();
 
+const useStyle = {
+  'background-color': 'transparent',
+  border: '0px',
+  cursor: 'pointer',
+};
+
 function GoogleSocialLogin() {
   const dispatch = useDispatch();
 
   const handleSuccess = useCallback((response) => {
     // response에 유저 정보가 담겨있다.
-    const accessToken = response.accessToken;
+    const accessToken: string = response.accessToken;
 
     dispatch({
       type: USER_LOGIN_REQUEST,
@@ -36,7 +42,15 @@ function GoogleSocialLogin() {
   return (
     <GoogleLogin
       clientId={clientId}
-      buttonText="Login With Google"
+      render={(renderProps) => (
+        <button
+          onClick={renderProps.onClick}
+          disabled={renderProps.disabled}
+          style={useStyle}
+        >
+          <img src="/images/google-login.png" alt="Google login" />
+        </button>
+      )}
       onSuccess={handleSuccess}
       onFailure={handleFailure}
       cookiePolicy={'single_host_origin'}

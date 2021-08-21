@@ -3,7 +3,7 @@ import { InitialState, UserActions } from './types';
 
 // 초기 상태
 const initialState: InitialState = {
-  me: null,
+  user: null,
   userInfoRequest: false,
   userInfoSuccess: false,
   userInfoFailure: null,
@@ -42,7 +42,7 @@ const reducer = (state = initialState, action: UserActions) =>
         draft.userInfoRequest = false;
         draft.userInfoSuccess = true;
         draft.userInfoFailure = null;
-        draft.me = action.data;
+        draft.user = action.data;
         break;
       case USER_INFO_FAILURE:
         draft.userInfoRequest = false;
@@ -58,7 +58,7 @@ const reducer = (state = initialState, action: UserActions) =>
         draft.userLogOutRequest = false;
         draft.userLogOutSuccess = true;
         draft.userLogOutFailure = null;
-        draft.me = action.data;
+        draft.user = action.data;
         break;
       case USER_LOGIN_FAILURE:
         draft.userLogOutRequest = false;
@@ -74,7 +74,7 @@ const reducer = (state = initialState, action: UserActions) =>
         draft.userLogOutRequest = false;
         draft.userLogOutSuccess = true;
         draft.userLogOutFailure = null;
-        draft.me = null;
+        draft.user = null;
         break;
       case USER_LOGOUT_FAILURE:
         draft.userLogOutRequest = false;
