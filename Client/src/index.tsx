@@ -1,17 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 import reportWebVitals from './reportWebVitals';
 import App from './App';
-import axios from 'axios';
 import dontenv from 'dotenv';
+import { Provider } from 'react-redux';
+import store from './store/index';
 dontenv.config();
-
-axios.defaults.baseURL = process.env.REACT_APP_SERVER_BASE_URL;
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Provider store={store}>
+      <App />
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );

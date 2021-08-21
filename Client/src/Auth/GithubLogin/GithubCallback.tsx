@@ -1,8 +1,11 @@
 import React, { useEffect } from 'react';
 import MainPage from '../../pages/MainPage';
-import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { USER_LOGIN_REQUEST } from '../../reducers/user';
 
 function GithubCallback() {
+  const dispatch = useDispatch();
+
   useEffect(() => {
     // Github 로그인 승인 후 callback URL
     const url = window.location.href;
@@ -13,21 +16,21 @@ function GithubCallback() {
       // 사용자 식별 코드
       const accessCode = url.split('?code=')[1];
 
-      const requestData = {
+      const accessData = {
         client_id: process.env.REACT_APP_GITHUB_CLIENT_ID,
         client_secret: process.env.REACT_APP_GITHUB_CLIENT_SECRET,
         code: accessCode,
       };
 
-      //TODO api 주소 협의하기
-      axios
-        .post('/api/login/github', requestData)
-        .then((response) => {
-          console.log('성공 ==> ', response.data);
-        })
-        .catch((error) => {
-          console.log('실패 ==>', error);
-        });
+      dispatch({
+        type: USER_LOGIN_REQUEST,
+        data: {
+          social: 'github',
+          ...accessData,
+        },
+      });
+    } else {
+      alert('문제가 발생했습니다. 잠시후 다시 시도해 주세요.');
     }
   }, []);
 
