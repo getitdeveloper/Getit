@@ -4,30 +4,25 @@ import dotenv from 'dotenv';
 import axios from 'axios';
 dotenv.config();
 
-interface User {
-    email: string;
-    name: string;
-  }
-
 interface GoogleToken{
   googleId : string;
   google_email : string;
   google_token : string;
 }
 
+const useStyle = {
+  'background-color' : 'transparent',
+  'border' : '0px',
+  'cursor': 'pointer'
+}
+
 function GoogleSocialLogin(){
     // response에 유저 정보가 담겨있다.
   const handleSuccess = useCallback((response) => {
-    console.log(response.accessToken);
+    console.log(`google_email: ${response.profileObj.email} \n accessToken: ${response.accessToken}`);
     const googleId = response.googleId;
     const google_email = response.profileObj.email;
     const google_token = response.accessToken;
-    const name = response.profileObj.name;
-
-    // const userInfo: User = {
-    //   email,
-    //   name,
-    // };
 
     const googleToken: GoogleToken = {
       googleId,
@@ -62,7 +57,11 @@ function GoogleSocialLogin(){
   return (
       <GoogleLogin
         clientId={clientId}
-        buttonText="Login With Google"
+        render={renderProps => (
+          <button onClick={renderProps.onClick} disabled={renderProps.disabled} style={useStyle}> 
+            <img src="/images/google-login.png" alt="Google login" />
+          </button>
+        )}
         onSuccess={handleSuccess}
         onFailure={handleFailure}
         cookiePolicy={'single_host_origin'}
