@@ -2,10 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import reportWebVitals from './reportWebVitals';
 import App from './App';
-import dontenv from 'dotenv';
 import { Provider } from 'react-redux';
 import store from './store/index';
-dontenv.config();
 
 ReactDOM.render(
   <React.StrictMode>

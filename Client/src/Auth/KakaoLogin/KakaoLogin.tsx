@@ -1,7 +1,4 @@
 import * as React from 'react';
-import './KakaoLogin';
-import dotenv from 'dotenv';
-dotenv.config();
 
 function KakaoLogin() {
   const API_KEY = process.env.REACT_APP_KAKAO_API_KEY;
@@ -10,7 +7,7 @@ function KakaoLogin() {
 
   return (
     <div>
-      <a href={KAKAO_AUTH_URL} className="kakaobtn">
+      <a href={KAKAO_AUTH_URL}>
         <img src="/images/kakao-login.svg" alt="Kakao login" />
       </a>
     </div>

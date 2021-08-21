@@ -15,7 +15,6 @@
     "@types/react-redux": "^7.1.18",
     "@types/react-router-dom": "^5.1.8",
     "axios": "^0.21.1",
-    "dotenv": "^10.0.0",
     "http-proxy-middleware": "^2.0.1",
     "immer": "^9.0.5",
     "react": "^17.0.2",

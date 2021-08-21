@@ -3,9 +3,9 @@ import React from 'react';
 function MainPage() {
   const styles = {
     padding: '48px',
-    border: '1px solid black', 
-    margin: '16px'
-  }
+    border: '1px solid black',
+    margin: '16px',
+  };
   return (
     <div>
       <div style={styles}>block1</div>
@@ -15,7 +15,8 @@ function MainPage() {
       <div style={styles}>block5</div>
       <div style={styles}>block6</div>
       <div style={styles}>block7</div>
-    </div>);
+    </div>
+  );
 }
 
 export default MainPage;

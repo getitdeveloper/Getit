@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react';
-import MainPage from '../../pages/MainPage';
+import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { USER_LOGIN_REQUEST } from '../../reducers/user';
 
 function GithubCallback() {
   const dispatch = useDispatch();
+  const history = useHistory();
 
   useEffect(() => {
     // Github 로그인 승인 후 callback URL
@@ -29,12 +30,15 @@ function GithubCallback() {
           ...accessData,
         },
       });
+
+      // 메인 페이지로 이동
+      history.push('/');
     } else {
       alert('문제가 발생했습니다. 잠시후 다시 시도해 주세요.');
     }
-  }, []);
+  }, [dispatch, history]);
 
-  return <MainPage />;
+  return null;
 }
 
 export default GithubCallback;

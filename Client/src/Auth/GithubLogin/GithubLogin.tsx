@@ -1,6 +1,4 @@
-import React from 'react';
-import dotenv from 'dotenv';
-dotenv.config();
+import * as React from 'react';
 
 // Github 로그인
 function GithubLogin() {
