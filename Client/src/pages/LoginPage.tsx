@@ -1,15 +1,15 @@
+import * as React from 'react';
 import GithubLogin from '../Auth/GithubLogin/GithubLogin';
 import GoogleSocialLogin from '../Auth/GoogleLogin/GoogleLogin';
 import KakaoLogin from '../Auth/KakaoLogin/KakaoLogin';
 
-function LoginPage() {
-
+function LoginPage(): JSX.Element {
   return (
     <div>
       <div>로그인 페이지</div>
-      <GoogleSocialLogin/>
-      <KakaoLogin/>
-       <GithubLogin />
+      <GoogleSocialLogin />
+      <KakaoLogin />
+      <GithubLogin />
     </div>
   );
 }

@@ -10,7 +10,7 @@ import {
   USER_LOGOUT_REQUEST,
   USER_LOGOUT_SUCCESS,
   USER_LOGOUT_FAILURE,
-} from '../reducers/user';
+} from '../reducers/actions';
 import {
   ResponseUserInfo,
   GoogleAccessData,
@@ -36,7 +36,7 @@ function* requestUserInfoSaga(): any {
     console.error(error);
     yield put({
       type: USER_INFO_FAILURE,
-      error: error,
+      error,
     });
   }
 }
@@ -111,7 +111,7 @@ function* requestUserLogInSaga(action: any) {
     console.error(error);
     yield put({
       type: USER_LOGIN_FAILURE,
-      error: error,
+      error,
     });
   }
 }
@@ -134,7 +134,7 @@ function* requestUserLogOutSaga(): any {
     // console.log('에러 ===>', error);
     yield put({
       type: USER_LOGOUT_FAILURE,
-      error: error,
+      error,
     });
   }
 }

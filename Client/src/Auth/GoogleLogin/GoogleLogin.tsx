@@ -2,9 +2,9 @@ import * as React from 'react';
 import { useCallback } from 'react';
 import GoogleLogin from 'react-google-login';
 import { useDispatch } from 'react-redux';
-import { USER_LOGIN_REQUEST } from '../../reducers/user';
+import { USER_LOGIN_REQUEST } from '../../reducers/actions';
 
-function GoogleSocialLogin() {
+function GoogleSocialLogin(): JSX.Element {
   const dispatch = useDispatch();
 
   const handleSuccess = useCallback(
@@ -20,7 +20,7 @@ function GoogleSocialLogin() {
         },
       });
     },
-    [dispatch]
+    [dispatch],
   );
 
   const handleFailure = useCallback(() => {
@@ -33,7 +33,7 @@ function GoogleSocialLogin() {
 
   if (!clientId) {
     console.log('문제가 발생했습니다. 잠시후 다시 시도해 주세요.');
-    return <div></div>;
+    return <div />;
   }
 
   return (
@@ -41,16 +41,17 @@ function GoogleSocialLogin() {
       clientId={clientId}
       render={(renderProps) => (
         <button
+          type='button'
           onClick={renderProps.onClick}
           disabled={renderProps.disabled}
           style={{ padding: 0 }}
         >
-          <img src="/images/google-login.png" alt="Google login" />
+          <img src='/images/google-login.png' alt='Google login' />
         </button>
       )}
       onSuccess={handleSuccess}
       onFailure={handleFailure}
-      cookiePolicy={'single_host_origin'}
+      cookiePolicy='single_host_origin'
     />
   );
 }

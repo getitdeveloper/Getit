@@ -1,9 +1,10 @@
+import * as React from 'react';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { USER_LOGIN_REQUEST } from '../../reducers/user';
+import { USER_LOGIN_REQUEST } from '../../reducers/actions';
 
-function GithubCallback() {
+function GithubCallback(): null {
   const dispatch = useDispatch();
   const history = useHistory();
 

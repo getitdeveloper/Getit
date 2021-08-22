@@ -5,14 +5,14 @@ import LoginPage from '../pages/LoginPage';
 import KakaoOAuth2Callback from '../Auth/KakaoLogin/KakaoOAuth2Callback';
 import GithubCallback from '../Auth/GithubLogin/GithubCallback';
 
-function Routes() {
+function Routes(): JSX.Element {
   return (
     <div>
       <Switch>
-        <Route exact path="/" component={MainPage} />
-        <Route exact path="/login" component={LoginPage} />
-        <Route exact path="/callback/kakao" component={KakaoOAuth2Callback}/>
-        <Route exact path="/callback/github" component={GithubCallback} />
+        <Route exact path='/' component={MainPage} />
+        <Route exact path='/login' component={LoginPage} />
+        <Route exact path='/callback/kakao' component={KakaoOAuth2Callback} />
+        <Route exact path='/callback/github' component={GithubCallback} />
       </Switch>
     </div>
   );

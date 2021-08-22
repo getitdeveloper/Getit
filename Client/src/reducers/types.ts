@@ -8,7 +8,7 @@ import {
   USER_LOGOUT_REQUEST,
   USER_LOGOUT_SUCCESS,
   USER_LOGOUT_FAILURE,
-} from './user';
+} from './actions';
 
 // 초기 상태값 타입
 export interface InitialState {

@@ -1,15 +1,15 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { USER_LOGIN_REQUEST } from '../../reducers/user';
 import { useHistory } from 'react-router-dom';
+import { USER_LOGIN_REQUEST } from '../../reducers/actions';
 
-function KakaoOAuth2Callback() {
+function KakaoOAuth2Callback(): null {
   const dispatch = useDispatch();
   const history = useHistory();
 
   useEffect(() => {
-    //카카오 인가 코드 받아오기
-    let accessCode = new URL(window.location.href).searchParams.get('code');
+    // 카카오 인가 코드 받아오기
+    const accessCode = new URL(window.location.href).searchParams.get('code');
     //   console.log(accessCode);
 
     if (accessCode) {

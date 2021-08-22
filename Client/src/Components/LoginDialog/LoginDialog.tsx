@@ -31,7 +31,7 @@ const useStyles = makeStyles({
   },
 });
 
-function LoginDialog(props: DialogProps) {
+function LoginDialog(props: DialogProps): JSX.Element {
   const classes = useStyles();
   const { onClose, open } = props;
 
@@ -46,14 +46,14 @@ function LoginDialog(props: DialogProps) {
   return (
     <Dialog
       onClose={handleClose}
-      aria-labelledby="simple-dialog-title"
+      aria-labelledby='simple-dialog-title'
       open={open}
-      className="dialog"
+      className='dialog'
     >
-      <IconButton aria-label="close" onClick={handleClose} className="close">
+      <IconButton aria-label='close' onClick={handleClose} className='close'>
         <CloseIcon />
       </IconButton>
-      <DialogTitle className="login">로그인</DialogTitle>
+      <DialogTitle className='login'>로그인</DialogTitle>
       <List className={classes.buttonList}>
         <ListItem
           onClick={() => handleListItemClick('google')}

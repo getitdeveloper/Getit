@@ -2,9 +2,9 @@ import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
 
 const SearchBarCSS = makeStyles((theme: Theme) =>
   createStyles({
-    box:{
+    box: {
       width: '36.875rem',
-      display:'flex',
+      display: 'flex',
       justifyContent: 'space-around',
     },
     search: {
@@ -12,7 +12,7 @@ const SearchBarCSS = makeStyles((theme: Theme) =>
       borderRadius: '23px',
       backgroundColor: '#f5f5f5',
       marginLeft: 0,
-      width: '100%'
+      width: '100%',
     },
     searchIcon: {
       padding: theme.spacing(0, 2),
@@ -24,7 +24,7 @@ const SearchBarCSS = makeStyles((theme: Theme) =>
       justifyContent: 'center',
     },
     inputRoot: {
-      width:'100%',
+      width: '100%',
       color: 'inherit',
     },
     inputInput: {

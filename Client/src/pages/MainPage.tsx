@@ -1,6 +1,6 @@
-import React from 'react';
+import * as React from 'react';
 
-function MainPage() {
+function MainPage(): JSX.Element {
   const styles = {
     padding: '48px',
     border: '1px solid black',

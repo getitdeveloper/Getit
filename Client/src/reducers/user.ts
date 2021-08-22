@@ -1,5 +1,16 @@
 import produce from 'immer';
 import { InitialState, UserActions } from './types';
+import {
+  USER_INFO_REQUEST,
+  USER_INFO_SUCCESS,
+  USER_INFO_FAILURE,
+  USER_LOGIN_REQUEST,
+  USER_LOGIN_SUCCESS,
+  USER_LOGIN_FAILURE,
+  USER_LOGOUT_REQUEST,
+  USER_LOGOUT_SUCCESS,
+  USER_LOGOUT_FAILURE,
+} from './actions';
 
 // 초기 상태
 const initialState: InitialState = {
@@ -15,22 +26,7 @@ const initialState: InitialState = {
   userLogOutFailure: null,
 };
 
-// 사용자 정보
-export const USER_INFO_REQUEST = 'USER_INFO_REQUEST';
-export const USER_INFO_SUCCESS = 'USER_INFO_SUCCESS';
-export const USER_INFO_FAILURE = 'USER_INFO_FAILURE';
-
-// 로그인
-export const USER_LOGIN_REQUEST = 'USER_LOGIN_REQUEST';
-export const USER_LOGIN_SUCCESS = 'USER_LOGIN_SUCCESS';
-export const USER_LOGIN_FAILURE = 'USER_LOGIN_FAILURE';
-
-// 로그아웃
-export const USER_LOGOUT_REQUEST = 'USER_LOGOUT_REQUEST';
-export const USER_LOGOUT_SUCCESS = 'USER_LOGOUT_SUCCESS';
-export const USER_LOGOUT_FAILURE = 'USER_LOGOUT_FAILURE';
-
-const reducer = (state = initialState, action: UserActions) =>
+const reducer = (state = initialState, action: UserActions): InitialState =>
   produce(state, (draft) => {
     switch (action.type) {
       case USER_INFO_REQUEST:
