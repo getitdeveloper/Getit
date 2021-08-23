@@ -51,12 +51,11 @@ class google_callback(View):
             if accept_status != 200:
                 return JsonResponse({'err_msg': 'failed to signin'}, status=accept_status)
             accept_json = accept.json()
-            accept_json['getit_key'] = accept_json['key']
-            del accept_json['key']
-            print(accept_json['getit_key'])
+            print(accept_json)
             accept_json.pop('user', None)
             res_data = {
-                'message' : 'login',
+                'message': 'login',
+                'token': accept_json,
             }
             return JsonResponse(res_data)
         except User.DoesNotExist:
@@ -67,12 +66,10 @@ class google_callback(View):
             if accept_status != 200:
                 return JsonResponse({'err_msg': 'failed to signup'}, status=accept_status)
             accept_json = accept.json()
-            accept_json['getit_key'] = accept_json['key']
-            del accept_json['key']
-            print(accept_json['getit_key'])
             accept_json.pop('user', None)
             res_data = {
                 'message': 'register',
+                'token': accept_json,
             }
             return JsonResponse(res_data)
 
@@ -125,12 +122,10 @@ class github_callback(View):
             if accept_status != 200:
                 return JsonResponse({'err_msg': 'failed to signin'}, status=accept_status)
             accept_json = accept.json()
-            accept_json['getit_key'] = accept_json['key']
-            del accept_json['key']
-            print(accept_json['getit_key'])
             accept_json.pop('user', None)
             res_data = {
                 'message': 'login',
+                'token': accept_json
             }
             return JsonResponse(res_data)
         except User.DoesNotExist:
@@ -143,12 +138,10 @@ class github_callback(View):
                 return JsonResponse({'err_msg': 'failed to signup'}, status=accept_status)
             # user의 pk, email, first name, last name과 Access Token, Refresh token 가져옴
             accept_json = accept.json()
-            accept_json['getit_key'] = accept_json['key']
-            del accept_json['key']
-            print(accept_json['getit_key'])
             accept_json.pop('user', None)
             res_data = {
                 'message': 'register',
+                'token': accept_json
             }
             return JsonResponse(res_data)
 
