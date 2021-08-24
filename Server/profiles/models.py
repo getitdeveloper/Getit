@@ -4,6 +4,7 @@ from django.dispatch import receiver
 
 from accounts.models import User
 from boards.models import Board
+import tags
 from tags.models import Tag
 
 
@@ -13,26 +14,33 @@ class Profile(models.Model):
         ('디자이너', '디자이너'),
         ('기획자', '기획자'),
     )
-    CHOICES_LEVEL = (
+    DEVELOPER_CHOICES_LEVEL = (
         ('코린이', '코린이'),
         ('코등학생', '코등학생'),
         ('코대생', '코대생'),
         ('코드닌자', '코드닌자'),
     )
+    DESIGNER_AND_PM_CHOICES_LEVEL = (
+        ('하수', '하수'),
+        ('초수', '초수'),
+        ('중수', '중수'),
+        ('고수', '고수'),
+    )
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    user_pk = models.IntegerField(null=True)
-    nickname = models.CharField(max_length=50, null=True, unique=True)
-    job = models.CharField(choices=CHOICES_JOB, max_length=10,null=True)
-    level = models.CharField(choices=CHOICES_LEVEL, max_length=10, null=True)
-    image = models.ImageField(upload_to='profile', null=True)
+    user_pk = models.IntegerField()
+    nickname = models.CharField(max_length=50, unique=True, null=True)
+    job = models.CharField(choices=CHOICES_JOB, max_length=10, default='개발자')
+    developer_level = models.CharField(choices=DEVELOPER_CHOICES_LEVEL, max_length=10, blank=True, default='코린이')
+    designer_and_pm_level = models.CharField(choices=DESIGNER_AND_PM_CHOICES_LEVEL, max_length=10, blank=True, default='하수')
+    image = models.ImageField(upload_to='profile', blank=True, default="../media/profile/Untitled.jpeg")
     mymail = models.EmailField(max_length=50, null=True)
     myinfo = models.TextField(null=True)
-    mygit = models.CharField(max_length=100, null=True)
-    stack = models.ForeignKey(Tag, on_delete=models.CASCADE, null=True)
-    portfolio = models.TextField(null=True)
+    mygit = models.CharField(max_length=100, blank=True, null=True)
+    stacks = models.ManyToManyField(Tag)
+    portfolio = models.TextField(blank=True, null=True)
 
-    def __str__(self):
-        return self.nickname
+    # def __str__(self):
+    #     return self.user_pk
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):

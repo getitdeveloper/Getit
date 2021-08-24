@@ -156,13 +156,14 @@ class kakao_callback(View):
         code = requestData['code']
         API_KEY = requestData['API_KEY']
         REDIRECT_URI = requestData['REDIRECT_URI']
-
+        print(code)
+        print(REDIRECT_URI)
         """
         Access Token Request
         """
         token_req = requests.get(f"https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id={API_KEY}&redirect_uri={REDIRECT_URI}&code={code}", headers={'Accept': 'application/json'})
         token_req_json = token_req.json()
-
+        print(token_req_json)
         error = token_req_json.get("error")
         if error is not None:
             raise JSONDecodeError(error)
@@ -171,19 +172,20 @@ class kakao_callback(View):
         """
         Email Request
         """
-        user_req = requests.get(f"https://kapi.kakao.com/v2/user/me", headers={"Authorization": f"Bearer {access_token}"})
+        user_req = requests.get(f"https://kapi.kakao.com/v2/user/me", headers={"Authorization": f"bearer {access_token}"})
         user_json = user_req.json()
+        print(user_json)
         error = user_json.get("error")
         if error is not None:
             raise JSONDecodeError(error)
         kakao_id = user_json.get("id")
         print(kakao_id)
-
         """
         Signup or Signin Request
         """
         try:
-            user = SocialAccount.objects.get(uid=kakao_id)
+            email = user_json['kakao_account'].get('email')
+            user = User.objects.get(email=email)
             data = {'access_token': access_token, 'code': code}
             accept = requests.post(
                 f"http://127.0.0.1:8000/accounts/kakao/login/finish/", data=data)
@@ -191,12 +193,11 @@ class kakao_callback(View):
             if accept_status != 200:
                 return JsonResponse({'err_msg': 'failed to signin'}, status=accept_status)
             accept_json = accept.json()
-            accept_json['getit_key'] = accept_json['key']
-            del accept_json['key']
-            print(accept_json['getit_key'])
+            print(accept_json)
             accept_json.pop('user', None)
             res_data = {
                 'message': 'login',
+                'token' : accept_json
             }
             return JsonResponse(res_data)
         except User.DoesNotExist:
@@ -208,12 +209,11 @@ class kakao_callback(View):
             if accept_status != 200:
                 return JsonResponse({'err_msg': 'failed to signup'}, status=accept_status)
             accept_json = accept.json()
-            accept_json['getit_key'] = accept_json['key']
-            del accept_json['key']
-            print(accept_json['getit_key'])
+            print(accept_json)
             accept_json.pop('user', None)
             res_data = {
                 'message': 'register',
+                'token' : accept_json
             }
             return JsonResponse(res_data)
 

@@ -5,9 +5,9 @@ MY_SECRET = {
 MY_DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'getit',
+        'NAME': 'get_it',
         'USER': 'root',
-        'PASSWORD': '1234',
+        'PASSWORD': '7401',
         'HOST': 'localhost',
         'PORT': '3306',
     }

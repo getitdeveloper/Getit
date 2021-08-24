@@ -72,8 +72,8 @@ INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + THIRD_PARTY_APPS
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated',
-        'rest_framework.permissions.IsAdminUser',
+        # 'rest_framework.permissions.IsAuthenticated',
+        # 'rest_framework.permissions.IsAdminUser',
         'rest_framework.permissions.AllowAny',
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': [
@@ -142,13 +142,7 @@ WSGI_APPLICATION = 'apis.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-DATABASES = DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-
+DATABASES = MY_DATABASES
 
 
 # Password validation
@@ -212,11 +206,11 @@ SOCIALACCOUNT_PROVIDERS = {
     },
     'kakao': {
         'APP': {
-            'client_id': '1ads2412423',
+            'client_id': '65fedce50558614cedc50c5f90855258',
             'secret': '453425234ads456',
             'key': ''
         }
-    }
+    },
 }
 
 MEDIA_URL = '/media/'
