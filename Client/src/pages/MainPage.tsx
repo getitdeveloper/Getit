@@ -1,4 +1,3 @@
-import * as React from 'react';
 
 function MainPage(): JSX.Element {
   const styles = {

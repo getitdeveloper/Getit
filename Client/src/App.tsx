@@ -8,7 +8,7 @@ import Routes from './Components/Routes';
 function App(): JSX.Element {
   return (
     <Router>
-      <Header />
+      <Header logined={true}/>
       <Banner />
       <NavBar />
       <Routes />
