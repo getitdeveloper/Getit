@@ -46,22 +46,22 @@ class google_callback(View):
             # 기존에 Google로 가입된 유저
             data = {'access_token': access_token}
             accept = requests.post(
-                f"http://127.0.0.1:8000/accounts/google/login/finish/", data=data)
+                f"http://127.0.0.1:8000/api/google/login/finish/", data=data)
             accept_status = accept.status_code
             if accept_status != 200:
                 return JsonResponse({'err_msg': 'failed to signin'}, status=accept_status)
             accept_json = accept.json()
-            print(accept_json)
             accept_json.pop('user', None)
             res_data = {
                 'message': 'login',
-                'token': accept_json,
+                'access_token': accept_json['access_token'],
+                'refresh_token': accept_json['refresh_token']
             }
             return JsonResponse(res_data)
         except User.DoesNotExist:
             data = {'access_token': access_token}
             accept = requests.post(
-                f"http://127.0.0.1:8000/accounts/google/login/finish/", data=data)
+                f"http://127.0.0.1:8000/api/google/login/finish/", data=data)
             accept_status = accept.status_code
             if accept_status != 200:
                 return JsonResponse({'err_msg': 'failed to signup'}, status=accept_status)
@@ -69,7 +69,8 @@ class google_callback(View):
             accept_json.pop('user', None)
             res_data = {
                 'message': 'register',
-                'token': accept_json,
+                'access_token': accept_json['access_token'],
+                'refresh_token': accept_json['refresh_token']
             }
             return JsonResponse(res_data)
 
@@ -100,39 +101,42 @@ class github_callback(View):
         user_req = requests.get(f"https://api.github.com/user",
                             headers={"Authorization": f"Bearer {access_token}"})
         user_json = user_req.json()
+        print(user_json)
         error = user_json.get("error")
         if error is not None:
             raise JSONDecodeError(error)
-        print(user_json)
-        username_initial = user_json.get("name")
-        username_split = username_initial.split(' ')
-        username = username_split[0].lower()
-        print(username)
+
+        user_id = user_json.get("id")
+        print(user_id)
+
         """
         Signup or Signin Request
         """
         try:
-            user = User.objects.get(first_name=username)
+            user = SocialAccount.objects.get(uid=user_id)
 
             # 기존에 github로 가입된 유저
             data = {'access_token': access_token, 'code': code}
             accept = requests.post(
-                f"http://127.0.0.1:8000/accounts/github/login/finish/", data=data)
+                f"http://127.0.0.1:8000/api/github/login/finish/", data=data)
             accept_status = accept.status_code
+
             if accept_status != 200:
                 return JsonResponse({'err_msg': 'failed to signin'}, status=accept_status)
             accept_json = accept.json()
+
             accept_json.pop('user', None)
             res_data = {
                 'message': 'login',
-                'token': accept_json
+                'access_token': accept_json['access_token'],
+                'refresh_token': accept_json['refresh_token']
             }
             return JsonResponse(res_data)
         except User.DoesNotExist:
             # 기존에 가입된 유저가 없으면 새로 가입
             data = {'access_token': access_token, 'code': code}
             accept = requests.post(
-                f"http://127.0.0.1:8000/accounts/github/login/finish/", data=data)
+                f"http://127.0.0.1:8000/api/github/login/finish/", data=data)
             accept_status = accept.status_code
             if accept_status != 200:
                 return JsonResponse({'err_msg': 'failed to signup'}, status=accept_status)
@@ -141,7 +145,8 @@ class github_callback(View):
             accept_json.pop('user', None)
             res_data = {
                 'message': 'register',
-                'token': accept_json
+                'access_token': accept_json['access_token'],
+                'refresh_token': accept_json['refresh_token']
             }
             return JsonResponse(res_data)
 
@@ -162,58 +167,56 @@ class kakao_callback(View):
         """
         token_req = requests.get(f"https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id={API_KEY}&redirect_uri={REDIRECT_URI}&code={code}", headers={'Accept': 'application/json'})
         token_req_json = token_req.json()
+        print(token_req_json)
 
         error = token_req_json.get("error")
         if error is not None:
             raise JSONDecodeError(error)
         access_token = token_req_json.get('access_token')
-        print(access_token)
         """
         Email Request
         """
         user_req = requests.get(f"https://kapi.kakao.com/v2/user/me", headers={"Authorization": f"Bearer {access_token}"})
         user_json = user_req.json()
+        print(user_json)
         error = user_json.get("error")
         if error is not None:
             raise JSONDecodeError(error)
-        kakao_id = user_json.get("id")
-        print(kakao_id)
-
+        user_id = user_json.get("id")
+        print(user_id)
         """
         Signup or Signin Request
         """
         try:
-            user = SocialAccount.objects.get(uid=kakao_id)
+            user = SocialAccount.objects.get(uid=user_id)
             data = {'access_token': access_token, 'code': code}
             accept = requests.post(
-                f"http://127.0.0.1:8000/accounts/kakao/login/finish/", data=data)
+                f"http://127.0.0.1:8000/api/kakao/login/finish/", data=data)
             accept_status = accept.status_code
             if accept_status != 200:
                 return JsonResponse({'err_msg': 'failed to signin'}, status=accept_status)
             accept_json = accept.json()
-            accept_json['getit_key'] = accept_json['key']
-            del accept_json['key']
-            print(accept_json['getit_key'])
             accept_json.pop('user', None)
             res_data = {
                 'message': 'login',
+                'access_token': accept_json['access_token'],
+                'refresh_token': accept_json['refresh_token']
             }
             return JsonResponse(res_data)
         except User.DoesNotExist:
             # 기존에 가입된 유저가 없으면 새로 가입
             data = {'access_token': access_token, 'code': code}
             accept = requests.post(
-                f"http://127.0.0.1:8000/accounts/kakao/login/finish/", data=data)
+                f"http://127.0.0.1:8000/api/kakao/login/finish/", data=data)
             accept_status = accept.status_code
             if accept_status != 200:
                 return JsonResponse({'err_msg': 'failed to signup'}, status=accept_status)
             accept_json = accept.json()
-            accept_json['getit_key'] = accept_json['key']
-            del accept_json['key']
-            print(accept_json['getit_key'])
             accept_json.pop('user', None)
             res_data = {
                 'message': 'register',
+                'access_token': accept_json['access_token'],
+                'refresh_token': accept_json['refresh_token']
             }
             return JsonResponse(res_data)
 
