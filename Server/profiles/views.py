@@ -1,35 +1,19 @@
 from django.shortcuts import render, get_object_or_404
 from rest_framework import viewsets, status
+from .permissions import IsOwnerOrReadOnly
 from rest_framework.generics import GenericAPIView
-from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly, DjangoObjectPermissions, \
-    DjangoModelPermissions
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from profiles.models import Profile, Group
-from profiles.serializers import GroupCreationSerializer, ProfileSerializer, IsOwnerOrReadOnly
+from profiles.serializers import GroupCreationSerializer, ProfileSerializer
 from tags.models import Tag
 
 
 class ProfileDetail(GenericAPIView):
-    """
-           개인 프로필
-           ---
-           # POST 예시
-               - user
-               - user_pk
-               - nickname
-               - job
-               - developer_level
-               - designer_and_pm_level
-               - image
-               - mymail
-               - myinfo
-               - mygit
-               - stacks
-               - portfolio
-       """
+
     serializer_class = ProfileSerializer
     permission_classes = [IsOwnerOrReadOnly, IsAuthenticatedOrReadOnly]
 
@@ -41,8 +25,29 @@ class ProfileDetail(GenericAPIView):
         serializer = ProfileSerializer(profile)
 
         return Response(serializer.data)
-
+    
     def post(self, request, user_pk):
+        """
+        개인 프로필
+        ---
+        # POST 예시
+            {
+                "user": 1,
+                "user_pk": 1,
+                "nickname": "test",
+                "job": "개발자",
+                "developer_level": "코린이",
+                "designer_and_pm_level": "하수",
+                "mymail": "test@test.com",
+                "myinfo": "안녕하세요. test입니다.",
+                "mygit": "https://github.com/test",
+                "stacks": [
+                    1,
+                    2,
+                ],
+                "portfolio": "string"
+            }
+        """
         profile = self.get_object(user_pk)
         serializer = ProfileSerializer(profile, data=request.data)
         self.check_object_permissions(self.request, profile)

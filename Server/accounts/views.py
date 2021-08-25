@@ -22,14 +22,8 @@ from accounts.models import User
 from accounts.serializers import GoogleCallbackSerializer, RegisterSerializer, GithubCallbackSerializer, \
     KakaoCallbackSerializer
 
-
-class HelloWorldView(APIView):
-    def get(self, request):
-        user = request.user
-        return Response(data={"message":"hello world", "user": user.username, "title": user.title}, status=status.HTTP_200_OK)
-
 @method_decorator(csrf_exempt, name='dispatch')
-class google_callback(View):
+class google_callback(APIView):
     @swagger_auto_schema(
         operation_description="구글 소셜 로그인",
         request_body=GoogleCallbackSerializer,
@@ -99,7 +93,7 @@ class GoogleLogin(SocialLoginView):
     client_class = OAuth2Client
 
 @method_decorator(csrf_exempt, name='dispatch')
-class github_callback(View):
+class github_callback(APIView):
     @swagger_auto_schema(
         operation_description="깃허브 소셜 로그인",
         request_body=GithubCallbackSerializer,
@@ -189,7 +183,7 @@ class GithubLogin(SocialLoginView):
     client_class = OAuth2Client
 
 @method_decorator(csrf_exempt, name='dispatch')
-class kakao_callback(View):
+class kakao_callback(APIView):
     @swagger_auto_schema(
         operation_description="카카오 소셜 로그인",
         request_body=KakaoCallbackSerializer,
