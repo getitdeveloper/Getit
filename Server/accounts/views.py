@@ -8,6 +8,8 @@ from django.http import JsonResponse
 from django.utils.decorators import method_decorator
 from django.views import View
 from django.views.decorators.csrf import csrf_exempt
+from drf_yasg import openapi
+from drf_yasg.utils import swagger_auto_schema
 from rest_framework import status, permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -17,6 +19,8 @@ from allauth.socialaccount.providers.kakao.views import KakaoOAuth2Adapter
 from dj_rest_auth.registration.views import SocialLoginView
 
 from accounts.models import User
+from accounts.serializers import GoogleCallbackSerializer, RegisterSerializer, GithubCallbackSerializer, \
+    KakaoCallbackSerializer
 
 
 class HelloWorldView(APIView):
@@ -26,6 +30,16 @@ class HelloWorldView(APIView):
 
 @method_decorator(csrf_exempt, name='dispatch')
 class google_callback(View):
+    @swagger_auto_schema(
+        operation_description="구글 소셜 로그인",
+        request_body=GoogleCallbackSerializer,
+        responses={
+            status.HTTP_201_CREATED: openapi.Response(
+                description="Login Response",
+                schema=RegisterSerializer
+            )
+        }
+    )
     def post(self, request):
         accessToken = json.loads(request.body)
         access_token = accessToken['access_token']
@@ -80,6 +94,16 @@ class GoogleLogin(SocialLoginView):
 
 @method_decorator(csrf_exempt, name='dispatch')
 class github_callback(View):
+    @swagger_auto_schema(
+        operation_description="깃허브 소셜 로그인",
+        request_body=GithubCallbackSerializer,
+        responses={
+            status.HTTP_201_CREATED: openapi.Response(
+                description="Login Response",
+                schema=RegisterSerializer
+            )
+        }
+    )
     def post(self, request):
         requestData = json.loads(request.body)
         client_id = requestData['client_id']
@@ -156,6 +180,16 @@ class GithubLogin(SocialLoginView):
 
 @method_decorator(csrf_exempt, name='dispatch')
 class kakao_callback(View):
+    @swagger_auto_schema(
+        operation_description="카카오 소셜 로그인",
+        request_body=KakaoCallbackSerializer,
+        responses={
+            status.HTTP_201_CREATED: openapi.Response(
+                description="Login Response",
+                schema=RegisterSerializer
+            )
+        }
+    )
     def post(self, request):
         requestData = json.loads(request.body)
         code = requestData['code']

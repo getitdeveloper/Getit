@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from rest_framework import viewsets, status
+from rest_framework.generics import GenericAPIView
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly, DjangoObjectPermissions, \
     DjangoModelPermissions
 from rest_framework.response import Response
@@ -11,8 +12,25 @@ from profiles.serializers import GroupCreationSerializer, ProfileSerializer, IsO
 from tags.models import Tag
 
 
-class ProfileDetail(APIView):
-
+class ProfileDetail(GenericAPIView):
+    """
+           개인 프로필
+           ---
+           # POST 예시
+               - user
+               - user_pk
+               - nickname
+               - job
+               - developer_level
+               - designer_and_pm_level
+               - image
+               - mymail
+               - myinfo
+               - mygit
+               - stacks
+               - portfolio
+       """
+    serializer_class = ProfileSerializer
     permission_classes = [IsOwnerOrReadOnly, IsAuthenticatedOrReadOnly]
 
     def get_object(self, user_pk):
