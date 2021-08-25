@@ -18,3 +18,4 @@ class RegisterSerializer(serializers.Serializer):
     access_token = serializers.CharField(max_length=200)
     refresh_token = serializers.CharField(max_length=200)
     message = serializers.CharField(max_length=200)
+    user_pk = serializers.CharField(max_length=100)
