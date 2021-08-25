@@ -65,11 +65,14 @@ class google_callback(View):
             if accept_status != 200:
                 return JsonResponse({'err_msg': 'failed to signin'}, status=accept_status)
             accept_json = accept.json()
+            upk = accept_json.get('user')
+            upk = upk['pk']
             accept_json.pop('user', None)
             res_data = {
                 'message': 'login',
                 'access_token': accept_json['access_token'],
-                'refresh_token': accept_json['refresh_token']
+                'refresh_token': accept_json['refresh_token'],
+                'user_pk' : upk
             }
             return JsonResponse(res_data)
         except User.DoesNotExist:
@@ -80,11 +83,14 @@ class google_callback(View):
             if accept_status != 200:
                 return JsonResponse({'err_msg': 'failed to signup'}, status=accept_status)
             accept_json = accept.json()
+            upk = accept_json.get('user')
+            upk = upk['pk']
             accept_json.pop('user', None)
             res_data = {
                 'message': 'register',
                 'access_token': accept_json['access_token'],
-                'refresh_token': accept_json['refresh_token']
+                'refresh_token': accept_json['refresh_token'],
+                'user_pk': upk
             }
             return JsonResponse(res_data)
 
@@ -125,13 +131,12 @@ class github_callback(View):
         user_req = requests.get(f"https://api.github.com/user",
                             headers={"Authorization": f"Bearer {access_token}"})
         user_json = user_req.json()
-        print(user_json)
+
         error = user_json.get("error")
         if error is not None:
             raise JSONDecodeError(error)
 
         user_id = user_json.get("id")
-        print(user_id)
 
         """
         Signup or Signin Request
@@ -148,12 +153,14 @@ class github_callback(View):
             if accept_status != 200:
                 return JsonResponse({'err_msg': 'failed to signin'}, status=accept_status)
             accept_json = accept.json()
-
+            upk = accept_json.get('user')
+            upk = upk['pk']
             accept_json.pop('user', None)
             res_data = {
                 'message': 'login',
                 'access_token': accept_json['access_token'],
-                'refresh_token': accept_json['refresh_token']
+                'refresh_token': accept_json['refresh_token'],
+                'user_pk': upk
             }
             return JsonResponse(res_data)
         except User.DoesNotExist:
@@ -166,11 +173,14 @@ class github_callback(View):
                 return JsonResponse({'err_msg': 'failed to signup'}, status=accept_status)
             # user의 pk, email, first name, last name과 Access Token, Refresh token 가져옴
             accept_json = accept.json()
+            upk = accept_json.get('user')
+            upk = upk['pk']
             accept_json.pop('user', None)
             res_data = {
                 'message': 'register',
                 'access_token': accept_json['access_token'],
-                'refresh_token': accept_json['refresh_token']
+                'refresh_token': accept_json['refresh_token'],
+                'user_pk': upk
             }
             return JsonResponse(res_data)
 
@@ -201,7 +211,6 @@ class kakao_callback(View):
         """
         token_req = requests.get(f"https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id={API_KEY}&redirect_uri={REDIRECT_URI}&code={code}", headers={'Accept': 'application/json'})
         token_req_json = token_req.json()
-        print(token_req_json)
 
         error = token_req_json.get("error")
         if error is not None:
@@ -212,12 +221,10 @@ class kakao_callback(View):
         """
         user_req = requests.get(f"https://kapi.kakao.com/v2/user/me", headers={"Authorization": f"Bearer {access_token}"})
         user_json = user_req.json()
-        print(user_json)
         error = user_json.get("error")
         if error is not None:
             raise JSONDecodeError(error)
         user_id = user_json.get("id")
-        print(user_id)
         """
         Signup or Signin Request
         """
@@ -230,11 +237,14 @@ class kakao_callback(View):
             if accept_status != 200:
                 return JsonResponse({'err_msg': 'failed to signin'}, status=accept_status)
             accept_json = accept.json()
+            upk = accept_json.get('user')
+            upk = upk['pk']
             accept_json.pop('user', None)
             res_data = {
                 'message': 'login',
                 'access_token': accept_json['access_token'],
-                'refresh_token': accept_json['refresh_token']
+                'refresh_token': accept_json['refresh_token'],
+                'user_pk': upk
             }
             return JsonResponse(res_data)
         except User.DoesNotExist:
@@ -246,11 +256,14 @@ class kakao_callback(View):
             if accept_status != 200:
                 return JsonResponse({'err_msg': 'failed to signup'}, status=accept_status)
             accept_json = accept.json()
+            upk = accept_json.get('user')
+            upk = upk['pk']
             accept_json.pop('user', None)
             res_data = {
                 'message': 'register',
                 'access_token': accept_json['access_token'],
-                'refresh_token': accept_json['refresh_token']
+                'refresh_token': accept_json['refresh_token'],
+                'user_pk': upk
             }
             return JsonResponse(res_data)
 
