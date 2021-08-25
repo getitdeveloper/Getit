@@ -1,5 +1,8 @@
+import * as React from 'react';
+import { useSelector, RootStateOrAny } from 'react-redux';
 
 function MainPage(): JSX.Element {
+  const user = useSelector((state: RootStateOrAny) => state.user);
   const styles = {
     padding: '48px',
     border: '1px solid black',

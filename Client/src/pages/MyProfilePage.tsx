@@ -1,10 +1,7 @@
-import Header from "../Components/Commons/Header/Header";
+import * as React from 'react';
 
-function MyProfilePage(){
-    return(
-        <div>
-        </div>
-    );
-};
+function MyProfilePage(): JSX.Element {
+  return <div>hello</div>;
+}
 
 export default MyProfilePage;

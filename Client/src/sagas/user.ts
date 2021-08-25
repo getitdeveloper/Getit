@@ -19,13 +19,13 @@ import {
 } from './types';
 
 // 사용자 정보 요청
-const requestUserInfo = () => {
-  return axios.get('/api/user');
+const requestUserInfo = (user_pk: string) => {
+  return axios.get(`/api/profiles/${user_pk}`);
 };
 
-function* requestUserInfoSaga(): any {
+function* requestUserInfoSaga(action: any): any {
   try {
-    const response = yield call(requestUserInfo);
+    const response = yield call(requestUserInfo, action.data);
     // console.log('유저 정보 응답 ===>', response);
 
     yield put({

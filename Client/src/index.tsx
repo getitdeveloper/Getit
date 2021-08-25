@@ -1,9 +1,10 @@
-import React from 'react';
+import * as React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import reportWebVitals from './reportWebVitals';
 import App from './App';
 import store from './store/index';
+import 'normalize.css';
 
 ReactDOM.render(
   <React.StrictMode>

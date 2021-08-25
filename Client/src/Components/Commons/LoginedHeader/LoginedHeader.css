@@ -1,0 +1,36 @@
+.header-container {
+  display: flex;
+  align-items: center;
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  background-color: white;
+}
+
+.logo-button {
+  left: 0;
+  position: relative;
+}
+
+.userinfo-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  right: 0;
+  position: relative;
+}
+
+button {
+  background-color: transparent;
+  border: 0px;
+  cursor: pointer;
+  font-size: 25%;
+}
+
+.icon-button {
+  background-color: #e0e0e0;
+  border-radius: 100%;
+  width: 35px;
+  height: 35px;
+}
