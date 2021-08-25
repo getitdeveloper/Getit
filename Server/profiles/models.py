@@ -61,7 +61,7 @@ class Group(models.Model):
     member = models.ForeignKey(User, on_delete=models.CASCADE)
     content = models.TextField(null=False)
     image = models.ImageField(upload_to='group', null=True)
-    stack = models.ForeignKey(Tag, on_delete=models.CASCADE, null=True)
+    stack = models.ForeignKey(Tag, on_delete=models.CASCADE)
     is_leader = models.BooleanField(null=False, default='False')
     created_at = models.DateTimeField(auto_now_add=True)
 

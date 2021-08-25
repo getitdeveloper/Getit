@@ -11,6 +11,7 @@ from django.views.decorators.csrf import csrf_exempt
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework import status, permissions
+from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
@@ -24,6 +25,7 @@ from accounts.serializers import GoogleCallbackSerializer, RegisterSerializer, G
 
 @method_decorator(csrf_exempt, name='dispatch')
 class google_callback(APIView):
+    permission_classes = [AllowAny,]
     @swagger_auto_schema(
         operation_description="구글 소셜 로그인",
         request_body=GoogleCallbackSerializer,
@@ -94,6 +96,7 @@ class GoogleLogin(SocialLoginView):
 
 @method_decorator(csrf_exempt, name='dispatch')
 class github_callback(APIView):
+    permission_classes = [AllowAny,]
     @swagger_auto_schema(
         operation_description="깃허브 소셜 로그인",
         request_body=GithubCallbackSerializer,
@@ -184,6 +187,7 @@ class GithubLogin(SocialLoginView):
 
 @method_decorator(csrf_exempt, name='dispatch')
 class kakao_callback(APIView):
+    permission_classes = [AllowAny,]
     @swagger_auto_schema(
         operation_description="카카오 소셜 로그인",
         request_body=KakaoCallbackSerializer,
