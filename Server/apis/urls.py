@@ -25,12 +25,15 @@ from apis import settings
 
 schema_view = get_schema_view(
    openapi.Info(
-      title="Snippets API",
+      title="Get it API",
       default_version='v1',
-      description="Test description",
-      terms_of_service="https://www.google.com/policies/terms/",
-      contact=openapi.Contact(email="contact@snippets.local"),
-      license=openapi.License(name="BSD License"),
+      description=
+      """
+      Get it API 문서 페이지입니다.
+      """,
+    #   terms_of_service="https://www.google.com/policies/terms/",
+    #   contact=openapi.Contact(email="contact@snippets.local"),
+    #   license=openapi.License(name="BSD License"),
    ),
    public=True,
    permission_classes=[permissions.AllowAny],
@@ -38,8 +41,8 @@ schema_view = get_schema_view(
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('accounts/', include('accounts.urls')),
-    path('accounts/', include('allauth.urls')),
+    path('api/', include('accounts.urls')),
+    path('api/', include('allauth.urls')),
     path('api/', include('profiles.urls')),
     url(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
     url(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),

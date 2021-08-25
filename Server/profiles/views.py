@@ -1,7 +1,8 @@
-from profiles.serializers import IsOwnerOrReadOnly
+from rest_framework.serializers import Serializer
+from .permissions import IsOwnerOrReadOnly
 from rest_framework import viewsets
-from rest_framework.permissions import AllowAny, IsAuthenticated, IsAuthenticatedOrReadOnly
-from rest_framework.generics import get_object_or_404
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from rest_framework.generics import GenericAPIView, get_object_or_404
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -24,10 +25,13 @@ from profiles.serializers import ProfileSerializer, GroupCreationSerializer
 #                     request, message=getattr(permission, 'message', None)
 #                 )
 
-class ProfileDetail(APIView):
-
+class ProfileDetail(GenericAPIView):
+    """
+    개인 프로필
+    ---
+    """
+    serializer_class = ProfileSerializer
     permission_classes = [IsOwnerOrReadOnly, IsAuthenticatedOrReadOnly]
-
     def get_object(self, user_pk):
         return get_object_or_404(Profile, user_pk=user_pk)
 

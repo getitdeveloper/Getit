@@ -1,5 +1,8 @@
+from .serializers import GithubCallbackSerializer, GoogleCallbackSerializer, KakaoCallbackSerializer, RegisterSerializer
 import json
 from json import JSONDecodeError
+from drf_yasg.utils import no_body, swagger_auto_schema
+from drf_yasg import openapi
 
 import requests
 from allauth.socialaccount.models import SocialAccount
@@ -8,7 +11,8 @@ from django.http import JsonResponse
 from django.utils.decorators import method_decorator
 from django.views import View
 from django.views.decorators.csrf import csrf_exempt
-from rest_framework import status, permissions
+from rest_framework import serializers, status, permissions
+from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
@@ -18,14 +22,19 @@ from dj_rest_auth.registration.views import SocialLoginView
 
 from accounts.models import User
 
-
-class HelloWorldView(APIView):
-    def get(self, request):
-        user = request.user
-        return Response(data={"message":"hello world", "user": user.username, "title": user.title}, status=status.HTTP_200_OK)
-
 @method_decorator(csrf_exempt, name='dispatch')
-class google_callback(View):
+class google_callback(APIView):
+
+    @swagger_auto_schema(
+        operation_description="구글 소셜 로그인", 
+        request_body=GoogleCallbackSerializer,
+        responses={
+            status.HTTP_201_CREATED: openapi.Response(
+                description="Login Response",
+                schema=RegisterSerializer
+            )
+        }
+    )
     def post(self, request):
         accessToken = json.loads(request.body)
         access_token = accessToken['access_token']
@@ -46,13 +55,13 @@ class google_callback(View):
             # 기존에 Google로 가입된 유저
             data = {'access_token': access_token}
             accept = requests.post(
-                f"http://127.0.0.1:8000/accounts/google/login/finish/", data=data)
+                f"http://127.0.0.1:8000/api/token_accept/google/", data=data)
             accept_status = accept.status_code
             if accept_status != 200:
                 return JsonResponse({'err_msg': 'failed to signin'}, status=accept_status)
             accept_json = accept.json()
             print(accept_json)
-            accept_json.pop('user', None)
+            # accept_json.pop('user', None)
             res_data = {
                 'message': 'login',
                 'token': accept_json,
@@ -61,24 +70,36 @@ class google_callback(View):
         except User.DoesNotExist:
             data = {'access_token': access_token}
             accept = requests.post(
-                f"http://127.0.0.1:8000/accounts/google/login/finish/", data=data)
+                f"http://127.0.0.1:8000/api/token_accept/google/", data=data)
             accept_status = accept.status_code
             if accept_status != 200:
                 return JsonResponse({'err_msg': 'failed to signup'}, status=accept_status)
             accept_json = accept.json()
-            accept_json.pop('user', None)
+            # accept_json.pop('user', None)
             res_data = {
                 'message': 'register',
                 'token': accept_json,
             }
             return JsonResponse(res_data)
 
+@swagger_auto_schema(auto_schema=None)
 class GoogleLogin(SocialLoginView):
     adapter_class = GoogleOAuth2Adapter
     client_class = OAuth2Client
 
 @method_decorator(csrf_exempt, name='dispatch')
-class github_callback(View):
+class github_callback(APIView):
+
+    @swagger_auto_schema(
+        operation_description="깃허브 소셜 로그인", 
+        request_body=GithubCallbackSerializer,
+        responses={
+            status.HTTP_201_CREATED: openapi.Response(
+                description="Login Response",
+                schema=RegisterSerializer
+            )
+        }
+    )
     def post(self, request):
         requestData = json.loads(request.body)
         client_id = requestData['client_id']
@@ -117,12 +138,12 @@ class github_callback(View):
             # 기존에 github로 가입된 유저
             data = {'access_token': access_token, 'code': code}
             accept = requests.post(
-                f"http://127.0.0.1:8000/accounts/github/login/finish/", data=data)
+                f"http://127.0.0.1:8000/api/token_accept/github/", data=data)
             accept_status = accept.status_code
             if accept_status != 200:
                 return JsonResponse({'err_msg': 'failed to signin'}, status=accept_status)
             accept_json = accept.json()
-            accept_json.pop('user', None)
+            # accept_json.pop('user', None)
             res_data = {
                 'message': 'login',
                 'token': accept_json
@@ -132,13 +153,13 @@ class github_callback(View):
             # 기존에 가입된 유저가 없으면 새로 가입
             data = {'access_token': access_token, 'code': code}
             accept = requests.post(
-                f"http://127.0.0.1:8000/accounts/github/login/finish/", data=data)
+                f"http://127.0.0.1:8000/api/token_accept/github/", data=data)
             accept_status = accept.status_code
             if accept_status != 200:
                 return JsonResponse({'err_msg': 'failed to signup'}, status=accept_status)
             # user의 pk, email, first name, last name과 Access Token, Refresh token 가져옴
             accept_json = accept.json()
-            accept_json.pop('user', None)
+            # accept_json.pop('user', None)
             res_data = {
                 'message': 'register',
                 'token': accept_json
@@ -150,7 +171,18 @@ class GithubLogin(SocialLoginView):
     client_class = OAuth2Client
 
 @method_decorator(csrf_exempt, name='dispatch')
-class kakao_callback(View):
+class kakao_callback(APIView):
+
+    @swagger_auto_schema(
+        operation_description="카카오 소셜 로그인", 
+        request_body=KakaoCallbackSerializer,
+        responses={
+            status.HTTP_201_CREATED: openapi.Response(
+                description="Login Response",
+                schema=RegisterSerializer
+            )
+        }
+    )
     def post(self, request):
         requestData = json.loads(request.body)
         code = requestData['code']
@@ -188,13 +220,13 @@ class kakao_callback(View):
             user = User.objects.get(email=email)
             data = {'access_token': access_token, 'code': code}
             accept = requests.post(
-                f"http://127.0.0.1:8000/accounts/kakao/login/finish/", data=data)
+                f"http://127.0.0.1:8000/api/token_accept/kakao/", data=data)
             accept_status = accept.status_code
             if accept_status != 200:
                 return JsonResponse({'err_msg': 'failed to signin'}, status=accept_status)
             accept_json = accept.json()
             print(accept_json)
-            accept_json.pop('user', None)
+            # accept_json.pop('user', None)
             res_data = {
                 'message': 'login',
                 'token' : accept_json
@@ -204,13 +236,13 @@ class kakao_callback(View):
             # 기존에 가입된 유저가 없으면 새로 가입
             data = {'access_token': access_token, 'code': code}
             accept = requests.post(
-                f"http://127.0.0.1:8000/accounts/kakao/login/finish/", data=data)
+                f"http://127.0.0.1:8000/api/token_accept/kakao/", data=data)
             accept_status = accept.status_code
             if accept_status != 200:
                 return JsonResponse({'err_msg': 'failed to signup'}, status=accept_status)
             accept_json = accept.json()
             print(accept_json)
-            accept_json.pop('user', None)
+            # accept_json.pop('user', None)
             res_data = {
                 'message': 'register',
                 'token' : accept_json
