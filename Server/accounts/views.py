@@ -63,14 +63,13 @@ class google_callback(APIView):
             accept_json = accept.json()
             upk = accept_json.get('user')
             upk = upk['pk']
+            access_token = accept_json['access_token']
             accept_json.pop('user', None)
-            res_data = {
+            res = JsonResponse({
                 'message': 'login',
-                'access_token': accept_json['access_token'],
-                'refresh_token': accept_json['refresh_token'],
-                'user_pk' : upk
-            }
-            return JsonResponse(res_data)
+                'user_pk': upk})
+            res.set_cookie(key='access_token', value=access_token)
+            return res
         except User.DoesNotExist:
             data = {'access_token': access_token}
             accept = requests.post(
@@ -81,14 +80,13 @@ class google_callback(APIView):
             accept_json = accept.json()
             upk = accept_json.get('user')
             upk = upk['pk']
+            access_token = accept_json['access_token']
             accept_json.pop('user', None)
-            res_data = {
+            res = JsonResponse({
                 'message': 'register',
-                'access_token': accept_json['access_token'],
-                'refresh_token': accept_json['refresh_token'],
-                'user_pk': upk
-            }
-            return JsonResponse(res_data)
+                'user_pk': upk})
+            res.set_cookie(key='access_token', value=access_token)
+            return res
 
 class GoogleLogin(SocialLoginView):
     adapter_class = GoogleOAuth2Adapter
@@ -152,14 +150,13 @@ class github_callback(APIView):
             accept_json = accept.json()
             upk = accept_json.get('user')
             upk = upk['pk']
+            access_token = accept_json['access_token']
             accept_json.pop('user', None)
-            res_data = {
+            res = JsonResponse({
                 'message': 'login',
-                'access_token': accept_json['access_token'],
-                'refresh_token': accept_json['refresh_token'],
-                'user_pk': upk
-            }
-            return JsonResponse(res_data)
+                'user_pk': upk})
+            res.set_cookie(key='access_token', value=access_token)
+            return res
         except User.DoesNotExist:
             # 기존에 가입된 유저가 없으면 새로 가입
             data = {'access_token': access_token, 'code': code}
@@ -172,14 +169,13 @@ class github_callback(APIView):
             accept_json = accept.json()
             upk = accept_json.get('user')
             upk = upk['pk']
+            access_token = accept_json['access_token']
             accept_json.pop('user', None)
-            res_data = {
+            res = JsonResponse({
                 'message': 'register',
-                'access_token': accept_json['access_token'],
-                'refresh_token': accept_json['refresh_token'],
-                'user_pk': upk
-            }
-            return JsonResponse(res_data)
+                'user_pk': upk})
+            res.set_cookie(key='access_token', value=access_token)
+            return res
 
 class GithubLogin(SocialLoginView):
     adapter_class = GitHubOAuth2Adapter
@@ -237,14 +233,13 @@ class kakao_callback(APIView):
             accept_json = accept.json()
             upk = accept_json.get('user')
             upk = upk['pk']
+            access_token = accept_json['access_token']
             accept_json.pop('user', None)
-            res_data = {
+            res = JsonResponse({
                 'message': 'login',
-                'access_token': accept_json['access_token'],
-                'refresh_token': accept_json['refresh_token'],
-                'user_pk': upk
-            }
-            return JsonResponse(res_data)
+                'user_pk': upk})
+            res.set_cookie(key='access_token', value=access_token)
+            return res
         except User.DoesNotExist:
             # 기존에 가입된 유저가 없으면 새로 가입
             data = {'access_token': access_token, 'code': code}
@@ -256,14 +251,13 @@ class kakao_callback(APIView):
             accept_json = accept.json()
             upk = accept_json.get('user')
             upk = upk['pk']
+            access_token = accept_json['access_token']
             accept_json.pop('user', None)
-            res_data = {
+            res = JsonResponse({
                 'message': 'register',
-                'access_token': accept_json['access_token'],
-                'refresh_token': accept_json['refresh_token'],
-                'user_pk': upk
-            }
-            return JsonResponse(res_data)
+                'user_pk': upk})
+            res.set_cookie(key='access_token', value=access_token)
+            return res
 
 class KakaoLogin(SocialLoginView):
     adapter_class = KakaoOAuth2Adapter
