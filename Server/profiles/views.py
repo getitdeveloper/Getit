@@ -2,20 +2,20 @@ from django.shortcuts import render, get_object_or_404
 from rest_framework import viewsets, status
 from .permissions import IsOwnerOrReadOnly
 from rest_framework.generics import GenericAPIView
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework.parsers import MultiPartParser
 
-from profiles.models import Profile, Group
-from profiles.serializers import GroupCreationSerializer, ProfileSerializer
+from profiles.models import Profile
+from profiles.serializers import ProfileSerializer
 from tags.models import Tag
 
 
 class ProfileDetail(GenericAPIView):
 
     serializer_class = ProfileSerializer
-    permission_classes = [IsOwnerOrReadOnly, IsAuthenticatedOrReadOnly]
+    permission_classes = [IsOwnerOrReadOnly]
+    parser_classes = (MultiPartParser,)
 
     def get_object(self, user_pk):
         return get_object_or_404(Profile, user_pk=user_pk)
@@ -38,9 +38,10 @@ class ProfileDetail(GenericAPIView):
                 "job": "개발자",
                 "developer_level": "코린이",
                 "designer_and_pm_level": "하수",
-                "mymail": "test@test.com",
-                "myinfo": "안녕하세요. test입니다.",
-                "mygit": "https://github.com/test",
+                "image": "C:\\User\\Test\\Image.jpg"
+                "email": "test@test.com",
+                "info": "안녕하세요. test입니다.",
+                "git": "https://github.com/test",
                 "stacks": [
                     1,
                     2,
@@ -56,6 +57,6 @@ class ProfileDetail(GenericAPIView):
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class GroupProfileViewSet(viewsets.ModelViewSet):
-    queryset = Group.objects.all()
-    serializer_class = GroupCreationSerializer
+# class GroupProfileViewSet(viewsets.ModelViewSet):
+#     queryset = Group.objects.all()
+#     serializer_class = GroupCreationSerializer

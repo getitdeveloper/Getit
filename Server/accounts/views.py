@@ -25,7 +25,6 @@ from accounts.serializers import GoogleCallbackSerializer, RegisterSerializer, G
 
 @method_decorator(csrf_exempt, name='dispatch')
 class google_callback(APIView):
-    permission_classes = [AllowAny,]
     @swagger_auto_schema(
         operation_description="구글 소셜 로그인",
         request_body=GoogleCallbackSerializer,
@@ -94,7 +93,6 @@ class GoogleLogin(SocialLoginView):
 
 @method_decorator(csrf_exempt, name='dispatch')
 class github_callback(APIView):
-    permission_classes = [AllowAny,]
     @swagger_auto_schema(
         operation_description="깃허브 소셜 로그인",
         request_body=GithubCallbackSerializer,
@@ -138,7 +136,6 @@ class github_callback(APIView):
         """
         try:
             user = SocialAccount.objects.get(uid=user_id)
-
             # 기존에 github로 가입된 유저
             data = {'access_token': access_token, 'code': code}
             accept = requests.post(
@@ -157,7 +154,7 @@ class github_callback(APIView):
                 'user_pk': upk})
             res.set_cookie(key='access_token', value=access_token)
             return res
-        except User.DoesNotExist:
+        except:
             # 기존에 가입된 유저가 없으면 새로 가입
             data = {'access_token': access_token, 'code': code}
             accept = requests.post(
@@ -183,7 +180,6 @@ class GithubLogin(SocialLoginView):
 
 @method_decorator(csrf_exempt, name='dispatch')
 class kakao_callback(APIView):
-    permission_classes = [AllowAny,]
     @swagger_auto_schema(
         operation_description="카카오 소셜 로그인",
         request_body=KakaoCallbackSerializer,
@@ -240,7 +236,7 @@ class kakao_callback(APIView):
                 'user_pk': upk})
             res.set_cookie(key='access_token', value=access_token)
             return res
-        except User.DoesNotExist:
+        except:
             # 기존에 가입된 유저가 없으면 새로 가입
             data = {'access_token': access_token, 'code': code}
             accept = requests.post(
