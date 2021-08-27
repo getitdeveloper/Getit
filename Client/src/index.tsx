@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import reportWebVitals from './reportWebVitals';
 import App from './App';
 import store from './store/index';
+import 'sanitize.css'; // css reset
 
 ReactDOM.render(
   <React.StrictMode>
