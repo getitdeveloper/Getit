@@ -8,9 +8,11 @@ import Routes from './Components/Routes';
 function App(): JSX.Element {
   return (
     <Router>
+      {/* 페이지 상단  */}
       <Header />
       <Banner />
       <NavBar />
+      {/* 페이지 라우팅 */}
       <Routes />
     </Router>
   );
