@@ -1,31 +1,51 @@
 import * as React from 'react';
-import { Tab, Tabs } from '@material-ui/core';
-import './NavBar.css';
+import { useCallback } from 'react';
+import { Tab } from '@material-ui/core';
+import { Link } from 'react-router-dom';
+import { StyledTabs, NavBarWrapper } from './styles';
 
 function NavBar(): JSX.Element {
-  const [value, setValue] = React.useState(0);
+  const [selectTab, setSelectTab] = React.useState(0);
 
-  const handleChange = (
-    event: React.ChangeEvent<{ event?: EventTarget }>,
-    newValue: number,
-  ) => {
-    setValue(newValue);
-  };
+  const handleChange = useCallback(
+    (event: React.ChangeEvent<{ event?: EventTarget }>, selection: number) => {
+      setSelectTab(selection);
+      // 선택된 탭
+      // console.log(selection);
+    },
+    [],
+  );
+
+  const activeStyle = useCallback(
+    (isActive) => {
+      return isActive ? { color: '#4dd28f' } : { color: '#000000' };
+    },
+    [selectTab],
+  );
 
   return (
-    <div className='NavBar'>
-      <Tabs
-        value={value}
-        onChange={handleChange}
-        indicatorColor='primary'
-        textColor='primary'
-        centered
-      >
-        <Tab label='스터디 모집 게시판' />
-        <Tab label='질문 게시판' />
-        <Tab label='자유 게시판' />
-      </Tabs>
-    </div>
+    <NavBarWrapper>
+      <StyledTabs value={selectTab} onChange={handleChange} centered>
+        <Tab
+          style={activeStyle(selectTab === 0)}
+          label='스터디 모집 게시판'
+          component={Link}
+          to='/'
+        />
+        <Tab
+          style={activeStyle(selectTab === 1)}
+          label='질문 게시판'
+          component={Link}
+          to='questionBoard'
+        />
+        <Tab
+          style={activeStyle(selectTab === 2)}
+          label='자유 게시판'
+          component={Link}
+          to='freeBoard'
+        />
+      </StyledTabs>
+    </NavBarWrapper>
   );
 }
 
