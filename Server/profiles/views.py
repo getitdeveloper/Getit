@@ -6,23 +6,23 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.parsers import MultiPartParser
 
-from profiles.models import PersonalProfile
-from profiles.serializers import PersonalProfileSerializer
+from profiles.models import Profile
+from profiles.serializers import ProfileSerializer
 from tags.models import Tag
 
 
-class PersonalProfileDetail(GenericAPIView):
+class ProfileDetail(GenericAPIView):
 
-    serializer_class = PersonalProfileSerializer
+    serializer_class = ProfileSerializer
     permission_classes = [IsOwnerOrReadOnly]
-    parser_classes = (MultiPartParser,)
+    # parser_classes = (MultiPartParser,)
 
     def get_object(self, user_pk):
-        return get_object_or_404(PersonalProfile, user_pk=user_pk)
+        return get_object_or_404(Profile, user_pk=user_pk)
 
     def get(self, request, user_pk):
         profile = self.get_object(user_pk)
-        serializer = PersonalProfileSerializer(profile)
+        serializer = ProfileSerializer(profile)
 
         return Response(serializer.data)
     
@@ -50,7 +50,7 @@ class PersonalProfileDetail(GenericAPIView):
             }
         """
         profile = self.get_object(user_pk)
-        serializer = PersonalProfileSerializer(profile, data=request.data)
+        serializer = ProfileSerializer(profile, data=request.data)
         self.check_object_permissions(self.request, profile)
         if serializer.is_valid():
             serializer.save()

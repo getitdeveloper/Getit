@@ -6,7 +6,7 @@ from accounts.models import User
 from tags.models import Tag
 
 
-class PersonalProfile(models.Model):
+class Profile(models.Model):
     CHOICES_JOB = (
         ('개발자', '개발자'),
         ('디자이너', '디자이너'),
@@ -43,7 +43,7 @@ class PersonalProfile(models.Model):
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
-        PersonalProfile.objects.create(user=instance, user_pk=instance.id)
+        Profile.objects.create(user=instance, user_pk=instance.id)
 
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
