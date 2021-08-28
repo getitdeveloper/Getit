@@ -1,5 +1,6 @@
 .header-container {
   display: flex;
+  height: auto;
   align-items: center;
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
   position: -webkit-sticky;
@@ -28,9 +29,7 @@ button {
   font-size: 25%;
 }
 
-.icon-button {
+/* .icon-button {
   background-color: #e0e0e0;
   border-radius: 100%;
-  width: 35px;
-  height: 35px;
-}
+} */
