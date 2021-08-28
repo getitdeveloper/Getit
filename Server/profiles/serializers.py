@@ -11,7 +11,6 @@ class PortfoliodetailSerializer(serializers.ModelSerializer):
 
 
 class ProfileSerializer(serializers.ModelSerializer):
-    portfolios_id = serializers.ReadOnlyField(source='author.username')
     class Meta:
         model = Profile
         fields = ('user', 'user_pk', 'nickname', 'job', 'developer_level', 'designer_and_pm_level', 'image', 'email', 'info','stacks', 'git', 'portfolio',)
