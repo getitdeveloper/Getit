@@ -48,6 +48,7 @@ PROJECT_APPS = [
     'tags',
     'boards',
     'comments',
+    'portfolios',
 ]
 
 THIRD_PARTY_APPS = [
@@ -144,7 +145,12 @@ WSGI_APPLICATION = 'apis.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-DATABASES = MY_DATABASES
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
 
 # DATABASES = {
 #     'default': {
