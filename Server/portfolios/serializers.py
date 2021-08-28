@@ -7,4 +7,4 @@ from .models import Portfolio
 class PortfolioSerializer(serializers.ModelSerializer):
     class Meta:
         model = Portfolio
-        fields = ('user', 'title', 'contents', 'images',)
+        fields = ('id','user', 'title', 'contents', 'images',)

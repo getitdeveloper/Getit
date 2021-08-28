@@ -3,6 +3,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 from accounts.models import User
+from portfolios.models import Portfolio
 from tags.models import Tag
 
 
@@ -34,8 +35,7 @@ class Profile(models.Model):
     email = models.EmailField(max_length=50, null=True)
     info = models.TextField(null=True)
     git = models.CharField(max_length=100, blank=True, null=True)
-    stacks = models.ManyToManyField(Tag, blank=True)
-    portfolio = models.TextField(blank=True, null=True)
+    stacks = models.ManyToManyField(Tag, blank=True, related_name='stacks')
 
     # def __str__(self):
     #     return self.user_pk
