@@ -66,7 +66,8 @@ class google_callback(APIView):
             accept_json.pop('user', None)
             res = JsonResponse({
                 'message': 'login',
-                'user_pk': upk})
+                'user_pk': upk,
+                'accept_json': accept_json})
             res.set_cookie(key='access_token', value=access_token)
             return res
         except User.DoesNotExist:
@@ -83,7 +84,8 @@ class google_callback(APIView):
             accept_json.pop('user', None)
             res = JsonResponse({
                 'message': 'register',
-                'user_pk': upk})
+                'user_pk': upk,
+                'accept_json': accept_json})
             res.set_cookie(key='access_token', value=access_token)
             return res
 
@@ -151,7 +153,8 @@ class github_callback(APIView):
             accept_json.pop('user', None)
             res = JsonResponse({
                 'message': 'login',
-                'user_pk': upk})
+                'user_pk': upk,
+                'accept_json': accept_json})
             res.set_cookie(key='access_token', value=access_token)
             return res
         except:
@@ -170,7 +173,8 @@ class github_callback(APIView):
             accept_json.pop('user', None)
             res = JsonResponse({
                 'message': 'register',
-                'user_pk': upk})
+                'user_pk': upk,
+                'accept_json':accept_json})
             res.set_cookie(key='access_token', value=access_token)
             return res
 
@@ -233,7 +237,8 @@ class kakao_callback(APIView):
             accept_json.pop('user', None)
             res = JsonResponse({
                 'message': 'login',
-                'user_pk': upk})
+                'user_pk': upk,
+                'accept_json': accept_json})
             res.set_cookie(key='access_token', value=access_token)
             return res
         except:
@@ -251,7 +256,8 @@ class kakao_callback(APIView):
             accept_json.pop('user', None)
             res = JsonResponse({
                 'message': 'register',
-                'user_pk': upk})
+                'user_pk': upk,
+                'accept_json': accept_json})
             res.set_cookie(key='access_token', value=access_token)
             return res
 
