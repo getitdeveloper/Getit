@@ -45,7 +45,7 @@ function* requestUserInfoSaga(): any {
 // 구글 테스트 로그인
 const requestTestGoogleLogIn = (accessData: GoogleAccessData) => {
   console.log('데이터 전송 ===> ', accessData);
-  return axios.post('/api/test/login', accessData);
+  return axios.post('/api/login/google/', accessData);
 };
 
 // 카카오 테스트 로그인
