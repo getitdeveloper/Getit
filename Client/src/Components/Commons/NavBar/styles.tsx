@@ -18,7 +18,7 @@ export const NavBarWrapper = styled.div`
   position: sticky;
   top: 0;
   background: #ffffff;
-  box-shadow: 0 3px 6px 0 #bababa;
+  box-shadow: 0 3px 6px 0 #d2d2d2;
   z-index: 100;
 `;
 
@@ -34,8 +34,9 @@ export const JobSelectButton = styled(Button)`
   padding: 0.7rem;
   width: 10rem;
   background-color: #ffffff;
+
   &:hover {
-    background-color: #4dd290;
+    background-color: ${(props) => props.theme.colors.main};
   }
 `;
 
@@ -43,28 +44,29 @@ export const HorizontalLine = styled.hr`
   width: 80%;
   border: 0.1px dashed #d2d2d2;
   border-style: none none dotted;
-  color: #fff;
 `;
 
 export const SortAndWriteWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
-  margin: 1.5rem 3rem;
+  padding: 1.5rem 3rem;
+  background: ${(props) => props.theme.colors.background};
 
   select {
     border: none;
     font-size: 1.5rem;
+    background: ${(props) => props.theme.colors.background};
   }
 `;
 
 export const WritePost = styled(Button)`
   margin-left: 0.5rem;
   border-radius: 25px;
-  background-color: #4dd290;
+  background-color: ${(props) => props.theme.colors.main};
   font-size: 1.5rem;
-  color: #fff;
+  color: ${(props) => props.theme.colors.whiteText};
 
   &:hover {
-    background-color: #4dd290;
+    background-color: ${(props) => props.theme.colors.main};
   }
 `;
