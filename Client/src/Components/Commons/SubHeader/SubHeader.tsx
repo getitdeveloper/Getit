@@ -1,8 +1,9 @@
 import * as React from 'react';
 import { useHistory } from 'react-router-dom';
-import './LoginedHeader.css';
+import UserInfoButtons from '../UserInfoButtons/UserInfoButtons';
+import './SubHeader.css';
 
-function LoginedHeader(): JSX.Element {
+function SubHeader(): JSX.Element {
   const history = useHistory();
   return (
     <div className='header-container'>
@@ -13,7 +14,7 @@ function LoginedHeader(): JSX.Element {
       >
         GET IT
       </button>
-      <div>
+      <div className='navbar-container'>
         <button type='button' onClick={() => history.push('/studyrecruit')}>
           스터디 모집 게시판
         </button>
@@ -24,21 +25,9 @@ function LoginedHeader(): JSX.Element {
           자유 게시판
         </button>
       </div>
-      <div className='userinfo-container'>
-        <p>정유미님</p>
-        <button
-          type='button'
-          className='icon-button'
-          onClick={() => history.push('/myprofile')}
-        >
-          <img src='/icons/user.svg' alt='user-menu' />
-        </button>
-        <button type='button' className='icon-button'>
-          <img src='/icons/alert.svg' alt='alert' />
-        </button>
-      </div>
+      <UserInfoButtons />
     </div>
   );
 }
 
-export default LoginedHeader;
+export default SubHeader;

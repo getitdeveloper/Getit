@@ -12,7 +12,19 @@ import {
 
 // 초기 상태값 타입
 export interface InitialState {
-  user: { nickname?: string } | null;
+  user: {
+    user_pk?: number;
+    user?: number;
+    nickname?: string;
+    job?: string;
+    developer_level?: string;
+    img?: string;
+    email?: string;
+    info?: string;
+    git?: string;
+    stacks?: number[];
+    portfolio?: object[];
+  } | null;
   userInfoRequest: boolean;
   userInfoSuccess: boolean;
   userInfoFailure: string | null;
@@ -32,7 +44,17 @@ export interface UserInfoRequest {
 export interface UserInfoSuccess {
   type: typeof USER_INFO_SUCCESS;
   data: {
+    user: number;
+    user_pk: number;
     nickname: string;
+    job: string;
+    developer_level: string;
+    img: string;
+    email: string;
+    info: string;
+    git: string;
+    stacks: number[];
+    portfolio: object[];
   };
 }
 
@@ -49,7 +71,8 @@ export interface UserLogInRequest {
 export interface UserLogInSuccess {
   type: typeof USER_LOGIN_SUCCESS;
   data: {
-    nickname: string;
+    message: string;
+    user_pk: number;
   };
 }
 

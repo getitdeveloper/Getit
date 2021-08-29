@@ -7,7 +7,7 @@ import GithubCallback from '../Auth/GithubLogin/GithubCallback';
 import StudyRecruitPage from '../pages/StudyRecruitPage';
 import QuestionPage from '../pages/QuestionPage';
 import FreeTalkPage from '../pages/FreeTalkPage';
-import ProfilePage from '../pages/ProfilePage.tsx/ProfilPage';
+import ProfilePage from '../pages/ProfilePage.tsx';
 
 function Routes(): JSX.Element {
   return (

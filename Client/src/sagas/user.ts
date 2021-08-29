@@ -20,13 +20,15 @@ import {
 
 // 사용자 정보 요청
 const requestUserInfo = (user_pk: string) => {
-  return axios.get(`/api/profiles/${user_pk}`);
+  return axios.get(`/profile/${user_pk}/`);
 };
+
+// ? axios.get('/profile/') --> back accesstoken 확인해서 자기 자신 정보 찾아서 뿌려주기?
 
 function* requestUserInfoSaga(action: any): any {
   try {
-    const response = yield call(requestUserInfo, action.data);
-    // console.log('유저 정보 응답 ===>', response);
+    const response = yield call(requestUserInfo, action.data.user_pk);
+    console.log('유저 정보 응답 ===>', response);
 
     yield put({
       type: USER_INFO_SUCCESS,
@@ -45,35 +47,19 @@ function* requestUserInfoSaga(action: any): any {
 // 구글 테스트 로그인
 const requestTestGoogleLogIn = (accessData: GoogleAccessData) => {
   console.log('데이터 전송 ===> ', accessData);
-  return axios.post('/api/test/login', accessData);
+  return axios.post('/login/google/', accessData);
 };
 
 // 카카오 테스트 로그인
 const requestTestKakaoLogIn = (accessData: KakaoAccessData) => {
   console.log('데이터 전송 ===> ', accessData);
-  return axios.post('/api/test/login', accessData);
+  return axios.post('/login/kakao/', accessData);
 };
 
 // 깃허브 테스트 로그인
 const requestTestGithubLogIn = (accessData: GithubAccessData) => {
   console.log('데이터 전송 ===> ', accessData);
-  return axios.post('/api/test/login', accessData);
-};
-
-// 구글 로그인
-const requestGoogleLogIn = (accessData: GoogleAccessData) => {
-  console.log('데이터 전송 ===> ', accessData);
-  return axios.post('/accounts/dj-rest-auth/google', accessData);
-};
-
-// 카카오 로그인
-const requestKakaoLogIn = () => {
-  return axios.post('/accounts/dj-rest-auth/kakao');
-};
-
-// 깃허브 로그인
-const requestGithubLogIn = () => {
-  return axios.post('/accounts/dj-rest-auth/github');
+  return axios.post('/login/github/', accessData);
 };
 
 function* requestUserLogInSaga(action: any) {
@@ -102,6 +88,7 @@ function* requestUserLogInSaga(action: any) {
     }
 
     console.log('로그인 요청 응답 성공 ===>', response);
+    axios.defaults.headers.common.Authorization = `Bearer ${action.data.accessToken}`;
 
     yield put({
       type: USER_LOGIN_SUCCESS,

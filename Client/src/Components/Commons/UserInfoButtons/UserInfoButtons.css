@@ -1,0 +1,13 @@
+.userinfo-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-right: 0;
+}
+
+button {
+  background-color: transparent;
+  border: 0px;
+  cursor: pointer;
+  font-size: 25%;
+}

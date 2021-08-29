@@ -18,7 +18,7 @@ function GithubCallback(): null {
       // 사용자 식별 코드
       const accessCode = url.split('?code=')[1];
 
-      const accessData = {
+      const reqeustData = {
         client_id: process.env.REACT_APP_GITHUB_CLIENT_ID,
         client_secret: process.env.REACT_APP_GITHUB_CLIENT_SECRET,
         code: accessCode,
@@ -28,7 +28,7 @@ function GithubCallback(): null {
         type: USER_LOGIN_REQUEST,
         data: {
           social: 'github',
-          ...accessData,
+          ...reqeustData,
         },
       });
 

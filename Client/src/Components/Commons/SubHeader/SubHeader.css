@@ -1,6 +1,7 @@
 .header-container {
   display: flex;
   height: auto;
+  justify-content: space-around;
   align-items: center;
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
   position: -webkit-sticky;
@@ -11,22 +12,10 @@
 
 .logo-button {
   left: 0;
-  position: relative;
 }
 
-.userinfo-container {
-  display: flex;
-  justify-content: space-around;
+.navbar-container {
   align-items: center;
-  right: 0;
-  position: relative;
-}
-
-button {
-  background-color: transparent;
-  border: 0px;
-  cursor: pointer;
-  font-size: 25%;
 }
 
 /* .icon-button {
