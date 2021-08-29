@@ -10,22 +10,22 @@ const JobMixin = css`
   margin-right: 0.8rem;
   border-radius: 7px;
   font-size: 12px;
-  color: #ffffff;
+  color: ${(props) => props.theme.colors.whiteText};
 
   text-align: center;
 `;
 
 export const Developer = styled.div`
-  background: #4dd290;
+  background: ${(props) => props.theme.colors.developer};
   ${JobMixin}
 `;
 
 export const Designer = styled.div`
-  background: #ffb65a;
+  background: ${(props) => props.theme.colors.designer};
   ${JobMixin}
 `;
 
 export const Planner = styled.div`
-  background: #fc9557;
+  background: ${(props) => props.theme.colors.planner};
   ${JobMixin}
 `;

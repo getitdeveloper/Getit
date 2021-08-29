@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { GlobalStyles } from './styles';
 import Banner from './Components/Banner/Banner';
 import NavBar from './Components/Commons/NavBar/index';
 import MainHeader from './Components/MainHeader/MainHeader';
@@ -9,7 +8,6 @@ import Routes from './Components/Routes';
 function App(): JSX.Element {
   return (
     <Router>
-      <GlobalStyles />
       {/* 페이지 상단  */}
       <MainHeader />
       <Banner />
