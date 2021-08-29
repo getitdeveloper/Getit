@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { useCallback, useState } from 'react';
 import { Tab } from '@material-ui/core';
-import { Link } from 'react-router-dom';
 import CreateIcon from '@material-ui/icons/Create';
 import {
   StyledTabs,
@@ -13,6 +12,9 @@ import {
   SortAndWriteWrapper,
   WritePost,
 } from './styles';
+import FreeBoardPage from '../../../pages/FreeBoardPage';
+import QuestionBoardPage from '../../../pages/QuestionBoardPage';
+import RecruitBoardPage from '../../../pages/RecruitBoardPage';
 
 function NavBar(): JSX.Element {
   const [selectTab, setSelectTab] = useState(0);
@@ -52,20 +54,14 @@ function NavBar(): JSX.Element {
           <Tab
             style={activeStyle(selectTab === 0)}
             label={<StyledLabel>스터디 모집 게시판</StyledLabel>}
-            component={Link}
-            to='/'
           />
           <Tab
             style={activeStyle(selectTab === 1)}
             label={<StyledLabel>질문 게시판</StyledLabel>}
-            component={Link}
-            to='questionBoard'
           />
           <Tab
             style={activeStyle(selectTab === 2)}
             label={<StyledLabel>자유 게시판</StyledLabel>}
-            component={Link}
-            to='freeBoard'
           />
         </StyledTabs>
       </NavBarWrapper>
@@ -112,6 +108,9 @@ function NavBar(): JSX.Element {
             <CreateIcon />
           </WritePost>
         </SortAndWriteWrapper>
+        {selectTab === 0 && <RecruitBoardPage />}
+        {selectTab === 1 && <FreeBoardPage />}
+        {selectTab === 2 && <QuestionBoardPage />}
       </div>
     </div>
   );
