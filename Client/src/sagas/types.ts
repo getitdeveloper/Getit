@@ -1,16 +1,7 @@
 export interface ResponseUserInfo {
   data: {
-    user: number;
+    message: string;
     user_pk: number;
-    nickname: string;
-    job: string;
-    developer_level: string;
-    img: string;
-    email: string;
-    info: string;
-    git: string;
-    stacks: number[];
-    portfolio: object[];
   };
 }
 

@@ -6,6 +6,7 @@ import GithubCallback from '../Auth/GithubLogin/GithubCallback';
 import QuestionBoardPage from '../pages/QuestionBoardPage/index';
 import ProfilePage from '../pages/ProfilePage.tsx';
 import FreeBoardPage from '../pages/FreeBoardPage/index';
+import RegisterPage from '../pages/RegisterPage';
 
 function Routes(): JSX.Element {
   return (
@@ -17,6 +18,7 @@ function Routes(): JSX.Element {
         <Route exact path='/questionBoard' component={QuestionBoardPage} />
         <Route exact path='/freeBoard' component={FreeBoardPage} />
         <Route exact path='/myprofile' component={ProfilePage} />
+        <Route exact path='/register' component={RegisterPage} />
       </Switch>
     </div>
   );

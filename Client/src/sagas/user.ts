@@ -73,22 +73,18 @@ function* requestUserLogInSaga(action: any) {
     switch (loginSocialType) {
       case 'google':
         response = yield call(requestTestGoogleLogIn, action.data);
-        // response = yield call(requestGoogleLogIn, action.data.accessToken);
         break;
       case 'kakao':
         response = yield call(requestTestKakaoLogIn, action.data);
-        // response = yield call(requestKakaoLogIn);
         break;
       case 'github':
         response = yield call(requestTestGithubLogIn, action.data);
-        // response = yield call(requestGithubLogIn);
         break;
       default:
         return null;
     }
 
-    console.log('로그인 요청 응답 성공 ===>', response);
-    axios.defaults.headers.common.Authorization = `Bearer ${action.data.accessToken}`;
+    console.log('로그인 요청 응답 성공 ===>', response.data);
 
     yield put({
       type: USER_LOGIN_SUCCESS,

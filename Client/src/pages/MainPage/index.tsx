@@ -1,5 +1,7 @@
 import * as React from 'react';
+import { useEffect } from 'react';
 import { useSelector, RootStateOrAny } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import moment from 'moment';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
@@ -21,9 +23,15 @@ import MemberType from '../../Components/RecruitMembers/index';
 
 function MainPage(): JSX.Element {
   const classes = useStyles();
+  const history = useHistory();
 
-  const user = useSelector((state: RootStateOrAny) => state.user);
-  console.log(user);
+  const message = useSelector((state: RootStateOrAny) => state.user.id.message);
+
+  useEffect(() => {
+    if (message === 'register') {
+      history.push('/register');
+    }
+  }, [message]);
 
   return (
     <div>
