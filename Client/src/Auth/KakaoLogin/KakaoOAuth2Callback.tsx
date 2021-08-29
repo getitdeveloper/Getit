@@ -12,14 +12,18 @@ function KakaoOAuth2Callback(): null {
     const accessCode = new URL(window.location.href).searchParams.get('code');
     //   console.log(accessCode);
 
+    const requestData = {
+      code: accessCode,
+      API_KEY: process.env.REACT_APP_KAKAO_API_KEY,
+      REDIRECT_URI: process.env.REACT_APP_KAKAO_REDIRECT_URI,
+    };
+
     if (accessCode) {
       dispatch({
         type: USER_LOGIN_REQUEST,
         data: {
           social: 'kakao',
-          code: accessCode,
-          API_KEY: process.env.REACT_APP_KAKAO_API_KEY,
-          REDIRECT_URI: process.env.REACT_APP_KAKAO_REDIRECT_URI,
+          ...requestData,
         },
       });
 

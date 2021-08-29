@@ -1,17 +1,21 @@
 import * as React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
+import { ThemeProvider } from 'styled-components';
 import reportWebVitals from './reportWebVitals';
 import App from './App';
 import store from './store/index';
-import 'sanitize.css'; // css reset
+import 'sanitize.css';
+import theme from './styles/theme';
+import GlobalStyle from './styles/global';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Provider store={store}>
+  <Provider store={store}>
+    <ThemeProvider theme={theme}>
       <App />
-    </Provider>
-  </React.StrictMode>,
+      <GlobalStyle />
+    </ThemeProvider>
+  </Provider>,
   document.getElementById('root'),
 );
 
