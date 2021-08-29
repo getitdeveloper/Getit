@@ -35,7 +35,7 @@ export const Title = styled.div`
 
   h1 {
     font-size: 20px;
-    color: #000;
+    color: ${(props) => props.theme.colors.blackText};
   }
 `;
 
