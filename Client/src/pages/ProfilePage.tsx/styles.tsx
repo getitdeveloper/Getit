@@ -17,7 +17,7 @@ export const PageContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-  background-color: #fff;
+  background-color: #ffffff;
   padding: 5%;
   border-radius: 22px;
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
@@ -49,7 +49,7 @@ export const ProfileRight = styled.div`
 export const ContentContainer = styled.div`
   margin: 1% 0%;
   padding: 2%;
-  background-color: #f5f5f5;
+  background-color: ${(props) => props.theme.colors.background};
   font-size: 70%;
   border-radius: 22px;
 `;
@@ -58,16 +58,16 @@ export const InfoContainer = styled.div`
   height: 30%;
   width: 100%;
   padding: 5%;
-  background-color: #f5f5f5;
+  background-color: ${(props) => props.theme.colors.background};
   font-size: 80%;
 `;
 
 export const SubTitle = styled.div`
-height: auto;
-weight: 100%
-align-self: center;
-margin-top: 10%;
-margin-bottom: 5%;
+  height: auto;
+  weight: 100%;
+  align-self: center;
+  margin-top: 10%;
+  margin-bottom: 5%;
 `;
 
 export const ProfileImage = styled.img`
@@ -89,6 +89,6 @@ export const ProfileNavItem = styled.button`
   align-self: flex-start;
   margin: 2% 0%;
   &:hover {
-    color: #4dd290;
+    color: ${(props) => props.theme.colors.main};
   }
 `;

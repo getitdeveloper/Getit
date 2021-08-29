@@ -9,6 +9,7 @@ export const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     alignItems: 'center',
     paddingTop: '1rem',
+    background: '#f5f5f5',
   },
   paper: {
     padding: theme.spacing(2),
@@ -34,7 +35,7 @@ export const Title = styled.div`
 
   h1 {
     font-size: 20px;
-    color: #000000;
+    color: ${(props) => props.theme.colors.blackText};
   }
 `;
 

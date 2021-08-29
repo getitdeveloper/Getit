@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 
 export const PageBackground = styled.div`
@@ -7,7 +6,7 @@ export const PageBackground = styled.div`
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  background-color: #f5f5f5;
+  background-color: ${(props) => props.theme.colors.background};
   padding: 2% 5%;
 `;
 
@@ -16,5 +15,5 @@ export const PageTitle = styled.p`
   font-stretch: normal;
   font-style: bold;
   text-align: left;
-  color: #000;
+  color: ${(props) => props.theme.colors.blackText};
 `;
