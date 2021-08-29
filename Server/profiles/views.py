@@ -42,10 +42,12 @@ class ProfileDetail(GenericAPIView):
                             1,
                             2,
                         ],
+                    }
+                    "portfolio" : [{
                         "portfolio_id": "1",
                         "portfolio_title": "getit프로젝트",
-                        "portfolio_images": "~~"
-                    }
+                        "portfolio_contents": "~~"
+                    }]
                 """
         profile = self.get_object(user_pk)
 
@@ -61,7 +63,7 @@ class ProfileDetail(GenericAPIView):
             })
         result_json = {
             "profile_data":serializer.data,
-            "potfolio":pofol
+            "portfolio":pofol
         }
         return Response(result_json)
     
@@ -90,7 +92,19 @@ class ProfileDetail(GenericAPIView):
         profile = self.get_object(user_pk)
         serializer = ProfileSerializer(profile, data=request.data)
         self.check_object_permissions(self.request, profile)
+        tag_id = []
         if serializer.is_valid():
+            tags = serializer.validated_data['stacks'].split(',')
+            print(tags)
+            for tag in tags:
+                if not tag:
+                    continue
+                _tag, _ = Tag.objects.get_or_create(name=tag)
+                profile.stacks.add(_tag)
+                tag_id.append(Tag.objects.get(name=tag))
+            serializer.validated_data['stacks'] = tag_id
+            print(serializer.validated_data['stacks'])
             serializer.save()
+
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

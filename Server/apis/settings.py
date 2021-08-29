@@ -232,4 +232,4 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 REST_USE_JWT = True
 JWT_AUTH_COOKIE = 'jwt-auth'
-APPEND_SLASH = True
+APPEND_SLASH = False
