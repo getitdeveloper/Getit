@@ -4,7 +4,7 @@ import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import Chip from '@material-ui/core/Chip';
 import { profileDummyData, currentProject, finishedProject } from './dummyData';
 import {
-  PageContainer,
+  SplittedPageContainer,
   ContentContainer,
   ProfileRight,
   ProfileLeft,
@@ -75,7 +75,7 @@ function ProfilePage(): JSX.Element {
       <SubHeader />
       <PageBackground>
         <PageTitle>내 프로필</PageTitle>
-        <PageContainer>
+        <SplittedPageContainer>
           <ProfileLeft>
             <MainProfile>
               {profileDummyData.img ? (
@@ -133,7 +133,7 @@ function ProfilePage(): JSX.Element {
             <SubTitle>완료된 프로젝트</SubTitle>
             <Project finished />
           </ProfileRight>
-        </PageContainer>
+        </SplittedPageContainer>
       </PageBackground>
     </div>
   );
