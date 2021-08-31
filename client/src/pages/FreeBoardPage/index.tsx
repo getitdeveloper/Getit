@@ -1,7 +1,18 @@
 import * as React from 'react';
+import PostItem from '../../Components/PostItem';
+import { PageContainer, PageBackground } from '../../styles/page';
+import { dummyData } from './dummyData';
 
 function FreeBoardPage() {
-  return <div>자유 게시판 입니다.</div>;
+  return (
+    <PageBackground>
+      <PageContainer>
+        {dummyData.map((content) => (
+          <PostItem key={content.id} content={content} />
+        ))}
+      </PageContainer>
+    </PageBackground>
+  );
 }
 
 export default FreeBoardPage;

@@ -8,13 +8,13 @@ import {
   NavBarWrapper,
   JobSelectButtonWrapper,
   JobSelectButton,
-  HorizontalLine,
   SortAndWriteWrapper,
   WritePost,
 } from './styles';
 import FreeBoardPage from '../../../pages/FreeBoardPage';
 import QuestionBoardPage from '../../../pages/QuestionBoardPage';
 import RecruitBoardPage from '../../../pages/RecruitBoardPage';
+import { HorizontalLine } from '../../../styles/commons';
 
 function NavBar(): JSX.Element {
   const [selectTab, setSelectTab] = useState(0);
@@ -96,7 +96,7 @@ function NavBar(): JSX.Element {
             <span data-job='planner'>기획자</span>
           </JobSelectButton>
         </JobSelectButtonWrapper>
-        <HorizontalLine />
+        <HorizontalLine width='80%' />
 
         <SortAndWriteWrapper>
           <select name='sortPost'>
@@ -109,8 +109,8 @@ function NavBar(): JSX.Element {
           </WritePost>
         </SortAndWriteWrapper>
         {selectTab === 0 && <RecruitBoardPage />}
-        {selectTab === 1 && <FreeBoardPage />}
-        {selectTab === 2 && <QuestionBoardPage />}
+        {selectTab === 2 && <FreeBoardPage />}
+        {selectTab === 1 && <QuestionBoardPage />}
       </div>
     </div>
   );

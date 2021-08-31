@@ -40,12 +40,6 @@ export const JobSelectButton = styled(Button)`
   }
 `;
 
-export const HorizontalLine = styled.hr`
-  width: 80%;
-  border: 0.1px dashed #d2d2d2;
-  border-style: none none dotted;
-`;
-
 export const SortAndWriteWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
