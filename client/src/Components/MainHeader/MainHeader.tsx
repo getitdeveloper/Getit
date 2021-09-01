@@ -20,7 +20,7 @@ function MainHeader(): JSX.Element {
       <div className='logo'>
         <p className='logotext'>Get IT</p>
         <SearchBar />
-        {user.id ? (
+        {user.id.user_pk ? (
           <UserInfoButtons />
         ) : (
           <div>
