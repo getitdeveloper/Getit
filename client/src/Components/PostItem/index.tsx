@@ -17,7 +17,7 @@ import { HorizontalLine } from '../../styles/commons';
 
 function PostItem(props: any) {
   const history = useHistory();
-  const { content } = props;
+  const { content, boardType } = props;
   console.log(content);
   return (
     <div>
@@ -26,10 +26,16 @@ function PostItem(props: any) {
           onClick={() => alert(`${content.writer}의 프로필로 이동`)}
         >
           <img src={content.writerImage} alt='writer-profile' width='15%' />
-          <p>{content.writer}</p>
+          <p style={{ fontSize: 'x-small' }}>{content.writer}</p>
         </WriterButton>
         <PostInfoButton
-          onClick={() => history.push('/freeBoard/detail', content.id)}
+          onClick={() => {
+            if (boardType === 'Question') {
+              history.push('/questionBoard/detail', content.id);
+            } else if (boardType === 'Free') {
+              history.push('/freeBoard/detail', content.id);
+            }
+          }}
         >
           <TagWrapper>
             {content.tagType.map((member: string) => (

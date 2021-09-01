@@ -5,13 +5,13 @@ import { PageBackground, PageContainer, PageTitle } from '../../styles/page';
 import { dummyData } from '../FreeBoardPage/dummyData';
 import PostItem from '../../Components/PostItem';
 
-function FreeBoardDetailPage(props: any) {
+function QuestionDetailPage(props: any) {
   const { history } = props;
   return (
     <div>
       <SubHeader />
       <PageBackground>
-        <PageTitle>자유 게시판</PageTitle>
+        <PageTitle>질문 게시판</PageTitle>
         <PageContainer width='80%'>
           <PostItem content={dummyData[history.location.state]} />
           <p>
@@ -37,4 +37,4 @@ function FreeBoardDetailPage(props: any) {
   );
 }
 
-export default FreeBoardDetailPage;
+export default QuestionDetailPage;

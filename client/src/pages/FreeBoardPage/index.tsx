@@ -8,7 +8,7 @@ function FreeBoardPage() {
     <PageBackground>
       <PageContainer>
         {dummyData.map((content) => (
-          <PostItem key={content.id} content={content} />
+          <PostItem key={content.id} content={content} boardType='Free' />
         ))}
       </PageContainer>
     </PageBackground>
