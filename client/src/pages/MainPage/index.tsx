@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSelector, RootStateOrAny } from 'react-redux';
 import MainHeader from '../../Components/MainHeader/MainHeader';
@@ -11,7 +10,7 @@ function MainPage(): JSX.Element {
 
   const message = useSelector((state: RootStateOrAny) => state.user.id.message);
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (message === 'register') {
       history.push('/register');
     }

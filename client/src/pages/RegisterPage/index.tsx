@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { useEffect } from 'react';
 import { useSelector, RootStateOrAny } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
@@ -7,7 +6,7 @@ function RegisterPage(): JSX.Element {
   const history = useHistory();
   const message = useSelector((state: RootStateOrAny) => state.user.id.message);
   // 기존 회원 또는 비회원 접근 방지 라우팅
-  useEffect(() => {
+  React.useEffect(() => {
     if (message !== 'register') {
       return history.push('/');
     }

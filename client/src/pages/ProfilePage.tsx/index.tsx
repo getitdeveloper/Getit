@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useHistory } from 'react-router-dom';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import Chip from '@material-ui/core/Chip';
-import { profileDummyData, currentProject, finishedProject } from './dummyData';
+import { profileDummyData } from './dummyData';
 import {
   SplittedPageContainer,
   ContentContainer,

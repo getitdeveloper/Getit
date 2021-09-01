@@ -18,8 +18,6 @@ import { HorizontalLine } from '../../../styles/commons';
 
 function NavBar(): JSX.Element {
   const [selectTab, setSelectTab] = useState(0);
-  const [selectJob, setSelectJob] = useState(0);
-  const [sortPost, setSortPost] = React.useState('recent');
   const [selected, setSelected] = React.useState(false);
 
   const handleChange = useCallback(

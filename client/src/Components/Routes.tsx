@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import MainPage from '../pages/MainPage/index';
+import MainPage from '../pages/MainPage';
 import KakaoOAuth2Callback from '../Auth/KakaoLogin/KakaoOAuth2Callback';
 import GithubCallback from '../Auth/GithubLogin/GithubCallback';
 import QuestionBoardPage from '../pages/QuestionBoardPage/index';
