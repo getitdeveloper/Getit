@@ -1,7 +1,18 @@
 import * as React from 'react';
+import PostItem from '../../Components/PostItem';
+import { PageContainer, PageBackground } from '../../styles/page';
+import { dummyData } from '../FreeBoardPage/dummyData';
 
-function QuestionBoardPage() {
-  return <div>질문 게시판 입니다.</div>;
+function QuestionBardPage() {
+  return (
+    <PageBackground>
+      <PageContainer>
+        {dummyData.map((content) => (
+          <PostItem key={content.id} content={content} boardType='Question' />
+        ))}
+      </PageContainer>
+    </PageBackground>
+  );
 }
 
-export default QuestionBoardPage;
+export default QuestionBardPage;

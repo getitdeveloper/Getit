@@ -44,9 +44,15 @@ function GoogleSocialLogin(): JSX.Element {
           type='button'
           onClick={renderProps.onClick}
           disabled={renderProps.disabled}
-          style={{ padding: 0 }}
+          style={{
+            padding: '3% 0%',
+            width: '100%',
+            borderRadius: '4px',
+            boxShadow: '0 3px 6px 0 rgba(0, 0, 0, 0.16)',
+          }}
         >
-          <img src='/images/google-login.png' alt='Google login' />
+          <img src='/icons/google.webp' alt='Google login' />
+          구글 아이디로 시작하기
         </button>
       )}
       onSuccess={handleSuccess}

@@ -1,6 +1,7 @@
 import React from 'react';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import styled from 'styled-components';
+import { PageContainer } from '../../styles/page';
 
 export const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -11,16 +12,12 @@ export const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-export const PageContainer = styled.div`
+export const SplittedPageContainer = styled(PageContainer)`
   width: 80%;
-  height: auto;
   display: flex;
   flex-direction: row;
+  justify-content: flex-start;
   align-items: flex-start;
-  background-color: #ffffff;
-  padding: 5%;
-  border-radius: 22px;
-  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
   @media ${(props) => props.theme.mobile} {
     flex-direction: column;
     width: 80%;
