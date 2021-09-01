@@ -14,7 +14,10 @@ import {
 
 // 초기 상태
 const initialState: InitialState = {
-  user: null,
+  id: {
+    message: null,
+    user_pk: null,
+  },
   userInfoRequest: false,
   userInfoSuccess: false,
   userInfoFailure: null,
@@ -38,7 +41,7 @@ const reducer = (state = initialState, action: UserActions): InitialState =>
         draft.userInfoRequest = false;
         draft.userInfoSuccess = true;
         draft.userInfoFailure = null;
-        draft.user = action.data;
+        draft.id = action.data;
         break;
       case USER_INFO_FAILURE:
         draft.userInfoRequest = false;
@@ -54,7 +57,7 @@ const reducer = (state = initialState, action: UserActions): InitialState =>
         draft.userLogOutRequest = false;
         draft.userLogOutSuccess = true;
         draft.userLogOutFailure = null;
-        draft.user = action.data;
+        draft.id = action.data;
         break;
       case USER_LOGIN_FAILURE:
         draft.userLogOutRequest = false;
@@ -70,7 +73,7 @@ const reducer = (state = initialState, action: UserActions): InitialState =>
         draft.userLogOutRequest = false;
         draft.userLogOutSuccess = true;
         draft.userLogOutFailure = null;
-        draft.user = null;
+        draft.id = action.data;
         break;
       case USER_LOGOUT_FAILURE:
         draft.userLogOutRequest = false;

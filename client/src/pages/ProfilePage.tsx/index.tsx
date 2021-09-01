@@ -56,9 +56,11 @@ const navItem = [
 
 function ProfilePage(): JSX.Element {
   const dispatch = useDispatch();
-  const user = useSelector((state: RootStateOrAny) => state.user).user;
+  const user = useSelector((state: RootStateOrAny) => state.user);
   const history = useHistory();
   const classes = useStyles();
+
+  console.log(user);
 
   React.useEffect(() => {
     dispatch({
@@ -69,7 +71,6 @@ function ProfilePage(): JSX.Element {
     });
   }, []);
 
-  console.log(user);
   return (
     <div>
       <SubHeader />

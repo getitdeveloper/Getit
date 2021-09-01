@@ -9,6 +9,8 @@ function MainHeader(): JSX.Element {
   const [open, setOpen] = React.useState(false);
   const user = useSelector((state: RootStateOrAny) => state.user);
 
+  console.log('user at main header: ', user.id);
+
   const handleClose = () => {
     setOpen(false);
   };
@@ -18,7 +20,7 @@ function MainHeader(): JSX.Element {
       <div className='logo'>
         <p className='logotext'>Get IT</p>
         <SearchBar />
-        {user.user ? (
+        {user.id ? (
           <UserInfoButtons />
         ) : (
           <div>

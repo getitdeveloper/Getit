@@ -8,6 +8,7 @@ import ProfilePage from '../pages/ProfilePage.tsx';
 import FreeBoardPage from '../pages/FreeBoardPage/index';
 import FreeBoardDetailPage from '../pages/FreeBoardDetailPage';
 import QuestionDetailPage from '../pages/QuestionDetailPage';
+import RegisterPage from '../pages/RegisterPage';
 
 function Routes(): JSX.Element {
   return (
@@ -25,6 +26,7 @@ function Routes(): JSX.Element {
           path='/questionBoard/detail'
           component={QuestionDetailPage}
         />
+        <Route exact path='/register' component={RegisterPage} />
       </Switch>
     </div>
   );
