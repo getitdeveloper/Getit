@@ -10,6 +10,9 @@ import {
   USER_LOGOUT_REQUEST,
   USER_LOGOUT_SUCCESS,
   USER_LOGOUT_FAILURE,
+  USER_PROFILE_REQUEST,
+  USER_PROFILE_SUCCESS,
+  USER_PROFILE_FAILURE,
 } from './actions';
 
 // 초기 상태
@@ -18,6 +21,8 @@ const initialState: InitialState = {
     message: null,
     user_pk: null,
   },
+  profileInfo: null,
+  portfolio: null,
   userInfoRequest: false,
   userInfoSuccess: false,
   userInfoFailure: null,
@@ -27,6 +32,9 @@ const initialState: InitialState = {
   userLogOutRequest: false,
   userLogOutSuccess: false,
   userLogOutFailure: null,
+  userProfileRequest: false,
+  userProfileSuccess: false,
+  userProfileFailure: null,
 };
 
 const reducer = (state = initialState, action: UserActions): InitialState =>
@@ -80,7 +88,21 @@ const reducer = (state = initialState, action: UserActions): InitialState =>
         draft.userLogOutSuccess = false;
         draft.userLogOutFailure = action.error;
         break;
-
+      case USER_PROFILE_REQUEST:
+        draft.userProfileRequest = true;
+        draft.userProfileSuccess = false;
+        draft.userProfileFailure = null;
+        break;
+      case USER_PROFILE_SUCCESS:
+        draft.userProfileRequest = false;
+        draft.userProfileSuccess = true;
+        draft.userProfileFailure = null;
+        break;
+      case USER_PROFILE_FAILURE:
+        draft.userProfileRequest = true;
+        draft.userProfileSuccess = false;
+        draft.userProfileFailure = action.error;
+        break;
       default:
         return state;
     }

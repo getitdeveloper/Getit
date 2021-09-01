@@ -10,8 +10,12 @@ import {
   USER_LOGOUT_REQUEST,
   USER_LOGOUT_SUCCESS,
   USER_LOGOUT_FAILURE,
+  USER_PROFILE_FAILURE,
+  USER_PROFILE_SUCCESS,
+  USER_PROFILE_REQUEST,
 } from '../reducers/actions';
 import {
+  ResponseUserProfile,
   ResponseUserInfo,
   GoogleAccessData,
   KakaoAccessData,
@@ -38,6 +42,29 @@ function* requestUserInfoSaga(action: any): any {
     console.error(error);
     yield put({
       type: USER_INFO_FAILURE,
+      error,
+    });
+  }
+}
+
+// 사용자 프로필 정보 요청
+const requestUserProfile = (user_pk: string) => {
+  return axios.get(`/api/profile/${user_pk}/`);
+};
+
+function* requestUserProfileSaga(action: any): any {
+  try {
+    const response = yield call(requestUserProfile, action.data.user_pk);
+    console.log('프로필 정보 응답 ===>', response);
+
+    yield put({
+      type: USER_PROFILE_SUCCESS,
+      data: response.data,
+    });
+  } catch (error) {
+    console.error(error);
+    yield put({
+      type: USER_PROFILE_FAILURE,
       error,
     });
   }
@@ -134,11 +161,16 @@ function* watchRequestUserLogOut() {
   yield takeLatest(USER_LOGOUT_REQUEST, requestUserLogOutSaga);
 }
 
+function* watchRequestUserProfile() {
+  yield takeLatest(USER_PROFILE_REQUEST, requestUserProfileSaga);
+}
+
 function* userSaga() {
   yield all([
     fork(watchRequestUserInfo),
     fork(watchRequestUserLogIn),
     fork(watchRequestUserLogOut),
+    fork(watchRequestUserProfile),
   ]);
 }
 
