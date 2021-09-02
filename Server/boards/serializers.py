@@ -1,12 +1,12 @@
-from .models import CommonBoard, RecruitmentBoard
+from .models import RecruitmentBoard, CommonBoard
 from rest_framework.serializers import ModelSerializer
 
-class CommonBoardPostSerializer(ModelSerializer):
+class CommonBoardSerializer(ModelSerializer):
     class Meta:
         model = CommonBoard
-        fields = ('title', 'content', 'category', 'image', 'likes', 'create_at', 'user', 'tags',)
+        fields = ('title', 'content', 'image', 'create_at', 'user',)
 
 class RecruitmentBoardSerializer(ModelSerializer):
     class Meta:
         model = RecruitmentBoard
-        fields = ('user', 'study_name', 'stack', 'developer', 'designer', 'pm', 'content', 'start_date', 'end_date', 'status',)
+        fields = ('user', 'study_name', 'developer', 'designer', 'pm', 'content', 'start_date', 'end_date', 'status',)

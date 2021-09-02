@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from rest_framework import viewsets, status
+from rest_framework.decorators import api_view
 
 from portfolios.models import Portfolio
 from .permissions import IsOwnerOrReadOnly
@@ -12,11 +13,19 @@ from profiles.models import Profile
 from profiles.serializers import ProfileSerializer
 from tags.models import Tag
 
+@api_view(['GET'])
+def status_check(request):
+    """
+    서버의 상태를 확인하는 함수
+    """
+    return Response({
+        "status": "OK"
+    }, status=status.HTTP_200_OK)
 
 class ProfileDetail(GenericAPIView):
-
     serializer_class = ProfileSerializer
     permission_classes = [IsOwnerOrReadOnly]
+
     # parser_classes = (MultiPartParser,)
 
     def get_object(self, user_pk):
@@ -25,6 +34,7 @@ class ProfileDetail(GenericAPIView):
     def get(self, request, user_pk):
         """
                 개인 프로필
+
                 ---
                 # GET Response 예시
                     {
@@ -38,38 +48,15 @@ class ProfileDetail(GenericAPIView):
                         "email": "test@test.com",
                         "info": "안녕하세요. test입니다.",
                         "git": "https://github.com/test",
-                        "stacks": [
-                            1,
-                            2,
-                        ],
-                    }
-                    "portfolio" : [{
-                        "portfolio_id": "1",
-                        "portfolio_title": "getit프로젝트",
-                        "portfolio_contents": "~~"
-                    }]
                 """
         profile = self.get_object(user_pk)
-
         serializer = ProfileSerializer(profile)
-        # potfolio 데이터 저장
-        pofol = []
-        portfolios = Portfolio.objects.filter(user=user_pk)
-        for portfolio in portfolios:
-            pofol.append({
-                'portfolio_id':portfolio.id,
-                'title': portfolio.title,
-                'contents':portfolio.contents
-            })
-        result_json = {
-            "profile_data":serializer.data,
-            "portfolio":pofol
-        }
-        return Response(result_json)
-    
+        return Response(serializer.data)
+
     def post(self, request, user_pk):
         """
         개인 프로필
+
         ---
         # POST 예시
             {
@@ -83,28 +70,11 @@ class ProfileDetail(GenericAPIView):
                 "email": "test@test.com",
                 "info": "안녕하세요. test입니다.",
                 "git": "https://github.com/test",
-                "stacks": [
-                    1,
-                    2,
-                ]
-            }
         """
         profile = self.get_object(user_pk)
         serializer = ProfileSerializer(profile, data=request.data)
         self.check_object_permissions(self.request, profile)
-        tag_id = []
         if serializer.is_valid():
-            tags = serializer.validated_data['stacks'].split(',')
-            print(tags)
-            for tag in tags:
-                if not tag:
-                    continue
-                _tag, _ = Tag.objects.get_or_create(name=tag)
-                profile.stacks.add(_tag)
-                tag_id.append(Tag.objects.get(name=tag))
-            serializer.validated_data['stacks'] = tag_id
-            print(serializer.validated_data['stacks'])
             serializer.save()
-
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

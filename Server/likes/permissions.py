@@ -1,12 +1,14 @@
 from rest_framework import permissions
 from django.contrib.auth import get_user_model
+from accounts.models import User
 
 class IsOwnerOrReadOnly(permissions.BasePermission):
 
     def has_permission(self, request, view):
         if request.method in permissions.SAFE_METHODS:
             return True
-        return str(request.user.id) == request.data.get('user')
+        print(request.user)
+        return request.user and request.user.is_authenticated
 
     def has_object_permission(self, request, view, obj):
         if request.user.is_authenticated:
