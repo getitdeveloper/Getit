@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { useHistory } from 'react-router-dom';
+import MarkdownRenderer from '../MarkdownRenderer';
 import { TitleForm, TextForm, FormButton, ButtonWrapper } from './styles';
 
 function PostForm() {
@@ -8,6 +9,7 @@ function PostForm() {
     title: '',
     text: '',
   });
+  const [hidden, setHidden] = React.useState(false);
   const { title, text } = inputs;
 
   const onChange = (e: any) => {
@@ -17,6 +19,10 @@ function PostForm() {
       [name]: value,
     };
     setInputs(changedInputs);
+  };
+
+  const onHidden = (status: boolean) => {
+    setHidden(status);
   };
 
   return (
@@ -29,13 +35,21 @@ function PostForm() {
         required
         value={title}
       />
+      <button type='button' onClick={() => onHidden(false)}>
+        작성하기
+      </button>
+      <button type='button' onClick={() => onHidden(true)}>
+        미리보기
+      </button>
       <TextForm
         name='text'
         onChange={onChange}
         placeholder='질문 내용을 작성해주세요'
         required
         value={text}
+        hidden={hidden}
       />
+      <MarkdownRenderer text={text} hidden={hidden} />
       <ButtonWrapper>
         <FormButton type='button' onClick={() => history.push('/')}>
           {' '}

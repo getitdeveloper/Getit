@@ -19,6 +19,7 @@ import { dummyData } from './dummyData';
 
 import MemberType from '../../Components/RecruitMembers/index';
 import PostSubHeader from '../../Components/PostSubHeader';
+import { PageBackground } from '../../styles/page';
 
 function RecruitBoardPage(): JSX.Element {
   const classes = useStyles();
@@ -27,7 +28,7 @@ function RecruitBoardPage(): JSX.Element {
   console.log(user);
 
   return (
-    <div>
+    <PageBackground>
       <PostSubHeader boardType='Recruit' />
       <div className={classes.root}>
         <GridWrapper>
@@ -89,7 +90,7 @@ function RecruitBoardPage(): JSX.Element {
           </Grid>
         </GridWrapper>
       </div>
-    </div>
+    </PageBackground>
   );
 }
 
