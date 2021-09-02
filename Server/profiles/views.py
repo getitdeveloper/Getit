@@ -1,3 +1,5 @@
+
+
 from django.shortcuts import render, get_object_or_404
 from rest_framework import viewsets, status
 from .permissions import IsOwnerOrReadOnly
@@ -7,7 +9,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
-from profiles.models import Profile, Group
+from profiles.models import Profile, TeamProfile
 from profiles.serializers import GroupCreationSerializer, ProfileSerializer
 from tags.models import Tag
 
@@ -50,12 +52,21 @@ class ProfileDetail(GenericAPIView):
         """
         profile = self.get_object(user_pk)
         serializer = ProfileSerializer(profile, data=request.data)
+
         self.check_object_permissions(self.request, profile)
         if serializer.is_valid():
+
             serializer.save()
+            stacks = serializer['stacks']['name']
+            print(stacks)
+            for tag in stacks:
+                if not tag:
+                    continue
+                _tag, _ = Tag.objects.get_or_create(name=tag)
+                profile.tags.add(_tag)
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class GroupProfileViewSet(viewsets.ModelViewSet):
-    queryset = Group.objects.all()
+    queryset = TeamProfile.objects.all()
     serializer_class = GroupCreationSerializer

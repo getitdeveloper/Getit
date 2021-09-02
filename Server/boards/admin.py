@@ -1,7 +1,6 @@
 from django.contrib import admin
 
 # Register your models here.
-from boards.models import Board
+from .models import CommonBoard, RecruitmentBoard
 
-admin.site.register(Board)
-
+admin.site.register([CommonBoard, RecruitmentBoard])

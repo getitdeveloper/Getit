@@ -47,12 +47,13 @@ PROJECT_APPS = [
     'profiles',
     'tags',
     'boards',
+    'portfolios',
+    'comments',
 ]
 
 THIRD_PARTY_APPS = [
     'rest_framework',
-    'rest_framework.authtoken',
-
+    'rest_framework_simplejwt.token_blacklist',
     'corsheaders',
 
     'allauth',
@@ -64,6 +65,7 @@ THIRD_PARTY_APPS = [
 
     'dj_rest_auth',
     'dj_rest_auth.registration',
+
 
     'drf_yasg',
 ]
@@ -87,7 +89,8 @@ REST_FRAMEWORK = {
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(days=3),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=14),
-    'BLACKLIST_AFTER_ROTATION': False,
+    'BLACKLIST_AFTER_ROTATION': True,
+    'ROTATE_REFRESH_TOKENS': False,
     'ALGORITHM': 'HS256',
     'SIGNING_KEY': SECRET_KEY,
     'VERIFYING_KEY': None,
@@ -143,7 +146,7 @@ WSGI_APPLICATION = 'apis.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-DATABASES = DATABASES = {
+DATABASES =  {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
@@ -192,7 +195,7 @@ STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CORS_ORIGIN_WHITELIST = ['http://127.0.0.1:3000', 'http://localhost:3000', 'http://ec2-3-36-99-223.ap-northeast-2.compute.amazonaws.com']
+CORS_ORIGIN_WHITELIST = ['http://127.0.0.1:3000', 'http://localhost:3000',]
 
 AUTH_USER_MODEL = "accounts.User"
 
@@ -201,21 +204,21 @@ SOCIALACCOUNT_PROVIDERS = {
         'APP': {
             'client_id': '1124512412423',
             'secret': '453425234523456',
-            'key': ''
+            'key': '',
         }
     },
     'github': {
         'APP': {
             'client_id': '1124512412423',
             'secret': '453425234523456',
-            'key': ''
+            'key': '',
         }
     },
     'kakao': {
         'APP': {
             'client_id': '1ads2412423',
             'secret': '453425234ads456',
-            'key': ''
+            'key': '',
         }
     }
 }
