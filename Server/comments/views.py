@@ -13,22 +13,33 @@ from .permissions import IsOwnerOrReadOnly
 # Create your views here.
 class CommentListAPIView(GenericAPIView):
     serializer_class = CommentSerializer
-    """
-        게시글의 댓글 리스트를 가져오는 API
-        
-        ---
-        # 내용
-            - user : 글쓴이 번호(user id)
-            - question : 게시글 번호(board id)
-            - content : 댓글 내용
-            - create_at : 생성 시간
-    """
-    def get(self, request, question_id):
-        posts = Comment.objects.filter(question_id=question_id)
+
+    def get(self, request, board_id):
+        """
+            댓글 list (GET)
+
+            ---
+                - user : 글쓴이 번호(user id)
+                - commonpost : 질문/자유 게시글 번호(board id)
+                - recruitmentpost : 모집 게시글 번호(board id)
+                - content : 댓글 내용
+                - create_at : 생성 시간
+        """
+        posts = Comment.objects.filter(question_id=board_id)
         serializer = CommentSerializer(posts, many=True)
         return Response(serializer.data)
 
-    def post(self, request, question_id):
+    def post(self, request, board_id):
+        """
+            댓글 list (POST)
+
+            ---
+                - user : 글쓴이 번호(user id)
+                - commonpost : 질문/자유 게시글 번호(board id)
+                - recruitmentpost : 모집 게시글 번호(board id)
+                - content : 댓글 내용
+                - create_at : 생성 시간
+        """
         serializer = CommentSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -40,15 +51,35 @@ class CommentDetailAPIView(GenericAPIView):
     permission_classes = [IsOwnerOrReadOnly]
     queryset = Comment
 
-    def get_object(self, pk, question_id):
-        return get_object_or_404(Comment, pk=pk, question_id=question_id)
+    def get_object(self, pk, board_id):
+        return get_object_or_404(Comment, pk=pk, question_id=board_id)
 
     def get(self, request, pk, question_id):
+        """
+            댓글 detail (GET)
+
+            ---
+                - user : 글쓴이 번호(user id)
+                - commonpost : 질문/자유 게시글 번호(board id)
+                - recruitmentpost : 모집 게시글 번호(board id)
+                - content : 댓글 내용
+                - create_at : 생성 시간
+        """
         post = self.get_object(pk, question_id)
         serializer = CommentSerializer(post)
         return Response(serializer.data)
 
     def put(self, request, pk, question_id):
+        """
+            댓글 detail (PUT:수정)
+
+            ---
+                - user : 글쓴이 번호(user id)
+                - commonpost : 질문/자유 게시글 번호(board id)
+                - recruitmentpost : 모집 게시글 번호(board id)
+                - content : 댓글 내용
+                - create_at : 생성 시간
+        """
         post = self.get_object(pk, question_id)
         serializer = CommentSerializer(post, data=request.data)
         self.check_object_permissions(self.request, post)
@@ -58,6 +89,12 @@ class CommentDetailAPIView(GenericAPIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, pk, question_id):
+        """
+            댓글 detail (DELETE)
+
+            ---
+
+        """
         post = self.get_object(pk, question_id)
         self.check_object_permissions(self.request, post)
         post.delete()

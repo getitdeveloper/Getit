@@ -4,7 +4,7 @@ from rest_framework.serializers import ModelSerializer
 class CommonBoardSerializer(ModelSerializer):
     class Meta:
         model = CommonBoard
-        fields = ('title', 'content', 'image', 'create_at', 'user',)
+        fields = ('title', 'category' ,'content', 'image', 'create_at', 'user',)
 
 class RecruitmentBoardSerializer(ModelSerializer):
     class Meta:

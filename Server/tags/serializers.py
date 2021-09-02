@@ -25,7 +25,7 @@ class RecruitBoardTagSerializer(serializers.ModelSerializer):
 class CommonBoardTagSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tag
-        fields = ('name','post')
+        fields = ('name','commonpost')
 
 class TagSerializer(serializers.ModelSerializer):
     class Meta:

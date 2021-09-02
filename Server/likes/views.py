@@ -44,8 +44,15 @@ class LikeAPIView(GenericAPIView):
             )
         }
     )
-    def get(self, request, post_id):
-        likes = Like.objects.filter(post_id=post_id)
+    def get(self, request, board_id):
+        """
+            좋아요 (GET)
+
+            ---
+                - user : 글쓴이 번호(user id)
+                - commonpost : 게시글 번호(board id)
+        """
+        likes = Like.objects.filter(post_id=board_id)
         serializer = LikeSerializer(likes, many=True)
         return Response(serializer.data)
 
@@ -58,11 +65,18 @@ class LikeAPIView(GenericAPIView):
             )
         }
     )
-    def post(self, request, post_id):
+    def post(self, request, board_id):
+        """
+            좋아요 (POST)
+
+            ---
+                - user : 글쓴이 번호(user id)
+                - commonpost : 게시글 번호(board id)
+        """
         if self.get_queryset().exists():
             self.get_queryset().delete()
-            likes = Like.objects.filter(post_id=post_id).count()
+            likes = Like.objects.filter(post_id=board_id).count()
             return JsonResponse({'counts': likes})
-        Like.objects.create(post_id=post_id, user=request.user)
-        likes = Like.objects.filter(post_id=post_id).count()
+        Like.objects.create(post_id=board_id, user=request.user)
+        likes = Like.objects.filter(post_id=board_id).count()
         return JsonResponse({'counts': likes})

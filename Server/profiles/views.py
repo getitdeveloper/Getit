@@ -28,18 +28,18 @@ class ProfileDetail(GenericAPIView):
 
     # parser_classes = (MultiPartParser,)
 
-    def get_object(self, user_pk):
-        return get_object_or_404(Profile, user_pk=user_pk)
+    def get_object(self, user_id):
+        return get_object_or_404(Profile, user_pk=user_id)
 
-    def get(self, request, user_pk):
+    def get(self, request, user_id):
         """
-                개인 프로필
+                개인 프로필 detail(GET)
 
                 ---
                 # GET Response 예시
                     {
                         "user": 1,
-                        "user_pk": 1,
+                        "user_id": 1,
                         "nickname": "test",
                         "job": "개발자",
                         "developer_level": "코린이",
@@ -49,19 +49,19 @@ class ProfileDetail(GenericAPIView):
                         "info": "안녕하세요. test입니다.",
                         "git": "https://github.com/test",
                 """
-        profile = self.get_object(user_pk)
+        profile = self.get_object(user_id)
         serializer = ProfileSerializer(profile)
         return Response(serializer.data)
 
-    def post(self, request, user_pk):
+    def post(self, request, user_id):
         """
-        개인 프로필
+        개인 프로필 detail(POST)
 
         ---
-        # POST 예시
+        # POST request 예시
             {
                 "user": 1,
-                "user_pk": 1,
+                "user_id": 1,
                 "nickname": "test",
                 "job": "개발자",
                 "developer_level": "코린이",
@@ -71,7 +71,7 @@ class ProfileDetail(GenericAPIView):
                 "info": "안녕하세요. test입니다.",
                 "git": "https://github.com/test",
         """
-        profile = self.get_object(user_pk)
+        profile = self.get_object(user_id)
         serializer = ProfileSerializer(profile, data=request.data)
         self.check_object_permissions(self.request, profile)
         if serializer.is_valid():
