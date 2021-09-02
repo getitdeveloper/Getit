@@ -1,3 +1,4 @@
+import { IPortfolio, IProfileInfo } from '../types';
 import {
   USER_INFO_REQUEST,
   USER_INFO_SUCCESS,
@@ -8,6 +9,9 @@ import {
   USER_LOGOUT_REQUEST,
   USER_LOGOUT_SUCCESS,
   USER_LOGOUT_FAILURE,
+  USER_PROFILE_FAILURE,
+  USER_PROFILE_REQUEST,
+  USER_PROFILE_SUCCESS,
 } from './actions';
 
 // 초기 상태값 타입
@@ -16,6 +20,8 @@ export interface InitialState {
     message: string | null;
     user_pk: number | null;
   };
+  profileInfo: IProfileInfo | null;
+  portfolio: IPortfolio | null;
   userInfoRequest: boolean;
   userInfoSuccess: boolean;
   userInfoFailure: string | null;
@@ -25,6 +31,9 @@ export interface InitialState {
   userLogOutRequest: boolean;
   userLogOutSuccess: boolean;
   userLogOutFailure: string | null;
+  userProfileRequest: boolean;
+  userProfileSuccess: boolean;
+  userProfileFailure: string | null;
 }
 
 // 사용자 정보 타입
@@ -81,6 +90,23 @@ export interface UserLogOutFailure {
   error: string;
 }
 
+export interface UserProfileRequest {
+  type: typeof USER_PROFILE_REQUEST;
+}
+
+export interface UserProfileSuccess {
+  type: typeof USER_PROFILE_SUCCESS;
+  data: {
+    profile: IProfileInfo;
+    portfolio: IPortfolio[];
+  };
+}
+
+export interface UserProfileFailure {
+  type: typeof USER_PROFILE_FAILURE;
+  error: string;
+}
+
 export type UserActions =
   | UserInfoRequest
   | UserInfoSuccess
@@ -90,4 +116,7 @@ export type UserActions =
   | UserLogInFailure
   | UserLogOutRequest
   | UserLogOutSuccess
-  | UserLogOutFailure;
+  | UserLogOutFailure
+  | UserProfileRequest
+  | UserProfileSuccess
+  | UserProfileFailure;

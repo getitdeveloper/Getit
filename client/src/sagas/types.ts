@@ -1,7 +1,16 @@
+import { IPortfolio, IProfileInfo } from '../types';
+
 export interface ResponseUserInfo {
   data: {
     message: string;
     user_pk: number;
+  };
+}
+
+export interface ResponseUserProfile {
+  data: {
+    profile: IProfileInfo;
+    portfolio: IPortfolio;
   };
 }
 

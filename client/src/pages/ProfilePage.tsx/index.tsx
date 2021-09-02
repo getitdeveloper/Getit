@@ -15,7 +15,7 @@ import {
   ProfileNavItem,
   useStyles,
 } from './styles';
-import { USER_INFO_REQUEST } from '../../reducers/actions';
+import { USER_PROFILE_REQUEST } from '../../reducers/actions';
 import SubHeader from '../../Components/Commons/SubHeader/SubHeader';
 import { PageTitle, PageBackground } from '../../styles/page';
 import Portfoilo from '../../Components/Portfolio';
@@ -57,19 +57,22 @@ const navItem = [
 function ProfilePage(): JSX.Element {
   const dispatch = useDispatch();
   const user = useSelector((state: RootStateOrAny) => state.user);
+  const profileInfo = useSelector(
+    (state: RootStateOrAny) => state.user.profileInfo,
+  );
   const history = useHistory();
   const classes = useStyles();
 
-  console.log(user);
+  console.log(user.id);
 
   React.useEffect(() => {
     dispatch({
-      type: USER_INFO_REQUEST,
+      type: USER_PROFILE_REQUEST,
       data: {
-        user_pk: user.user_pk,
+        user_pk: user.id.user_pk,
       },
     });
-  }, []);
+  }, [profileInfo]);
 
   return (
     <div>
