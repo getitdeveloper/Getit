@@ -9,6 +9,10 @@ import FreeBoardPage from '../pages/FreeBoardPage/index';
 import FreeBoardDetailPage from '../pages/FreeBoardDetailPage';
 import QuestionDetailPage from '../pages/QuestionDetailPage';
 import RegisterPage from '../pages/RegisterPage';
+import QuestionFormPage from '../pages/QuestionFormPage';
+import RecruitBoardPage from '../pages/RecruitBoardPage';
+import FreeBoardFormPage from '../pages/FreeBoardFormPage';
+import RecruitFormPage from '../pages/RecruitFormPage';
 
 function Routes(): JSX.Element {
   return (
@@ -27,6 +31,10 @@ function Routes(): JSX.Element {
           component={QuestionDetailPage}
         />
         <Route exact path='/register' component={RegisterPage} />
+        <Route exact path='/questionBoard/form' component={QuestionFormPage} />
+        <Route exact path='/freeBoard/form' component={FreeBoardFormPage} />
+        <Route exact path='/recruitBoard' component={RecruitBoardPage} />
+        <Route exact path='/recruitBoard/form' component={RecruitFormPage} />
       </Switch>
     </div>
   );

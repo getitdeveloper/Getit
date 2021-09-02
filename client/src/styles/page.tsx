@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 interface Size {
   width?: string;
+  padding?: string;
 }
 
 export const PageBackground = styled.div`
@@ -28,6 +29,6 @@ export const PageContainer = styled.div`
   background-color: #ffffff;
   border-radius: 22px;
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
-  padding: 5%;
+  padding: ${(props: Size) => (props.padding ? props.padding : '5%')};
   margin-bottom: 5%;
 `;

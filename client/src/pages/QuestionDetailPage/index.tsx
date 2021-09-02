@@ -4,6 +4,7 @@ import SubHeader from '../../Components/Commons/SubHeader/SubHeader';
 import { PageBackground, PageContainer, PageTitle } from '../../styles/page';
 import { dummyData } from '../FreeBoardPage/dummyData';
 import PostItem from '../../Components/PostItem';
+import MarkdownRenderer from '../../Components/MarkdownRenderer';
 
 function QuestionDetailPage(props: any) {
   const { history } = props;
@@ -14,10 +15,10 @@ function QuestionDetailPage(props: any) {
         <PageTitle>질문 게시판</PageTitle>
         <PageContainer width='80%'>
           <PostItem content={dummyData[history.location.state]} />
-          <p>
-            adfakjldfkasjdlfjsldfadsfaklsfj;askdf asdlfkasldfkjaslkdfj
-            sldfkalskdfjasldkj
-          </p>
+          <MarkdownRenderer
+            text={dummyData[history.location.state].text}
+            open
+          />
         </PageContainer>
         <div>
           <span>
