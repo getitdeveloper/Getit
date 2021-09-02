@@ -2,8 +2,6 @@ import * as React from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { dark } from 'react-syntax-highlighter/dist/esm/styles/prism';
-import { MarkdownWrapper } from './styles';
 
 function CodeBlock({ inline, className, children }: any) {
   const value = children;
@@ -18,19 +16,17 @@ function CodeBlock({ inline, className, children }: any) {
 }
 
 function MarkdownRenderer(props: any) {
-  const { text, hidden } = props;
-  if (hidden) {
+  const { text, open } = props;
+  if (open) {
     return (
-      <MarkdownWrapper>
-        <ReactMarkdown
-          components={{
-            code: CodeBlock,
-          }}
-          remarkPlugins={[remarkGfm]}
-        >
-          {text}
-        </ReactMarkdown>
-      </MarkdownWrapper>
+      <ReactMarkdown
+        components={{
+          code: CodeBlock,
+        }}
+        remarkPlugins={[remarkGfm]}
+      >
+        {text}
+      </ReactMarkdown>
     );
   }
   return null;

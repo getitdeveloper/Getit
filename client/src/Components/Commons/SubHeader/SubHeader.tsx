@@ -15,13 +15,13 @@ function SubHeader(): JSX.Element {
         GET IT
       </button>
       <div className='navbar-container'>
-        <button type='button' onClick={() => history.push('/studyrecruit')}>
+        <button type='button' onClick={() => history.push('/recruitBoard')}>
           스터디 모집 게시판
         </button>
-        <button type='button' onClick={() => history.push('/question')}>
+        <button type='button' onClick={() => history.push('/questionBoard')}>
           질문 게시판
         </button>
-        <button type='button' onClick={() => history.push('/freetalk')}>
+        <button type='button' onClick={() => history.push('/freeBoard')}>
           자유 게시판
         </button>
       </div>

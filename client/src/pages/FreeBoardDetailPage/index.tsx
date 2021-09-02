@@ -4,20 +4,19 @@ import SubHeader from '../../Components/Commons/SubHeader/SubHeader';
 import { PageBackground, PageContainer, PageTitle } from '../../styles/page';
 import { dummyData } from '../FreeBoardPage/dummyData';
 import PostItem from '../../Components/PostItem';
+import MarkdownRenderer from '../../Components/MarkdownRenderer';
 
 function FreeBoardDetailPage(props: any) {
   const { history } = props;
+  const contentId = history.location.state;
   return (
     <div>
       <SubHeader />
       <PageBackground>
         <PageTitle>자유 게시판</PageTitle>
         <PageContainer width='80%'>
-          <PostItem content={dummyData[history.location.state]} />
-          <p>
-            adfakjldfkasjdlfjsldfadsfaklsfj;askdf asdlfkasldfkjaslkdfj
-            sldfkalskdfjasldkj
-          </p>
+          <PostItem content={dummyData[contentId]} />
+          <MarkdownRenderer text={dummyData[contentId].text} open />
         </PageContainer>
         <div>
           <span>

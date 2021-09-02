@@ -34,10 +34,10 @@ function PostSubHeader(props: BoardType) {
         return history.push('/questionBoard/form');
         break;
       case 'Free':
-        return history.push('/questionBoard/form');
+        return history.push('/freeBoard/form');
         break;
       case 'Recruit':
-        return history.push('/questionBoard/form');
+        return history.push('/recruitBoard/form');
         break;
       default:
         break;

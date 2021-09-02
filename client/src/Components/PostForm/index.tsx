@@ -1,7 +1,13 @@
 import * as React from 'react';
 import { useHistory } from 'react-router-dom';
 import MarkdownRenderer from '../MarkdownRenderer';
-import { TitleForm, TextForm, FormButton, ButtonWrapper } from './styles';
+import {
+  TitleForm,
+  TextForm,
+  FormButton,
+  ButtonWrapper,
+  MarkdownWrapper,
+} from './styles';
 
 function PostForm() {
   const history = useHistory();
@@ -49,7 +55,10 @@ function PostForm() {
         value={text}
         hidden={hidden}
       />
-      <MarkdownRenderer text={text} hidden={hidden} />
+      <MarkdownWrapper open={hidden}>
+        <MarkdownRenderer text={text} open={hidden} />
+      </MarkdownWrapper>
+
       <ButtonWrapper>
         <FormButton type='button' onClick={() => history.push('/')}>
           {' '}
