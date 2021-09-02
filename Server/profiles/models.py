@@ -3,8 +3,6 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 from accounts.models import User
-from portfolios.models import Portfolio
-from tags.models import Tag
 
 
 class Profile(models.Model):
@@ -25,7 +23,7 @@ class Profile(models.Model):
         ('중수', '중수'),
         ('고수', '고수'),
     )
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
+    user = models.OneToOneField('accounts.User', on_delete=models.CASCADE, related_name='profile')
     user_pk = models.IntegerField(unique=True)
     nickname = models.CharField(max_length=50, unique=True, null=True)
     job = models.CharField(choices=CHOICES_JOB, max_length=10, default='개발자')
@@ -35,7 +33,6 @@ class Profile(models.Model):
     email = models.EmailField(max_length=50, null=True)
     info = models.TextField(null=True)
     git = models.CharField(max_length=100, blank=True, null=True)
-    stacks = models.ManyToManyField(Tag, blank=True, related_name='stacks')
 
     # def __str__(self):
     #     return self.user_pk
@@ -54,11 +51,10 @@ class TeamProfile(models.Model):
         ("진행중", "진행중"),
         ("완료", "완료")
     )
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='author', null=True)
+    user = models.ForeignKey('accounts.User', on_delete=models.CASCADE, related_name='author', null=True)
     title = models.CharField(max_length=20, null=False)
     status = models.CharField(max_length=10, choices=STATUS_CHOICE, null=False, default=1)
     member = models.ManyToManyField(User, blank=True, related_name='member')
     content = models.TextField(null=False)
     image = models.ImageField(upload_to='group', null=True, blank=True)
-    stack = models.ManyToManyField(Tag, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)

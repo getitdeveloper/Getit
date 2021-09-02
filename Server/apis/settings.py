@@ -49,12 +49,13 @@ PROJECT_APPS = [
     'boards',
     'comments',
     'portfolios',
+    'likes',
 ]
 
 THIRD_PARTY_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
-
+    'rest_framework_simplejwt.token_blacklist',
     'corsheaders',
 
     'allauth',
@@ -89,7 +90,8 @@ REST_FRAMEWORK = {
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(days=3),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=14),
-    'BLACKLIST_AFTER_ROTATION': False,
+    'ROTATE_REFRESH_TOKENS': False,
+    'BLACKLIST_AFTER_ROTATION': True,
     'ALGORITHM': 'HS256',
     'SIGNING_KEY': SECRET_KEY,
     'VERIFYING_KEY': None,
@@ -232,4 +234,4 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 REST_USE_JWT = True
 JWT_AUTH_COOKIE = 'jwt-auth'
-APPEND_SLASH = False
+APPEND_SLASH = True

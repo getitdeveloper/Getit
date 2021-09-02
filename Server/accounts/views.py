@@ -22,6 +22,8 @@ from dj_rest_auth.registration.views import SocialLoginView
 from accounts.models import User
 from accounts.serializers import GoogleCallbackSerializer, RegisterSerializer, GithubCallbackSerializer, \
     KakaoCallbackSerializer
+from profiles.models import Profile
+
 
 @method_decorator(csrf_exempt, name='dispatch')
 class google_callback(APIView):
@@ -52,6 +54,8 @@ class google_callback(APIView):
         """
         try:
             user = User.objects.get(email=email)
+            if user is None:
+                raise Exception
             # 기존에 Google로 가입된 유저
             data = {'access_token': access_token}
             accept = requests.post(
@@ -62,6 +66,10 @@ class google_callback(APIView):
             accept_json = accept.json()
             upk = accept_json.get('user')
             upk = upk['pk']
+            profile = Profile.objects.get(user=upk)
+            nickname = profile.nickname
+            if nickname is None:
+                raise Exception
             access_token = accept_json['access_token']
             accept_json.pop('user', None)
             res = JsonResponse({
@@ -70,7 +78,7 @@ class google_callback(APIView):
                 'accept_json': accept_json})
             res.set_cookie(key='access_token', value=access_token)
             return res
-        except User.DoesNotExist:
+        except:
             data = {'access_token': access_token}
             accept = requests.post(
                 f"http://127.0.0.1:8000/api/token_accept/google/", data=data)
@@ -138,6 +146,8 @@ class github_callback(APIView):
         """
         try:
             user = SocialAccount.objects.get(uid=user_id)
+            if user is None:
+                raise Exception
             # 기존에 github로 가입된 유저
             data = {'access_token': access_token, 'code': code}
             accept = requests.post(
@@ -149,6 +159,10 @@ class github_callback(APIView):
             accept_json = accept.json()
             upk = accept_json.get('user')
             upk = upk['pk']
+            profile = Profile.objects.get(user=upk)
+            nickname = profile.nickname
+            if nickname is None:
+                raise Exception
             access_token = accept_json['access_token']
             accept_json.pop('user', None)
             res = JsonResponse({
@@ -224,6 +238,8 @@ class kakao_callback(APIView):
         """
         try:
             user = SocialAccount.objects.get(uid=user_id)
+            if user is None:
+                raise Exception
             data = {'access_token': access_token, 'code': code}
             accept = requests.post(
                 f"http://127.0.0.1:8000/api/token_accept/kakao/", data=data)
@@ -233,6 +249,10 @@ class kakao_callback(APIView):
             accept_json = accept.json()
             upk = accept_json.get('user')
             upk = upk['pk']
+            profile = Profile.objects.get(user=upk)
+            nickname = profile.nickname
+            if nickname is None:
+                raise Exception
             access_token = accept_json['access_token']
             accept_json.pop('user', None)
             res = JsonResponse({

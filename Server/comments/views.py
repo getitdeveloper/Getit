@@ -1,4 +1,7 @@
-from rest_framework.generics import get_object_or_404
+from drf_yasg import openapi
+from drf_yasg.utils import swagger_auto_schema
+from rest_framework.generics import get_object_or_404, GenericAPIView
+from rest_framework.parsers import MultiPartParser
 from .models import Comment
 from .serializers import CommentSerializer
 from django.shortcuts import render
@@ -7,13 +10,19 @@ from rest_framework.response import Response
 from rest_framework import status
 from .permissions import IsOwnerOrReadOnly
 
-
 # Create your views here.
-class CommentListAPIView(APIView):
+class CommentListAPIView(GenericAPIView):
     serializer_class = CommentSerializer
-
-    # parser_classes = (MultiPartParser,)
-
+    """
+        게시글의 댓글 리스트를 가져오는 API
+        
+        ---
+        # 내용
+            - user : 글쓴이 번호(user id)
+            - question : 게시글 번호(board id)
+            - content : 댓글 내용
+            - create_at : 생성 시간
+    """
     def get(self, request, question_id):
         posts = Comment.objects.filter(question_id=question_id)
         serializer = CommentSerializer(posts, many=True)
@@ -26,12 +35,10 @@ class CommentListAPIView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
-class CommentDetailAPIView(APIView):
+class CommentDetailAPIView(GenericAPIView):
     serializer_class = CommentSerializer
     permission_classes = [IsOwnerOrReadOnly]
-
-    # parser_classes = (MultiPartParser,)
+    queryset = Comment
 
     def get_object(self, pk, question_id):
         return get_object_or_404(Comment, pk=pk, question_id=question_id)

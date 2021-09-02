@@ -1,11 +1,10 @@
-from boards.models import CommonBoard
-from accounts.models import User
+
 from django.db import models
 
 # Create your models here.
 class Comment(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    question = models.ForeignKey(CommonBoard, on_delete=models.CASCADE)
+    user = models.ForeignKey('accounts.User', on_delete=models.CASCADE)
+    commonpost = models.ForeignKey('boards.CommonBoard', on_delete=models.CASCADE, blank=True, null=True)
+    recruitmentpost = models.ForeignKey('boards.RecruitmentBoard', on_delete=models.CASCADE, blank=True, null=True)
     content = models.TextField()
-    likes = models.PositiveIntegerField(default=0)
     create_at = models.DateTimeField(auto_now_add=True)

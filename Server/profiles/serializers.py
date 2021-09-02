@@ -5,7 +5,7 @@ from portfolios.models import Portfolio
 from .models import Profile, TeamProfile
 
 class ProfileSerializer(serializers.ModelSerializer):
-    stacks = serializers.CharField(max_length=500, required=False)
+
     class Meta:
         model = Profile
         fields = (
@@ -18,7 +18,6 @@ class ProfileSerializer(serializers.ModelSerializer):
             'image',
             'email',
             'info',
-            'stacks',
             'git',
         )
 
