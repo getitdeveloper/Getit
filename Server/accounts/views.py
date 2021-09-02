@@ -11,6 +11,7 @@ from django.views.decorators.csrf import csrf_exempt
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework import status, permissions
+from rest_framework.generics import GenericAPIView
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -38,6 +39,12 @@ class google_callback(APIView):
         }
     )
     def post(self, request):
+        """
+            카카오 로그인(POST)
+
+            ---
+            "accsess_token" : "asdasdasdasdasd"
+        """
         accessToken = json.loads(request.body)
         access_token = accessToken['access_token']
         """
@@ -114,6 +121,16 @@ class github_callback(APIView):
         }
     )
     def post(self, request):
+        """
+            깃허브 로그인(POST)
+
+            ---
+            requestData{
+                "client_id" : "123213123123",
+                "client_secret": "123123123",
+                "code": "123123123"
+            }
+        """
         requestData = json.loads(request.body)
         client_id = requestData['client_id']
         client_secret = requestData['client_secret']
@@ -209,6 +226,16 @@ class kakao_callback(APIView):
         }
     )
     def post(self, request):
+        """
+            카카오 로그인(POST)
+
+            ---
+            requestData{
+                "code" : "123213123123",
+                "API_KEY": "123123123",
+                "REDIRECT_URI": "test.com"
+            }
+        """
         requestData = json.loads(request.body)
         code = requestData['code']
         API_KEY = requestData['API_KEY']
@@ -284,3 +311,18 @@ class kakao_callback(APIView):
 class KakaoLogin(SocialLoginView):
     adapter_class = KakaoOAuth2Adapter
     client_class = OAuth2Client
+
+
+def duplicate_check(request):
+    request = json.loads(request.body)
+    nickname = request["nickname"]
+    try:
+        _nickname = Profile.objects.get(nickname=nickname)
+    except:
+        _nickname = None
+    if _nickname is None:
+        duplicate = "pass"
+    else:
+        duplicate = "fail"
+    context = {'duplicate': duplicate}
+    return JsonResponse(context)

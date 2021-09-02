@@ -2,7 +2,7 @@ from django.db import models
 
 
 class Tag(models.Model):
-    post = models.ForeignKey('boards.CommonBoard', on_delete=models.CASCADE, blank=True, null=True)
+    commonpost = models.ForeignKey('boards.CommonBoard', on_delete=models.CASCADE, blank=True, null=True)
     recruitpost = models.ForeignKey('boards.RecruitmentBoard', on_delete=models.CASCADE, blank=True, null=True)
     profile = models.ForeignKey('profiles.Profile', on_delete=models.CASCADE, blank=True, null=True)
     teamprofile = models.ForeignKey('profiles.TeamProfile', on_delete=models.CASCADE, blank=True, null=True)

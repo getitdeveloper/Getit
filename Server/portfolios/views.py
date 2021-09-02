@@ -15,11 +15,46 @@ class PortfolioListAPIView(GenericAPIView):
     parser_classes = (FormParser, MultiPartParser)
 
     def get(self, request, user_id):
+        """
+                            포트폴리오 list
+
+                            ---
+                            # GET Response 예시
+                            {
+                                'id':1, --> 포트폴리오 id
+                                'user':1,
+                                'title':'getit',
+                                'contents':'스터집모집플랫폼'
+                                'images':'test.com'
+                            }
+
+                            """
+
+        """
+            포트폴리오 list (GET)
+
+            ---
+                - id : 포트폴리오 번호(potfolio id)
+                - user : 사용자 번호(user id)
+                - title : 제목
+                - contents : 내용
+                - images : 이미지
+        """
         posts = Portfolio.objects.filter(user=user_id)
         serializer = PortfolioSerializer(posts, many=True)
         return Response(serializer.data)
 
     def post(self, request, user_id):
+        """
+            포트폴리오 list (POST)
+
+            ---
+                - id : 포트폴리오 번호(potfolio id)
+                - user : 사용자 번호(user id)
+                - title : 제목
+                - contents : 내용
+                - images : 이미지
+        """
         serializer = PortfolioSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -36,11 +71,31 @@ class PortfolioDetailAPIView(GenericAPIView):
         return get_object_or_404(Portfolio, pk=pk, user_id=user_id)
 
     def get(self, request, pk, user_id):
+        """
+            포트폴리오 detail (GET)
+
+            ---
+                - id : 포트폴리오 번호(potfolio id)
+                - user : 사용자 번호(user id)
+                - title : 제목
+                - contents : 내용
+                - images : 이미지
+        """
         portfolio = self.get_object(pk, user_id)
         serializer = PortfolioSerializer(portfolio)
         return Response(serializer.data)
 
     def put(self, request, pk, user_id):
+        """
+            포트폴리오 detail (PUT:수정)
+
+            ---
+                - id : 포트폴리오 번호(potfolio id)
+                - user : 사용자 번호(user id)
+                - title : 제목
+                - contents : 내용
+                - images : 이미지
+        """
         portfolio = self.get_object(pk, user_id)
         serializer = PortfolioSerializer(portfolio, data=request.data)
         self.check_object_permissions(self.request, portfolio)
@@ -50,6 +105,11 @@ class PortfolioDetailAPIView(GenericAPIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, pk, user_id):
+        """
+            포트폴리오 detail (DELETE)
+
+            ---
+        """
         portfolio = self.get_object(pk, user_id)
         self.check_object_permissions(self.request, portfolio)
         portfolio.delete()
