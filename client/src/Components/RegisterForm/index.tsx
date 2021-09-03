@@ -2,115 +2,147 @@ import * as React from 'react';
 import { useState, useCallback } from 'react';
 import { useSelector, RootStateOrAny } from 'react-redux';
 import { useHistory, Link } from 'react-router-dom';
+
 import {
   RegisterWrapper,
-  Title,
-  FormWrapper,
-  StyledLabel,
   Logo,
+  Title,
+  Form,
+  DivideSection,
+  NicknameWrapper,
+  StyledLabel,
+  NicknameInput,
   EmailInput,
-  StyldInput,
   DoubleCheckBtn,
   FieldSelect,
   StyldTextarea,
   SubmitBtn,
+  ErrorMessage,
+  SelectArrowBtn,
 } from './styles';
+import LogoSvg from './Logo.svg';
+import SelectSvg from './Select.svg';
 
 function RegisterForm(): JSX.Element {
   const history = useHistory();
   const message = useSelector((state: RootStateOrAny) => state.user.id.message);
 
   const [nickname, setNickname] = useState('');
+  const [nicknameError, setNicknameError] = useState(false);
+  // TODO 백엔드 연결하고 setDuplicateCheck 설정하기
+  const [duplicateCheck, setDuplicateCheck] = useState(false);
+  const [duplicateCheckError, setDuplicateCheckError] = useState(false);
   const [field, setField] = useState('');
+  const [fieldError, setFieldError] = useState(false);
   const [level, setLevel] = useState('');
+  const [levelError, setLevelError] = useState(false);
   const [email, setEmail] = useState('');
+  const [emailError, setEmailError] = useState(false);
   const [introduce, setIntroduce] = useState('');
+  const [introduceError, setIntroduceError] = useState(false);
   const [stacks, setStacks] = useState([]);
+  const [stacksError, setStacksError] = useState(false);
 
-  // TODO 주석 복원하기!!
   // 기존 회원 또는 비회원 접근 방지 라우팅
-  // React.useEffect(() => {
-  //   if (message !== 'register') {
-  //     return history.push('/');
-  //   }
-  // }, []);
-
-  const handleSubmit = useCallback(() => {
-    // 닉네임
-    if (nickname.length < 6 || nickname.length >= 10) {
-      return alert('닉네임은 6자 ~ 10자로 입력해야 합니다.');
+  React.useEffect(() => {
+    if (message !== 'register') {
+      return history.push('/');
     }
-    // 분야
-    if (field === '') {
-      return alert('분야를 선택해주세요');
-    }
+  }, []);
 
-    // 레벨
-    if (level === '') {
-      return alert('레벨을 선택해주세요');
-    }
+  // 회원가입시 입력값 체크
+  const handleSubmit = useCallback(
+    (event) => {
+      event.preventDefault();
+      // 닉네임 길이 체크
+      if (nickname.length < 6 || nickname.length > 10) {
+        setNicknameError(true);
+      }
+      // 닉네임 중복 확인 (nickname 입력 에러가 없는 경우 체크)
+      if (
+        !(nickname.length < 6 || nickname.length > 10) &&
+        duplicateCheck === false
+      ) {
+        setDuplicateCheckError(true);
+        return alert('닉네임 중복확인을 해주세요.');
+      }
+      // 분야 선택 유무 체크
+      if (field === '') {
+        setFieldError(true);
+      }
+      // 레벨 (분야 선택한 경우 에러 체크)
+      if (!(field === '') && level === '') {
+        setLevelError(true);
+      }
+      // 이메일 입력 우뮤 체크
+      if (email === '') {
+        setEmailError(true);
+      }
+      // 자기소개 입력 유무 체크
+      if (introduce === '') {
+        setIntroduceError(true);
+      }
+      // 사용 가능한 기술 스택 입력 유무 체크
+      if (stacks.length < 1) {
+        setStacksError(true);
+      }
+      // 마지막으로 모든 에러가 없는지 체크
+      if (
+        nicknameError ||
+        fieldError ||
+        levelError ||
+        emailError ||
+        introduceError ||
+        stacksError
+      ) {
+        return alert('모든 항목을 입력해야 합니다.');
+      }
 
-    // 이메일
-    if (email === '') {
-      return alert('이메일을 입력해주세요');
-    }
+      const data = { nickname, field, level, email, introduce, stacks };
 
-    // 자기소개
-    if (introduce === '') {
-      return alert('자기소개를 입력해주세요');
-    }
-    // 사용 가능한 기술 스택
-    if (stacks.length < 1) {
-      return alert('사용 가능한 기술 스택을 입력해주세요');
-    }
+      console.log(data);
 
-    const data = { nickname, field, level, email, introduce, stacks };
-
-    console.log(data);
-
-    // dispatch({
-    //   type: SIGN_UP_REQUEST,
-    //   data: { email, password, nickname },
-    // });
-  }, [nickname, field, level, email, introduce, stacks]);
+      // dispatch({
+      //   type: SIGN_UP_REQUEST,
+      //   data: { email, password, nickname },
+      // });
+    },
+    [nickname, field, level, email, introduce, stacks],
+  );
 
   const handleChange = useCallback(
     (event) => {
-      // console.log(event.target.name);
-      console.log(event.target.value);
-      const stacksArray = [...stacks];
-
       const selectInput = event.target.name;
       switch (selectInput) {
         case 'user-nickname':
           setNickname(event.target.value);
-          console.log('닉네임을 입력했다');
+          // 닉네임 길이제한
+          if (event.target.value.length < 6 || event.target.value.length > 10) {
+            return setNicknameError(true);
+          }
+          setNicknameError(false);
           break;
         case 'user-field':
           setField(event.target.value);
-          console.log('분야를 선택했다');
+          setFieldError(false);
           break;
         case 'user-level':
           setLevel(event.target.value);
-          console.log(event.target.value);
-          console.log('레벨을 선택했다');
+          setLevelError(false);
           break;
         case 'user-email':
           setEmail(event.target.value);
-          console.log('이메일을 입력했다');
+          setEmailError(false);
           break;
-
         case 'user-introduce':
           setIntroduce(event.target.value);
-          console.log('자기소개를 입력했다');
+          setIntroduceError(false);
           break;
-
         case 'user-stacks':
-          // TODO 기술스텍 검색 라이브러리 찾아보기
+          // TODO 기술스텍 검색 라이브러리 찾아보기(개발자, 디자이너, 기획자)
           setStacks(event.target.value);
-          console.log('사용 가능한 기술을 입력했다');
+          setStacksError(false);
           break;
-
         default:
           return null;
       }
@@ -118,125 +150,203 @@ function RegisterForm(): JSX.Element {
     [nickname, field, level, email, introduce, stacks],
   );
 
+  const handleSpacebar = useCallback((event) => {
+    if (event.key === ' ') {
+      event.preventDefault();
+      alert('공백은 사용할 수 없습니다.');
+    }
+  }, []);
+
+  const handleDoubleCheck = useCallback(() => {
+    setDuplicateCheckError(false);
+  }, []);
+
   return (
     <RegisterWrapper>
-      {/* <div style={{ width: '45.7rem' }}> */}
       <Logo>
-        <Link to='/'>GetIt</Link>
+        <Link to='/'>
+          <img src={LogoSvg} alt='logo' />
+        </Link>
       </Logo>
 
       <Title>회원가입</Title>
 
-      <FormWrapper>
+      <Form>
         {/* 닉네임(필수) */}
-        <label htmlFor='user-nickname'>
-          <StyledLabel>닉네임(필수)</StyledLabel>
-          <div>
-            <EmailInput
-              type='text'
-              name='user-nickname'
-              placeholder='닉네임을 입력해주세요.'
-              required
-              onChange={handleChange}
-              value={nickname}
-            />
-            <DoubleCheckBtn type='button' value='중복확인' />
-          </div>
-        </label>
+        <DivideSection>
+          <label htmlFor='user-nickname'>
+            <StyledLabel>닉네임(필수)</StyledLabel>
+            <NicknameWrapper>
+              <NicknameInput
+                type='text'
+                name='user-nickname'
+                placeholder='닉네임을 입력해주세요.'
+                required
+                onChange={handleChange}
+                onKeyDown={handleSpacebar}
+                value={nickname}
+              />
+              {/* 중복 확인 버튼 */}
+              <DoubleCheckBtn
+                type='button'
+                value='중복확인'
+                onClick={handleDoubleCheck}
+              />
+            </NicknameWrapper>
+          </label>
+          {nicknameError && (
+            <ErrorMessage>닉네임은 6자 ~ 10자로 입력해야 합니다.</ErrorMessage>
+          )}
+          {duplicateCheckError && (
+            <ErrorMessage>닉네임 중복확인을 해주세요!</ErrorMessage>
+          )}
+        </DivideSection>
 
         {/* 분야(필수) */}
-        <label htmlFor='user-field'>
-          <StyledLabel>분야(필수)</StyledLabel>
-          <div>
-            <FieldSelect
-              name='user-field'
-              form='myForm'
-              required
-              onChange={handleChange}
-            >
-              <option value='description' disabled selected>
-                분야를 선택하세요.
-              </option>
-              <option value='developer'>개발자</option>
-              <option value='designer'>디자이너</option>
-              <option value='planner'>기획자</option>
-            </FieldSelect>
-          </div>
-        </label>
+        <DivideSection>
+          <label htmlFor='user-field'>
+            <StyledLabel>분야(필수)</StyledLabel>
+            {/* <ArrowImg> */}
+            <SelectArrowBtn>
+              <img src={SelectSvg} alt='select arrow button' />
+              <FieldSelect
+                name='user-field'
+                form='myForm'
+                required
+                onChange={handleChange}
+              >
+                <option value='description' disabled selected>
+                  분야를 선택하세요.
+                </option>
+                <option value='developer'>개발자</option>
+                <option value='designer'>디자이너</option>
+                <option value='planner'>기획자</option>
+              </FieldSelect>
+            </SelectArrowBtn>
+            {/* </ArrowImg> */}
+          </label>
+          {fieldError && <ErrorMessage>분야를 선택해주세요!</ErrorMessage>}
+        </DivideSection>
 
-        {/* 레벨(필수) */}
-        <label htmlFor='user-level'>
-          <StyledLabel>레벨(필수)</StyledLabel>
-          <div>
-            <FieldSelect
-              name='user-level'
-              form='myForm'
-              required
-              onChange={handleChange}
-            >
-              <option value='description' disabled selected>
-                레벨을 선택해주세요.
-              </option>
-              <option value='코린이'>
-                코린이: 협업 경험은 없고 개인 프로젝트만 진행해보았습니다.
-              </option>
-              <option value='코등학생'>
-                코등학생: 협업 경험이 없지만 API를 사용해 협업을 진행할수
-                있습니다.
-              </option>
-              <option value='코대생'>
-                코대생: 협업 경험이 있고 API를 자유자재로 다룰수 있습니다.
-              </option>
-              <option value='코드닌자'>
-                코드닌자: 현재 실무에서 종사하고 있는 개발자입니다.
-              </option>
-            </FieldSelect>
-          </div>
-        </label>
+        {/* 레벨(필수) 분야 선택시 알맞은 선택 폼이 출력 */}
+        <DivideSection>
+          {field && (
+            <label htmlFor='user-level'>
+              <StyledLabel>레벨(필수)</StyledLabel>
+              <SelectArrowBtn>
+                <img src={SelectSvg} alt='select arrow button' />
+                <FieldSelect
+                  name='user-level'
+                  form='myForm'
+                  required
+                  onChange={handleChange}
+                >
+                  {field !== 'developer' ? (
+                    <>
+                      <option value='description' disabled selected>
+                        레벨을 선택해주세요.
+                      </option>
+                      <option value='하수'>
+                        하수: 협업 경험은 없고 개인 프로젝트만 진행해보았습니다.
+                      </option>
+                      <option value='중수'>
+                        중수: 협업 경험이 있으며 다른 사용자들과 협업을 진행할
+                        수 있습니다.
+                      </option>
+                      <option value='고수'>
+                        고수: 현재 실무에서 종사하고 있습니다.
+                      </option>
+                    </>
+                  ) : (
+                    <>
+                      <option value='description' disabled selected>
+                        레벨을 선택해주세요.
+                      </option>
+                      <option value='코린이'>
+                        코린이: 협업 경험은 없고 개인 프로젝트만
+                        진행해보았습니다.
+                      </option>
+                      <option value='코등학생'>
+                        코등학생: 협업 경험이 없지만 API를 사용해 협업을 진행할
+                        수 있습니다.
+                      </option>
+                      <option value='코대생'>
+                        코대생: 협업 경험이 있고 API를 자유자재로 다룰수
+                        있습니다.
+                      </option>
+                      <option value='코드닌자'>
+                        코드닌자: 현재 실무에서 종사하고 있는 개발자입니다.
+                      </option>
+                    </>
+                  )}
+                </FieldSelect>
+              </SelectArrowBtn>
+            </label>
+          )}
+          {levelError && <ErrorMessage>레벨을 선택해주세요!</ErrorMessage>}
+        </DivideSection>
 
         {/* 이메일(필수) */}
-        <label htmlFor='user-email'>
-          <StyledLabel>이메일(필수)</StyledLabel>
-          <div>
-            <StyldInput
-              type='email'
-              name='user-email'
-              placeholder='이메일을 입력해주세요.'
-              required
-              onChange={handleChange}
-            />
-          </div>
-        </label>
+        <DivideSection>
+          <label htmlFor='user-email'>
+            <StyledLabel>이메일(필수)</StyledLabel>
+            <div>
+              <EmailInput
+                type='email'
+                name='user-email'
+                placeholder='이메일을 입력해주세요.'
+                required
+                onChange={handleChange}
+                onKeyDown={handleSpacebar}
+              />
+            </div>
+          </label>
+          {emailError && <ErrorMessage>이메일을 입력해주세요!</ErrorMessage>}
+        </DivideSection>
 
         {/* 자기소개(필수) */}
-        <label htmlFor='user-introduce'>
-          <StyledLabel>자기소개(필수)</StyledLabel>
-          <div>
-            <StyldTextarea
-              name='user-introduce'
-              placeholder='자기소개를 작성해주세요.'
-              required
-              onChange={handleChange}
-            />
-          </div>
-        </label>
+        <DivideSection>
+          <label htmlFor='user-introduce'>
+            <StyledLabel>자기소개(필수)</StyledLabel>
+            <div>
+              <StyldTextarea
+                name='user-introduce'
+                placeholder='자기소개를 작성해주세요.'
+                required
+                onChange={handleChange}
+              />
+            </div>
+          </label>
+          {introduceError && (
+            <ErrorMessage style={{ padding: '0 0.5rem' }}>
+              자기소개를 작성해주세요!
+            </ErrorMessage>
+          )}
+        </DivideSection>
 
         {/* 사용 가능한 기술스택(필수) */}
-        <label htmlFor='user-stacks'>
-          <StyledLabel>사용 가능한 기술 스택(필수)</StyledLabel>
-          <div>
-            <StyldTextarea
-              name='user-stacks'
-              placeholder='기술 스택을 작성해주세요.'
-              required
-              onChange={handleChange}
-            />
-          </div>
-        </label>
+        <DivideSection>
+          <label htmlFor='user-stacks'>
+            <StyledLabel>사용 가능한 기술 스택(필수)</StyledLabel>
+            <div>
+              <StyldTextarea
+                name='user-stacks'
+                placeholder='기술 스택을 작성해주세요.'
+                required
+                onChange={handleChange}
+              />
+            </div>
+          </label>
+          {stacksError && (
+            <ErrorMessage style={{ padding: '0 0.5rem' }}>
+              사용 가능한 기술 스택 작성해주세요!
+            </ErrorMessage>
+          )}
+        </DivideSection>
 
+        {/* 시작하기 (회원가입 완료)버튼 */}
         <SubmitBtn type='button' value='시작하기' onClick={handleSubmit} />
-      </FormWrapper>
-      {/* </div> */}
+      </Form>
     </RegisterWrapper>
   );
 }

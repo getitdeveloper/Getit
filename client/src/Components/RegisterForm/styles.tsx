@@ -1,9 +1,14 @@
 import styled, { css } from 'styled-components';
 
+// 공통 css
 const Input = css`
   width: 100%;
   height: 4.4rem;
-  margin-bottom: 2.1rem;
+  padding-left: 0.5rem;
+`;
+
+const Pointer = css`
+  cursor: pointer;
 `;
 
 export const RegisterWrapper = styled.div`
@@ -18,23 +23,62 @@ export const RegisterWrapper = styled.div`
 
 export const Logo = styled.div`
   text-align: center;
+  margin: 3.1rem;
   a {
     font-size: 4rem;
     text-decoration: none;
     color: ${(props) => props.theme.colors.main};
-    margin-bottom: 2.1rem;
+  }
+
+  img {
+    height: 8rem;
   }
 `;
 
 export const Title = styled.h1`
   font-size: 2.5rem;
   text-align: center;
+  margin-bottom: 5.9rem;
 `;
 
-export const FormWrapper = styled.div`
+export const Form = styled.form`
+  width: 100vw;
+  max-width: 45.7rem;
+  padding: 0 1rem;
+`;
+
+export const DivideSection = styled.div`
+  margin-bottom: 2.1rem;
+`;
+
+export const NicknameWrapper = styled.div`
   display: flex;
-  flex-direction: column;
-  /* width: 100%; */
+  justify-content: space-between;
+`;
+
+export const NicknameInput = styled.input`
+  ${Input}
+  border-radius: 10px;
+  border: 1px solid #bcbcbc;
+  font-size: 1.6rem;
+  width: 73%;
+`;
+
+export const DoubleCheckBtn = styled.input`
+  ${Input}
+  ${Pointer}
+  border: 1px solid ${(props) => props.theme.colors.main};
+  border-radius: 21px;
+  background-color: #ffffff;
+  color: ${(props) => props.theme.colors.main};
+  font-size: 1.6rem;
+  width: 25%;
+`;
+
+export const StyledLabel = styled.label`
+  margin: 5.9rem 8.7rem 1.1rem 0.8rem;
+  font-size: 1.6rem;
+  font-weight: 500;
 `;
 
 export const EmailInput = styled.input`
@@ -42,55 +86,54 @@ export const EmailInput = styled.input`
   border-radius: 10px;
   border: 1px solid #bcbcbc;
   font-size: 1.6rem;
-  /* margin-right: 1rem; */
-  width: 75%;
 `;
 
-export const DoubleCheckBtn = styled.input`
-  border: 1px solid ${(props) => props.theme.colors.main};
-  border-radius: 21px;
-  background-color: #ffffff;
-  color: ${(props) => props.theme.colors.main};
-  ${Input}
-  font-size: 1.6rem;
-  width: 25%;
-`;
+// export const ArrowImg = styled.div`
+//   position: relative;
+//   &::after {
+//     content: '▼';
+//     font-size: 1.4rem;
+//     color: #000000;
+//     position: absolute;
+//     right: 2.1rem;
+//     bottom: 1.2rem;
+//     ${Pointer}
+//   }
+// `;
 
-export const StyledLabel = styled.label`
-  width: 8.6rem;
-  height: 2.4rem;
-  margin: 59px 87px 11px 8px;
-  font-size: 1.6rem;
-  font-weight: 500;
-`;
-
-export const StyldInput = styled.input`
-  border-radius: 10px;
-  border: 1px solid #bcbcbc;
-  font-size: 1.6rem;
-  ${Input}
+export const SelectArrowBtn = styled.div`
+  position: relative;
+  img {
+    position: absolute;
+    right: 2.1rem;
+    bottom: 2rem;
+  }
 `;
 
 export const FieldSelect = styled.select`
+  ${Input}
+  ${Pointer}
   border-radius: 10px;
   border: 1px solid #bcbcbc;
   font-size: 1.6rem;
-  ${Input}
+  appearance: none;
 `;
 
 export const StyldTextarea = styled.textarea`
+  ${Input}
   border-radius: 10px;
   border: 1px solid #bcbcbc;
   font-size: 1.6rem;
-  ${Input}
   resize: none;
-  height: 10rem;
+  height: 11rem;
+  padding-top: 0.5rem;
 `;
 
 export const SubmitBtn = styled.input`
+  ${Pointer}
   height: 5.7rem;
-  margin: 7.5rem 0 0;
-  /* padding: 1.2rem 19.38rem 1.6rem 19.12rem; */
+  width: 100%;
+  margin: 7.5rem 0 7.5rem;
   border-radius: 25px;
   border: none;
   background: ${(props) => props.theme.colors.main};
@@ -99,4 +142,11 @@ export const SubmitBtn = styled.input`
   font-weight: 500;
   line-height: 0.55;
   letter-spacing: -0.5px;
+`;
+
+export const ErrorMessage = styled.div`
+  color: #ff0000;
+  /* color: ${(props) => props.theme.colors.main}; */
+  font-size: 1.6rem;
+  padding: 0.5rem;
 `;
