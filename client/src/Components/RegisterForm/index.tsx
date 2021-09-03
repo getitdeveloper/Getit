@@ -18,7 +18,9 @@ import {
   StyldTextarea,
   SubmitBtn,
   ErrorMessage,
+  ErrorMessageTextarea,
   SelectArrowBtn,
+  TextCount,
 } from './styles';
 import LogoSvg from './Logo.svg';
 import SelectSvg from './Select.svg';
@@ -40,7 +42,7 @@ function RegisterForm(): JSX.Element {
   const [emailError, setEmailError] = useState(false);
   const [introduce, setIntroduce] = useState('');
   const [introduceError, setIntroduceError] = useState(false);
-  const [stacks, setStacks] = useState([]);
+  const [stacks, setStacks] = useState('');
   const [stacksError, setStacksError] = useState(false);
 
   // 기존 회원 또는 비회원 접근 방지 라우팅
@@ -63,8 +65,7 @@ function RegisterForm(): JSX.Element {
         !(nickname.length < 6 || nickname.length > 10) &&
         duplicateCheck === false
       ) {
-        setDuplicateCheckError(true);
-        return alert('닉네임 중복확인을 해주세요.');
+        return setDuplicateCheckError(true);
       }
       // 분야 선택 유무 체크
       if (field === '') {
@@ -83,22 +84,47 @@ function RegisterForm(): JSX.Element {
         setIntroduceError(true);
       }
       // 사용 가능한 기술 스택 입력 유무 체크
-      if (stacks.length < 1) {
-        setStacksError(true);
-      }
-      // 마지막으로 모든 에러가 없는지 체크
-      if (
-        nicknameError ||
-        fieldError ||
-        levelError ||
-        emailError ||
-        introduceError ||
-        stacksError
-      ) {
-        return alert('모든 항목을 입력해야 합니다.');
+      if (stacks === '') {
+        return setStacksError(true);
       }
 
-      const data = { nickname, field, level, email, introduce, stacks };
+      // 마지막으로 모든 에러가 없는지 체크
+      if (
+        nickname === '' ||
+        field === '' ||
+        email === '' ||
+        introduce === '' ||
+        stacks === '' ||
+        nicknameError === true ||
+        duplicateCheckError === true ||
+        fieldError === true ||
+        levelError === true ||
+        emailError === true ||
+        introduceError === true ||
+        stacksError === true
+      ) {
+        return null;
+      }
+
+      // 쉼표로 기술 구분
+      const stacksSplitList = stacks.split(',');
+      // 문자열 앞 뒤 white space(공백) 제거
+      const removeWhiteSpaceList = stacksSplitList.map((stack) =>
+        stack.replaceAll(/^\s+|\s+$/gm, ''),
+      );
+      // 쉼표만 나열한 경우 stack 목록에 미포함하도록 제거
+      const resultStackList = removeWhiteSpaceList.filter(
+        (stack) => stack.length >= 1,
+      );
+
+      const data = {
+        nickname,
+        field,
+        level,
+        email,
+        introduce,
+        stacks: resultStackList,
+      };
 
       console.log(data);
 
@@ -107,7 +133,22 @@ function RegisterForm(): JSX.Element {
       //   data: { email, password, nickname },
       // });
     },
-    [nickname, field, level, email, introduce, stacks],
+    [
+      nickname,
+      nicknameError,
+      duplicateCheck,
+      duplicateCheckError,
+      field,
+      fieldError,
+      level,
+      levelError,
+      email,
+      emailError,
+      introduce,
+      introduceError,
+      stacks,
+      stacksError,
+    ],
   );
 
   const handleChange = useCallback(
@@ -116,6 +157,7 @@ function RegisterForm(): JSX.Element {
       switch (selectInput) {
         case 'user-nickname':
           setNickname(event.target.value);
+          setDuplicateCheck(false);
           // 닉네임 길이제한
           if (event.target.value.length < 6 || event.target.value.length > 10) {
             return setNicknameError(true);
@@ -139,7 +181,6 @@ function RegisterForm(): JSX.Element {
           setIntroduceError(false);
           break;
         case 'user-stacks':
-          // TODO 기술스텍 검색 라이브러리 찾아보기(개발자, 디자이너, 기획자)
           setStacks(event.target.value);
           setStacksError(false);
           break;
@@ -147,7 +188,7 @@ function RegisterForm(): JSX.Element {
           return null;
       }
     },
-    [nickname, field, level, email, introduce, stacks],
+    [nickname, duplicateCheck, field, level, email, introduce, stacks],
   );
 
   const handleSpacebar = useCallback((event) => {
@@ -158,6 +199,7 @@ function RegisterForm(): JSX.Element {
   }, []);
 
   const handleDoubleCheck = useCallback(() => {
+    setDuplicateCheck(true);
     setDuplicateCheckError(false);
   }, []);
 
@@ -220,7 +262,7 @@ function RegisterForm(): JSX.Element {
                 </option>
                 <option value='developer'>개발자</option>
                 <option value='designer'>디자이너</option>
-                <option value='planner'>기획자</option>
+                <option value='productManger'>기획자</option>
               </FieldSelect>
             </SelectArrowBtn>
             {/* </ArrowImg> */}
@@ -314,13 +356,15 @@ function RegisterForm(): JSX.Element {
                 placeholder='자기소개를 작성해주세요.'
                 required
                 onChange={handleChange}
+                maxLength={500}
               />
+              <TextCount>{introduce.length}/ 500</TextCount>
             </div>
           </label>
           {introduceError && (
-            <ErrorMessage style={{ padding: '0 0.5rem' }}>
+            <ErrorMessageTextarea>
               자기소개를 작성해주세요!
-            </ErrorMessage>
+            </ErrorMessageTextarea>
           )}
         </DivideSection>
 
@@ -331,16 +375,17 @@ function RegisterForm(): JSX.Element {
             <div>
               <StyldTextarea
                 name='user-stacks'
-                placeholder='기술 스택을 작성해주세요.'
+                placeholder='기술 스택을 작성해주세요. 쉼표로 구분해서 작성해주세요.'
                 required
                 onChange={handleChange}
+                maxLength={500}
               />
             </div>
           </label>
           {stacksError && (
-            <ErrorMessage style={{ padding: '0 0.5rem' }}>
+            <ErrorMessageTextarea>
               사용 가능한 기술 스택 작성해주세요!
-            </ErrorMessage>
+            </ErrorMessageTextarea>
           )}
         </DivideSection>
 

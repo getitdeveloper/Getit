@@ -105,8 +105,11 @@ export const SelectArrowBtn = styled.div`
   position: relative;
   img {
     position: absolute;
-    right: 2.1rem;
-    bottom: 2rem;
+    right: 0.1rem;
+    bottom: 0.5rem;
+    background-color: #ffffff;
+    padding: 1.4rem;
+    border-radius: 10px;
   }
 `;
 
@@ -129,6 +132,12 @@ export const StyldTextarea = styled.textarea`
   padding-top: 0.5rem;
 `;
 
+export const TextCount = styled.p`
+  font-size: 1.4rem;
+  padding-right: 1rem;
+  float: right;
+`;
+
 export const SubmitBtn = styled.input`
   ${Pointer}
   height: 5.7rem;
@@ -149,4 +158,11 @@ export const ErrorMessage = styled.div`
   /* color: ${(props) => props.theme.colors.main}; */
   font-size: 1.6rem;
   padding: 0.5rem;
+`;
+
+export const ErrorMessageTextarea = styled.div`
+  color: #ff0000;
+  /* color: ${(props) => props.theme.colors.main}; */
+  font-size: 1.6rem;
+  padding: 0 0.5rem;
 `;
