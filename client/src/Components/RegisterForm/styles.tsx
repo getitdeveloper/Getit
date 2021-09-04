@@ -31,7 +31,7 @@ export const Logo = styled.div`
   }
 
   img {
-    height: 8rem;
+    height: 5.5rem;
   }
 `;
 

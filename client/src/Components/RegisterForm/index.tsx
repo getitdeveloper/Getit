@@ -48,6 +48,7 @@ function RegisterForm(): JSX.Element {
   const [levelError, setLevelError] = useState(false);
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState(false);
+  const [emailValidationError, setEmailValidationError] = useState(false);
   const [introduce, setIntroduce] = useState('');
   const [introduceError, setIntroduceError] = useState(false);
   const [stacks, setStacks] = useState('');
@@ -99,12 +100,16 @@ function RegisterForm(): JSX.Element {
       if (email === '') {
         setEmailError(true);
       }
+      // 이메일 형식 validation 확인
+      if (!(email === '') && emailValidationError) {
+        setEmailValidationError(true);
+      }
       // 자기소개 입력 유무 체크
       if (introduce === '') {
         setIntroduceError(true);
       }
       // 사용 가능한 기술 스택 입력 유무 체크
-      if (stacks === '') {
+      if (stacks.length === 0) {
         return setStacksError(true);
       }
 
@@ -112,14 +117,17 @@ function RegisterForm(): JSX.Element {
       if (
         nickname === '' ||
         field === '' ||
+        level === '' ||
         email === '' ||
         introduce === '' ||
-        stacks === '' ||
+        stacks.length === 0 ||
         nicknameError === true ||
+        duplicateCheck === false ||
         duplicateCheckError === true ||
         fieldError === true ||
         levelError === true ||
         emailError === true ||
+        emailValidationError === true ||
         introduceError === true ||
         stacksError === true
       ) {
@@ -171,6 +179,7 @@ function RegisterForm(): JSX.Element {
       levelError,
       email,
       emailError,
+      emailValidationError,
       introduce,
       introduceError,
       stacks,
@@ -178,51 +187,74 @@ function RegisterForm(): JSX.Element {
     ],
   );
 
-  const handleChange = useCallback(
+  const handleChangeNickname = useCallback(
     (event) => {
-      const selectInput = event.target.name;
-      switch (selectInput) {
-        case 'user-nickname':
-          setNickname(event.target.value);
-          setDuplicateCheck(false);
-          // 중복확인 후 입력시 중복확인 초기화
-          dispatch({
-            type: USER_NICK_DOUBLECHECK_RESET,
-            data: {
-              nickname: null,
-            },
-          });
-          // 닉네임 길이제한
-          if (event.target.value.length < 6 || event.target.value.length > 10) {
-            return setNicknameError(true);
-          }
-          setNicknameError(false);
-          break;
-        case 'user-field':
-          setField(event.target.value);
-          setFieldError(false);
-          break;
-        case 'user-level':
-          setLevel(event.target.value);
-          setLevelError(false);
-          break;
-        case 'user-email':
-          setEmail(event.target.value);
-          setEmailError(false);
-          break;
-        case 'user-introduce':
-          setIntroduce(event.target.value);
-          setIntroduceError(false);
-          break;
-        case 'user-stacks':
-          setStacks(event.target.value);
-          setStacksError(false);
-          break;
-        default:
-          return null;
+      setNickname(event.target.value);
+      setDuplicateCheck(false);
+      // 중복확인 후 입력시 중복확인 초기화
+      dispatch({
+        type: USER_NICK_DOUBLECHECK_RESET,
+        data: {
+          nickname: null,
+        },
+      });
+      // 닉네임 길이제한
+      if (event.target.value.length < 6 || event.target.value.length > 10) {
+        return setNicknameError(true);
       }
+      setNicknameError(false);
     },
-    [nickname, duplicateCheck, field, level, email, introduce, stacks],
+    [nickname, nicknameError, duplicateCheck, duplicateCheckError],
+  );
+
+  const handleChangeField = useCallback(
+    (event) => {
+      setField(event.target.value);
+      setFieldError(false);
+    },
+    [field, fieldError],
+  );
+
+  const handleChangeLevel = useCallback(
+    (event) => {
+      setLevel(event.target.value);
+      setLevelError(false);
+    },
+    [level, levelError],
+  );
+
+  const handleChangeEmail = useCallback(
+    (event) => {
+      setEmail(event.target.value);
+      setEmailError(false);
+
+      // 이메일 형식 validation 확인
+      const emailValidationRegexp =
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+      const emailValidation = emailValidationRegexp.test(event.target.value);
+
+      if (!emailValidation) {
+        return setEmailValidationError(true);
+      }
+      setEmailValidationError(false);
+    },
+    [email, emailError, emailValidationError],
+  );
+
+  const handleChangeIntroduce = useCallback(
+    (event) => {
+      setIntroduce(event.target.value);
+      setIntroduceError(false);
+    },
+    [introduce, introduceError],
+  );
+  const handleChangeStacks = useCallback(
+    (event) => {
+      setStacks(event.target.value);
+      setStacksError(false);
+    },
+    [stacks, stacksError],
   );
 
   const handleSpacebar = useCallback((event) => {
@@ -237,6 +269,9 @@ function RegisterForm(): JSX.Element {
     if (nickname.length < 6 || nickname.length > 10) {
       return setNicknameError(true);
     }
+    if (nickDoubleCheck === 'pass') {
+      return alert('사용 가능한 닉네임 입니다.');
+    }
     // 닉네임 6 ~ 10자 충족시에만 중복확인 요청
     dispatch({
       type: USER_NICK_DOUBLECHECK_REQUEST,
@@ -244,7 +279,7 @@ function RegisterForm(): JSX.Element {
         nickname,
       },
     });
-  }, [nickname]);
+  }, [nickname, nickDoubleCheck]);
 
   return (
     <RegisterWrapper>
@@ -267,7 +302,7 @@ function RegisterForm(): JSX.Element {
                 name='user-nickname'
                 placeholder='닉네임을 입력해주세요.'
                 required
-                onChange={handleChange}
+                onChange={handleChangeNickname}
                 onKeyDown={handleSpacebar}
                 value={nickname}
               />
@@ -298,7 +333,7 @@ function RegisterForm(): JSX.Element {
                 name='user-field'
                 form='myForm'
                 required
-                onChange={handleChange}
+                onChange={handleChangeField}
               >
                 <option value='description' disabled selected>
                   분야를 선택하세요.
@@ -324,7 +359,7 @@ function RegisterForm(): JSX.Element {
                   name='user-level'
                   form='myForm'
                   required
-                  onChange={handleChange}
+                  onChange={handleChangeLevel}
                 >
                   {field !== 'developer' ? (
                     <>
@@ -381,12 +416,15 @@ function RegisterForm(): JSX.Element {
                 name='user-email'
                 placeholder='이메일을 입력해주세요.'
                 required
-                onChange={handleChange}
+                onChange={handleChangeEmail}
                 onKeyDown={handleSpacebar}
               />
             </div>
           </label>
           {emailError && <ErrorMessage>이메일을 입력해주세요!</ErrorMessage>}
+          {emailValidationError && (
+            <ErrorMessage>제대로된 이메일 형식이 아닙니다!</ErrorMessage>
+          )}
         </DivideSection>
 
         {/* 자기소개(필수) */}
@@ -398,7 +436,7 @@ function RegisterForm(): JSX.Element {
                 name='user-introduce'
                 placeholder='자기소개를 작성해주세요.'
                 required
-                onChange={handleChange}
+                onChange={handleChangeIntroduce}
                 maxLength={500}
               />
               <TextCount>{introduce.length}/ 500</TextCount>
@@ -420,7 +458,7 @@ function RegisterForm(): JSX.Element {
                 name='user-stacks'
                 placeholder='기술 스택을 작성해주세요. 쉼표로 구분해서 작성해주세요.'
                 required
-                onChange={handleChange}
+                onChange={handleChangeStacks}
                 maxLength={500}
               />
             </div>
