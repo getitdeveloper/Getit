@@ -26,6 +26,7 @@ class CommonBoardListAPIView(GenericAPIView):
 
             ---
                 127.0.0.1:8000/api/board?category=free(question)
+                - id : 게시판 번호
                 - user : 글쓴이 번호(user id)
                 - title : 제목
                 - category : 자유게시판, 질문게시판 둘중 하나로
@@ -53,6 +54,7 @@ class CommonBoardListAPIView(GenericAPIView):
             질문/자유 게시글 list (POST)
 
             ---
+                - id : 게시판 번호
                 - user : 글쓴이 번호(user id)
                 - title : 제목
                 - category : 자유게시판, 질문게시판 둘중 하나로
@@ -82,6 +84,7 @@ class CommonBoardDetailAPIView(GenericAPIView):
             질문/자유 게시글 detail (GET)
 
             ---
+                - id : 게시판 번호
                 - user : 글쓴이 번호(user id)
                 - title : 제목
                 - category : 자유게시판, 질문게시판 둘중 하나로
@@ -98,6 +101,7 @@ class CommonBoardDetailAPIView(GenericAPIView):
             질문/자유 게시글 detail (PUT:수정)
 
             ---
+                - id : 게시판 번호
                 - user : 글쓴이 번호(user id)
                 - title : 제목
                 - category : 자유게시판, 질문게시판 둘중 하나로
@@ -115,7 +119,7 @@ class CommonBoardDetailAPIView(GenericAPIView):
 
     def delete(self, request, pk):
         """
-            질문/자유 게시글 detail (GET)
+            질문/자유 게시글 detail (DELETE)
 
             ---
         """
