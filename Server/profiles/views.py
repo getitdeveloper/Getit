@@ -1,4 +1,6 @@
 from django.shortcuts import render, get_object_or_404
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
 from rest_framework import viewsets, status
 from rest_framework.decorators import api_view
 
@@ -22,6 +24,7 @@ def status_check(request):
         "status": "OK"
     }, status=status.HTTP_200_OK)
 
+@method_decorator(csrf_exempt, name='dispatch')
 class ProfileDetail(GenericAPIView):
     serializer_class = ProfileSerializer
     permission_classes = [IsOwnerOrReadOnly]
