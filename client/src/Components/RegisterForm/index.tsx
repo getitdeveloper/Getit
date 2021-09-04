@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { useState, useCallback } from 'react';
-import { useSelector, RootStateOrAny } from 'react-redux';
+import { useState, useCallback, useEffect } from 'react';
+import { useSelector, RootStateOrAny, useDispatch } from 'react-redux';
 import { useHistory, Link } from 'react-router-dom';
-
+import { IRegisterData } from './types';
 import {
   RegisterWrapper,
   Logo,
@@ -24,14 +24,22 @@ import {
 } from './styles';
 import LogoSvg from './Logo.svg';
 import SelectSvg from './Select.svg';
+import {
+  USER_NICK_DOUBLECHECK_REQUEST,
+  USER_NICK_DOUBLECHECK_RESET,
+} from '../../reducers/actions';
 
 function RegisterForm(): JSX.Element {
   const history = useHistory();
+  const dispatch = useDispatch();
+
   const message = useSelector((state: RootStateOrAny) => state.user.id.message);
+  const nickDoubleCheck = useSelector(
+    (state: RootStateOrAny) => state.user.nickDoubleCheck.duplicate,
+  );
 
   const [nickname, setNickname] = useState('');
   const [nicknameError, setNicknameError] = useState(false);
-  // TODO 백엔드 연결하고 setDuplicateCheck 설정하기
   const [duplicateCheck, setDuplicateCheck] = useState(false);
   const [duplicateCheckError, setDuplicateCheckError] = useState(false);
   const [field, setField] = useState('');
@@ -45,12 +53,24 @@ function RegisterForm(): JSX.Element {
   const [stacks, setStacks] = useState('');
   const [stacksError, setStacksError] = useState(false);
 
-  // 기존 회원 또는 비회원 접근 방지 라우팅
-  React.useEffect(() => {
+  useEffect(() => {
+    // 기존 회원 또는 비회원 접근 방지 라우팅
     if (message !== 'register') {
       return history.push('/');
     }
-  }, []);
+
+    // 닉네임 중복 확인 체크
+    if (nickDoubleCheck === 'pass') {
+      setDuplicateCheck(true);
+      setDuplicateCheckError(false);
+      return alert('사용 가능한 닉네임 입니다.');
+    }
+    if (nickDoubleCheck === 'fail') {
+      setDuplicateCheck(false);
+      setDuplicateCheckError(true);
+      return alert('사용 불가능한 닉네임 입니다.');
+    }
+  }, [nickDoubleCheck]);
 
   // 회원가입시 입력값 체크
   const handleSubmit = useCallback(
@@ -117,7 +137,7 @@ function RegisterForm(): JSX.Element {
         (stack) => stack.length >= 1,
       );
 
-      const data = {
+      const data: IRegisterData = {
         nickname,
         field,
         level,
@@ -129,8 +149,15 @@ function RegisterForm(): JSX.Element {
       console.log(data);
 
       // dispatch({
-      //   type: SIGN_UP_REQUEST,
-      //   data: { email, password, nickname },
+      //   type: USER_PROFILE_SAVE_REQUEST,
+      //   data: {
+      //     nickname,
+      //     field,
+      //     level,
+      //     email,
+      //     introduce,
+      //     stacks: resultStackList,
+      //   },
       // });
     },
     [
@@ -158,6 +185,13 @@ function RegisterForm(): JSX.Element {
         case 'user-nickname':
           setNickname(event.target.value);
           setDuplicateCheck(false);
+          // 중복확인 후 입력시 중복확인 초기화
+          dispatch({
+            type: USER_NICK_DOUBLECHECK_RESET,
+            data: {
+              nickname: null,
+            },
+          });
           // 닉네임 길이제한
           if (event.target.value.length < 6 || event.target.value.length > 10) {
             return setNicknameError(true);
@@ -199,9 +233,18 @@ function RegisterForm(): JSX.Element {
   }, []);
 
   const handleDoubleCheck = useCallback(() => {
-    setDuplicateCheck(true);
-    setDuplicateCheckError(false);
-  }, []);
+    // 닉네임 6 ~ 10자 미충족시 에러 메세지 출력
+    if (nickname.length < 6 || nickname.length > 10) {
+      return setNicknameError(true);
+    }
+    // 닉네임 6 ~ 10자 충족시에만 중복확인 요청
+    dispatch({
+      type: USER_NICK_DOUBLECHECK_REQUEST,
+      data: {
+        nickname,
+      },
+    });
+  }, [nickname]);
 
   return (
     <RegisterWrapper>

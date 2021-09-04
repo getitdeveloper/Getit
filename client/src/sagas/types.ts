@@ -32,3 +32,16 @@ export interface GithubAccessData {
   client_secret: string;
   code: string;
 }
+
+export interface IUserNickname {
+  nickname: string;
+}
+export interface IUserNickDoubleCheckRequest {
+  type: string;
+  data: {
+    nickname: string;
+  };
+}
+export interface IUserNickDoubleCheckResponse {
+  data: { duplicate: string };
+}

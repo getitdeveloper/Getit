@@ -12,6 +12,10 @@ import {
   USER_PROFILE_FAILURE,
   USER_PROFILE_REQUEST,
   USER_PROFILE_SUCCESS,
+  USER_NICK_DOUBLECHECK_REQUEST,
+  USER_NICK_DOUBLECHECK_SUCCESS,
+  USER_NICK_DOUBLECHECK_FAILURE,
+  USER_NICK_DOUBLECHECK_RESET,
 } from './actions';
 
 // 초기 상태값 타입
@@ -19,6 +23,9 @@ export interface InitialState {
   id: {
     message: string | null;
     user_pk: number | null;
+  };
+  nickDoubleCheck: {
+    duplicate: null | string;
   };
   profileInfo: IProfileInfo | null;
   portfolio: IPortfolio | null;
@@ -34,6 +41,10 @@ export interface InitialState {
   userProfileRequest: boolean;
   userProfileSuccess: boolean;
   userProfileFailure: string | null;
+  userNickDoubleCheckRequest: boolean;
+  userNickDoubleCheckSuccess: boolean;
+  userNickDoubleCheckFailure: string | null;
+  userNickDoubleCheckReset: boolean;
 }
 
 // 사용자 정보 타입
@@ -107,6 +118,26 @@ export interface UserProfileFailure {
   error: string;
 }
 
+export interface IUserNickDoubleCheckRequest {
+  type: typeof USER_NICK_DOUBLECHECK_REQUEST;
+}
+
+export interface IUserNickDoubleCheckSuccess {
+  type: typeof USER_NICK_DOUBLECHECK_SUCCESS;
+  data: {
+    duplicate: string;
+  };
+}
+
+export interface IUserNickDoubleCheckFailure {
+  type: typeof USER_NICK_DOUBLECHECK_FAILURE;
+  error: string;
+}
+
+export interface IUserNickDoubleCheckReset {
+  type: typeof USER_NICK_DOUBLECHECK_RESET;
+}
+
 export type UserActions =
   | UserInfoRequest
   | UserInfoSuccess
@@ -119,4 +150,8 @@ export type UserActions =
   | UserLogOutFailure
   | UserProfileRequest
   | UserProfileSuccess
-  | UserProfileFailure;
+  | UserProfileFailure
+  | IUserNickDoubleCheckRequest
+  | IUserNickDoubleCheckSuccess
+  | IUserNickDoubleCheckFailure
+  | IUserNickDoubleCheckReset;
