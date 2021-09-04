@@ -312,7 +312,7 @@ class KakaoLogin(SocialLoginView):
     adapter_class = KakaoOAuth2Adapter
     client_class = OAuth2Client
 
-
+@method_decorator(csrf_exempt, name='dispatch')
 def duplicate_check(request):
     request = json.loads(request.body)
     nickname = request["nickname"]
