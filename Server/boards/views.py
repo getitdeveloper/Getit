@@ -1,8 +1,10 @@
 import json
 
 from drf_yasg import openapi
+from rest_framework.filters import SearchFilter
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework.generics import GenericAPIView
+from rest_framework.mixins import ListModelMixin
 from rest_framework.parsers import MultiPartParser
 from .permissions import IsOwnerOrReadOnly
 from .serializers import CommonBoardSerializer, RecruitmentBoardSerializer
@@ -12,13 +14,16 @@ from .models import CommonBoard, RecruitmentBoard
 from django.shortcuts import get_object_or_404
 from rest_framework.views import APIView
 from .pagenation import BoardPageNumberPagination
+from rest_framework import viewsets
 
 
 class CommonBoardListAPIView(GenericAPIView):
-
+    queryset = CommonBoard.objects.all()
     serializer_class = CommonBoardSerializer
     pagination_class = BoardPageNumberPagination
     ordering_fields = ['create_at']
+    filter_backends = [SearchFilter]
+    search_fields = ['title', 'content']
 
     def get(self, request):
         """
@@ -35,20 +40,26 @@ class CommonBoardListAPIView(GenericAPIView):
                 - create_at : 생성 시간
         """
         category = request.GET.get('category')
-        print(category)
+        queryset = self.get_queryset()
         if category == 'free':
-            posts = CommonBoard.objects.filter(category="자유 게시판")
+            posts = CommonBoard.objects.filter(category=category)
             paginator = BoardPageNumberPagination()
             result_page = paginator.paginate_queryset(posts, request)
             serializer = CommonBoardSerializer(result_page, many=True)
-            return Response(serializer.data)
+            return paginator.get_paginated_response(serializer.data)
         elif category == 'question':
-            posts = CommonBoard.objects.filter(category="질문 게시판")
+            posts = CommonBoard.objects.filter(category=category)
             paginator = BoardPageNumberPagination()
             result_page = paginator.paginate_queryset(posts, request)
             serializer = CommonBoardSerializer(result_page, many=True)
-            return Response(serializer.data)
-
+            return paginator.get_paginated_response(serializer.data)
+        else:
+            posts = CommonBoard.objects.all()
+            posts = self.filter_queryset(posts)
+            paginator = BoardPageNumberPagination()
+            result_page = paginator.paginate_queryset(posts, request)
+            serializer = CommonBoardSerializer(result_page, many=True)
+            return paginator.get_paginated_response(serializer.data)
 
     def post(self, request):
         """

@@ -12,7 +12,6 @@ class CommonBoard(models.Model):
     image = models.ImageField(upload_to='board', blank=True, null=True)
     create_at = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey('accounts.User', on_delete=models.CASCADE)
-    stack = models.ManyToManyField('tags.Tag')
 
 class RecruitmentBoard(models.Model):
 
