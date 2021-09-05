@@ -13,6 +13,12 @@ import {
   USER_PROFILE_FAILURE,
   USER_PROFILE_SUCCESS,
   USER_PROFILE_REQUEST,
+  USER_NICK_DOUBLECHECK_REQUEST,
+  USER_NICK_DOUBLECHECK_SUCCESS,
+  USER_NICK_DOUBLECHECK_FAILURE,
+  USER_PROFILE_REGISTER_REQUEST,
+  USER_PROFILE_REGISTER_SUCCESS,
+  USER_PROFILE_REGISTER_FAILURE,
 } from '../reducers/actions';
 import {
   ResponseUserProfile,
@@ -20,6 +26,9 @@ import {
   GoogleAccessData,
   KakaoAccessData,
   GithubAccessData,
+  IUserNickDoubleCheckRequest,
+  IUserNickDoubleCheckResponse,
+  IUserNickname,
 } from './types';
 
 // 사용자 정보 요청
@@ -149,6 +158,61 @@ function* requestUserLogOutSaga(): any {
   }
 }
 
+// 회원가입 페이지 닉네임 중복 체크
+const requestUserNickDoubleCheck = (data: IUserNickname) => {
+  console.log('닉네임 중복 확인 ===>', data);
+  return axios.post('/api/duplicate_check/', data);
+};
+
+function* requestUserNickDoubleCheckSaga(
+  action: IUserNickDoubleCheckRequest,
+): any {
+  try {
+    const response: IUserNickDoubleCheckResponse = yield call(
+      requestUserNickDoubleCheck,
+      action.data,
+    );
+    console.log('닉네임 중복 확인 응답 결과 ===>', response);
+
+    yield put({
+      type: USER_NICK_DOUBLECHECK_SUCCESS,
+      data: response.data,
+    });
+  } catch (error) {
+    // console.log('에러 ===>', error);
+    yield put({
+      type: USER_NICK_DOUBLECHECK_FAILURE,
+      error,
+    });
+  }
+}
+
+// 회원가입 회원 프로필 정보 저장
+const requestUserProfileRegister = (data: any) => {
+  console.log('프로필 정보 확인 ===>', data);
+  return axios.post(`/api/profile/${data.user_pk}/`, data);
+};
+
+function* requestUserProfileRegisterSaga(action: any): any {
+  // console.log('프로필 정보 확인 ===>', action);
+
+  try {
+    const response: any = yield call(requestUserProfileRegister, action.data);
+    console.log('프로필 저장 응답 결과 ===>', response);
+
+    yield put({
+      type: USER_PROFILE_REGISTER_SUCCESS,
+      data: response.data,
+    });
+  } catch (error) {
+    // console.log('에러 ===>', error);
+    yield put({
+      type: USER_PROFILE_REGISTER_FAILURE,
+      error,
+    });
+  }
+}
+
 function* watchRequestUserInfo() {
   yield takeLatest(USER_INFO_REQUEST, requestUserInfoSaga);
 }
@@ -165,12 +229,28 @@ function* watchRequestUserProfile() {
   yield takeLatest(USER_PROFILE_REQUEST, requestUserProfileSaga);
 }
 
+function* watchRequestUserNickDoubleCheck() {
+  yield takeLatest(
+    USER_NICK_DOUBLECHECK_REQUEST,
+    requestUserNickDoubleCheckSaga,
+  );
+}
+
+function* watchRequestUserPofileRegister() {
+  yield takeLatest(
+    USER_PROFILE_REGISTER_REQUEST,
+    requestUserProfileRegisterSaga,
+  );
+}
+
 function* userSaga() {
   yield all([
     fork(watchRequestUserInfo),
     fork(watchRequestUserLogIn),
     fork(watchRequestUserLogOut),
     fork(watchRequestUserProfile),
+    fork(watchRequestUserNickDoubleCheck),
+    fork(watchRequestUserPofileRegister),
   ]);
 }
 
