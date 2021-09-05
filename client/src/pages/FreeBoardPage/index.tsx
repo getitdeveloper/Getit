@@ -27,6 +27,7 @@ function FreeBoardPage(props: HeaderProp) {
       type: FREE_BOARD_REQUEST,
       data: {
         page: 1,
+        category: 'free',
       },
     });
   }, []);
