@@ -1,5 +1,7 @@
 import * as React from 'react';
+import { useSelector, RootStateOrAny, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { FREE_POST_REGISTER_REQUEST } from '../../reducers/actions';
 import MarkdownRenderer from '../MarkdownRenderer';
 import {
   TitleForm,
@@ -11,6 +13,10 @@ import {
 
 function PostForm() {
   const history = useHistory();
+  const dispatch = useDispatch();
+  const boardType = history.location.state;
+  const user = useSelector((state: RootStateOrAny) => state.user);
+  const userId = Number(user.id.user_pk);
   const [inputs, setInputs] = React.useState({
     title: '',
     text: '',
@@ -29,6 +35,20 @@ function PostForm() {
 
   const onHidden = (status: boolean) => {
     setHidden(status);
+  };
+
+  const onSubmit = (postTitle: string, postContent: string) => {
+    const postData = {
+      title: postTitle,
+      category: boardType,
+      content: postContent,
+      user: userId,
+    };
+    console.log(postData);
+    dispatch({
+      type: FREE_POST_REGISTER_REQUEST,
+      data: postData,
+    });
   };
 
   return (
@@ -64,7 +84,7 @@ function PostForm() {
           {' '}
           작성 취소{' '}
         </FormButton>
-        <FormButton type='button' onClick={() => console.log(title, text)}>
+        <FormButton type='button' onClick={() => onSubmit(title, text)}>
           제출하기
         </FormButton>
       </ButtonWrapper>

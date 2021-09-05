@@ -1,6 +1,7 @@
 import * as React from 'react';
 import CreateIcon from '@material-ui/icons/Create';
 import { useHistory } from 'react-router-dom';
+import { RootStateOrAny, useSelector } from 'react-redux';
 import {
   JobSelectButtonWrapper,
   SortAndWriteWrapper,
@@ -16,6 +17,8 @@ interface BoardType {
 function PostSubHeader(props: BoardType) {
   const history = useHistory();
   const [selected, setSelected] = React.useState(false);
+  const user = useSelector((state: RootStateOrAny) => state.user);
+  const userId = user.id.user_pk;
   const { boardType } = props;
 
   const handleJobSelectButton = React.useCallback(
@@ -27,20 +30,20 @@ function PostSubHeader(props: BoardType) {
   );
 
   const handlePostType = () => {
-    // todo login 하지 않은 유저의 경우 로그인부터 하라고 알려주기
-    console.log('current board', boardType);
-    switch (boardType) {
-      case 'Question':
-        return history.push('/questionBoard/form');
-        break;
-      case 'Free':
-        return history.push('/freeBoard/form');
-        break;
-      case 'Recruit':
-        return history.push('/recruitBoard/form');
-        break;
-      default:
-        break;
+    if (userId) {
+      console.log('current board', boardType);
+      switch (boardType) {
+        case 'Question':
+          return history.push('/questionBoard/form', 'question');
+        case 'Free':
+          return history.push('/freeBoard/form', 'free');
+        case 'Recruit':
+          return history.push('/recruitBoard/form', 'recruit');
+        default:
+          break;
+      }
+    } else {
+      alert('로그인이 필요합니다. 먼저 로그인해주세요!');
     }
   };
   return (
