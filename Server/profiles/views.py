@@ -42,11 +42,10 @@ class ProfileDetail(GenericAPIView):
                 # GET Response 예시
                     {
                         "user": 1,
-                        "user_id": 1,
+                        "user_pk": 1,
                         "nickname": "test",
                         "job": "개발자",
-                        "developer_level": "코린이",
-                        "designer_and_pm_level": "하수",
+                        "level": "코린이",
                         "image": "C:\\User\\Test\\Image.jpg"
                         "email": "test@test.com",
                         "info": "안녕하세요. test입니다.",
@@ -64,11 +63,10 @@ class ProfileDetail(GenericAPIView):
         # POST request 예시
             {
                 "user": 1,
-                "user_id": 1,
+                "user_pk": 1,
                 "nickname": "test",
                 "job": "개발자",
-                "developer_level": "코린이",
-                "designer_and_pm_level": "하수",
+                "level": "코린이",
                 "image": "C:\\User\\Test\\Image.jpg"
                 "email": "test@test.com",
                 "info": "안녕하세요. test입니다.",
