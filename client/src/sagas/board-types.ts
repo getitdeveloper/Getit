@@ -14,3 +14,10 @@ export interface FreePostData {
   content: string;
   user: number;
 }
+
+export interface QuestionPostData {
+  title: string;
+  category: string;
+  content: string;
+  user: number;
+}
