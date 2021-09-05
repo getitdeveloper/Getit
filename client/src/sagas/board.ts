@@ -24,6 +24,7 @@ const requestFreeBoard = (page: number) => {
 
 function* requestFreeBoardSaga(action: any): any {
   try {
+    console.log('자유게시판 받아오기');
     const response = yield call(requestFreeBoard, action.data.page);
     console.log('자유게시판 정보 응답 ===>', response);
 
@@ -41,13 +42,13 @@ function* requestFreeBoardSaga(action: any): any {
 }
 
 // 자유 게시글 받아오기
-const requestFreePost = (post_pk: string) => {
-  return axios.get(`/api/board/${post_pk}`);
+const requestFreePost = (id: string) => {
+  return axios.get(`/api/board/${id}`);
 };
 
 function* requestFreePostSaga(action: any): any {
   try {
-    const response = yield call(requestFreePost, action.data.post_pk);
+    const response = yield call(requestFreePost, action.data.id);
     console.log('자유게시글 정보 응답 ===>', response);
 
     yield put({
