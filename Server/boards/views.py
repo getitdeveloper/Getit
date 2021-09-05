@@ -49,6 +49,7 @@ class CommonBoardListAPIView(GenericAPIView):
             serializer = CommonBoardSerializer(result_page, many=True)
             return Response(serializer.data)
 
+
     def post(self, request):
         """
             질문/자유 게시글 list (POST)

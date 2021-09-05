@@ -11,13 +11,11 @@ class Profile(models.Model):
         ('디자이너', '디자이너'),
         ('기획자', '기획자'),
     )
-    DEVELOPER_CHOICES_LEVEL = (
+    LEVEL_CHOICES = (
         ('코린이', '코린이'),
         ('코등학생', '코등학생'),
         ('코대생', '코대생'),
         ('코드닌자', '코드닌자'),
-    )
-    DESIGNER_AND_PM_CHOICES_LEVEL = (
         ('하수', '하수'),
         ('초수', '초수'),
         ('중수', '중수'),
@@ -27,8 +25,7 @@ class Profile(models.Model):
     user_pk = models.IntegerField(unique=True)
     nickname = models.CharField(max_length=50, unique=True, null=True)
     job = models.CharField(choices=CHOICES_JOB, max_length=10, default='개발자')
-    developer_level = models.CharField(choices=DEVELOPER_CHOICES_LEVEL, max_length=10, blank=True, default='코린이')
-    designer_and_pm_level = models.CharField(choices=DESIGNER_AND_PM_CHOICES_LEVEL, max_length=10, blank=True, default='하수')
+    level = models.CharField(choices=LEVEL_CHOICES, max_length=10, blank=True, default='코린이')
     image = models.ImageField(upload_to='profile', blank=True, null=True, default="../media/profile/Untitled.jpeg")
     email = models.EmailField(max_length=50, null=True)
     info = models.TextField(null=True)
