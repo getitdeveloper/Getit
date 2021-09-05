@@ -40,7 +40,7 @@ function FreeBoardPage(props: HeaderProp) {
         <PostSubHeader boardType='Free' />
         {freeBoard ? (
           <PageContainer>
-            {freeBoard.map((content: IPost) => (
+            {freeBoard.results.map((content: IPost) => (
               <PostItem key={content.id} content={content} boardType='Free' />
             ))}
           </PageContainer>
