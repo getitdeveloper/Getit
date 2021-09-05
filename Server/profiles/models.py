@@ -30,7 +30,7 @@ class Profile(models.Model):
     email = models.EmailField(max_length=50, null=True)
     info = models.TextField(null=True)
     git = models.CharField(max_length=100, blank=True, null=True)
-    stack = models.ManyToManyField('tags.Tag')
+
 
     # def __str__(self):
     #     return self.user_pk

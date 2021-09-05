@@ -74,16 +74,7 @@ class ProfileDetail(GenericAPIView):
         """
         profile = self.get_object(user_pk)
         serializer = ProfileSerializer(profile, data=request.data)
-
-
         if serializer.is_valid():
-            stacks = serializer.validated_data['name']
-            print(stacks)
             serializer.save()
-            for stack in stacks.values():
-                if not stack:
-                    continue
-                _tag, _ = Tag.objects.get_or_create(name=stack)
-                Profile.stack.add(_tag)
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
