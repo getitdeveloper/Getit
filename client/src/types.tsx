@@ -16,3 +16,20 @@ export interface IPortfolio {
   title: string;
   contents: string;
 }
+
+export interface IBoard {
+  count: number;
+  next: string;
+  previous: string;
+  results: IPost[];
+}
+
+export interface IPost {
+  id: number;
+  title: string;
+  category: string;
+  content: string;
+  image: string;
+  create_at: string;
+  user: number;
+}

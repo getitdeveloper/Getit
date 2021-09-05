@@ -18,16 +18,15 @@ import { HorizontalLine } from '../../styles/commons';
 function PostItem(props: any) {
   const history = useHistory();
   const { content, boardType } = props;
-  console.log(content);
   return (
     <div>
       <PostContainer>
-        <WriterButton
+        {/* <WriterButton
           onClick={() => alert(`${content.writer}의 프로필로 이동`)}
         >
           <img src={content.writerImage} alt='writer-profile' width='15%' />
           <p style={{ fontSize: 'x-small' }}>{content.writer}</p>
-        </WriterButton>
+        </WriterButton> */}
         <PostInfoButton
           onClick={() => {
             if (boardType === 'Question') {
@@ -37,27 +36,26 @@ function PostItem(props: any) {
             }
           }}
         >
-          <TagWrapper>
+          {/* <TagWrapper>
             {content.tagType.map((member: string) => (
               <MemberType key={member} member={member} />
             ))}
-          </TagWrapper>
+          </TagWrapper> */}
           <PostTitle>{content.title}</PostTitle>
-          <PostText>{content.text}</PostText>
+          <PostText>{content.content}</PostText>
         </PostInfoButton>
       </PostContainer>
       <PostDetail>
         <DetailInfo>
           <img src='/icons/calendar.svg' alt='write-date' />
-          {moment(content.writeDate).format('YYYY년 MM월 DD일')}
+          {moment(content.create_at).format('YYYY년 MM월 DD일')}
         </DetailInfo>
         <DetailInfo>
-          <img src='/icons/like.svg' alt='like-count' />
-          {content.likeCount}
+          <img src='/icons/like.svg' alt='like-count' />0
+          {/* {content.likeCount} */}
         </DetailInfo>
         <DetailInfo>
-          <ChatBubbleOutlineIcon />
-          {content.commentCount}
+          <ChatBubbleOutlineIcon />2{/* {content.commentCount} */}
         </DetailInfo>
       </PostDetail>
       <HorizontalLine width='100%' />

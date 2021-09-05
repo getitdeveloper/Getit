@@ -128,6 +128,7 @@ const reducer = (state = initialState, action: UserActions): InitialState =>
         draft.userProfileRequest = false;
         draft.userProfileSuccess = true;
         draft.userProfileFailure = null;
+        draft.profileInfo = action.data;
         break;
       case USER_PROFILE_FAILURE:
         draft.userProfileRequest = false;

@@ -127,10 +127,7 @@ export interface UserProfileRequest {
 
 export interface UserProfileSuccess {
   type: typeof USER_PROFILE_SUCCESS;
-  data: {
-    profile: IProfileInfo;
-    portfolio: IPortfolio[];
-  };
+  data: IProfileInfo;
 }
 
 export interface UserProfileFailure {
