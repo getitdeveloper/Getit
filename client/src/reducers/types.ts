@@ -16,6 +16,10 @@ import {
   USER_NICK_DOUBLECHECK_SUCCESS,
   USER_NICK_DOUBLECHECK_FAILURE,
   USER_NICK_DOUBLECHECK_RESET,
+  USER_PROFILE_REGISTER_REQUEST,
+  USER_PROFILE_REGISTER_SUCCESS,
+  USER_PROFILE_REGISTER_FAILURE,
+  USER_REGISTER_RESET,
 } from './actions';
 
 // 초기 상태값 타입
@@ -26,6 +30,18 @@ export interface InitialState {
   };
   nickDoubleCheck: {
     duplicate: null | string;
+  };
+  profile: {
+    user: number | null;
+    user_id: number | null;
+    nickname: string | null;
+    job: string | null;
+    developer_level: string | null;
+    designer_and_pm_level: string | null;
+    image: string | null;
+    email: string | null;
+    info: string | null;
+    git: string | null;
   };
   profileInfo: IProfileInfo | null;
   portfolio: IPortfolio | null;
@@ -45,6 +61,10 @@ export interface InitialState {
   userNickDoubleCheckSuccess: boolean;
   userNickDoubleCheckFailure: string | null;
   userNickDoubleCheckReset: boolean;
+  userProfileRegisterRequest: boolean;
+  userProfileRegisterSuccess: boolean;
+  userProfileRegisterFailure: string | null;
+  userRegisterReset: boolean;
 }
 
 // 사용자 정보 타입
@@ -138,6 +158,35 @@ export interface IUserNickDoubleCheckReset {
   type: typeof USER_NICK_DOUBLECHECK_RESET;
 }
 
+export interface IUserProfileRegisterRequest {
+  type: typeof USER_PROFILE_REGISTER_REQUEST;
+}
+
+export interface IUserProfileRegisterSuccess {
+  type: typeof USER_PROFILE_REGISTER_SUCCESS;
+  data: {
+    user: number;
+    user_id: number;
+    nickname: string;
+    job: string;
+    developer_level: string;
+    designer_and_pm_level: string;
+    image: string;
+    email: string;
+    info: string;
+    git: string;
+  };
+}
+
+export interface IUserProfileRegisterFailure {
+  type: typeof USER_PROFILE_REGISTER_FAILURE;
+  error: string;
+}
+
+export interface IUserRegisterReset {
+  type: typeof USER_REGISTER_RESET;
+}
+
 export type UserActions =
   | UserInfoRequest
   | UserInfoSuccess
@@ -154,4 +203,8 @@ export type UserActions =
   | IUserNickDoubleCheckRequest
   | IUserNickDoubleCheckSuccess
   | IUserNickDoubleCheckFailure
-  | IUserNickDoubleCheckReset;
+  | IUserNickDoubleCheckReset
+  | IUserProfileRegisterRequest
+  | IUserProfileRegisterSuccess
+  | IUserProfileRegisterFailure
+  | IUserRegisterReset;

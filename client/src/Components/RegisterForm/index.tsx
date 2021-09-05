@@ -27,7 +27,11 @@ import SelectSvg from './Select.svg';
 import {
   USER_NICK_DOUBLECHECK_REQUEST,
   USER_NICK_DOUBLECHECK_RESET,
+  USER_PROFILE_REGISTER_REQUEST,
+  USER_REGISTER_RESET,
 } from '../../reducers/actions';
+
+import Option from './Option';
 
 function RegisterForm(): JSX.Element {
   const history = useHistory();
@@ -36,6 +40,10 @@ function RegisterForm(): JSX.Element {
   const message = useSelector((state: RootStateOrAny) => state.user.id.message);
   const nickDoubleCheck = useSelector(
     (state: RootStateOrAny) => state.user.nickDoubleCheck.duplicate,
+  );
+  const userId = useSelector((state: RootStateOrAny) => state.user.id.user_pk);
+  const profile = useSelector(
+    (state: RootStateOrAny) => state.user.profile.user_pk,
   );
 
   const [nickname, setNickname] = useState('');
@@ -56,6 +64,7 @@ function RegisterForm(): JSX.Element {
 
   useEffect(() => {
     // 기존 회원 또는 비회원 접근 방지 라우팅
+    // TODO 상태 초기화
     if (message !== 'register') {
       return history.push('/');
     }
@@ -71,7 +80,7 @@ function RegisterForm(): JSX.Element {
       setDuplicateCheckError(true);
       return alert('사용 불가능한 닉네임 입니다.');
     }
-  }, [nickDoubleCheck]);
+  }, [nickDoubleCheck, message]);
 
   // 회원가입시 입력값 체크
   const handleSubmit = useCallback(
@@ -145,28 +154,38 @@ function RegisterForm(): JSX.Element {
         (stack) => stack.length >= 1,
       );
 
+      // const data: IRegisterData = {
+      //   user: userId,
+      //   user_id: userId,
+      //   nickname,
+      //   job: field,
+      //   developer_level: level,
+      //   email,
+      //   introduce,
+      //   // stacks: resultStackList,
+      // };
+
       const data: IRegisterData = {
+        user: userId,
+        user_pk: userId,
         nickname,
-        field,
+        job: field,
         level,
         email,
-        introduce,
-        stacks: resultStackList,
+        info: introduce,
+        // stacks: resultStackList,
       };
 
       console.log(data);
 
-      // dispatch({
-      //   type: USER_PROFILE_SAVE_REQUEST,
-      //   data: {
-      //     nickname,
-      //     field,
-      //     level,
-      //     email,
-      //     introduce,
-      //     stacks: resultStackList,
-      //   },
-      // });
+      dispatch({
+        type: USER_PROFILE_REGISTER_REQUEST,
+        data,
+      });
+
+      dispatch({
+        type: USER_REGISTER_RESET,
+      });
     },
     [
       nickname,
@@ -211,6 +230,8 @@ function RegisterForm(): JSX.Element {
     (event) => {
       setField(event.target.value);
       setFieldError(false);
+      // if (event.target.value !== '개발자') {
+      // }
     },
     [field, fieldError],
   );
@@ -331,16 +352,15 @@ function RegisterForm(): JSX.Element {
               <img src={SelectSvg} alt='select arrow button' />
               <FieldSelect
                 name='user-field'
-                form='myForm'
                 required
                 onChange={handleChangeField}
               >
                 <option value='description' disabled selected>
                   분야를 선택하세요.
                 </option>
-                <option value='developer'>개발자</option>
-                <option value='designer'>디자이너</option>
-                <option value='productManger'>기획자</option>
+                <option value='개발자'>개발자</option>
+                <option value='디자이너'>디자이너</option>
+                <option value='기획자'>기획자</option>
               </FieldSelect>
             </SelectArrowBtn>
             {/* </ArrowImg> */}
@@ -357,48 +377,10 @@ function RegisterForm(): JSX.Element {
                 <img src={SelectSvg} alt='select arrow button' />
                 <FieldSelect
                   name='user-level'
-                  form='myForm'
                   required
                   onChange={handleChangeLevel}
                 >
-                  {field !== 'developer' ? (
-                    <>
-                      <option value='description' disabled selected>
-                        레벨을 선택해주세요.
-                      </option>
-                      <option value='하수'>
-                        하수: 협업 경험은 없고 개인 프로젝트만 진행해보았습니다.
-                      </option>
-                      <option value='중수'>
-                        중수: 협업 경험이 있으며 다른 사용자들과 협업을 진행할
-                        수 있습니다.
-                      </option>
-                      <option value='고수'>
-                        고수: 현재 실무에서 종사하고 있습니다.
-                      </option>
-                    </>
-                  ) : (
-                    <>
-                      <option value='description' disabled selected>
-                        레벨을 선택해주세요.
-                      </option>
-                      <option value='코린이'>
-                        코린이: 협업 경험은 없고 개인 프로젝트만
-                        진행해보았습니다.
-                      </option>
-                      <option value='코등학생'>
-                        코등학생: 협업 경험이 없지만 API를 사용해 협업을 진행할
-                        수 있습니다.
-                      </option>
-                      <option value='코대생'>
-                        코대생: 협업 경험이 있고 API를 자유자재로 다룰수
-                        있습니다.
-                      </option>
-                      <option value='코드닌자'>
-                        코드닌자: 현재 실무에서 종사하고 있는 개발자입니다.
-                      </option>
-                    </>
-                  )}
+                  <Option field={field} />
                 </FieldSelect>
               </SelectArrowBtn>
             </label>

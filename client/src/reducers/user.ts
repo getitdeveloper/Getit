@@ -17,6 +17,10 @@ import {
   USER_NICK_DOUBLECHECK_SUCCESS,
   USER_NICK_DOUBLECHECK_FAILURE,
   USER_NICK_DOUBLECHECK_RESET,
+  USER_PROFILE_REGISTER_REQUEST,
+  USER_PROFILE_REGISTER_SUCCESS,
+  USER_PROFILE_REGISTER_FAILURE,
+  USER_REGISTER_RESET,
 } from './actions';
 
 // 초기 상태
@@ -27,6 +31,18 @@ const initialState: InitialState = {
   },
   nickDoubleCheck: {
     duplicate: null,
+  },
+  profile: {
+    user: null,
+    user_id: null,
+    nickname: null,
+    job: null,
+    developer_level: null,
+    designer_and_pm_level: null,
+    image: null,
+    email: null,
+    info: null,
+    git: null,
   },
   profileInfo: null,
   portfolio: null,
@@ -46,6 +62,10 @@ const initialState: InitialState = {
   userNickDoubleCheckSuccess: false,
   userNickDoubleCheckFailure: null,
   userNickDoubleCheckReset: false,
+  userProfileRegisterRequest: false,
+  userProfileRegisterSuccess: false,
+  userProfileRegisterFailure: null,
+  userRegisterReset: false,
 };
 
 const reducer = (state = initialState, action: UserActions): InitialState =>
@@ -136,6 +156,26 @@ const reducer = (state = initialState, action: UserActions): InitialState =>
         draft.userNickDoubleCheckRequest = false;
         draft.userNickDoubleCheckSuccess = false;
         draft.userNickDoubleCheckFailure = null;
+        break;
+      case USER_PROFILE_REGISTER_REQUEST:
+        draft.userProfileRegisterRequest = true;
+        draft.userProfileRegisterSuccess = false;
+        draft.userProfileRegisterFailure = null;
+        break;
+      case USER_PROFILE_REGISTER_SUCCESS:
+        draft.userProfileRegisterRequest = false;
+        draft.userProfileRegisterSuccess = true;
+        draft.userProfileRegisterFailure = null;
+        draft.profile = action.data;
+        break;
+      case USER_PROFILE_REGISTER_FAILURE:
+        draft.userProfileRegisterRequest = false;
+        draft.userProfileRegisterSuccess = false;
+        draft.userProfileRegisterFailure = action.error;
+        break;
+      case USER_REGISTER_RESET:
+        draft.userRegisterReset = true;
+        draft.id = { message: null, user_pk: null };
         break;
       default:
         return state;

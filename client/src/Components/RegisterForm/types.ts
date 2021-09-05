@@ -1,8 +1,10 @@
 export interface IRegisterData {
+  user: number;
+  user_pk: number;
   nickname: string;
-  field: string;
+  job: string;
   level: string;
   email: string;
-  introduce: string;
-  stacks: Array<string>; // string[]
+  info: string;
+  stacks?: Array<string>; // string[]
 }

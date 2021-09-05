@@ -105,7 +105,7 @@ export const SelectArrowBtn = styled.div`
   position: relative;
   img {
     position: absolute;
-    right: 0.1rem;
+    right: 0.15rem;
     bottom: 0.5rem;
     background-color: #ffffff;
     padding: 1.4rem;

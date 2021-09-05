@@ -16,6 +16,9 @@ import {
   USER_NICK_DOUBLECHECK_REQUEST,
   USER_NICK_DOUBLECHECK_SUCCESS,
   USER_NICK_DOUBLECHECK_FAILURE,
+  USER_PROFILE_REGISTER_REQUEST,
+  USER_PROFILE_REGISTER_SUCCESS,
+  USER_PROFILE_REGISTER_FAILURE,
 } from '../reducers/actions';
 import {
   ResponseUserProfile,
@@ -184,6 +187,32 @@ function* requestUserNickDoubleCheckSaga(
   }
 }
 
+// 회원가입 회원 프로필 정보 저장
+const requestUserProfileRegister = (data: any) => {
+  console.log('프로필 정보 확인 ===>', data);
+  return axios.post(`/api/profile/${data.user_pk}/`, data);
+};
+
+function* requestUserProfileRegisterSaga(action: any): any {
+  // console.log('프로필 정보 확인 ===>', action);
+
+  try {
+    const response: any = yield call(requestUserProfileRegister, action.data);
+    console.log('프로필 저장 응답 결과 ===>', response);
+
+    yield put({
+      type: USER_PROFILE_REGISTER_SUCCESS,
+      data: response.data,
+    });
+  } catch (error) {
+    // console.log('에러 ===>', error);
+    yield put({
+      type: USER_PROFILE_REGISTER_FAILURE,
+      error,
+    });
+  }
+}
+
 function* watchRequestUserInfo() {
   yield takeLatest(USER_INFO_REQUEST, requestUserInfoSaga);
 }
@@ -207,6 +236,13 @@ function* watchRequestUserNickDoubleCheck() {
   );
 }
 
+function* watchRequestUserPofileRegister() {
+  yield takeLatest(
+    USER_PROFILE_REGISTER_REQUEST,
+    requestUserProfileRegisterSaga,
+  );
+}
+
 function* userSaga() {
   yield all([
     fork(watchRequestUserInfo),
@@ -214,6 +250,7 @@ function* userSaga() {
     fork(watchRequestUserLogOut),
     fork(watchRequestUserProfile),
     fork(watchRequestUserNickDoubleCheck),
+    fork(watchRequestUserPofileRegister),
   ]);
 }
 
