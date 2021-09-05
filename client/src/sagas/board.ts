@@ -14,10 +14,8 @@ import {
 import { BoardData, ResponseFreePost, PostData } from './board-types';
 
 // 자유게시판 받아오기
-const requestFreeBoard = (BoardData: BoardData) => {
-  return axios.get(
-    `/api/board?category=${BoardData.category}&page=${BoardData.page}`,
-  );
+const requestFreeBoard = (data: BoardData) => {
+  return axios.get(`/api/board?category=${data.category}&page=${data.page}`);
 };
 
 function* requestFreeBoardSaga(action: any): any {
