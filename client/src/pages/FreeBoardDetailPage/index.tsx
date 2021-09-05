@@ -1,23 +1,39 @@
 import * as React from 'react';
+import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
 import SubHeader from '../../Components/Commons/SubHeader/SubHeader';
 import { PageBackground, PageContainer, PageTitle } from '../../styles/page';
-import { dummyData } from '../FreeBoardPage/dummyData';
 import PostItem from '../../Components/PostItem';
 import MarkdownRenderer from '../../Components/MarkdownRenderer';
+import { FREE_POST_REQUEST } from '../../reducers/actions';
 
 function FreeBoardDetailPage(props: any) {
   const { history } = props;
   const contentId = history.location.state;
+  const dispatch = useDispatch();
+  const freePost = useSelector((state: RootStateOrAny) => state.board.freePost);
+
+  React.useEffect(() => {
+    dispatch({
+      type: FREE_POST_REQUEST,
+      data: {
+        id: contentId,
+      },
+    });
+  }, []);
+
   return (
     <div>
       <SubHeader />
       <PageBackground>
         <PageTitle>자유 게시판</PageTitle>
-        <PageContainer width='80%'>
-          <PostItem content={dummyData[contentId]} />
-          <MarkdownRenderer text={dummyData[contentId].text} open />
-        </PageContainer>
+        {freePost && (
+          <PageContainer width='80%'>
+            <PostItem content={freePost} />
+            <MarkdownRenderer text={freePost.content} open />
+          </PageContainer>
+        )}
+
         <div>
           <span>
             <ChatBubbleOutlineIcon />
