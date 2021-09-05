@@ -55,7 +55,7 @@ class ProfileDetail(GenericAPIView):
         serializer = ProfileSerializer(profile)
         return Response(serializer.data)
 
-    def post(self, request, user_id):
+    def post(self, request, user_pk):
         """
         개인 프로필 detail(POST)
 
@@ -72,10 +72,18 @@ class ProfileDetail(GenericAPIView):
                 "info": "안녕하세요. test입니다.",
                 "git": "https://github.com/test",
         """
-        profile = self.get_object(user_id)
+        profile = self.get_object(user_pk)
         serializer = ProfileSerializer(profile, data=request.data)
-        self.check_object_permissions(self.request, profile)
+
+
         if serializer.is_valid():
+            stacks = serializer.validated_data['name']
+            print(stacks)
             serializer.save()
+            for stack in stacks.values():
+                if not stack:
+                    continue
+                _tag, _ = Tag.objects.get_or_create(name=stack)
+                Profile.stack.add(_tag)
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
