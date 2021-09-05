@@ -19,6 +19,7 @@ from rest_framework import viewsets
 
 class CommonBoardListAPIView(GenericAPIView):
     queryset = CommonBoard.objects.all()
+    permission_classes = [IsOwnerOrReadOnly]
     serializer_class = CommonBoardSerializer
     pagination_class = BoardPageNumberPagination
     ordering_fields = ['create_at']
