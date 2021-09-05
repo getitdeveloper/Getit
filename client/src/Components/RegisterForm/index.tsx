@@ -302,9 +302,15 @@ function RegisterForm(): JSX.Element {
     });
   }, [nickname, nickDoubleCheck]);
 
+  const handleRouting = useCallback(() => {
+    dispatch({
+      type: USER_REGISTER_RESET,
+    });
+  }, []);
+
   return (
     <RegisterWrapper>
-      <Logo>
+      <Logo onClick={handleRouting}>
         <Link to='/'>
           <img src={LogoSvg} alt='logo' />
         </Link>
