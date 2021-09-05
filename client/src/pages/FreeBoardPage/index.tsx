@@ -18,7 +18,7 @@ const defaultProp: HeaderProp = {
 function FreeBoardPage(props: HeaderProp) {
   const dispatch = useDispatch();
   const freeBoard = useSelector(
-    (state: RootStateOrAny) => state.board.freeBoard,
+    (state: RootStateOrAny) => state.board.BoardList,
   );
   const { header } = props;
 
@@ -26,7 +26,7 @@ function FreeBoardPage(props: HeaderProp) {
     dispatch({
       type: FREE_BOARD_REQUEST,
       data: {
-        page: 1,
+        page: '1',
         category: 'free',
       },
     });

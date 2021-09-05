@@ -11,7 +11,9 @@ function FreeBoardDetailPage(props: any) {
   const { history } = props;
   const contentId = history.location.state;
   const dispatch = useDispatch();
-  const freePost = useSelector((state: RootStateOrAny) => state.board.freePost);
+  const freePost = useSelector(
+    (state: RootStateOrAny) => state.board.PostContent,
+  );
 
   React.useEffect(() => {
     dispatch({

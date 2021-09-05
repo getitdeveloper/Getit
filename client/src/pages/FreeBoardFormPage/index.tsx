@@ -4,6 +4,8 @@ import PostForm from '../../Components/PostForm';
 import { PageBackground, PageContainer, PageTitle } from '../../styles/page';
 
 function FreeBoardFormPage() {
+  // todo user_pk가 null일 경우 main page로 이동
+
   return (
     <div>
       <SubHeader />
