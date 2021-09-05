@@ -11,7 +11,6 @@ class StackSerializer(ModelSerializer):
         fields = ('name',)
 
 class ProfileSerializer(ModelSerializer):
-    name = StackSerializer(many=True)
     class Meta:
         model = Profile
         fields = (
@@ -24,7 +23,6 @@ class ProfileSerializer(ModelSerializer):
             'email',
             'info',
             'git',
-            'name',
         )
 
 class TeamProfileSerializer(serializers.ModelSerializer):

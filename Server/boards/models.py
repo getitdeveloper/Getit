@@ -3,8 +3,8 @@ from django.db import models
 
 class CommonBoard(models.Model):
     CHOICES_CATEGORY = (
-        ('자유 게시판', '자유 게시판'),
-        ('질문 게시판', '질문 게시판'),
+        ('free', 'free'),
+        ('question', 'question'),
     )
     title = models.CharField(max_length=500)
     content = models.TextField()
