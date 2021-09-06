@@ -5,12 +5,15 @@ from rest_framework.serializers import ModelSerializer
 from portfolios.models import Portfolio
 from tags.models import Tag
 from .models import Profile, TeamProfile
-class StackSerializer(ModelSerializer):
+
+class TagSerializer(serializers.ModelSerializer):
+    def to_representation(self, value):
+        return value.name
     class Meta:
         model = Tag
         fields = ('name',)
-
 class ProfileSerializer(ModelSerializer):
+    stack = TagSerializer(read_only=True, many=True)
     class Meta:
         model = Profile
         fields = (
@@ -23,6 +26,7 @@ class ProfileSerializer(ModelSerializer):
             'email',
             'info',
             'git',
+            'stack',
         )
 
 class TeamProfileSerializer(serializers.ModelSerializer):

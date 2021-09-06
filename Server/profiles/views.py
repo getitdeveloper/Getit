@@ -31,10 +31,10 @@ class ProfileDetail(GenericAPIView):
 
     # parser_classes = (MultiPartParser,)
 
-    def get_object(self, user_id):
-        return get_object_or_404(Profile, user_pk=user_id)
+    def get_object(self, user_pk):
+        return get_object_or_404(Profile, user_pk=user_pk)
 
-    def get(self, request, user_id):
+    def get(self, request, user_pk):
         """
                 개인 프로필 detail(GET)
 
@@ -51,7 +51,7 @@ class ProfileDetail(GenericAPIView):
                         "info": "안녕하세요. test입니다.",
                         "git": "https://github.com/test",
                 """
-        profile = self.get_object(user_id)
+        profile = self.get_object(user_pk)
         serializer = ProfileSerializer(profile)
         return Response(serializer.data)
 
@@ -74,7 +74,14 @@ class ProfileDetail(GenericAPIView):
         """
         profile = self.get_object(user_pk)
         serializer = ProfileSerializer(profile, data=request.data)
+
         if serializer.is_valid():
             serializer.save()
+            names = request.data['stack']
+            for name in names:
+                if not name:
+                    continue
+                _name, _ = Tag.objects.get_or_create(name=name)
+                profile.stack.add(_name)
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

@@ -1,11 +1,12 @@
 from rest_framework import serializers
 
+from profiles.serializers import TagSerializer
 from .models import RecruitmentBoard, CommonBoard
 from rest_framework.serializers import ModelSerializer
 
 
 class CommonBoardSerializer(serializers.ModelSerializer):
-    stack = serializers.StringRelatedField(many=True)
+    stack = TagSerializer(read_only=True, many=True)
     class Meta:
         model = CommonBoard
         fields = ('id','title', 'category' ,'content', 'image', 'create_at', 'user', 'stack',)
