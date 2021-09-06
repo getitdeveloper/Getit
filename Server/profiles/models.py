@@ -1,7 +1,7 @@
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-
+from taggit.managers import TaggableManager
 from accounts.models import User
 
 
@@ -30,6 +30,7 @@ class Profile(models.Model):
     email = models.EmailField(max_length=50, null=True)
     info = models.TextField(null=True)
     git = models.CharField(max_length=100, blank=True, null=True)
+    stack = models.ManyToManyField('tags.Tag')
 
 
     # def __str__(self):
