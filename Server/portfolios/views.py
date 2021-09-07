@@ -16,21 +16,6 @@ class PortfolioListAPIView(GenericAPIView):
 
     def get(self, request, user_id):
         """
-                            포트폴리오 list
-
-                            ---
-                            # GET Response 예시
-                            {
-                                'id':1, --> 포트폴리오 id
-                                'user':1,
-                                'title':'getit',
-                                'contents':'스터집모집플랫폼'
-                                'images':'test.com'
-                            }
-
-                            """
-
-        """
             포트폴리오 list (GET)
 
             ---
@@ -58,6 +43,7 @@ class PortfolioListAPIView(GenericAPIView):
         serializer = PortfolioSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
+
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

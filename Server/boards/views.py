@@ -6,7 +6,9 @@ from drf_yasg.utils import swagger_auto_schema
 from rest_framework.generics import GenericAPIView
 from rest_framework.mixins import ListModelMixin
 from rest_framework.parsers import MultiPartParser
-from .permissions import IsOwnerOrReadOnly
+
+from tags.models import Tag
+from .permissions import IsOwnerOrReadOnly, RecruitmentIsOwnerOrReadOnly
 from .serializers import CommonBoardSerializer, RecruitmentBoardSerializer
 from rest_framework.response import Response
 from rest_framework import status
@@ -44,12 +46,14 @@ class CommonBoardListAPIView(GenericAPIView):
         queryset = self.get_queryset()
         if category == 'free':
             posts = CommonBoard.objects.filter(category=category)
+            posts = self.filter_queryset(posts)
             paginator = BoardPageNumberPagination()
             result_page = paginator.paginate_queryset(posts, request)
             serializer = CommonBoardSerializer(result_page, many=True)
             return paginator.get_paginated_response(serializer.data)
         elif category == 'question':
             posts = CommonBoard.objects.filter(category=category)
+            posts = self.filter_queryset(posts)
             paginator = BoardPageNumberPagination()
             result_page = paginator.paginate_queryset(posts, request)
             serializer = CommonBoardSerializer(result_page, many=True)
@@ -67,18 +71,27 @@ class CommonBoardListAPIView(GenericAPIView):
             질문/자유 게시글 list (POST)
 
             ---
-                - id : 게시판 번호
-                - user : 글쓴이 번호(user id)
-                - title : 제목
-                - category : 자유게시판, 질문게시판 둘중 하나로
-                - content : 내용
-                - image : 이미지
-                - create_at : 생성 시간
+                {
+                    "title":"asdasdasd",
+                    "category":"question",
+                    "content":"asdasdasdasd",
+                    "image":null,
+                    "user":3,
+                    "stack":["python", "java"]
+                }
         """
+
         serializer = CommonBoardSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
+            board = CommonBoard.objects.get(id=serializer.data['id'])
 
+            names = request.data['stack']
+            for name in names:
+                if not name:
+                    continue
+                _name, _ = Tag.objects.get_or_create(name=name)
+                board.stack.add(_name)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -142,15 +155,24 @@ class CommonBoardDetailAPIView(GenericAPIView):
         post.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+
 class RecruitmentBoardPostListAPIView(GenericAPIView):
     serializer_class = RecruitmentBoardSerializer
+    permission_classes = [RecruitmentIsOwnerOrReadOnly]
+    pagination_class = BoardPageNumberPagination
+    ordering_fields = ['create_at']
+    filter_backends = [SearchFilter]
+    search_fields = ['content']
 
     # parser_classes = (MultiPartParser,)
 
     def get(self, request):
         posts = RecruitmentBoard.objects.all()
-        serializer = RecruitmentBoardSerializer(posts, many=True)
-        return Response(serializer.data)
+        posts = self.filter_queryset(posts)
+        paginator = BoardPageNumberPagination()
+        result_page = paginator.paginate_queryset(posts, request)
+        serializer = RecruitmentBoardSerializer(result_page, many=True)
+        return paginator.get_paginated_response(serializer.data)
 
     def post(self, request):
         serializer = RecruitmentBoardSerializer(data=request.data)

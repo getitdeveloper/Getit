@@ -15,9 +15,8 @@ class CommonBoard(models.Model):
     stack = models.ManyToManyField('tags.Tag')
 
 class RecruitmentBoard(models.Model):
-
-    user = models.ForeignKey('accounts.User', on_delete=models.CASCADE, null=True)
-    study_name = models.ForeignKey('profiles.TeamProfile', on_delete=models.CASCADE)
+    user = models.ForeignKey('accounts.User', on_delete=models.CASCADE)
+    study = models.ForeignKey('profiles.TeamProfile', on_delete=models.CASCADE)
     developer = models.PositiveIntegerField(default=0)
     designer = models.PositiveIntegerField(default=0)
     pm = models.PositiveIntegerField(default=0)
@@ -25,3 +24,4 @@ class RecruitmentBoard(models.Model):
     start_date = models.DateField()
     end_date = models.DateField()
     status = models.BooleanField(default=0)
+    stack = models.ManyToManyField('tags.Tag')
