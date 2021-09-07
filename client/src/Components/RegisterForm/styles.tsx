@@ -101,7 +101,7 @@ export const EmailInput = styled.input`
 //   }
 // `;
 
-export const SelectArrowBtn = styled.div`
+export const SelectWrapper = styled.div`
   position: relative;
   img {
     position: absolute;

@@ -204,12 +204,16 @@ function* requestUserProfileRegisterSaga(action: any): any {
       type: USER_PROFILE_REGISTER_SUCCESS,
       data: response.data,
     });
+    return alert(
+      `${response.data.nickname}님 회원가입이 완료되었습니다. 환영합니다.`,
+    );
   } catch (error) {
     // console.log('에러 ===>', error);
     yield put({
       type: USER_PROFILE_REGISTER_FAILURE,
       error,
     });
+    return alert('문제가 발생했습니다. 잠시 후 다시 시도해 주세요.');
   }
 }
 
