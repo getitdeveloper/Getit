@@ -6,5 +6,11 @@ export interface IRegisterData {
   level: string;
   email: string;
   info: string;
-  stacks?: Array<string>; // string[]
+  stack: Array<string>; // string[]
+}
+
+export interface IOptionProps {
+  field: string;
+  image: string;
+  handleChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
 }

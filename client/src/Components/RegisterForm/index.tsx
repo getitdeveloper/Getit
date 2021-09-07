@@ -19,32 +19,33 @@ import {
   SubmitBtn,
   ErrorMessage,
   ErrorMessageTextarea,
-  SelectArrowBtn,
+  SelectWrapper,
   TextCount,
 } from './styles';
-import LogoSvg from './Logo.svg';
-import SelectSvg from './Select.svg';
+
 import {
   USER_NICK_DOUBLECHECK_REQUEST,
   USER_NICK_DOUBLECHECK_RESET,
   USER_PROFILE_REGISTER_REQUEST,
   USER_REGISTER_RESET,
 } from '../../reducers/actions';
-
-import Option from './Option';
+import OptionDev from './OptionDev';
+import OptionDesign from './OptionDesign';
+import OptionPM from './OptionPM';
+import LogoSvg from './Logo.svg';
+import SelectSvg from './Select.svg';
 
 function RegisterForm(): JSX.Element {
   const history = useHistory();
   const dispatch = useDispatch();
 
-  const message = useSelector((state: RootStateOrAny) => state.user.id.message);
-  const nickDoubleCheck = useSelector(
+  const message: string = useSelector(
+    (state: RootStateOrAny) => state.user.id.message,
+  );
+  const nickDoubleCheck: string = useSelector(
     (state: RootStateOrAny) => state.user.nickDoubleCheck.duplicate,
   );
   const userId = useSelector((state: RootStateOrAny) => state.user.id.user_pk);
-  const profile = useSelector(
-    (state: RootStateOrAny) => state.user.profile.user_pk,
-  );
 
   const [nickname, setNickname] = useState('');
   const [nicknameError, setNicknameError] = useState(false);
@@ -64,7 +65,6 @@ function RegisterForm(): JSX.Element {
 
   useEffect(() => {
     // 기존 회원 또는 비회원 접근 방지 라우팅
-    // TODO 상태 초기화
     if (message !== 'register') {
       return history.push('/');
     }
@@ -78,11 +78,11 @@ function RegisterForm(): JSX.Element {
     if (nickDoubleCheck === 'fail') {
       setDuplicateCheck(false);
       setDuplicateCheckError(true);
-      return alert('사용 불가능한 닉네임 입니다.');
+      return alert('이미 사용 중인 닉네임입니다.');
     }
   }, [nickDoubleCheck, message]);
 
-  // 회원가입시 입력값 체크
+  // 회원가입 폼 제출 시 입력값 체크
   const handleSubmit = useCallback(
     (event) => {
       event.preventDefault();
@@ -140,7 +140,7 @@ function RegisterForm(): JSX.Element {
         introduceError === true ||
         stacksError === true
       ) {
-        return null;
+        return alert('모든 항목을 작성해 주세요.');
       }
 
       // 쉼표로 기술 구분
@@ -154,17 +154,6 @@ function RegisterForm(): JSX.Element {
         (stack) => stack.length >= 1,
       );
 
-      // const data: IRegisterData = {
-      //   user: userId,
-      //   user_id: userId,
-      //   nickname,
-      //   job: field,
-      //   developer_level: level,
-      //   email,
-      //   introduce,
-      //   // stacks: resultStackList,
-      // };
-
       const data: IRegisterData = {
         user: userId,
         user_pk: userId,
@@ -173,16 +162,17 @@ function RegisterForm(): JSX.Element {
         level,
         email,
         info: introduce,
-        // stacks: resultStackList,
+        stack: resultStackList,
       };
 
-      console.log(data);
+      // console.log(data);
 
+      // 회원 가입 요청
       dispatch({
         type: USER_PROFILE_REGISTER_REQUEST,
         data,
       });
-
+      // 회원가입 register message 초기화
       dispatch({
         type: USER_REGISTER_RESET,
       });
@@ -230,8 +220,8 @@ function RegisterForm(): JSX.Element {
     (event) => {
       setField(event.target.value);
       setFieldError(false);
-      // if (event.target.value !== '개발자') {
-      // }
+      // field가 변경되는 경우 level값 초기화
+      setLevel('');
     },
     [field, fieldError],
   );
@@ -354,21 +344,21 @@ function RegisterForm(): JSX.Element {
           <label htmlFor='user-field'>
             <StyledLabel>분야(필수)</StyledLabel>
             {/* <ArrowImg> */}
-            <SelectArrowBtn>
+            <SelectWrapper>
               <img src={SelectSvg} alt='select arrow button' />
               <FieldSelect
                 name='user-field'
                 required
                 onChange={handleChangeField}
               >
-                <option value='description' disabled selected>
+                <option value='description-field' disabled selected>
                   분야를 선택하세요.
                 </option>
                 <option value='개발자'>개발자</option>
                 <option value='디자이너'>디자이너</option>
                 <option value='기획자'>기획자</option>
               </FieldSelect>
-            </SelectArrowBtn>
+            </SelectWrapper>
             {/* </ArrowImg> */}
           </label>
           {fieldError && <ErrorMessage>분야를 선택해주세요!</ErrorMessage>}
@@ -377,19 +367,30 @@ function RegisterForm(): JSX.Element {
         {/* 레벨(필수) 분야 선택시 알맞은 선택 폼이 출력 */}
         <DivideSection>
           {field && (
-            <label htmlFor='user-level'>
-              <StyledLabel>레벨(필수)</StyledLabel>
-              <SelectArrowBtn>
-                <img src={SelectSvg} alt='select arrow button' />
-                <FieldSelect
-                  name='user-level'
-                  required
-                  onChange={handleChangeLevel}
-                >
-                  <Option field={field} />
-                </FieldSelect>
-              </SelectArrowBtn>
-            </label>
+            <div>
+              {/* 각각 작성하지않으면 field값 변경시 input값이 제대로 최기화 되어 보여지지 않음 */}
+              {field === '개발자' && (
+                <OptionDev
+                  field={field}
+                  image={SelectSvg}
+                  handleChange={handleChangeLevel}
+                />
+              )}
+              {field === '디자이너' && (
+                <OptionDesign
+                  field={field}
+                  image={SelectSvg}
+                  handleChange={handleChangeLevel}
+                />
+              )}
+              {field === '기획자' && (
+                <OptionPM
+                  field={field}
+                  image={SelectSvg}
+                  handleChange={handleChangeLevel}
+                />
+              )}
+            </div>
           )}
           {levelError && <ErrorMessage>레벨을 선택해주세요!</ErrorMessage>}
         </DivideSection>
