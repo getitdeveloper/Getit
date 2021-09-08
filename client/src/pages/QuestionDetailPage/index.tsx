@@ -1,25 +1,39 @@
 import * as React from 'react';
+import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
 import SubHeader from '../../Components/Commons/SubHeader/SubHeader';
 import { PageBackground, PageContainer, PageTitle } from '../../styles/page';
-import { dummyData } from '../FreeBoardPage/dummyData';
-import PostItem from '../../Components/PostItem';
-import MarkdownRenderer from '../../Components/MarkdownRenderer';
+import { COMMON_POST_REQUEST } from '../../reducers/actions';
+import PostDetail from '../../Components/PostDetail';
 
 function QuestionDetailPage(props: any) {
   const { history } = props;
+  const contentId = history.location.state;
+  const dispatch = useDispatch();
+  const questionPost = useSelector(
+    (state: RootStateOrAny) => state.board.PostContent,
+  );
+
+  React.useEffect(() => {
+    dispatch({
+      type: COMMON_POST_REQUEST,
+      data: {
+        id: contentId,
+      },
+    });
+  }, []);
+
+  if (!questionPost) {
+    return <CircularProgress />;
+  }
   return (
     <div>
       <SubHeader />
       <PageBackground>
         <PageTitle>질문 게시판</PageTitle>
-        <PageContainer width='80%'>
-          <PostItem content={dummyData[history.location.state]} />
-          <MarkdownRenderer
-            text={dummyData[history.location.state].text}
-            open
-          />
-        </PageContainer>
+        <PostDetail post={questionPost} />
+
         <div>
           <span>
             <ChatBubbleOutlineIcon />

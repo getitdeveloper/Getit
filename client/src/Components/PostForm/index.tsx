@@ -46,10 +46,15 @@ function PostForm() {
       stack: ['hello'],
     };
     console.log(postData);
-    dispatch({
-      type: COMMON_POST_REGISTER_REQUEST,
-      data: postData,
-    });
+    try {
+      dispatch({
+        type: COMMON_POST_REGISTER_REQUEST,
+        data: postData,
+      });
+      history.push(`/${boardType}Board`);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

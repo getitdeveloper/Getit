@@ -1,4 +1,5 @@
 import * as React from 'react';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
 import SubHeader from '../../Components/Commons/SubHeader/SubHeader';
@@ -6,6 +7,7 @@ import { PageBackground, PageContainer, PageTitle } from '../../styles/page';
 import PostItem from '../../Components/PostItem';
 import MarkdownRenderer from '../../Components/MarkdownRenderer';
 import { COMMON_POST_REQUEST } from '../../reducers/actions';
+import PostDetail from '../../Components/PostDetail';
 
 function FreeBoardDetailPage(props: any) {
   const { history } = props;
@@ -24,17 +26,15 @@ function FreeBoardDetailPage(props: any) {
     });
   }, []);
 
+  if (!freePost) {
+    return <CircularProgress />;
+  }
   return (
     <div>
       <SubHeader />
       <PageBackground>
         <PageTitle>자유 게시판</PageTitle>
-        {freePost && (
-          <PageContainer width='80%'>
-            <PostItem content={freePost} />
-            <MarkdownRenderer text={freePost.content} open />
-          </PageContainer>
-        )}
+        <PostDetail post={freePost} />
 
         <div>
           <span>

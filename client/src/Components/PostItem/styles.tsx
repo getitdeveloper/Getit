@@ -53,7 +53,7 @@ export const PostText = styled.p`
   text-overflow: ellipsis;
 `;
 
-export const PostDetail = styled.div`
+export const PostDetails = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: center;

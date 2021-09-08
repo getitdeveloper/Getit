@@ -9,7 +9,7 @@ import {
   PostText,
   PostTitle,
   TagWrapper,
-  PostDetail,
+  PostDetails,
   DetailInfo,
 } from './styles';
 import MemberType from '../RecruitMembers/index';
@@ -45,7 +45,7 @@ function PostItem(props: any) {
           <PostText>{content.content}</PostText>
         </PostInfoButton>
       </PostContainer>
-      <PostDetail>
+      <PostDetails>
         <DetailInfo>
           <img src='/icons/calendar.svg' alt='write-date' />
           {moment(content.create_at).format('YYYY년 MM월 DD일')}
@@ -57,7 +57,7 @@ function PostItem(props: any) {
         <DetailInfo>
           <ChatBubbleOutlineIcon />2{/* {content.commentCount} */}
         </DetailInfo>
-      </PostDetail>
+      </PostDetails>
       <HorizontalLine width='100%' />
     </div>
   );

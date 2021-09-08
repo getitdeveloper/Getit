@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import SubHeader from '../../Components/Commons/SubHeader/SubHeader';
 import PostItem from '../../Components/PostItem';
 import PostSubHeader from '../../Components/PostSubHeader';
@@ -33,6 +34,9 @@ function QuestionBardPage(props: HeaderProp) {
     });
   }, []);
 
+  if (!boardList) {
+    return <CircularProgress />;
+  }
   return (
     <div>
       {header ? <SubHeader /> : null}
