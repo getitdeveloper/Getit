@@ -92,6 +92,7 @@ class CommonBoardListAPIView(GenericAPIView):
                     continue
                 _name, _ = Tag.objects.get_or_create(name=name)
                 board.stack.add(_name)
+            serializer.data['stack'].append(names)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

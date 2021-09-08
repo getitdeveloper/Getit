@@ -28,9 +28,7 @@ def status_check(request):
 class ProfileDetail(GenericAPIView):
     serializer_class = ProfileSerializer
     permission_classes = [IsOwnerOrReadOnly]
-
     # parser_classes = (MultiPartParser,)
-
     def get_object(self, user_pk):
         return get_object_or_404(Profile, user_pk=user_pk)
 
@@ -84,6 +82,42 @@ class ProfileDetail(GenericAPIView):
                 if not name:
                     continue
                 _name, _ = Tag.objects.get_or_create(name=name)
+                profile.stack.add(_name)
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def put(self, request, user_pk):
+        """
+        개인 프로필 detail(PUT)
+
+        ---
+        # POST request 예시
+            {
+                "user": 3,
+                "user_pk": 3,
+                "nickname": "테스트계정",
+                "job": "개발자",
+                "level": "코린이",
+                "image": "image.test.com",
+                "email": "test@naer.com",
+                "info": "asdasd",
+                "git": "asdasdasd",
+                "stack": ["abc","def"]
+            }
+        """
+        profile = self.get_object(user_pk)
+        serializer = ProfileSerializer(profile, data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+            names = request.data['stack']
+            print(names)
+            for name in names:
+                if not name:
+                    continue
+                _name, _ = Tag.objects.get_or_create(name=name)
+                profile.stack.clear()
+                print(profile.stack)
                 profile.stack.add(_name)
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
