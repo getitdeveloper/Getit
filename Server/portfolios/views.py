@@ -12,7 +12,7 @@ from rest_framework.parsers import FormParser, MultiPartParser
 class PortfolioListAPIView(GenericAPIView):
     serializer_class = PortfolioSerializer
     permission_classes = [IsOwnerOrReadOnly]
-    parser_classes = (FormParser, MultiPartParser)
+    #parser_classes = (FormParser, MultiPartParser)
 
     def get(self, request, user_id):
         """
@@ -34,7 +34,6 @@ class PortfolioListAPIView(GenericAPIView):
             포트폴리오 list (POST)
 
             ---
-                - id : 포트폴리오 번호(potfolio id)
                 - user : 사용자 번호(user id)
                 - title : 제목
                 - contents : 내용
