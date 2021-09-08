@@ -1,106 +1,106 @@
 import axios from 'axios';
 import { all, call, fork, put, takeLatest } from '@redux-saga/core/effects';
 import {
-  FREE_BOARD_SUCCESS,
-  FREE_BOARD_FAILURE,
-  FREE_BOARD_REQUEST,
-  FREE_POST_SUCCESS,
-  FREE_POST_FAILURE,
-  FREE_POST_REQUEST,
-  FREE_POST_REGISTER_REQUEST,
-  FREE_POST_REGISTER_FAILURE,
-  FREE_POST_REGISTER_SUCCESS,
+  COMMON_BOARD_SUCCESS,
+  COMMON_BOARD_FAILURE,
+  COMMON_BOARD_REQUEST,
+  COMMON_POST_SUCCESS,
+  COMMON_POST_FAILURE,
+  COMMON_POST_REQUEST,
+  COMMON_POST_REGISTER_REQUEST,
+  COMMON_POST_REGISTER_FAILURE,
+  COMMON_POST_REGISTER_SUCCESS,
 } from '../reducers/actions';
-import { BoardData, ResponseFreePost, PostData } from './board-types';
+import { BoardData, PostData } from './boardTypes';
 
 // 자유게시판 받아오기
-const requestFreeBoard = (data: BoardData) => {
+const requestCommonBoard = (data: BoardData) => {
   return axios.get(`/api/board?category=${data.category}`);
   // return axios.get(`/api/board?category=${data.category}&page=${data.page}`);
 };
 
-function* requestFreeBoardSaga(action: any): any {
+function* requestCommonBoardSaga(action: any): any {
   try {
     console.log('자유게시판 받아오기');
-    const response = yield call(requestFreeBoard, action.data);
+    const response = yield call(requestCommonBoard, action.data);
     console.log('자유게시판 정보 응답 ===>', response);
 
     yield put({
-      type: FREE_BOARD_SUCCESS,
+      type: COMMON_BOARD_SUCCESS,
       data: response.data,
     });
   } catch (error) {
     console.error(error);
     yield put({
-      type: FREE_BOARD_FAILURE,
+      type: COMMON_BOARD_FAILURE,
       error,
     });
   }
 }
 
 // 자유 게시글 받아오기
-const requestFreePost = (id: string) => {
+const requestCommonPost = (id: string) => {
   return axios.get(`/api/board/${id}`);
 };
 
-function* requestFreePostSaga(action: any): any {
+function* requestCommonPostSaga(action: any): any {
   try {
-    const response = yield call(requestFreePost, action.data.id);
+    const response = yield call(requestCommonPost, action.data.id);
     console.log('자유게시글 정보 응답 ===>', response);
 
     yield put({
-      type: FREE_POST_SUCCESS,
+      type: COMMON_POST_SUCCESS,
       data: response.data,
     });
   } catch (error) {
     console.error(error);
     yield put({
-      type: FREE_POST_FAILURE,
+      type: COMMON_POST_FAILURE,
       error,
     });
   }
 }
 
 // 자유 게시글 작성하기
-const requestFreePostRegister = (data: PostData) => {
+const requestCommonPostRegister = (data: PostData) => {
   return axios.post(`/api/board/`, data);
 };
 
-function* requestFreePostRegisterSaga(action: any): any {
+function* requestCommonPostRegisterSaga(action: any): any {
   try {
-    const response = yield call(requestFreePostRegister, action.data);
+    const response = yield call(requestCommonPostRegister, action.data);
     console.log('자유게시글 작성 후 정보 응답 ===>', response);
 
     yield put({
-      type: FREE_POST_REGISTER_SUCCESS,
+      type: COMMON_POST_REGISTER_SUCCESS,
       data: response.data,
     });
   } catch (error) {
     console.error(error);
     yield put({
-      type: FREE_POST_REGISTER_FAILURE,
+      type: COMMON_POST_REGISTER_FAILURE,
       error,
     });
   }
 }
 
-function* watchRequestFreeBoard() {
-  yield takeLatest(FREE_BOARD_REQUEST, requestFreeBoardSaga);
+function* watchRequestCommonBoard() {
+  yield takeLatest(COMMON_BOARD_REQUEST, requestCommonBoardSaga);
 }
 
-function* watchRequestFreePost() {
-  yield takeLatest(FREE_POST_REQUEST, requestFreePostSaga);
+function* watchRequestCommonPost() {
+  yield takeLatest(COMMON_POST_REQUEST, requestCommonPostSaga);
 }
 
-function* watchRequestFreePostRegister() {
-  yield takeLatest(FREE_POST_REGISTER_REQUEST, requestFreePostRegisterSaga);
+function* watchRequestCommonPostRegister() {
+  yield takeLatest(COMMON_POST_REGISTER_REQUEST, requestCommonPostRegisterSaga);
 }
 
 function* boardSaga() {
   yield all([
-    fork(watchRequestFreeBoard),
-    fork(watchRequestFreePost),
-    fork(watchRequestFreePostRegister),
+    fork(watchRequestCommonBoard),
+    fork(watchRequestCommonPost),
+    fork(watchRequestCommonPostRegister),
   ]);
 }
 

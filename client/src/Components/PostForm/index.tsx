@@ -43,6 +43,7 @@ function PostForm() {
       category: boardType,
       content: postContent,
       user: userId,
+      stack: ['hello'],
     };
     console.log(postData);
     dispatch({
