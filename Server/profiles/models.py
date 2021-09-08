@@ -45,14 +45,21 @@ def save_user_profile(sender, instance, **kwargs):
     instance.profile.save()
 
 class TeamProfile(models.Model):
-    STATUS_CHOICE = (
-        ("진행중", "진행중"),
-        ("완료", "완료")
-    )
-    user = models.ForeignKey('accounts.User', on_delete=models.CASCADE, related_name='author', null=True)
-    title = models.CharField(max_length=20, null=False)
-    status = models.CharField(max_length=10, choices=STATUS_CHOICE, null=False, default=1)
-    member = models.ManyToManyField(User, blank=True, related_name='member')
+
+    user = models.ForeignKey('accounts.User', on_delete=models.CASCADE, related_name='author')
+    name = models.CharField(max_length=20, null=False)
+    status = models.BooleanField(default=0)
+    member = models.ManyToManyField('accounts.User', blank=True, related_name='member')
     content = models.TextField(null=False)
     image = models.ImageField(upload_to='group', null=True, blank=True)
+    stack = models.ManyToManyField('tags.Tag')
     created_at = models.DateTimeField(auto_now_add=True)
+
+class IsLeader(models.Model):
+    user = models.ForeignKey('accounts.User', on_delete=models.CASCADE, related_name='user_is_leader')
+    team_profile = models.ForeignKey('profiles.TeamProfile', on_delete=models.CASCADE, related_name='team_profile')
+    is_leader = models.BooleanField(default=0)
+
+@receiver(post_save, sender=TeamProfile)
+def save_is_leader(sender, instance, **kwargs):
+    IsLeader.objects.create(user=instance.user, team_profile=instance, is_leader=True)

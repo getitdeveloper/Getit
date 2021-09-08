@@ -6,7 +6,7 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
     def has_permission(self, request, view):
         if request.method in permissions.SAFE_METHODS:
             return True
-        return str(request.user.id) == request.data.get('user')
+        return request.user.id == request.data.get('user')
 
     def has_object_permission(self, request, view, obj):
         if request.user.is_authenticated:
