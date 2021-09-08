@@ -1,9 +1,6 @@
 import produce from 'immer';
-import { InitialState, UserActions } from './types';
+import { InitialState, UserActions } from './userTypes';
 import {
-  USER_INFO_REQUEST,
-  USER_INFO_SUCCESS,
-  USER_INFO_FAILURE,
   USER_LOGIN_REQUEST,
   USER_LOGIN_SUCCESS,
   USER_LOGIN_FAILURE,
@@ -21,6 +18,7 @@ import {
   USER_PROFILE_REGISTER_SUCCESS,
   USER_PROFILE_REGISTER_FAILURE,
   USER_REGISTER_RESET,
+  USER_ID_UPDATE,
 } from './actions';
 
 // 초기 상태
@@ -46,9 +44,6 @@ const initialState: InitialState = {
   },
   profileInfo: null,
   portfolio: null,
-  userInfoRequest: false,
-  userInfoSuccess: false,
-  userInfoFailure: null,
   userLogInRequest: false,
   userLogInSuccess: false,
   userLogInFailure: null,
@@ -66,27 +61,12 @@ const initialState: InitialState = {
   userProfileRegisterSuccess: false,
   userProfileRegisterFailure: null,
   userRegisterReset: false,
+  userIdUpdate: false,
 };
 
 const reducer = (state = initialState, action: UserActions): InitialState =>
   produce(state, (draft) => {
     switch (action.type) {
-      case USER_INFO_REQUEST:
-        draft.userInfoRequest = true;
-        draft.userInfoSuccess = false;
-        draft.userInfoFailure = null;
-        break;
-      case USER_INFO_SUCCESS:
-        draft.userInfoRequest = false;
-        draft.userInfoSuccess = true;
-        draft.userInfoFailure = null;
-        draft.id = action.data;
-        break;
-      case USER_INFO_FAILURE:
-        draft.userInfoRequest = false;
-        draft.userInfoSuccess = false;
-        draft.userInfoFailure = action.error;
-        break;
       case USER_LOGIN_REQUEST:
         draft.userLogInRequest = true;
         draft.userLogInSuccess = false;
@@ -177,6 +157,10 @@ const reducer = (state = initialState, action: UserActions): InitialState =>
       case USER_REGISTER_RESET:
         draft.userRegisterReset = true;
         draft.id = { message: null, user_pk: null };
+        break;
+      case USER_ID_UPDATE:
+        draft.userRegisterReset = true;
+        draft.id = action.data;
         break;
       default:
         return state;

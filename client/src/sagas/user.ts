@@ -1,9 +1,6 @@
 import axios from 'axios';
 import { all, call, fork, put, takeLatest } from '@redux-saga/core/effects';
 import {
-  USER_INFO_REQUEST,
-  USER_INFO_SUCCESS,
-  USER_INFO_FAILURE,
   USER_LOGIN_REQUEST,
   USER_LOGIN_SUCCESS,
   USER_LOGIN_FAILURE,
@@ -19,6 +16,7 @@ import {
   USER_PROFILE_REGISTER_REQUEST,
   USER_PROFILE_REGISTER_SUCCESS,
   USER_PROFILE_REGISTER_FAILURE,
+  USER_ID_UPDATE,
 } from '../reducers/actions';
 import {
   ResponseUserProfile,
@@ -29,32 +27,10 @@ import {
   IUserNickDoubleCheckRequest,
   IUserNickDoubleCheckResponse,
   IUserNickname,
-} from './types';
-
-// 사용자 정보 요청
-const requestUserInfo = (user_pk: string) => {
-  return axios.get(`/api/profile/${user_pk}/`);
-};
-
-// ? axios.get('/profile/') --> back accesstoken 확인해서 자기 자신 정보 찾아서 뿌려주기?
-
-function* requestUserInfoSaga(action: any): any {
-  try {
-    const response = yield call(requestUserInfo, action.data.user_pk);
-    console.log('유저 정보 응답 ===>', response);
-
-    yield put({
-      type: USER_INFO_SUCCESS,
-      data: response.data,
-    });
-  } catch (error) {
-    console.error(error);
-    yield put({
-      type: USER_INFO_FAILURE,
-      error,
-    });
-  }
-}
+  IUserProfileRegisterResponse,
+  IUserProfileRegisterRequest,
+  IUserProfileData,
+} from './userTypes';
 
 // 사용자 프로필 정보 요청
 const requestUserProfile = (user_pk: string) => {
@@ -81,19 +57,19 @@ function* requestUserProfileSaga(action: any): any {
 
 // 로그인 요청
 // 구글 테스트 로그인
-const requestTestGoogleLogIn = (accessData: GoogleAccessData) => {
+const requestGoogleLogIn = (accessData: GoogleAccessData) => {
   console.log('데이터 전송 ===> ', accessData);
   return axios.post('/api/login/google/', accessData);
 };
 
 // 카카오 테스트 로그인
-const requestTestKakaoLogIn = (accessData: KakaoAccessData) => {
+const requestKakaoLogIn = (accessData: KakaoAccessData) => {
   console.log('데이터 전송 ===> ', accessData);
   return axios.post('/api/login/kakao/', accessData);
 };
 
 // 깃허브 테스트 로그인
-const requestTestGithubLogIn = (accessData: GithubAccessData) => {
+const requestGithubLogIn = (accessData: GithubAccessData) => {
   console.log('데이터 전송 ===> ', accessData);
   return axios.post('/api/login/github/', accessData);
 };
@@ -108,13 +84,13 @@ function* requestUserLogInSaga(action: any) {
 
     switch (loginSocialType) {
       case 'google':
-        response = yield call(requestTestGoogleLogIn, action.data);
+        response = yield call(requestGoogleLogIn, action.data);
         break;
       case 'kakao':
-        response = yield call(requestTestKakaoLogIn, action.data);
+        response = yield call(requestKakaoLogIn, action.data);
         break;
       case 'github':
-        response = yield call(requestTestGithubLogIn, action.data);
+        response = yield call(requestGithubLogIn, action.data);
         break;
       default:
         return null;
@@ -188,22 +164,35 @@ function* requestUserNickDoubleCheckSaga(
 }
 
 // 회원가입 회원 프로필 정보 저장
-const requestUserProfileRegister = (data: any) => {
-  console.log('프로필 정보 확인 ===>', data);
+const requestUserProfileRegister = (data: IUserProfileData) => {
+  console.log('프로필 정보 확인 data ===>', data);
   return axios.post(`/api/profile/${data.user_pk}/`, data);
 };
 
-function* requestUserProfileRegisterSaga(action: any): any {
-  // console.log('프로필 정보 확인 ===>', action);
+function* requestUserProfileRegisterSaga(action: IUserProfileRegisterRequest) {
+  console.log('프로필 정보 확인 action ===>', action);
 
   try {
-    const response: any = yield call(requestUserProfileRegister, action.data);
+    const response: IUserProfileRegisterResponse = yield call(
+      requestUserProfileRegister,
+      action.data,
+    );
     console.log('프로필 저장 응답 결과 ===>', response);
 
     yield put({
       type: USER_PROFILE_REGISTER_SUCCESS,
       data: response.data,
     });
+
+    // 회원가입에 성공했기때문에 message, user_pk 업데이트
+    yield put({
+      type: USER_ID_UPDATE,
+      data: {
+        message: 'login',
+        user_pk: response.data.user_pk,
+      },
+    });
+
     return alert(
       `${response.data.nickname}님 회원가입이 완료되었습니다. 환영합니다.`,
     );
@@ -215,10 +204,6 @@ function* requestUserProfileRegisterSaga(action: any): any {
     });
     return alert('문제가 발생했습니다. 잠시 후 다시 시도해 주세요.');
   }
-}
-
-function* watchRequestUserInfo() {
-  yield takeLatest(USER_INFO_REQUEST, requestUserInfoSaga);
 }
 
 function* watchRequestUserLogIn() {
@@ -249,7 +234,6 @@ function* watchRequestUserPofileRegister() {
 
 function* userSaga() {
   yield all([
-    fork(watchRequestUserInfo),
     fork(watchRequestUserLogIn),
     fork(watchRequestUserLogOut),
     fork(watchRequestUserProfile),

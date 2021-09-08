@@ -172,10 +172,6 @@ function RegisterForm(): JSX.Element {
         type: USER_PROFILE_REGISTER_REQUEST,
         data,
       });
-      // 회원가입 register message 초기화
-      dispatch({
-        type: USER_REGISTER_RESET,
-      });
     },
     [
       nickname,

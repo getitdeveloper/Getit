@@ -1,8 +1,5 @@
 import { IPortfolio, IProfileInfo } from '../types';
 import {
-  USER_INFO_REQUEST,
-  USER_INFO_SUCCESS,
-  USER_INFO_FAILURE,
   USER_LOGIN_REQUEST,
   USER_LOGIN_SUCCESS,
   USER_LOGIN_FAILURE,
@@ -20,6 +17,7 @@ import {
   USER_PROFILE_REGISTER_SUCCESS,
   USER_PROFILE_REGISTER_FAILURE,
   USER_REGISTER_RESET,
+  USER_ID_UPDATE,
 } from './actions';
 
 // 초기 상태값 타입
@@ -45,9 +43,6 @@ export interface InitialState {
   };
   profileInfo: IProfileInfo | null;
   portfolio: IPortfolio | null;
-  userInfoRequest: boolean;
-  userInfoSuccess: boolean;
-  userInfoFailure: string | null;
   userLogInRequest: boolean;
   userLogInSuccess: boolean;
   userLogInFailure: string | null;
@@ -65,24 +60,7 @@ export interface InitialState {
   userProfileRegisterSuccess: boolean;
   userProfileRegisterFailure: string | null;
   userRegisterReset: boolean;
-}
-
-// 사용자 정보 타입
-export interface UserInfoRequest {
-  type: typeof USER_INFO_REQUEST;
-}
-
-export interface UserInfoSuccess {
-  type: typeof USER_INFO_SUCCESS;
-  data: {
-    message: string;
-    user_pk: number;
-  };
-}
-
-export interface UserInfoFailure {
-  type: typeof USER_INFO_FAILURE;
-  error: string;
+  userIdUpdate: boolean;
 }
 
 // 로그인 액션 타입
@@ -121,6 +99,7 @@ export interface UserLogOutFailure {
   error: string;
 }
 
+// 사용자 프로필 정보 타입
 export interface UserProfileRequest {
   type: typeof USER_PROFILE_REQUEST;
 }
@@ -184,10 +163,15 @@ export interface IUserRegisterReset {
   type: typeof USER_REGISTER_RESET;
 }
 
+export interface IUserIdUpdate {
+  type: typeof USER_ID_UPDATE;
+  data: {
+    message: string;
+    user_pk: number;
+  };
+}
+
 export type UserActions =
-  | UserInfoRequest
-  | UserInfoSuccess
-  | UserInfoFailure
   | UserLogInRequest
   | UserLogInSuccess
   | UserLogInFailure
@@ -204,4 +188,5 @@ export type UserActions =
   | IUserProfileRegisterRequest
   | IUserProfileRegisterSuccess
   | IUserProfileRegisterFailure
-  | IUserRegisterReset;
+  | IUserRegisterReset
+  | IUserIdUpdate;
