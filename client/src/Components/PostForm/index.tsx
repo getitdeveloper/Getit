@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useSelector, RootStateOrAny, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { FREE_POST_REGISTER_REQUEST } from '../../reducers/actions';
+import { COMMON_POST_REGISTER_REQUEST } from '../../reducers/actions';
 import MarkdownRenderer from '../MarkdownRenderer';
 import {
   TitleForm,
@@ -47,7 +47,7 @@ function PostForm() {
     };
     console.log(postData);
     dispatch({
-      type: FREE_POST_REGISTER_REQUEST,
+      type: COMMON_POST_REGISTER_REQUEST,
       data: postData,
     });
   };

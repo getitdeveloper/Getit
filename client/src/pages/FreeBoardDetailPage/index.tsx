@@ -5,7 +5,7 @@ import SubHeader from '../../Components/Commons/SubHeader/SubHeader';
 import { PageBackground, PageContainer, PageTitle } from '../../styles/page';
 import PostItem from '../../Components/PostItem';
 import MarkdownRenderer from '../../Components/MarkdownRenderer';
-import { FREE_POST_REQUEST } from '../../reducers/actions';
+import { COMMON_POST_REQUEST } from '../../reducers/actions';
 
 function FreeBoardDetailPage(props: any) {
   const { history } = props;
@@ -17,7 +17,7 @@ function FreeBoardDetailPage(props: any) {
 
   React.useEffect(() => {
     dispatch({
-      type: FREE_POST_REQUEST,
+      type: COMMON_POST_REQUEST,
       data: {
         id: contentId,
       },
