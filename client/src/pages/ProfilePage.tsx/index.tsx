@@ -72,7 +72,7 @@ function ProfilePage(): JSX.Element {
         user_pk: user.id.user_pk,
       },
     });
-  }, [profileInfo]);
+  }, []);
 
   return (
     <div>

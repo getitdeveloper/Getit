@@ -62,6 +62,7 @@ export const NicknameInput = styled.input`
   border: 1px solid #bcbcbc;
   font-size: 1.6rem;
   width: 73%;
+  padding-left: 1.5rem;
 `;
 
 export const DoubleCheckBtn = styled.input`
@@ -86,6 +87,7 @@ export const EmailInput = styled.input`
   border-radius: 10px;
   border: 1px solid #bcbcbc;
   font-size: 1.6rem;
+  padding-left: 1.5rem;
 `;
 
 // export const ArrowImg = styled.div`
@@ -120,6 +122,7 @@ export const FieldSelect = styled.select`
   border: 1px solid #bcbcbc;
   font-size: 1.6rem;
   appearance: none;
+  padding-left: 1.5rem;
 `;
 
 export const StyldTextarea = styled.textarea`
@@ -129,7 +132,8 @@ export const StyldTextarea = styled.textarea`
   font-size: 1.6rem;
   resize: none;
   height: 11rem;
-  padding-top: 0.5rem;
+  padding-top: 1rem;
+  padding-left: 1.5rem;
 `;
 
 export const TextCount = styled.p`
