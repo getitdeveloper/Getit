@@ -8,6 +8,7 @@ import { PageContainer, PageBackground } from '../../styles/page';
 import { COMMON_BOARD_REQUEST } from '../../reducers/actions';
 import { dummyData } from '../FreeBoardPage/dummyData';
 import { IPost } from '../../types';
+import Paging from '../../Components/Paging';
 
 interface HeaderProp {
   header?: boolean;
@@ -22,18 +23,21 @@ function QuestionBardPage(props: HeaderProp) {
   const boardList = useSelector(
     (state: RootStateOrAny) => state.board.BoardList,
   );
+  const [page, setPage] = React.useState(1);
   const { header } = props;
 
   React.useEffect(() => {
     dispatch({
       type: COMMON_BOARD_REQUEST,
       data: {
-        page: '1',
+        page: String(page),
         category: 'question',
       },
     });
-  }, []);
+  }, [page]);
 
+  console.log('page number: ', page);
+  console.log('questionBoard: ', boardList);
   if (!boardList) {
     return <CircularProgress />;
   }
@@ -43,7 +47,7 @@ function QuestionBardPage(props: HeaderProp) {
       <PageBackground>
         <PostSubHeader boardType='Question' />
         {boardList ? (
-          <PageContainer>
+          <PageContainer width='80%'>
             {boardList.results.map((content: IPost) => (
               <PostItem
                 key={content.id}
@@ -53,6 +57,11 @@ function QuestionBardPage(props: HeaderProp) {
             ))}
           </PageContainer>
         ) : null}
+        <Paging
+          activePage={page}
+          totalPage={boardList.count}
+          setPage={setPage}
+        />
       </PageBackground>
     </div>
   );

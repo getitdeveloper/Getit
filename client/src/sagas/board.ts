@@ -15,8 +15,8 @@ import { BoardData, PostData } from './boardTypes';
 
 // 자유게시판 받아오기
 const requestCommonBoard = (data: BoardData) => {
-  return axios.get(`/api/board?category=${data.category}`);
-  // return axios.get(`/api/board?category=${data.category}&page=${data.page}`);
+  // return axios.get(`/api/board?category=${data.category}`);
+  return axios.get(`/api/board?category=${data.category}&page=${data.page}`);
 };
 
 function* requestCommonBoardSaga(action: any): any {
