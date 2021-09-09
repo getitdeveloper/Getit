@@ -4,8 +4,6 @@ import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
 import SubHeader from '../../Components/Commons/SubHeader/SubHeader';
 import { PageBackground, PageContainer, PageTitle } from '../../styles/page';
-import PostItem from '../../Components/PostItem';
-import MarkdownRenderer from '../../Components/MarkdownRenderer';
 import { COMMON_POST_REQUEST } from '../../reducers/actions';
 import PostDetail from '../../Components/PostDetail';
 
