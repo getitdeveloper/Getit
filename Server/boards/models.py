@@ -14,6 +14,9 @@ class CommonBoard(models.Model):
     user = models.ForeignKey('accounts.User', on_delete=models.CASCADE)
     stack = models.ManyToManyField('tags.Tag')
 
+    class Meta:
+        ordering = ['-create_at']
+
 class RecruitmentBoard(models.Model):
     user = models.ForeignKey('accounts.User', on_delete=models.CASCADE)
     study = models.ForeignKey('profiles.TeamProfile', on_delete=models.CASCADE)

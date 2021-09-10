@@ -9,7 +9,7 @@ from rest_framework.parsers import MultiPartParser
 
 from tags.models import Tag
 from .permissions import IsOwnerOrReadOnly, RecruitmentIsOwnerOrReadOnly
-from .serializers import CommonBoardSerializer, RecruitmentBoardSerializer
+from .serializers import RecruitmentBoardSerializer, CommonBoardListSerializer, CommonBoardDetailSerializer
 from rest_framework.response import Response
 from rest_framework import status
 from .models import CommonBoard, RecruitmentBoard
@@ -22,7 +22,7 @@ from rest_framework import viewsets
 class CommonBoardListAPIView(GenericAPIView):
     queryset = CommonBoard.objects.all()
     permission_classes = [IsOwnerOrReadOnly]
-    serializer_class = CommonBoardSerializer
+    serializer_class = CommonBoardListSerializer
     pagination_class = BoardPageNumberPagination
     ordering_fields = ['create_at']
     filter_backends = [SearchFilter]
@@ -34,13 +34,21 @@ class CommonBoardListAPIView(GenericAPIView):
 
             ---
                 127.0.0.1:8000/api/board?category=free(question)
-                - id : 게시판 번호
-                - user : 글쓴이 번호(user id)
-                - title : 제목
-                - category : 자유게시판, 질문게시판 둘중 하나로
-                - content : 내용
-                - image : 이미지
-                - create_at : 생성 시간
+                "results":
+                [
+                {
+                "id":32,
+                "title":"다라",
+                "category":"free",
+                "content":"aㅁㄴㅁㄴㅇd",
+                "image":null,
+                "create_at":"2021-09-08T19:30:23.300228+09:00",
+                "user":{
+                    "id":3,
+                    "profile":{
+                        "nickname":"asdvxc",
+                        "image":"/media/profile/Untitled.jpeg"}},
+                        "stack":["python","java"]}
         """
         category = request.GET.get('category')
         queryset = self.get_queryset()
@@ -49,21 +57,21 @@ class CommonBoardListAPIView(GenericAPIView):
             posts = self.filter_queryset(posts)
             paginator = BoardPageNumberPagination()
             result_page = paginator.paginate_queryset(posts, request)
-            serializer = CommonBoardSerializer(result_page, many=True)
+            serializer = CommonBoardListSerializer(result_page, many=True)
             return paginator.get_paginated_response(serializer.data)
         elif category == 'question':
             posts = CommonBoard.objects.filter(category=category)
             posts = self.filter_queryset(posts)
             paginator = BoardPageNumberPagination()
             result_page = paginator.paginate_queryset(posts, request)
-            serializer = CommonBoardSerializer(result_page, many=True)
+            serializer = CommonBoardListSerializer(result_page, many=True)
             return paginator.get_paginated_response(serializer.data)
         else:
             posts = CommonBoard.objects.all()
             posts = self.filter_queryset(posts)
             paginator = BoardPageNumberPagination()
             result_page = paginator.paginate_queryset(posts, request)
-            serializer = CommonBoardSerializer(result_page, many=True)
+            serializer = CommonBoardListSerializer(result_page, many=True)
             return paginator.get_paginated_response(serializer.data)
 
     def post(self, request):
@@ -81,7 +89,7 @@ class CommonBoardListAPIView(GenericAPIView):
                 }
         """
 
-        serializer = CommonBoardSerializer(data=request.data)
+        serializer = CommonBoardListSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             board = CommonBoard.objects.get(id=serializer.data['id'])
@@ -99,7 +107,7 @@ class CommonBoardListAPIView(GenericAPIView):
 
 class CommonBoardDetailAPIView(GenericAPIView):
 
-    serializer_class = CommonBoardSerializer
+    serializer_class = CommonBoardDetailSerializer
     permission_classes = [IsOwnerOrReadOnly]
 
     # parser_classes = (MultiPartParser,)
@@ -121,7 +129,7 @@ class CommonBoardDetailAPIView(GenericAPIView):
                 - create_at : 생성 시간
         """
         post = self.get_object(pk)
-        serializer = CommonBoardSerializer(post)
+        serializer = CommonBoardDetailSerializer(post)
         return Response(serializer.data)
 
     def put(self, request, pk):
@@ -138,7 +146,7 @@ class CommonBoardDetailAPIView(GenericAPIView):
                 - create_at : 생성 시간
         """
         post = self.get_object(pk)
-        serializer = CommonBoardSerializer(post, data=request.data)
+        serializer = CommonBoardDetailSerializer(post, data=request.data)
         self.check_object_permissions(self.request, post)
         if serializer.is_valid():
             serializer.save()
