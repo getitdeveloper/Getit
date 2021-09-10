@@ -73,15 +73,15 @@ const reducer = (state = initialState, action: UserActions): InitialState =>
         draft.userLogInFailure = null;
         break;
       case USER_LOGIN_SUCCESS:
-        draft.userLogOutRequest = false;
-        draft.userLogOutSuccess = true;
-        draft.userLogOutFailure = null;
+        draft.userLogInRequest = false;
+        draft.userLogInSuccess = true;
+        draft.userLogInFailure = null;
         draft.id = action.data;
         break;
       case USER_LOGIN_FAILURE:
-        draft.userLogOutRequest = false;
-        draft.userLogOutSuccess = false;
-        draft.userLogOutFailure = action.error;
+        draft.userLogInRequest = false;
+        draft.userLogInSuccess = false;
+        draft.userLogInFailure = action.error;
         break;
       case USER_LOGOUT_REQUEST:
         draft.userLogOutRequest = true;
