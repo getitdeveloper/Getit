@@ -29,7 +29,15 @@ export interface IPost {
   title: string;
   category: string;
   content: string;
-  image: string;
-  create_at: string;
+  image?: string;
+  create_at?: string;
   user: number;
+}
+
+export interface IComment {
+  user: number;
+  commonpost: number;
+  recruitpost: number;
+  content: string;
+  create_at?: string;
 }
