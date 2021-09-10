@@ -55,6 +55,12 @@ class TeamProfile(models.Model):
     stack = models.ManyToManyField('tags.Tag')
     created_at = models.DateTimeField(auto_now_add=True)
 
+    def save(self, *args, **kwargs):
+        created = not self.pk
+        super().save(*args, **kwargs)
+        if created:
+            self.member.add(User.objects.get(id=self.user_id))
+
 class IsLeader(models.Model):
     user = models.ForeignKey('accounts.User', on_delete=models.CASCADE, related_name='user_is_leader')
     team_profile = models.ForeignKey('profiles.TeamProfile', on_delete=models.CASCADE, related_name='team_profile')
