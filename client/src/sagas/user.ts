@@ -97,6 +97,8 @@ function* requestUserLogInSaga(action: any) {
     }
 
     console.log('로그인 요청 응답 성공 ===>', response.data);
+    const accessToken = response.data.accept_json.access_token;
+    axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
 
     yield put({
       type: USER_LOGIN_SUCCESS,
