@@ -29,7 +29,10 @@ function GoogleSocialLogin(): JSX.Element {
   }, []);
 
   // Google Login Access URL
-  const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
+  const clientId =
+    process.env.NODE_ENV === 'production'
+      ? process.env.REACT_APP_PROD_GOOGLE_CLIENT_ID
+      : process.env.REACT_APP_DEV_GOOGLE_CLIENT_ID;
 
   if (!clientId) {
     console.log('문제가 발생했습니다. 잠시후 다시 시도해 주세요.');

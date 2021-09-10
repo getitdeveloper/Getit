@@ -28,6 +28,13 @@ function MainPage(): JSX.Element {
     }
   }, [userId]);
 
+  useEffect(() => {
+    axios
+      .get('/')
+      .then((res) => console.log('서버상태 ===> ', res))
+      .catch((error) => console.log(error));
+  }, []);
+
   return (
     <div>
       <MainHeader />

@@ -14,8 +14,14 @@ function KakaoOAuth2Callback(): null {
 
     const requestData = {
       code: accessCode,
-      API_KEY: process.env.REACT_APP_KAKAO_API_KEY,
-      REDIRECT_URI: process.env.REACT_APP_KAKAO_REDIRECT_URI,
+      API_KEY:
+        process.env.NODE_ENV === 'production'
+          ? process.env.REACT_APP_PROD_KAKAO_API_KEY
+          : process.env.REACT_APP_DEV_KAKAO_API_KEY,
+      REDIRECT_URI:
+        process.env.NODE_ENV === 'production'
+          ? process.env.REACT_APP_PROD_KAKAO_REDIRECT_URI
+          : process.env.REACT_APP_DEV_KAKAO_REDIRECT_URI,
     };
 
     if (accessCode) {
