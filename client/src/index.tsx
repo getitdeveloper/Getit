@@ -5,7 +5,6 @@ import { ThemeProvider } from 'styled-components';
 import reportWebVitals from './reportWebVitals';
 import App from './App';
 import store from './store/index';
-import 'sanitize.css';
 import theme from './styles/theme';
 import GlobalStyle from './styles/global';
 
