@@ -6,7 +6,10 @@ import commentSaga from './comment';
 import userSaga from './user';
 
 // axios 요청 기본 주소
-axios.defaults.baseURL = process.env.REACT_APP_SERVER_BASE_URL;
+axios.defaults.baseURL =
+  process.env.NODE_ENV === 'production'
+    ? process.env.REACT_APP_PROD_SERVER_BASE_URL
+    : process.env.REACT_APP_DEV_SERVER_BASE_URL;
 
 // cookie 전송을 위한 설정
 axios.defaults.withCredentials = true;

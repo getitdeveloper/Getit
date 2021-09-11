@@ -19,8 +19,14 @@ function GithubCallback(): null {
       const accessCode = url.split('?code=')[1];
 
       const reqeustData = {
-        client_id: process.env.REACT_APP_GITHUB_CLIENT_ID,
-        client_secret: process.env.REACT_APP_GITHUB_CLIENT_SECRET,
+        client_id:
+          process.env.NODE_ENV === 'production'
+            ? process.env.REACT_APP_PROD_GITHUB_CLIENT_ID
+            : process.env.REACT_APP_DEV_GITHUB_CLIENT_ID,
+        client_secret:
+          process.env.NODE_ENV === 'production'
+            ? process.env.REACT_APP_PROD_GITHUB_CLIENT_SECRET
+            : process.env.REACT_APP_DEV_GITHUB_CLIENT_SECRET,
         code: accessCode,
       };
 
