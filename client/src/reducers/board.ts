@@ -1,82 +1,82 @@
 import produce from 'immer';
-import { InitialState, BoardActions } from './board-types';
+import { InitialState, BoardActions } from './boardTypes';
 import {
-  FREE_BOARD_SUCCESS,
-  FREE_BOARD_FAILURE,
-  FREE_BOARD_REQUEST,
-  FREE_POST_SUCCESS,
-  FREE_POST_FAILURE,
-  FREE_POST_REQUEST,
-  FREE_POST_REGISTER_REQUEST,
-  FREE_POST_REGISTER_FAILURE,
-  FREE_POST_REGISTER_SUCCESS,
+  COMMON_BOARD_SUCCESS,
+  COMMON_BOARD_FAILURE,
+  COMMON_BOARD_REQUEST,
+  COMMON_POST_SUCCESS,
+  COMMON_POST_FAILURE,
+  COMMON_POST_REQUEST,
+  COMMON_POST_REGISTER_REQUEST,
+  COMMON_POST_REGISTER_FAILURE,
+  COMMON_POST_REGISTER_SUCCESS,
 } from './actions';
 
 // 초기 상태
 const initialState: InitialState = {
   PostContent: null,
   BoardList: null,
-  freePostRequest: false,
-  freePostSuccess: false,
-  freePostFailure: null,
-  freePostRegisterRequest: false,
-  freePostRegisterSuccess: false,
-  freePostRegisterFailure: null,
-  freeBoardRequest: false,
-  freeBoardSuccess: false,
-  freeBoardFailure: null,
+  commonPostRequest: false,
+  commonPostSuccess: false,
+  commonPostFailure: null,
+  commonPostRegisterRequest: false,
+  commonPostRegisterSuccess: false,
+  commonPostRegisterFailure: null,
+  commonBoardRequest: false,
+  commonBoardSuccess: false,
+  commonBoardFailure: null,
 };
 
 const reducer = (state = initialState, action: BoardActions): InitialState =>
   produce(state, (draft) => {
     switch (action.type) {
-      case FREE_BOARD_SUCCESS:
-        draft.freeBoardRequest = false;
-        draft.freeBoardSuccess = true;
-        draft.freeBoardFailure = null;
+      case COMMON_BOARD_SUCCESS:
+        draft.commonBoardRequest = false;
+        draft.commonBoardSuccess = true;
+        draft.commonBoardFailure = null;
         draft.BoardList = action.data;
         break;
-      case FREE_BOARD_REQUEST:
-        draft.freeBoardRequest = true;
-        draft.freeBoardSuccess = false;
-        draft.freeBoardFailure = null;
+      case COMMON_BOARD_REQUEST:
+        draft.commonBoardRequest = true;
+        draft.commonBoardSuccess = false;
+        draft.commonBoardFailure = null;
         break;
-      case FREE_BOARD_FAILURE:
-        draft.freeBoardRequest = false;
-        draft.freeBoardSuccess = false;
-        draft.freeBoardFailure = action.error;
+      case COMMON_BOARD_FAILURE:
+        draft.commonBoardRequest = false;
+        draft.commonBoardSuccess = false;
+        draft.commonBoardFailure = action.error;
         break;
-      case FREE_POST_REQUEST:
-        draft.freePostSuccess = false;
-        draft.freePostRequest = true;
-        draft.freePostFailure = null;
+      case COMMON_POST_REQUEST:
+        draft.commonPostSuccess = false;
+        draft.commonPostRequest = true;
+        draft.commonPostFailure = null;
         break;
-      case FREE_POST_SUCCESS:
-        draft.freePostSuccess = true;
-        draft.freePostRequest = false;
-        draft.freePostFailure = null;
+      case COMMON_POST_SUCCESS:
+        draft.commonPostSuccess = true;
+        draft.commonPostRequest = false;
+        draft.commonPostFailure = null;
         draft.PostContent = action.data;
         break;
-      case FREE_POST_FAILURE:
-        draft.freePostSuccess = false;
-        draft.freePostRequest = false;
-        draft.freePostFailure = action.error;
+      case COMMON_POST_FAILURE:
+        draft.commonPostSuccess = false;
+        draft.commonPostRequest = false;
+        draft.commonPostFailure = action.error;
         break;
-      case FREE_POST_REGISTER_SUCCESS:
-        draft.freePostRegisterSuccess = true;
-        draft.freePostRegisterRequest = false;
-        draft.freePostRegisterFailure = null;
+      case COMMON_POST_REGISTER_SUCCESS:
+        draft.commonPostRegisterSuccess = true;
+        draft.commonPostRegisterRequest = false;
+        draft.commonPostRegisterFailure = null;
         draft.PostContent = action.data;
         break;
-      case FREE_POST_REGISTER_REQUEST:
-        draft.freePostRegisterSuccess = false;
-        draft.freePostRegisterRequest = true;
-        draft.freePostRegisterFailure = null;
+      case COMMON_POST_REGISTER_REQUEST:
+        draft.commonPostRegisterSuccess = false;
+        draft.commonPostRegisterRequest = true;
+        draft.commonPostRegisterFailure = null;
         break;
-      case FREE_POST_REGISTER_FAILURE:
-        draft.freePostRegisterSuccess = false;
-        draft.freePostRegisterRequest = false;
-        draft.freePostRegisterFailure = action.error;
+      case COMMON_POST_REGISTER_FAILURE:
+        draft.commonPostRegisterSuccess = false;
+        draft.commonPostRegisterRequest = false;
+        draft.commonPostRegisterFailure = action.error;
         break;
       default:
         return state;

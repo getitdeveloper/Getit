@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useSelector, RootStateOrAny, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { FREE_POST_REGISTER_REQUEST } from '../../reducers/actions';
+import { COMMON_POST_REGISTER_REQUEST } from '../../reducers/actions';
 import MarkdownRenderer from '../MarkdownRenderer';
 import {
   TitleForm,
@@ -46,10 +46,15 @@ function PostForm() {
       stack: ['1', '123123', 'apple', 'banana'], // stack 작성하기?!!
     };
     console.log(postData);
-    dispatch({
-      type: FREE_POST_REGISTER_REQUEST,
-      data: postData,
-    });
+    try {
+      dispatch({
+        type: COMMON_POST_REGISTER_REQUEST,
+        data: postData,
+      });
+      history.push(`/${boardType}Board`);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
