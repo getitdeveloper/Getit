@@ -110,3 +110,30 @@ class CommentDetailAPIView(GenericAPIView):
         post.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+class CommentMyListAPIView(GenericAPIView):
+    serializer_class = CommentSerializer
+
+    def get(self, request, pk):
+        """
+            my댓글 list (GET)
+
+            ---
+                [
+                {
+                "user":1,
+                "commonpost":2,
+                "recruitmentpost":null,
+                "content":"asdasvasva",
+                "create_at":"2021-09-12T10:23:39.469226+09:00"},
+                {
+                "user":1,
+                "commonpost":2,
+                "recruitmentpost":null,
+                "content":"asvasvasvasv",
+                "create_at":"2021-09-12T10:23:44.361077+09:00"
+                }
+                ]
+        """
+        comments = Comment.objects.filter(user=pk)
+        serializer = CommentSerializer(comments, many=True)
+        return Response(serializer.data)

@@ -220,3 +220,50 @@ class RecruitmentBoardPostDetailAPIView(GenericAPIView):
         self.check_object_permissions(self.request, post)
         post.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+class BoardMyListAPIView(GenericAPIView):
+    serializer_class = CommonBoardListSerializer
+
+    def get(self, request, pk):
+        """
+            my게시판 list (GET)
+
+            ---
+                [{
+                "id":1,
+                "title":"asd",
+                "category":"free",
+                "content":"asdasdasd",
+                "image":null,
+                "create_at":"2021-09-12T07:11:57.299117+09:00",
+                "user":{"id":1,"profile":{"nickname":null,"image":"/media/profile/Untitled.jpeg"}},"worker":"개발자"}]
+        """
+        boards = CommonBoard.objects.filter(user=pk)
+        serializer = CommonBoardListSerializer(boards, many=True)
+        return Response(serializer.data)
+
+class RecruitmentBoardPostMyListAPIView(GenericAPIView):
+    serializer_class = RecruitmentBoardSerializer
+
+    def get(self, request, pk):
+        """
+            my모집게시판 list (GET)
+
+            ---
+                [{
+                "user":1,
+                "title":"getit",
+                "study":{"id":3,"user":2,"name":"리액트","content":"ㅁㄴㅇㅁㄴㅇ","status":true,"member":[2],"image":null,"stack":["drf","mysql","docker"],"created_at":"2021-09-12T07:48:24.974159+09:00"},
+                "developer":2,
+                "designer":2,
+                "pm":2,
+                "content":"겟잇프로젝트",
+                "start_date":"2021-09-12",
+                "end_date":"2021-09-12",
+                "status":true,
+                "worker":"개발자",
+                "stack":["postgre","docker","k8s"]}]
+        """
+        boards = RecruitmentBoard.objects.filter(user=pk)
+        serializer = RecruitmentBoardSerializer(boards, many=True)
+        return Response(serializer.data)
