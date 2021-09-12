@@ -28,19 +28,10 @@ from profiles.models import Profile
 
 @method_decorator(csrf_exempt, name='dispatch')
 class google_callback(APIView):
-    @swagger_auto_schema(
-        operation_description="구글 소셜 로그인",
-        request_body=GoogleCallbackSerializer,
-        responses={
-            status.HTTP_201_CREATED: openapi.Response(
-                description="Login Response",
-                schema=RegisterSerializer
-            )
-        }
-    )
+
     def post(self, request):
         """
-            카카오 로그인(POST)
+            구글 로그인(POST)
 
             ---
             "accsess_token" : "asdasdasdasdasd"
@@ -79,6 +70,7 @@ class google_callback(APIView):
                 raise Exception
             access_token = accept_json['access_token']
             accept_json.pop('user', None)
+            
             res = JsonResponse({
                 'message': 'login',
                 'user_pk': upk,
@@ -112,22 +104,13 @@ class GoogleLogin(SocialLoginView):
 
 @method_decorator(csrf_exempt, name='dispatch')
 class github_callback(APIView):
-    @swagger_auto_schema(
-        operation_description="깃허브 소셜 로그인",
-        request_body=GithubCallbackSerializer,
-        responses={
-            status.HTTP_201_CREATED: openapi.Response(
-                description="Login Response",
-                schema=RegisterSerializer
-            )
-        }
-    )
+
     def post(self, request):
         """
             깃허브 로그인(POST)
 
             ---
-            requestData{
+            requestData = {
                 "client_id" : "123213123123",
                 "client_secret": "123123123",
                 "code": "123123123"
@@ -219,16 +202,7 @@ class GithubLogin(SocialLoginView):
 
 @method_decorator(csrf_exempt, name='dispatch')
 class kakao_callback(APIView):
-    @swagger_auto_schema(
-        operation_description="카카오 소셜 로그인",
-        request_body=KakaoCallbackSerializer,
-        responses={
-            status.HTTP_201_CREATED: openapi.Response(
-                description="Login Response",
-                schema=RegisterSerializer
-            )
-        }
-    )
+
     def post(self, request):
         """
             카카오 로그인(POST)

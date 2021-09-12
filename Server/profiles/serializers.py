@@ -31,10 +31,12 @@ class ProfileSerializer(ModelSerializer):
         )
 
 class TeamProfileSerializer(serializers.ModelSerializer):
+
     stack = TagSerializer(read_only=True, many=True)
     class Meta:
         model = TeamProfile
         fields = (
+            'id',
             'user',
             'name',
             'content',

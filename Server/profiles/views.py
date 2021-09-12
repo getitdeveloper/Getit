@@ -39,15 +39,17 @@ class ProfileDetail(GenericAPIView):
                 ---
                 # GET Response 예시
                     {
-                        "user": 1,
-                        "user_pk": 1,
-                        "nickname": "test",
+                        "user": 2,
+                        "user_pk": 2,
+                        "nickname": "edcedc1027",
                         "job": "개발자",
+                        "image": "/media/profile/Untitled.jpeg",
                         "level": "코린이",
-                        "image": "C:\\User\\Test\\Image.jpg"
-                        "email": "test@test.com",
-                        "info": "안녕하세요. test입니다.",
-                        "git": "https://github.com/test",
+                        "email": "edcedc1027@gmail.com",
+                        "info": "저는 이형준입니다. 백엔드 개발자가 될껍니다.",
+                        "git": "leeceo97",
+                        "stack": ["django","drf","mysql","postgre","docker","k8s","aws","gcp","nginx"]
+                    }
                 """
         profile = self.get_object(user_pk)
         serializer = ProfileSerializer(profile)
@@ -55,22 +57,23 @@ class ProfileDetail(GenericAPIView):
 
     def post(self, request, user_pk):
         """
-        개인 프로필 detail(POST)
+                개인 프로필 detail(POST)
 
-        ---
-        # POST request 예시
-            {
-                "user": 3,
-                "user_pk": 3,
-                "nickname": "테스트계정",
-                "job": "개발자",
-                "level": "코린이",
-                "image": "image.test.com",
-                "email": "test@naer.com",
-                "info": "asdasd",
-                "git": "asdasdasd",
-                "stack": ["abc","def"]
-            }
+                ---
+                # POST Request 예시
+                    {
+                        "user": 2,
+                        "user_pk": 2,
+                        "nickname": "edcedc1027",
+                        "job": "개발자",
+                        "image": "/media/profile/Untitled.jpeg",
+                        "level": "코린이",
+                        "email": "edcedc1027@gmail.com",
+                        "info": "저는 이형준입니다. 백엔드 개발자가 될껍니다.",
+                        "git": "leeceo97",
+                        "stack": ["django","drf","mysql","postgre","docker","k8s","aws","gcp","nginx"]
+                        --> stack의경우 삭제기능은 put만 구현해놨습니다.
+                    }
         """
         profile = self.get_object(user_pk)
         serializer = ProfileSerializer(profile, data=request.data)
@@ -88,22 +91,23 @@ class ProfileDetail(GenericAPIView):
 
     def put(self, request, user_pk):
         """
-        개인 프로필 detail(PUT)
+                개인 프로필 detail(PUT)
 
-        ---
-        # POST request 예시
-            {
-                "user": 3,
-                "user_pk": 3,
-                "nickname": "테스트계정",
-                "job": "개발자",
-                "level": "코린이",
-                "image": "image.test.com",
-                "email": "test@naer.com",
-                "info": "asdasd",
-                "git": "asdasdasd",
-                "stack": ["abc","def"]
-            }
+                ---
+                # PUT Request 예시
+                    {
+                        "user": 2,
+                        "user_pk": 2,
+                        "nickname": "edcedc1027",
+                        "job": "개발자",
+                        "image": "/media/profile/Untitled.jpeg",
+                        "level": "코린이",
+                        "email": "edcedc1027@gmail.com",
+                        "info": "저는 이형준입니다. 백엔드 개발자가 될껍니다.",
+                        "git": "leeceo97",
+                        "stack": ["django","drf","mysql","postgre","docker","k8s","aws","gcp","nginx"]
+                        --> stack의경우 삭제기능은 put만 구현해놨습니다.
+                    }
         """
         profile = self.get_object(user_pk)
         serializer = ProfileSerializer(profile, data=request.data)
@@ -111,54 +115,69 @@ class ProfileDetail(GenericAPIView):
         if serializer.is_valid():
             serializer.save()
             names = request.data['stack']
-            print(names)
             for name in names:
                 if not name:
                     continue
                 _name, _ = Tag.objects.get_or_create(name=name)
                 profile.stack.clear()
-                print(profile.stack)
                 profile.stack.add(_name)
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class TeamProfileCreate(GenericAPIView):
+    """
+                팀 list(GET)
+                ---
+                # GET Response 예시
+                    {
+                    "id":1,
+                    "user":2,
+                    "name":"장고스터디",
+                    "content":"ㅁㄴㅇㅁㄴㅇ",
+                    "status":true,
+                    "member":[2],
+                    "image":null,
+                    "stack":["drf","mysql","docker"],
+                    "created_at":"2021-09-12T07:07:04.808820+09:00"
+                    }
+                """
     serializer_class = TeamProfileSerializer
     permission_classes = [IsOwnerOrReadOnly]
 
-    def get_object(self, user_id):
-        return get_object_or_404(TeamProfile, user_id=user_id)
+    def get_object(self, user_pk):
+        return get_object_or_404(TeamProfile, user_id=user_pk)
 
-    def get(self, request, user_id):
-        profiles = TeamProfile.objects.filter(user=user_id)
+    def get(self, request, user_pk):
+        profiles = TeamProfile.objects.filter(user=user_pk)
         serializer = TeamProfileSerializer(profiles, many=True)
         return Response(serializer.data)
 
-    def post(self, request, user_id):
+    def post(self, request, user_pk):
         """
-        개인 프로필 detail(POST)
+        팀 프로필 list(POST)
         ---
         # POST request 예시
-            {
-                "user": 1,
-                "user_pk": 1,
-                "nickname": "test",
-                "job": "개발자",
-                "level": "코린이",
-                "image": "C:\\User\\Test\\Image.jpg"
-                "email": "test@test.com",
-                "info": "안녕하세요. test입니다.",
-                "git": "https://github.com/test",
+                {
+                "user":2,
+                "name":"장고",
+                "content":"ㅁㄴㅇㅁㄴㅇ",
+                "status":true,
+                "member":[2],
+                "image":null,
+                "stack":["drf","mysql","docker"]
+                }
         """
+
         serializer = TeamProfileSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            # names = request.data['stack']
-            # for name in names:
-            #     if not name:
-            #         continue
-            #     _name, _ = Tag.objects.get_or_create(name=name)
-            #     profile.stack.add(_name)
+            profile = self.get_object(user_pk)
+            names = request.data['stack']
+            for name in names:
+                if not name:
+                    continue
+                _name, _ = Tag.objects.get_or_create(name=name)
+                profile.stack.add(_name)
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -174,19 +193,20 @@ class TeamProfileDetail(GenericAPIView):
 
     def get(self, request, user_id, id):
         """
-                개인 프로필 detail(GET)
+                팀 detail(GET)
                 ---
                 # GET Response 예시
                     {
-                        "user": 1,
-                        "user_pk": 1,
-                        "nickname": "test",
-                        "job": "개발자",
-                        "level": "코린이",
-                        "image": "C:\\User\\Test\\Image.jpg"
-                        "email": "test@test.com",
-                        "info": "안녕하세요. test입니다.",
-                        "git": "https://github.com/test",
+                    "id":1,
+                    "user":2,
+                    "name":"장고스터디",
+                    "content":"ㅁㄴㅇㅁㄴㅇ",
+                    "status":true,
+                    "member":[2],
+                    "image":null,
+                    "stack":["drf","mysql","docker"],
+                    "created_at":"2021-09-12T07:07:04.808820+09:00"
+                    }
                 """
         profile = self.get_object(user_id, id)
         serializer = TeamProfileSerializer(profile)
@@ -194,19 +214,18 @@ class TeamProfileDetail(GenericAPIView):
 
     def put(self, request, user_id, id):
         """
-        개인 프로필 detail(POST)
+        팀 프로필 detail(PUT)
         ---
-        # POST request 예시
-            {
-                "user": 1,
-                "user_pk": 1,
-                "nickname": "test",
-                "job": "개발자",
-                "level": "코린이",
-                "image": "C:\\User\\Test\\Image.jpg"
-                "email": "test@test.com",
-                "info": "안녕하세요. test입니다.",
-                "git": "https://github.com/test",
+        # PUT request 예시
+                {
+                "user":2,
+                "name":"장고스터디",
+                "content":"ㅁㄴㅇㅁㄴㅇ",
+                "status":true,
+                "member":[2],
+                "image":null,
+                "stack":["drf","mysql","docker"]
+                }
         """
         profile = self.get_object(user_id, id)
         serializer = TeamProfileSerializer(profile, data=request.data)
@@ -218,6 +237,7 @@ class TeamProfileDetail(GenericAPIView):
                 if not name:
                     continue
                 _name, _ = Tag.objects.get_or_create(name=name)
+                profile.stack.clear()
                 profile.stack.add(_name)
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

@@ -26,7 +26,7 @@ class CommonBoardListAPIView(GenericAPIView):
     pagination_class = BoardPageNumberPagination
     ordering_fields = ['create_at']
     filter_backends = [SearchFilter]
-    search_fields = ['title', 'content']
+    search_fields = ['title', 'content','worker',]
 
     def get(self, request):
         """
@@ -35,12 +35,11 @@ class CommonBoardListAPIView(GenericAPIView):
             ---
                 127.0.0.1:8000/api/board?category=free(question)
                 "results":
-                [
                 {
                 "id":32,
                 "title":"다라",
                 "category":"free",
-                "content":"aㅁㄴㅁㄴㅇd",
+                "content":"테스틐글입니다.",
                 "image":null,
                 "create_at":"2021-09-08T19:30:23.300228+09:00",
                 "user":{
@@ -48,7 +47,6 @@ class CommonBoardListAPIView(GenericAPIView):
                     "profile":{
                         "nickname":"asdvxc",
                         "image":"/media/profile/Untitled.jpeg"}},
-                        "stack":["python","java"]}
         """
         category = request.GET.get('category')
         queryset = self.get_queryset()
@@ -85,22 +83,14 @@ class CommonBoardListAPIView(GenericAPIView):
                     "content":"asdasdasdasd",
                     "image":null,
                     "user":3,
-                    "stack":["python", "java"]
+                    "stack":["python", "java"],
+                    "worker":"개발자"
                 }
         """
 
         serializer = CommonBoardListSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            board = CommonBoard.objects.get(id=serializer.data['id'])
-
-            names = request.data['stack']
-            for name in names:
-                if not name:
-                    continue
-                _name, _ = Tag.objects.get_or_create(name=name)
-                board.stack.add(_name)
-            serializer.data['stack'].append(names)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -120,13 +110,16 @@ class CommonBoardDetailAPIView(GenericAPIView):
             질문/자유 게시글 detail (GET)
 
             ---
-                - id : 게시판 번호
-                - user : 글쓴이 번호(user id)
-                - title : 제목
-                - category : 자유게시판, 질문게시판 둘중 하나로
-                - content : 내용
-                - image : 이미지
-                - create_at : 생성 시간
+                {
+                "id":1,
+                "title":"asd",
+                "category":"free",
+                "content":"asdasdasd",
+                "image":null,
+                "create_at":"2021-09-12T07:11:57.299117+09:00",
+                "user":1,
+                "worker":"개발자"
+                }
         """
         post = self.get_object(pk)
         serializer = CommonBoardDetailSerializer(post)
@@ -134,16 +127,17 @@ class CommonBoardDetailAPIView(GenericAPIView):
 
     def put(self, request, pk):
         """
-            질문/자유 게시글 detail (PUT:수정)
+            질문/자유 게시글 detail (PUT)
 
             ---
-                - id : 게시판 번호
-                - user : 글쓴이 번호(user id)
-                - title : 제목
-                - category : 자유게시판, 질문게시판 둘중 하나로
-                - content : 내용
-                - image : 이미지
-                - create_at : 생성 시간
+                {
+                    "title":"asdasdasd",
+                    "category":"question",
+                    "content":"asdasdasdasd",
+                    "image":null,
+                    "user":3,
+                    "stack":["python", "java"]
+                }
         """
         post = self.get_object(pk)
         serializer = CommonBoardDetailSerializer(post, data=request.data)
@@ -171,7 +165,7 @@ class RecruitmentBoardPostListAPIView(GenericAPIView):
     pagination_class = BoardPageNumberPagination
     ordering_fields = ['create_at']
     filter_backends = [SearchFilter]
-    search_fields = ['content']
+    search_fields = ['content','worker','title',]
 
     # parser_classes = (MultiPartParser,)
 
@@ -211,6 +205,13 @@ class RecruitmentBoardPostDetailAPIView(GenericAPIView):
         self.check_object_permissions(self.request, post)
         if serializer.is_valid():
             serializer.save()
+            names = request.data['stack']
+            for name in names:
+                if not name:
+                    continue
+                _name, _ = Tag.objects.get_or_create(name=name)
+                post.stack.clear()
+                post.stack.add(_name)
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

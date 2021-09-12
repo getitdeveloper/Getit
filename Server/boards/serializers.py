@@ -45,7 +45,6 @@ class CommentProfileSerializer(ModelSerializer):
 
 
 class CommonBoardListSerializer(serializers.ModelSerializer):
-    stack = TagSerializer(read_only=True, many=True)
     likes = serializers.IntegerField(
         source='likes.count',
         read_only=True
@@ -57,7 +56,7 @@ class CommonBoardListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CommonBoard
-        fields = ('id', 'title', 'category', 'content', 'image', 'create_at', 'user', 'stack', 'likes', 'comments',)
+        fields = ('id', 'title', 'category', 'content', 'image', 'create_at', 'user', 'likes', 'comments','worker',)
 
     def to_representation(self, instance):
         self.fields['user'] = UserProfileSerializer(read_only=True)
@@ -65,7 +64,7 @@ class CommonBoardListSerializer(serializers.ModelSerializer):
 
 
 class CommonBoardDetailSerializer(serializers.ModelSerializer):
-    stack = TagSerializer(read_only=True, many=True)
+
     likes = serializers.IntegerField(
         source='likes.count',
         read_only=True
@@ -74,7 +73,7 @@ class CommonBoardDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CommonBoard
-        fields = ('id', 'title', 'category', 'content', 'image', 'create_at', 'user', 'stack', 'likes', 'comments',)
+        fields = ('id', 'title', 'category', 'content', 'image', 'create_at', 'user', 'likes', 'comments','worker',)
 
     def to_representatione(self, instance):
         self.fields['user'] = UserProfileSerializer(read_only=True)
@@ -83,9 +82,10 @@ class CommonBoardDetailSerializer(serializers.ModelSerializer):
 
 
 class RecruitmentBoardSerializer(ModelSerializer):
+    stack = TagSerializer(read_only=True, many=True)
     class Meta:
         model = RecruitmentBoard
-        fields = ('id', 'user', 'study', 'developer', 'designer', 'pm', 'content', 'start_date', 'end_date', 'status',)
+        fields = ('user','title', 'study', 'developer', 'designer', 'pm', 'content', 'start_date', 'end_date', 'status','worker','stack',)
 
     def to_representation(self, instance):
         self.fields['study'] = TeamProfileSerializer(read_only=True)
