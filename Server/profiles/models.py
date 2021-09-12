@@ -45,12 +45,16 @@ def save_user_profile(sender, instance, **kwargs):
     instance.profile.save()
 
 class TeamProfile(models.Model):
-
+    CATEGORY_LEVEL = (
+        ('팀장','팀장'),
+        ('팀원','팀장'),
+    )
     user = models.ForeignKey('accounts.User', on_delete=models.CASCADE, related_name='author')
     name = models.CharField(max_length=20, null=False)
     status = models.BooleanField(default=0)
     member = models.ManyToManyField('accounts.User', blank=True, related_name='member')
     content = models.TextField(null=False)
+    level = models.CharField(choices=CATEGORY_LEVEL, default='팀원', max_length=20)
     image = models.ImageField(upload_to='group', null=True, blank=True)
     stack = models.ManyToManyField('tags.Tag')
     created_at = models.DateTimeField(auto_now_add=True)

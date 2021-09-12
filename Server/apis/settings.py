@@ -50,6 +50,7 @@ PROJECT_APPS = [
     'comments',
     'portfolios',
     'likes',
+    'members',
 ]
 
 THIRD_PARTY_APPS = [
