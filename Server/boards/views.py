@@ -413,3 +413,4 @@ class RecruitmentBoardPostMyListAPIView(GenericAPIView):
         boards = RecruitmentBoard.objects.filter(user=pk)
         serializer = RecruitmentBoardSerializer(boards, many=True)
         return Response(serializer.data)
+

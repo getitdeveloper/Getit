@@ -33,7 +33,6 @@ class CommentListAPIView(GenericAPIView):
         """
         posts = Comment.objects.filter(commonpost=board_id)
         serializer = CommentSerializer(posts, many=True)
-        print(serializer.data)
         return Response(serializer.data)
 
     def post(self, request, board_id):
