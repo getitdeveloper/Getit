@@ -34,19 +34,26 @@ class CommonBoardListAPIView(GenericAPIView):
 
             ---
                 127.0.0.1:8000/api/board?category=free(question)
-                "results":
-                {
-                "id":32,
-                "title":"다라",
-                "category":"free",
-                "content":"테스틐글입니다.",
-                "image":null,
-                "create_at":"2021-09-08T19:30:23.300228+09:00",
-                "user":{
-                    "id":3,
-                    "profile":{
-                        "nickname":"asdvxc",
-                        "image":"/media/profile/Untitled.jpeg"}},
+            {
+                "id": 1,
+                "title": "test",
+                "category": "free",
+                "content": "test",
+                "image": null,
+                "create_at": "2021-09-12T10:10:17.730557+09:00",
+                "user": {
+                    "id": 1,
+                    "profile": {
+                        "nickname": "getit",
+                        "image": "/media/profile/Untitled.jpeg"
+                    }
+                },
+                "stack": [
+                    "python"
+                ],
+                "likes": 2,
+                "comments": 1
+            }
         """
         category = request.GET.get('category')
         queryset = self.get_queryset()
@@ -110,16 +117,40 @@ class CommonBoardDetailAPIView(GenericAPIView):
             질문/자유 게시글 detail (GET)
 
             ---
-                {
-                "id":1,
-                "title":"asd",
-                "category":"free",
-                "content":"asdasdasd",
-                "image":null,
-                "create_at":"2021-09-12T07:11:57.299117+09:00",
-                "user":1,
-                "worker":"개발자"
-                }
+            {
+                "id": 4,
+                "title": "test",
+                "category": "free",
+                "worker":"개발자",
+                "content": "test",
+                "image": null,
+                "create_at": "2021-09-12T10:10:17.730557+09:00",
+                "user": 1,
+                "stack": [
+                    "python"
+                ],
+                "likes": 2,
+                "comments": [
+                    {
+                        "user": {
+                            "id": 1,
+                            "profile": {
+                                "nickname": "getit",
+                                "image": "/media/profile/Untitled.jpeg"
+                            }
+                        }
+                    },
+                    {
+                        "user": {
+                            "id": 2,
+                            "profile": {
+                                "nickname": "test",
+                                "image": "/media/profile/Untitled.jpeg"
+                            }
+                        }
+                    }
+                ]
+            }
         """
         post = self.get_object(pk)
         serializer = CommonBoardDetailSerializer(post)
