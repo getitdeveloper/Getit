@@ -3,9 +3,9 @@ import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSelector, RootStateOrAny } from 'react-redux';
 import axios from 'axios';
-import MainHeader from '../../Components/MainHeader/MainHeader';
+import Header from '../../Components/Header';
 import Banner from '../../Components/Banner/Banner';
-import NavBar from '../../Components/Commons/NavBar';
+import NavBar from '../../Components/NavBar/index';
 
 function MainPage(): JSX.Element {
   const history = useHistory();
@@ -37,7 +37,7 @@ function MainPage(): JSX.Element {
 
   return (
     <div>
-      <MainHeader />
+      <Header />
       <Banner />
       <NavBar />
     </div>

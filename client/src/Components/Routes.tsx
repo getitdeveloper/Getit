@@ -16,27 +16,25 @@ import RecruitFormPage from '../pages/RecruitFormPage';
 
 function Routes(): JSX.Element {
   return (
-    <div>
-      <Switch>
-        <Route exact path='/' component={MainPage} />
-        <Route exact path='/callback/kakao' component={KakaoOAuth2Callback} />
-        <Route exact path='/callback/github' component={GithubCallback} />
-        <Route exact path='/questionBoard' component={QuestionBoardPage} />
-        <Route exact path='/freeBoard' component={FreeBoardPage} />
-        <Route exact path='/myprofile' component={ProfilePage} />
-        <Route exact path='/freeBoard/detail' component={FreeBoardDetailPage} />
-        <Route
-          exact
-          path='/questionBoard/detail'
-          component={QuestionDetailPage}
-        />
-        <Route exact path='/register' component={RegisterPage} />
-        <Route exact path='/questionBoard/form' component={QuestionFormPage} />
-        <Route exact path='/freeBoard/form' component={FreeBoardFormPage} />
-        <Route exact path='/recruitBoard' component={RecruitBoardPage} />
-        <Route exact path='/recruitBoard/form' component={RecruitFormPage} />
-      </Switch>
-    </div>
+    <Switch>
+      <Route exact path='/' component={MainPage} />
+      <Route exact path='/callback/kakao' component={KakaoOAuth2Callback} />
+      <Route exact path='/callback/github' component={GithubCallback} />
+      <Route exact path='/questionBoard' component={QuestionBoardPage} />
+      <Route exact path='/freeBoard' component={FreeBoardPage} />
+      <Route exact path='/myprofile' component={ProfilePage} />
+      <Route exact path='/freeBoard/detail' component={FreeBoardDetailPage} />
+      <Route
+        exact
+        path='/questionBoard/detail'
+        component={QuestionDetailPage}
+      />
+      <Route exact path='/register' component={RegisterPage} />
+      <Route exact path='/questionBoard/form' component={QuestionFormPage} />
+      <Route exact path='/freeBoard/form' component={FreeBoardFormPage} />
+      <Route exact path='/recruitBoard' component={RecruitBoardPage} />
+      <Route exact path='/recruitBoard/form' component={RecruitFormPage} />
+    </Switch>
   );
 }
 

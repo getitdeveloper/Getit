@@ -3,9 +3,9 @@ import { useCallback, useState } from 'react';
 import { Tab } from '@material-ui/core';
 
 import { StyledTabs, StyledLabel, NavBarWrapper } from './styles';
-import FreeBoardPage from '../../../pages/FreeBoardPage';
-import QuestionBoardPage from '../../../pages/QuestionBoardPage';
-import RecruitBoardPage from '../../../pages/RecruitBoardPage';
+import FreeBoardPage from '../../pages/FreeBoardPage';
+import QuestionBoardPage from '../../pages/QuestionBoardPage';
+import RecruitBoardPage from '../../pages/RecruitBoardPage';
 
 function NavBar(): JSX.Element {
   const [selectTab, setSelectTab] = useState(0);
