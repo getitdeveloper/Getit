@@ -1,4 +1,7 @@
 import json
+from django.db.models.query_utils import Q
+from django.http.response import JsonResponse
+from django.utils.translation import get_supported_language_variant
 
 from drf_yasg import openapi
 from rest_framework.filters import SearchFilter
@@ -15,7 +18,7 @@ from rest_framework import status
 from .models import CommonBoard, RecruitmentBoard
 from django.shortcuts import get_object_or_404
 from rest_framework.views import APIView
-from .pagenation import BoardPageNumberPagination
+from .pagenation import BoardPageNumberPagination, WholeBoardCommonPageNumberPagination, WholeBoardRecruitmentPageNumberPagination
 from rest_framework import viewsets
 
 
@@ -366,6 +369,173 @@ class RecruitmentBoardPostDetailAPIView(GenericAPIView):
         self.check_object_permissions(self.request, post)
         post.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+class WholePostSearch(GenericAPIView):
+
+    filter_backends = [SearchFilter]
+    search_fields = ['content', 'title',]
+
+    def get(self, request):
+        """
+            전체 게시글 list (GET)
+
+            ---
+                127.0.0.1:8000/api/board?category=free(question)
+            {
+                "freeboard": [
+                    {
+                        "id": 13,
+                        "title": "test2",
+                        "category": "free",
+                        "worker": "개발자",
+                        "content": "test1",
+                        "image": null,
+                        "create_at": "2021-09-12T16:44:50.233830+09:00",
+                        "user": {
+                            "id": 2,
+                            "profile": {
+                                "nickname": null,
+                                "image": "/media/profile/Untitled.jpeg"
+                            }
+                        },
+                        "likes": 0,
+                        "comments": 0
+                    },
+                    {
+                        "id": 12,
+                        "title": "test2",
+                        "category": "free",
+                        "worker": "개발자",
+                        "content": "test1",
+                        "image": null,
+                        "create_at": "2021-09-12T16:44:49.672820+09:00",
+                        "user": {
+                            "id": 2,
+                            "profile": {
+                                "nickname": null,
+                                "image": "/media/profile/Untitled.jpeg"
+                            }
+                        },
+                        "likes": 0,
+                        "comments": 0
+                    }
+                ],
+                "questionboard": [
+                    {
+                        "id": 22,
+                        "title": "test1",
+                        "category": "question",
+                        "worker": "개발자",
+                        "content": "test2",
+                        "image": null,
+                        "create_at": "2021-09-12T16:45:12.362742+09:00",
+                        "user": {
+                            "id": 2,
+                            "profile": {
+                                "nickname": null,
+                                "image": "/media/profile/Untitled.jpeg"
+                            }
+                        },
+                        "likes": 0,
+                        "comments": 0
+                    },
+                    {
+                        "id": 21,
+                        "title": "test1",
+                        "category": "question",
+                        "worker": "개발자",
+                        "content": "test2",
+                        "image": null,
+                        "create_at": "2021-09-12T16:45:11.873442+09:00",
+                        "user": {
+                            "id": 2,
+                            "profile": {
+                                "nickname": null,
+                                "image": "/media/profile/Untitled.jpeg"
+                            }
+                        },
+                        "likes": 0,
+                        "comments": 0
+                    }
+                ],
+                "recruitboard": [
+                    {
+                        "id": 1,
+                        "user": 2,
+                        "title": "test1",
+                        "study": {
+                            "id": 1,
+                            "user": 2,
+                            "name": "test",
+                            "content": "test",
+                            "status": true,
+                            "member": [
+                                2
+                            ],
+                            "image": null,
+                            "stack": [
+                                "python"
+                            ],
+                            "created_at": "2021-09-12T11:06:40.929959+09:00"
+                        },
+                        "developer": 2,
+                        "designer": 0,
+                        "pm": 0,
+                        "content": "test1",
+                        "start_date": "2021-09-12",
+                        "end_date": "2021-09-13",
+                        "status": true
+                    },
+                    {
+                        "id": 2,
+                        "user": 2,
+                        "title": "test2",
+                        "study": {
+                            "id": 1,
+                            "user": 2,
+                            "name": "test",
+                            "content": "test",
+                            "status": true,
+                            "member": [
+                                2
+                            ],
+                            "image": null,
+                            "stack": [
+                                "python"
+                            ],
+                            "created_at": "2021-09-12T11:06:40.929959+09:00"
+                        },
+                        "developer": 2,
+                        "designer": 0,
+                        "pm": 0,
+                        "content": "test2",
+                        "start_date": "2021-09-12",
+                        "end_date": "2021-09-13",
+                        "status": true
+                    }
+                ]
+            }
+        """
+        common_paginator = WholeBoardCommonPageNumberPagination()
+        recruit_paginator = WholeBoardRecruitmentPageNumberPagination()
+        free_posts = CommonBoard.objects.filter(category="free")
+        free_posts = self.filter_queryset(free_posts)
+        free_posts = common_paginator.paginate_queryset(free_posts, request)
+        free_serializer = CommonBoardListSerializer(free_posts, many=True)
+        question_posts = CommonBoard.objects.filter(category="question")
+        question_posts = self.filter_queryset(question_posts)
+        question_posts = common_paginator.paginate_queryset(question_posts, request)
+        question_serializer = CommonBoardListSerializer(question_posts, many=True)
+        recruit_posts = RecruitmentBoard.objects.all()
+        recruit_posts = self.filter_queryset(recruit_posts)
+        recruit_posts = recruit_paginator.paginate_queryset(recruit_posts, request)
+        recruit_serializer = RecruitmentBoardSerializer(recruit_posts, many=True)
+        return JsonResponse({
+            "freeboard": free_serializer.data,
+            "questionboard": question_serializer.data,
+            "recruitboard" : recruit_serializer.data
+        })
+
 
 class BoardMyListAPIView(GenericAPIView):
     serializer_class = CommonBoardListSerializer
