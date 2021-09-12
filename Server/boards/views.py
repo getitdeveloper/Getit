@@ -35,24 +35,32 @@ class CommonBoardListAPIView(GenericAPIView):
             ---
                 127.0.0.1:8000/api/board?category=free(question)
             {
-                "id": 1,
-                "title": "test",
-                "category": "free",
-                "content": "test",
-                "image": null,
-                "create_at": "2021-09-12T10:10:17.730557+09:00",
-                "user": {
-                    "id": 1,
-                    "profile": {
-                        "nickname": "getit",
-                        "image": "/media/profile/Untitled.jpeg"
+                "count": 1,
+                "next": null,
+                "previous": null,
+                "results": [
+                    {
+                        "id": 1,
+                        "title": "test",
+                        "category": "free",
+                        "worker": "개발자",
+                        "content": "test",
+                        "image": null,
+                        "create_at": "2021-09-12T10:53:19.475337+09:00",
+                        "user": {
+                            "id": 1,
+                            "profile": {
+                                "nickname": null,
+                                "image": "/media/profile/Untitled.jpeg"
+                            }
+                        },
+                        "stack": [
+                            "python"
+                        ],
+                        "likes": 1,
+                        "comments": 1
                     }
-                },
-                "stack": [
-                    "python"
-                ],
-                "likes": 2,
-                "comments": 1
+                ]
             }
         """
         category = request.GET.get('category')
@@ -94,7 +102,6 @@ class CommonBoardListAPIView(GenericAPIView):
                     "worker":"개발자"
                 }
         """
-
         serializer = CommonBoardListSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -118,36 +125,37 @@ class CommonBoardDetailAPIView(GenericAPIView):
 
             ---
             {
-                "id": 4,
+                "id": 1,
                 "title": "test",
                 "category": "free",
-                "worker":"개발자",
                 "content": "test",
                 "image": null,
-                "create_at": "2021-09-12T10:10:17.730557+09:00",
+                "create_at": "2021-09-12T10:53:19.475337+09:00",
                 "user": 1,
                 "stack": [
                     "python"
                 ],
-                "likes": 2,
+                "likes": 1,
                 "comments": [
                     {
                         "user": {
                             "id": 1,
                             "profile": {
-                                "nickname": "getit",
+                                "nickname": getit,
                                 "image": "/media/profile/Untitled.jpeg"
                             }
-                        }
+                        },
+                        "content": "test1"
                     },
                     {
                         "user": {
                             "id": 2,
                             "profile": {
-                                "nickname": "test",
+                                "nickname": test,
                                 "image": "/media/profile/Untitled.jpeg"
                             }
-                        }
+                        },
+                        "content": "test2"
                     }
                 ]
             }
@@ -201,6 +209,70 @@ class RecruitmentBoardPostListAPIView(GenericAPIView):
     # parser_classes = (MultiPartParser,)
 
     def get(self, request):
+        """
+            모집 게시글 list (GET)
+
+            ---
+            {
+                "count": 2,
+                "next": null,
+                "previous": null,
+                "results": [
+                    {
+                        "id": 1,
+                        "user": 2,
+                        "study": {
+                            "id": 1,
+                            "user": 2,
+                            "name": "test",
+                            "content": "test",
+                            "status": true,
+                            "member": [
+                                2
+                            ],
+                            "image": null,
+                            "stack": [
+                                "python"
+                            ],
+                            "created_at": "2021-09-12T11:06:40.929959+09:00"
+                        },
+                        "developer": 1,
+                        "designer": 0,
+                        "pm": 0,
+                        "content": "test",
+                        "start_date": "2021-09-12",
+                        "end_date": "2021-09-13",
+                        "status": true
+                    },
+                    {
+                        "id": 2,
+                        "user": 2,
+                        "study": {
+                            "id": 1,
+                            "user": 2,
+                            "name": "test",
+                            "content": "test",
+                            "status": true,
+                            "member": [
+                                2
+                            ],
+                            "image": null,
+                            "stack": [
+                                "python"
+                            ],
+                            "created_at": "2021-09-12T11:06:40.929959+09:00"
+                        },
+                        "developer": 2,
+                        "designer": 0,
+                        "pm": 0,
+                        "content": "test2",
+                        "start_date": "2021-09-12",
+                        "end_date": "2021-09-13",
+                        "status": true
+                    }
+                ]
+            }
+        """
         posts = RecruitmentBoard.objects.all()
         posts = self.filter_queryset(posts)
         paginator = BoardPageNumberPagination()
@@ -209,6 +281,22 @@ class RecruitmentBoardPostListAPIView(GenericAPIView):
         return paginator.get_paginated_response(serializer.data)
 
     def post(self, request):
+        """
+            모집 게시글 list (GET)
+
+            ---
+            {
+                "user": 2,
+                "study": 1,
+                "developer": 2,
+                "designer": 0,
+                "pm": 0,
+                "content": "test2",
+                "start_date": "2021-09-12",
+                "end_date": "2021-09-13",
+                "status": true
+            }
+        """
         serializer = RecruitmentBoardSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -226,11 +314,60 @@ class RecruitmentBoardPostDetailAPIView(GenericAPIView):
         return get_object_or_404(RecruitmentBoard, pk=pk)
 
     def get(self, request, pk, format=None):
+        """
+            모집 게시글 detail (GET)
+
+            ---
+            {
+                "id": 1,
+                "user": 2,
+                "study": {
+                    "id": 1,
+                    "user": 2,
+                    "name": "test",
+                    "content": "test",
+                    "status": true,
+                    "member": [
+                        2
+                    ],
+                    "image": null,
+                    "stack": [
+                        "python"
+                    ],
+                    "created_at": "2021-09-12T11:06:40.929959+09:00"
+                },
+                "developer": 1,
+                "designer": 0,
+                "pm": 0,
+                "content": "test",
+                "start_date": "2021-09-12",
+                "end_date": "2021-09-13",
+                "status": true
+            }
+        """
         post = self.get_object(pk)
         serializer = RecruitmentBoardSerializer(post)
         return Response(serializer.data)
 
     def put(self, request, pk):
+        """
+        모집 게시글 detail (PUT)
+
+        ---
+            {
+                "id": 1,
+                "user": 2,
+                "study": 1,
+                "developer": 2,
+                "designer": 0,
+                "pm": 0,
+                "content": "test",
+                "start_date": "2021-09-12",
+                "end_date": "2021-09-13",
+                "status": true,
+                "stack": ["python", "react"]
+            }
+        """
         post = self.get_object(pk)
         serializer = RecruitmentBoardSerializer(post, data=request.data)
         self.check_object_permissions(self.request, post)
