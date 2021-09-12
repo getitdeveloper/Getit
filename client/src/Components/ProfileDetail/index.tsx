@@ -21,6 +21,14 @@ function ProfileDetail(props: any) {
   const { profileInfo } = props;
   const history = useHistory();
   const classes = useStyles();
+
+  const onHandleNavigation = (content: any) => {
+    if (content.actionType === 'alert') {
+      alert(content.message);
+    } else if (content.actionType === 'push' && content.url) {
+      return history.push(content.url);
+    }
+  };
   return (
     <SplittedPageContainer>
       <ProfileLeft>
@@ -46,13 +54,7 @@ function ProfileDetail(props: any) {
         {navItem.map((content) => (
           <ProfileNavItem
             key={content.menu}
-            onClick={() => {
-              if (content.actionType === 'alert') {
-                alert(content.message);
-              } else if (content.actionType === 'push' && content.url) {
-                return history.push(content.url);
-              }
-            }}
+            onClick={() => onHandleNavigation(content)}
           >
             {content.menu}
           </ProfileNavItem>
