@@ -32,12 +32,29 @@ export interface IPost {
   image?: string;
   create_at?: string;
   user: number;
+  likes?: number;
+  comments?: number;
+  worker: string;
+}
+
+export interface ICommentList {
+  commonpost?: number;
+  content: string;
+  create_at: string;
+  recruitpostpost?: number;
+  user: {
+    id: number;
+    profile: {
+      image: string;
+      nickname: string;
+    };
+  };
 }
 
 export interface IComment {
   user: number;
-  commonpost: number;
-  recruitpost: number;
+  commonpost?: number;
+  recruitpost?: number;
   content: string;
   create_at?: string;
 }

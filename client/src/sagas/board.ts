@@ -13,7 +13,7 @@ import {
 } from '../reducers/actions';
 import { BoardData, PostData } from './boardTypes';
 
-// 자유게시판 받아오기
+// 자유/질문 게시판 받아오기
 const requestCommonBoard = (data: BoardData) => {
   // return axios.get(`/api/board?category=${data.category}`);
   return axios.get(`/api/board?category=${data.category}&page=${data.page}`);
@@ -21,9 +21,8 @@ const requestCommonBoard = (data: BoardData) => {
 
 function* requestCommonBoardSaga(action: any): any {
   try {
-    console.log('자유게시판 받아오기');
     const response = yield call(requestCommonBoard, action.data);
-    console.log('자유게시판 정보 응답 ===>', response);
+    console.log('게시판 정보 응답 ===>', response);
 
     yield put({
       type: COMMON_BOARD_SUCCESS,
@@ -38,7 +37,7 @@ function* requestCommonBoardSaga(action: any): any {
   }
 }
 
-// 자유 게시글 받아오기
+// 자유/질문 게시글 받아오기
 const requestCommonPost = (id: string) => {
   return axios.get(`/api/board/${id}`);
 };
@@ -46,7 +45,7 @@ const requestCommonPost = (id: string) => {
 function* requestCommonPostSaga(action: any): any {
   try {
     const response = yield call(requestCommonPost, action.data.id);
-    console.log('자유게시글 정보 응답 ===>', response);
+    console.log('자유/질문 게시글 정보 응답 ===>', response);
 
     yield put({
       type: COMMON_POST_SUCCESS,
@@ -61,7 +60,7 @@ function* requestCommonPostSaga(action: any): any {
   }
 }
 
-// 자유 게시글 작성하기
+// 자유/질문 게시글 작성하기
 const requestCommonPostRegister = (data: PostData) => {
   return axios.post(`/api/board/`, data);
 };
@@ -69,7 +68,7 @@ const requestCommonPostRegister = (data: PostData) => {
 function* requestCommonPostRegisterSaga(action: any): any {
   try {
     const response = yield call(requestCommonPostRegister, action.data);
-    console.log('자유게시글 작성 후 정보 응답 ===>', response);
+    console.log('자유/질문 게시글 작성 후 정보 응답 ===>', response);
 
     yield put({
       type: COMMON_POST_REGISTER_SUCCESS,

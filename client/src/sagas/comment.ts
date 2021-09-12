@@ -11,7 +11,7 @@ import {
 
 // 댓글 받아오기
 const requestComment = (data: any) => {
-  return axios.get(`/api/${data.boardId}/comment/`);
+  return axios.get(`/api/${data.board}/comment/`);
 };
 
 function* requestCommentSaga(action: any): any {
@@ -34,7 +34,7 @@ function* requestCommentSaga(action: any): any {
 
 // 댓글 작성하기
 const requestCommentRegister = (data: any) => {
-  return axios.post(`/api/${data.boardId}/comment/`, data.comment);
+  return axios.post(`/api/${data.board}/comment/`, data.comment);
 };
 
 function* requestCommentRegisterSaga(action: any): any {

@@ -4,8 +4,9 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
 import SubHeader from '../../Components/Commons/SubHeader/SubHeader';
 import { PageBackground, PageContainer, PageTitle } from '../../styles/page';
-import { COMMON_POST_REQUEST } from '../../reducers/actions';
+import { COMMON_POST_REQUEST, COMMENT_REQUEST } from '../../reducers/actions';
 import PostDetail from '../../Components/PostDetail';
+import Comments from '../../Components/Comments';
 
 function QuestionDetailPage(props: any) {
   const { history } = props;
@@ -44,9 +45,7 @@ function QuestionDetailPage(props: any) {
             좋아요
           </span>
         </div>
-        <PageContainer width='80%'>
-          <p>댓글</p>
-        </PageContainer>
+        <Comments boardId={contentId} />
       </PageBackground>
     </div>
   );

@@ -17,7 +17,8 @@ import { HorizontalLine } from '../../styles/commons';
 
 function PostItem(props: any) {
   const history = useHistory();
-  const { content, boardType } = props;
+  const { content, boardType, detail } = props;
+  console.log(content);
   return (
     <div>
       <PostContainer>
@@ -42,7 +43,7 @@ function PostItem(props: any) {
             ))}
           </TagWrapper> */}
           <PostTitle>{content.title}</PostTitle>
-          <PostText>{content.content}</PostText>
+          {detail ? null : <PostText>{content.content}</PostText>}
         </PostInfoButton>
       </PostContainer>
       <PostDetails>
@@ -51,11 +52,12 @@ function PostItem(props: any) {
           {moment(content.create_at).format('YYYY년 MM월 DD일')}
         </DetailInfo>
         <DetailInfo>
-          <img src='/icons/like.svg' alt='like-count' />0
-          {/* {content.likeCount} */}
+          <img src='/icons/like.svg' alt='like-count' />
+          {content.likes}
         </DetailInfo>
         <DetailInfo>
-          <ChatBubbleOutlineIcon />2{/* {content.commentCount} */}
+          <ChatBubbleOutlineIcon />
+          {content.comments}
         </DetailInfo>
       </PostDetails>
       <HorizontalLine width='100%' />

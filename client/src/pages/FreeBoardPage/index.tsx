@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import Pagination from 'react-js-pagination';
 import SubHeader from '../../Components/Commons/SubHeader/SubHeader';
 import PostItem from '../../Components/PostItem';
 import PostSubHeader from '../../Components/PostSubHeader';

@@ -6,7 +6,6 @@ import PostItem from '../../Components/PostItem';
 import PostSubHeader from '../../Components/PostSubHeader';
 import { PageContainer, PageBackground } from '../../styles/page';
 import { COMMON_BOARD_REQUEST } from '../../reducers/actions';
-import { dummyData } from '../FreeBoardPage/dummyData';
 import { IPost } from '../../types';
 import Paging from '../../Components/Paging';
 

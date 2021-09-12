@@ -1,4 +1,4 @@
-import { IComment } from '../types';
+import { IComment, ICommentList } from '../types';
 import {
   COMMENT_REQUEST,
   COMMENT_SUCCESS,
@@ -9,7 +9,7 @@ import {
 } from './actions';
 
 export interface InitialState {
-  CommentList: IComment[] | null;
+  CommentList: ICommentList[] | null;
   Comment: IComment | null;
   commentRequest: boolean;
   commentSuccess: boolean;
@@ -26,7 +26,7 @@ export interface CommentRequest {
 
 export interface CommentSuccess {
   type: typeof COMMENT_SUCCESS;
-  data: IComment[];
+  data: ICommentList[];
 }
 
 export interface CommentFailure {
