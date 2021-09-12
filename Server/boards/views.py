@@ -136,28 +136,6 @@ class CommonBoardDetailAPIView(GenericAPIView):
                     "python"
                 ],
                 "likes": 1,
-                "comments": [
-                    {
-                        "user": {
-                            "id": 1,
-                            "profile": {
-                                "nickname": getit,
-                                "image": "/media/profile/Untitled.jpeg"
-                            }
-                        },
-                        "content": "test1"
-                    },
-                    {
-                        "user": {
-                            "id": 2,
-                            "profile": {
-                                "nickname": test,
-                                "image": "/media/profile/Untitled.jpeg"
-                            }
-                        },
-                        "content": "test2"
-                    }
-                ]
             }
         """
         post = self.get_object(pk)

@@ -45,7 +45,6 @@ class CommentProfileSerializer(ModelSerializer):
         fields = ('user', 'content')
 
 class CommonBoardListSerializer(serializers.ModelSerializer):
-    stack = TagSerializer(read_only=True, many=True)
     likes = serializers.IntegerField(
         source='likes.count',
         read_only=True
@@ -63,7 +62,6 @@ class CommonBoardListSerializer(serializers.ModelSerializer):
         return super().to_representation(instance)   
 
 class CommonBoardDetailSerializer(serializers.ModelSerializer):
-    stack = TagSerializer(read_only=True, many=True)
     likes = serializers.IntegerField(
         source='likes.count',
         read_only=True
