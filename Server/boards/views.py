@@ -139,6 +139,7 @@ class CommonBoardDetailAPIView(GenericAPIView):
                     "python"
                 ],
                 "likes": 1,
+                "comments": 1
             }
         """
         post = self.get_object(pk)

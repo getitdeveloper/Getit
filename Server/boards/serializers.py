@@ -66,13 +66,16 @@ class CommonBoardDetailSerializer(serializers.ModelSerializer):
         source='likes.count',
         read_only=True
     )
+    comments = serializers.IntegerField(
+        source='comments.count',
+        read_only=True
+    )
     class Meta:
         model = CommonBoard
-        fields = ('id','title', 'category' ,'content', 'image', 'create_at', 'user', 'likes',)
+        fields = ('id','title', 'category' ,'content', 'image', 'create_at', 'user', 'likes', 'comments')
 
     def to_representatione(self, instance):
         self.fields['user'] = UserProfileSerializer(read_only=True)
-        # self.fields['comments'] = CommentProfileSerializer(read_only=True, many=True)
         return super().to_representation(instance) 
 
 class RecruitmentBoardSerializer(ModelSerializer):
