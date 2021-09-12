@@ -28,6 +28,7 @@ function FreeBoardDetailPage(props: any) {
   if (!freePost) {
     return <CircularProgress />;
   }
+  console.log('freePost: ', freePost);
   return (
     <div>
       <SubHeader />
@@ -45,6 +46,7 @@ function FreeBoardDetailPage(props: any) {
             좋아요
           </span>
         </div>
+
         <Comments boardId={contentId} />
       </PageBackground>
     </div>

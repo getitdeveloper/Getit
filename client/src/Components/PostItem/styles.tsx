@@ -62,4 +62,5 @@ export const PostDetails = styled.div`
 
 export const DetailInfo = styled.span`
   padding: 1%;
+  color: #868686;
 `;

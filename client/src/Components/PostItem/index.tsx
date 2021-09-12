@@ -17,7 +17,8 @@ import { HorizontalLine } from '../../styles/commons';
 
 function PostItem(props: any) {
   const history = useHistory();
-  const { content, boardType } = props;
+  const { content, boardType, detail } = props;
+  console.log(content);
   return (
     <div>
       <PostContainer>
@@ -42,7 +43,7 @@ function PostItem(props: any) {
             ))}
           </TagWrapper> */}
           <PostTitle>{content.title}</PostTitle>
-          <PostText>{content.content}</PostText>
+          {detail ? null : <PostText>{content.content}</PostText>}
         </PostInfoButton>
       </PostContainer>
       <PostDetails>

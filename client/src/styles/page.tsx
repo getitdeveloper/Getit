@@ -31,4 +31,5 @@ export const PageContainer = styled.div`
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
   padding: ${(props: Size) => (props.padding ? props.padding : '5%')};
   margin-bottom: 5%;
+  margin-top: 2%;
 `;
