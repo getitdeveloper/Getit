@@ -38,12 +38,14 @@ function PostForm() {
   };
 
   const onSubmit = (postTitle: string, postContent: string) => {
+    console.log(user);
     const postData = {
       title: postTitle,
       category: boardType,
       content: postContent,
       user: userId,
       stack: ['1', '123123', 'apple', 'banana'], // stack 작성하기?!!
+      worker: '개발자',
     };
     console.log(postData);
     try {

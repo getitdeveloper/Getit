@@ -6,6 +6,7 @@ import SubHeader from '../../Components/Commons/SubHeader/SubHeader';
 import { PageBackground, PageContainer, PageTitle } from '../../styles/page';
 import { COMMON_POST_REQUEST } from '../../reducers/actions';
 import PostDetail from '../../Components/PostDetail';
+import Comments from '../../Components/Comments';
 
 function FreeBoardDetailPage(props: any) {
   const { history } = props;
@@ -44,9 +45,7 @@ function FreeBoardDetailPage(props: any) {
             좋아요
           </span>
         </div>
-        <PageContainer width='80%'>
-          <p>댓글</p>
-        </PageContainer>
+        <Comments boardId={contentId} />
       </PageBackground>
     </div>
   );

@@ -51,11 +51,12 @@ function PostItem(props: any) {
           {moment(content.create_at).format('YYYY년 MM월 DD일')}
         </DetailInfo>
         <DetailInfo>
-          <img src='/icons/like.svg' alt='like-count' />0
-          {/* {content.likeCount} */}
+          <img src='/icons/like.svg' alt='like-count' />
+          {content.likes}
         </DetailInfo>
         <DetailInfo>
-          <ChatBubbleOutlineIcon />2{/* {content.commentCount} */}
+          <ChatBubbleOutlineIcon />
+          {content.comments}
         </DetailInfo>
       </PostDetails>
       <HorizontalLine width='100%' />
