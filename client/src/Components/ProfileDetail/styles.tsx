@@ -91,7 +91,6 @@ export const ProfileNavItem = styled.button`
 `;
 
 // MyComments styles
-
 export const CommentWrapper = styled.div`
   margin-bottom: 3%;
   width: 100%;
@@ -112,4 +111,14 @@ export const CommentDetailWrapper = styled.div`
 
 export const GoBoardButton = styled.button`
   width: 15%;
+`;
+
+// MyPosts styles
+
+export const PostWrapper = styled.div`
+  box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.16);
+  border: solid 1px #fbfbfb;
+  background-color: #fff;
+  padding: 2%;
+  border-radius: 7px;
 `;

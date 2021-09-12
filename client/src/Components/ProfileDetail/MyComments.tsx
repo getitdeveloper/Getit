@@ -7,6 +7,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { MY_COMMENT_REQUEST } from '../../reducers/actions';
 import {
   ProfileRight,
+  SubTitle,
   CommentWrapper,
   CommentDetailWrapper,
   GoBoardButton,
@@ -33,6 +34,7 @@ function MyComments() {
   }
   return (
     <ProfileRight>
+      <p>내가 쓴 댓글</p>
       {myComments.map((content: any) => (
         <CommentWrapper key={content.create_at}>
           <CommentDetailWrapper>
