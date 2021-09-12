@@ -20,18 +20,8 @@ import { dummyData } from './dummyData';
 import MemberType from '../../Components/RecruitMembers/index';
 import PostSubHeader from '../../Components/PostSubHeader';
 import { PageBackground } from '../../styles/page';
-import SubHeader from '../../Components/Commons/SubHeader/SubHeader';
 
-interface HeaderProp {
-  header?: boolean;
-}
-
-const defaultProp: HeaderProp = {
-  header: true,
-};
-
-function RecruitBoardPage(props: HeaderProp): JSX.Element {
-  const { header } = props;
+function RecruitBoardPage(): JSX.Element {
   const classes = useStyles();
 
   const user = useSelector((state: RootStateOrAny) => state.user);
@@ -39,7 +29,6 @@ function RecruitBoardPage(props: HeaderProp): JSX.Element {
 
   return (
     <div>
-      {header ? <SubHeader /> : null}
       <PageBackground>
         <PostSubHeader boardType='Recruit' />
         <div className={classes.root}>
@@ -108,7 +97,5 @@ function RecruitBoardPage(props: HeaderProp): JSX.Element {
     </div>
   );
 }
-
-RecruitBoardPage.defaultProps = defaultProp;
 
 export default RecruitBoardPage;

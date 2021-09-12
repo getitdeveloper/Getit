@@ -1,13 +1,18 @@
 import * as React from 'react';
 import { useCallback, useState } from 'react';
 import { RootStateOrAny, useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 import SearchBar from '../SearchBar/SearchBar';
 import LoginDialog from '../LoginDialog/LoginDialog';
 import UserInfoButtons from '../Commons/UserInfoButtons/UserInfoButtons';
 import LogoSvg from '../../assets/images/Logo.svg';
+import NavBar from '../NavBar';
 
 function Header(): JSX.Element {
   const user = useSelector((state: RootStateOrAny) => state.user);
+
+  const location = useLocation();
+  console.log('this location is ===> ', location);
 
   const [open, setOpen] = useState(false);
 
@@ -32,7 +37,8 @@ function Header(): JSX.Element {
         }}
       >
         <img src={LogoSvg} alt='logo' style={{ width: '12rem' }} />
-        <SearchBar />
+        {location.pathname === '/' ? <SearchBar /> : <NavBar />}
+
         {user.id.user_pk ? (
           <UserInfoButtons />
         ) : (

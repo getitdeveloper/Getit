@@ -16,7 +16,7 @@ import {
   useStyles,
 } from './styles';
 import { USER_PROFILE_REQUEST } from '../../reducers/actions';
-import SubHeader from '../../Components/Commons/SubHeader/SubHeader';
+
 import { PageTitle, PageBackground } from '../../styles/page';
 import Portfoilo from '../../Components/Portfolio';
 import Project from '../../Components/Project';
@@ -76,7 +76,6 @@ function ProfilePage(): JSX.Element {
 
   return (
     <div>
-      <SubHeader />
       <PageBackground>
         <PageTitle>내 프로필</PageTitle>
         <SplittedPageContainer>

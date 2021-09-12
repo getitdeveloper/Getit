@@ -2,7 +2,7 @@ import * as React from 'react';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Pagination from 'react-js-pagination';
-import SubHeader from '../../Components/Commons/SubHeader/SubHeader';
+
 import PostItem from '../../Components/PostItem';
 import PostSubHeader from '../../Components/PostSubHeader';
 import { COMMON_BOARD_REQUEST } from '../../reducers/actions';
@@ -10,21 +10,12 @@ import { PageContainer, PageBackground } from '../../styles/page';
 import { IPost } from '../../types';
 import Paging from '../../Components/Paging';
 
-interface HeaderProp {
-  header?: boolean;
-}
-
-const defaultProp: HeaderProp = {
-  header: true,
-};
-
-function FreeBoardPage(props: HeaderProp) {
+function FreeBoardPage() {
   const dispatch = useDispatch();
   const boardList = useSelector(
     (state: RootStateOrAny) => state.board.BoardList,
   );
   const [page, setPage] = React.useState(1);
-  const { header } = props;
 
   React.useEffect(() => {
     dispatch({
@@ -44,8 +35,6 @@ function FreeBoardPage(props: HeaderProp) {
 
   return (
     <div>
-      {header ? <SubHeader /> : null}
-
       <PageBackground>
         <PostSubHeader boardType='Free' />
         {boardList ? (
@@ -64,7 +53,5 @@ function FreeBoardPage(props: HeaderProp) {
     </div>
   );
 }
-
-FreeBoardPage.defaultProps = defaultProp;
 
 export default FreeBoardPage;

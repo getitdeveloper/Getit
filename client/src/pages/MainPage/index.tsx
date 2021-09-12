@@ -3,7 +3,6 @@ import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSelector, RootStateOrAny } from 'react-redux';
 import axios from 'axios';
-import Header from '../../Components/Header';
 import Banner from '../../Components/Banner/Banner';
 import NavBar from '../../Components/NavBar/index';
 
@@ -37,7 +36,6 @@ function MainPage(): JSX.Element {
 
   return (
     <div>
-      <Header />
       <Banner />
       <NavBar />
     </div>
