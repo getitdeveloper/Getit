@@ -56,7 +56,7 @@ class CommonBoardListSerializer(serializers.ModelSerializer):
     )
     class Meta:
         model = CommonBoard
-        fields = ('id','title', 'category', 'worker', 'content', 'image', 'create_at', 'user', 'stack', 'likes', 'comments',)
+        fields = ('id','title', 'category', 'worker', 'content', 'image', 'create_at', 'user', 'likes', 'comments',)
 
     def to_representation(self, instance):
         self.fields['user'] = UserProfileSerializer(read_only=True)
@@ -68,10 +68,9 @@ class CommonBoardDetailSerializer(serializers.ModelSerializer):
         source='likes.count',
         read_only=True
     )
-    comments = CommentProfileSerializer(read_only=True, many=True)
     class Meta:
         model = CommonBoard
-        fields = ('id','title', 'category' ,'content', 'image', 'create_at', 'user', 'stack', 'likes', 'comments',)
+        fields = ('id','title', 'category' ,'content', 'image', 'create_at', 'user', 'likes',)
 
     def to_representatione(self, instance):
         self.fields['user'] = UserProfileSerializer(read_only=True)

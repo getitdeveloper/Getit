@@ -11,6 +11,9 @@ from rest_framework import status
 from .permissions import IsOwnerOrReadOnly
 
 # Create your views here.
+from profiles.models import Profile
+
+
 class CommentListAPIView(GenericAPIView):
     serializer_class = CommentSerializer
 
@@ -30,6 +33,7 @@ class CommentListAPIView(GenericAPIView):
         """
         posts = Comment.objects.filter(commonpost=board_id)
         serializer = CommentSerializer(posts, many=True)
+        print(serializer.data)
         return Response(serializer.data)
 
     def post(self, request, board_id):

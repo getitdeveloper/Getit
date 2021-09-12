@@ -3,9 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="14847226-151c-4591-a157-0243461eac9c" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/boards/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/Server/boards/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/boards/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/Server/boards/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/comments/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/Server/comments/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/boards/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/Server/boards/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/boards/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/Server/boards/serializers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/comments/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/Server/comments/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/comments/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/Server/comments/serializers.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/comments/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/Server/comments/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -44,5 +45,16 @@
       <updated>1628791722555</updated>
     </task>
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>

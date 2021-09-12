@@ -8,3 +8,6 @@ class Comment(models.Model):
     recruitmentpost = models.ForeignKey('boards.RecruitmentBoard', on_delete=models.CASCADE, blank=True, null=True)
     content = models.TextField()
     create_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-create_at']
