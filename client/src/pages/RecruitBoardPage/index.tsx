@@ -25,7 +25,6 @@ function RecruitBoardPage(): JSX.Element {
   const classes = useStyles();
 
   const user = useSelector((state: RootStateOrAny) => state.user);
-  console.log(user);
 
   return (
     <div>

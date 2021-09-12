@@ -4,7 +4,7 @@ import LogoSvg from '../../assets/images/Logo.svg';
 export const HeaderWrapper = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
   width: 80%;
   margin: 0 auto;
@@ -30,4 +30,10 @@ export const LoginButton = styled.button`
   text-align: left;
   color: #ffffff;
   font-size: 1.5rem;
+  border-style: none;
+  cursor: pointer;
+
+  /* @media only screen and (max-width: 900px) {
+    display: none;
+  } */
 `;

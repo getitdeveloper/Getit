@@ -1,18 +1,23 @@
 import * as React from 'react';
-import { useCallback, useState } from 'react';
-import { RootStateOrAny, useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
+import { useCallback, useState, useEffect } from 'react';
+import { RootStateOrAny, useSelector, useDispatch } from 'react-redux';
+import { useLocation, Link } from 'react-router-dom';
 import SearchBar from '../SearchBar/SearchBar';
 import LoginDialog from '../LoginDialog/LoginDialog';
-import UserInfoButtons from '../Commons/UserInfoButtons/UserInfoButtons';
+import UserInfoButtons from '../UserInfoButtons/UserInfoButtons';
 import LogoSvg from '../../assets/images/Logo.svg';
-import NavBar from '../NavBar';
+import HeaderNav from '../HeaderNav/index';
+import { LoginButton } from './styles';
+import { USER_PROFILE_REQUEST } from '../../reducers/actions';
 
 function Header(): JSX.Element {
-  const user = useSelector((state: RootStateOrAny) => state.user);
+  const dispatch = useDispatch();
+  const { pathname } = useLocation();
 
-  const location = useLocation();
-  console.log('this location is ===> ', location);
+  const id = useSelector((state: RootStateOrAny) => state.user.id.user_pk);
+  const profileInfo = useSelector(
+    (state: RootStateOrAny) => state.user.profileInfo,
+  );
 
   const [open, setOpen] = useState(false);
 
@@ -24,48 +29,46 @@ function Header(): JSX.Element {
     setOpen(false);
   }, [open]);
 
-  return (
-    <div style={{ marginTop: '1rem' }}>
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'space-around',
-          alignItems: 'center',
-          width: '80%',
-          margin: '0 auto',
-        }}
-      >
-        <img src={LogoSvg} alt='logo' style={{ width: '12rem' }} />
-        {location.pathname === '/' ? <SearchBar /> : <NavBar />}
+  useEffect(() => {
+    dispatch({
+      type: USER_PROFILE_REQUEST,
+      data: {
+        user_pk: id,
+      },
+    });
+  }, [id]);
 
-        {user.id.user_pk ? (
-          <UserInfoButtons />
-        ) : (
-          <div>
-            <button
-              type='button'
-              onClick={handleOpen}
-              style={{
-                padding: '0.5rem 1.063rem',
-                borderRadius: '7px',
-                backgroundColor: '#4dd290',
-                fontWeight: 'bold',
-                fontStretch: 'normal',
-                fontStyle: 'normal',
-                lineHeight: '1.15',
-                letterSpacing: 'normal',
-                textAlign: 'left',
-                color: '#FFFFFF',
-                fontSize: '1.5rem',
-              }}
-            >
-              Login
-            </button>
-            <LoginDialog open={open} onClose={handleClose} />
-          </div>
-        )}
-      </div>
+  return (
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        alignItems: 'center',
+        width: '80%',
+        margin: '0 auto',
+        marginTop: '1rem',
+        marginBottom: '1rem',
+      }}
+    >
+      <Link to='/'>
+        <img src={LogoSvg} alt='logo' style={{ width: '12rem' }} />
+      </Link>
+      {/* 메인 페이지인 경우 검색창, 다른 페이지의 경우 네비게이션 */}
+      {pathname === '/' ? <SearchBar /> : <HeaderNav />}
+
+      {/* 로그인한 경우  */}
+      {profileInfo ? (
+        <UserInfoButtons nickname={profileInfo.nickname} />
+      ) : (
+        // 로그인하지 않은 경우
+        <>
+          <LoginButton type='button' onClick={handleOpen}>
+            Login
+          </LoginButton>
+          <LoginDialog open={open} onClose={handleClose} />
+        </>
+      )}
     </div>
   );
 }
