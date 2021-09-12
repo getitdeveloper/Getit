@@ -6,6 +6,9 @@ import {
   COMMENT_REGISTER_REQUEST,
   COMMENT_REGISTER_SUCCESS,
   COMMENT_REGISTER_FAILURE,
+  MY_COMMENT_REQUEST,
+  MY_COMMENT_SUCCESS,
+  MY_COMMENT_FAILURE,
 } from './actions';
 import { InitialState, CommentActions } from './commentTypes';
 
@@ -13,12 +16,16 @@ import { InitialState, CommentActions } from './commentTypes';
 const initialState: InitialState = {
   CommentList: null,
   Comment: null,
+  MyComment: null,
   commentRequest: false,
   commentSuccess: false,
   commentFailure: null,
   commentRegisterRequest: false,
   commentRegisterSuccess: false,
   commentRegisterFailure: null,
+  myCommentRequest: false,
+  myCommentSuccess: false,
+  myCommentFailure: null,
 };
 
 const reducer = (state = initialState, action: CommentActions): InitialState =>
@@ -55,6 +62,22 @@ const reducer = (state = initialState, action: CommentActions): InitialState =>
         draft.commentRegisterSuccess = false;
         draft.commentRegisterRequest = false;
         draft.commentRegisterFailure = action.error;
+        break;
+      case MY_COMMENT_REQUEST:
+        draft.myCommentRequest = true;
+        draft.myCommentSuccess = false;
+        draft.myCommentFailure = null;
+        break;
+      case MY_COMMENT_SUCCESS:
+        draft.myCommentRequest = false;
+        draft.myCommentSuccess = true;
+        draft.myCommentFailure = null;
+        draft.MyComment = action.data;
+        break;
+      case MY_COMMENT_FAILURE:
+        draft.myCommentRequest = false;
+        draft.myCommentSuccess = false;
+        draft.myCommentFailure = action.error;
         break;
       default:
         return state;
