@@ -1,5 +1,4 @@
 import * as React from 'react';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
 import SubHeader from '../../Components/Commons/SubHeader/SubHeader';
@@ -7,6 +6,7 @@ import { PageBackground, PageContainer, PageTitle } from '../../styles/page';
 import { COMMON_POST_REQUEST } from '../../reducers/actions';
 import PostDetail from '../../Components/PostDetail';
 import Comments from '../../Components/Comments';
+import LoadingSpinner from '../../Components/LoadingSpinner';
 
 function FreeBoardDetailPage(props: any) {
   const { history } = props;
@@ -26,7 +26,7 @@ function FreeBoardDetailPage(props: any) {
   }, []);
 
   if (!freePost) {
-    return <CircularProgress />;
+    return <LoadingSpinner />;
   }
   console.log('freePost: ', freePost);
   return (

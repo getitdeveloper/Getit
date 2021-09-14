@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
 import SubHeader from '../../Components/Commons/SubHeader/SubHeader';
 import { PageBackground, PageContainer, PageTitle } from '../../styles/page';
 import { COMMON_POST_REQUEST, COMMENT_REQUEST } from '../../reducers/actions';
 import PostDetail from '../../Components/PostDetail';
 import Comments from '../../Components/Comments';
+import LoadingSpinner from '../../Components/LoadingSpinner';
 
 function QuestionDetailPage(props: any) {
   const { history } = props;
@@ -26,7 +26,7 @@ function QuestionDetailPage(props: any) {
   }, []);
 
   if (!questionPost) {
-    return <CircularProgress />;
+    return <LoadingSpinner />;
   }
   return (
     <div>
