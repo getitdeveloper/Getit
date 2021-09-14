@@ -35,8 +35,8 @@ function FreeBoardPage() {
 
   return (
     <div>
+      <PostSubHeader boardType='Free' />
       <PageBackground>
-        <PostSubHeader boardType='Free' />
         {boardList ? (
           <PageContainer width='80%'>
             {boardList.results.map((content: IPost) => (

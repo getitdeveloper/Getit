@@ -28,10 +28,6 @@ function SearchBar(): JSX.Element {
         type: SEARCH_POST_REQUEST,
         data: search,
       });
-      // axios
-      //   .get(`/api/wholepost/?search=${search}`)
-      //   .then((res) => console.log('검색 결과 ===> ', res))
-      //   .catch((err) => console.log('검색 결과 에러 ===> ', err));
     },
     [search],
   );

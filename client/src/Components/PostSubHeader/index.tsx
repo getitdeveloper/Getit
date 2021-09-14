@@ -1,35 +1,34 @@
 import * as React from 'react';
+import { useState, useCallback } from 'react';
 import CreateIcon from '@material-ui/icons/Create';
 import { useHistory } from 'react-router-dom';
 import { RootStateOrAny, useSelector } from 'react-redux';
 import {
+  PostSubHeaderWrapper,
   JobSelectButtonWrapper,
   SortAndWriteWrapper,
   WritePost,
   JobSelectButton,
 } from './styles';
 import { HorizontalLine } from '../../styles/commons';
+import { BoardType } from './types';
 
-interface BoardType {
-  boardType: string;
-}
-
-function PostSubHeader(props: BoardType) {
+function PostSubHeader({ boardType }: BoardType): JSX.Element {
   const history = useHistory();
-  const [selected, setSelected] = React.useState(false);
+  const [selected, setSelected] = useState(false);
+  const [option, setOption] = useState('recent');
   const user = useSelector((state: RootStateOrAny) => state.user);
   const userId = user.id.user_pk;
-  const { boardType } = props;
 
-  const handleJobSelectButton = React.useCallback(
-    (event: any) => {
+  const handleJobSelectButton = useCallback(
+    (event) => {
       setSelected(event.target);
       console.log(event.target);
     },
     [selected],
   );
 
-  const handlePostType = () => {
+  const handlePostType = useCallback(() => {
     if (userId) {
       console.log('current board', boardType);
       switch (boardType) {
@@ -45,9 +44,15 @@ function PostSubHeader(props: BoardType) {
     } else {
       alert('로그인이 필요합니다. 먼저 로그인해주세요!');
     }
-  };
+  }, [userId, boardType]);
+
+  const handleSortPost = useCallback((event) => {
+    console.log(event.target.value);
+    setOption(event.target.value);
+  }, []);
+
   return (
-    <div style={{ width: '80%', margin: '0 auto' }}>
+    <PostSubHeaderWrapper>
       <JobSelectButtonWrapper>
         <JobSelectButton
           data-job='all'
@@ -71,17 +76,17 @@ function PostSubHeader(props: BoardType) {
           <span data-job='designer'>디자이너</span>
         </JobSelectButton>
         <JobSelectButton
-          data-job='planner'
+          data-job='ProjectManager'
           variant='contained'
           onClick={handleJobSelectButton}
         >
-          <span data-job='planner'>기획자</span>
+          <span data-job='ProjectManager'>기획자</span>
         </JobSelectButton>
       </JobSelectButtonWrapper>
-      <HorizontalLine width='80%' />
+      <HorizontalLine width='100%' />
 
       <SortAndWriteWrapper>
-        <select name='sortPost'>
+        <select name='sortPost' onChange={handleSortPost}>
           <option value='recent'>최신순</option>
           <option value='popular'>인기순</option>
         </select>
@@ -90,7 +95,7 @@ function PostSubHeader(props: BoardType) {
           <CreateIcon />
         </WritePost>
       </SortAndWriteWrapper>
-    </div>
+    </PostSubHeaderWrapper>
   );
 }
 

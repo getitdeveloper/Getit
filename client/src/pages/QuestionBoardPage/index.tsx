@@ -33,8 +33,8 @@ function QuestionBardPage() {
   }
   return (
     <div>
+      <PostSubHeader boardType='Question' />
       <PageBackground>
-        <PostSubHeader boardType='Question' />
         {boardList ? (
           <PageContainer width='80%'>
             {boardList.results.map((content: IPost) => (
