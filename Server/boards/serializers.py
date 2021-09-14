@@ -92,16 +92,3 @@ class RecruitmentBoardSerializer(ModelSerializer):
         self.fields['user'] = UserProfileSerializer(read_only=True)
         self.fields['study'] = TeamProfileSerializer(read_only=True)
         return super().to_representation(instance)
-
-
-class RecruitmentBoardSerializer(ModelSerializer):
-
-    class Meta:
-        model = RecruitmentBoard
-        fields = ('id','user', 'title', 'study', 'developer', 'designer', 'pm', 'content', 'start_date', 'end_date', 'status',)
-    
-    def to_representation(self, instance):
-        self.fields['study'] = TeamProfileSerializer(read_only=True)
-        return super().to_representation(instance)
-
-    
