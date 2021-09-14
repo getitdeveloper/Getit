@@ -13,6 +13,9 @@ import {
   MY_POST_LIST_SUCCESS,
   MY_POST_LIST_REQUEST,
   MY_POST_LIST_FAILURE,
+  COMMON_POST_LIKE_REQUEST,
+  COMMON_POST_LIKE_SUCCESS,
+  COMMON_POST_LIKE_FAILURE,
 } from './actions';
 
 // 초기 상태
@@ -20,6 +23,7 @@ const initialState: InitialState = {
   PostContent: null,
   BoardList: null,
   MyPostList: null,
+  LikeCounts: null,
   commonPostRequest: false,
   commonPostSuccess: false,
   commonPostFailure: null,
@@ -32,6 +36,9 @@ const initialState: InitialState = {
   myPostListRequest: false,
   myPostListSuccess: false,
   myPostListFailure: null,
+  commonPostLikeRequest: false,
+  commonPostLikeSuccess: false,
+  commonPostLikeFailure: null,
 };
 
 const reducer = (state = initialState, action: BoardActions): InitialState =>
@@ -100,6 +107,22 @@ const reducer = (state = initialState, action: BoardActions): InitialState =>
         draft.myPostListSuccess = false;
         draft.myPostListRequest = false;
         draft.myPostListFailure = action.error;
+        break;
+      case COMMON_POST_LIKE_REQUEST:
+        draft.commonPostLikeRequest = true;
+        draft.commonPostLikeSuccess = false;
+        draft.commonPostLikeFailure = null;
+        break;
+      case COMMON_POST_LIKE_SUCCESS:
+        draft.commonPostLikeRequest = false;
+        draft.commonPostLikeSuccess = true;
+        draft.commonPostLikeFailure = null;
+        draft.LikeCounts = action.data;
+        break;
+      case COMMON_POST_LIKE_FAILURE:
+        draft.commonPostLikeRequest = false;
+        draft.commonPostLikeSuccess = false;
+        draft.commonPostLikeFailure = action.error;
         break;
       default:
         return state;
