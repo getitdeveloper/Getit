@@ -17,6 +17,7 @@ import RecruitBoardPage from '../pages/RecruitBoardPage';
 import FreeBoardFormPage from '../pages/FreeBoardFormPage';
 import RecruitFormPage from '../pages/RecruitFormPage';
 import Header from './Header/index';
+import SearchResultPage from '../pages/SearchResultPage/index';
 
 function Routes(): JSX.Element {
   const history = useHistory();
@@ -59,6 +60,7 @@ function Routes(): JSX.Element {
         <Route exact path='/freeBoard/form' component={FreeBoardFormPage} />
         <Route exact path='/recruitBoard' component={RecruitBoardPage} />
         <Route exact path='/recruitBoard/form' component={RecruitFormPage} />
+        <Route exact path='/searchResult' component={SearchResultPage} />
       </Switch>
     </>
   );

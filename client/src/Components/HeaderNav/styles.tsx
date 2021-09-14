@@ -4,11 +4,16 @@ import { Link } from 'react-router-dom';
 export const Nav = styled.ul`
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  margin: 0 auto;
 
   li {
     font-size: 1.6rem;
     padding: 0 0.8rem;
+  }
+
+  @media ${({ theme }) => theme.tablet} {
+    width: 100%;
+    justify-content: center;
   }
 `;
 

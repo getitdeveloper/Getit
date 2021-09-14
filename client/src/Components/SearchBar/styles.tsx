@@ -1,19 +1,4 @@
-import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
 import styled from 'styled-components';
-
-const SearchBarStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    inputRoot: {
-      width: '90%',
-      color: 'inherit',
-      // padding: theme.spacing(1, 1, 1, 0),
-      paddingLeft: `calc(1em + ${theme.spacing(1)}px)`,
-      fontSize: '1.5rem',
-    },
-  }),
-);
-
-export default SearchBarStyles;
 
 export const SearchBarWrapper = styled.div`
   max-width: 36.75rem;
@@ -22,6 +7,21 @@ export const SearchBarWrapper = styled.div`
   border-radius: 23px;
   background-color: #f5f5f5;
   margin-left: 0;
+  margin: 0 auto;
+
+  @media ${({ theme }) => theme.tablet} {
+    width: 90%;
+  }
+
+  input {
+    width: 90%;
+    background: transparent;
+    border-style: none;
+    height: 4rem;
+    padding-left: 1.5rem;
+    font-size: 1.5rem;
+    outline-style: none;
+  }
 `;
 
 export const SearchIconWrapper = styled.div`

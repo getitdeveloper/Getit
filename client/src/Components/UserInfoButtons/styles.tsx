@@ -14,22 +14,19 @@ export const UserInfoWrapper = styled.div`
     background-color: transparent;
     cursor: pointer;
     margin: 0 0.5rem;
+    padding: 0.3rem 0.5rem;
     border-style: none;
+    background-color: #e0e0e0;
+    border-radius: 50%;
   }
 `;
 
 export const StyledPersonIcon = styled(PersonIcon)`
   color: #868686;
   font-size: 2.5rem;
-  background-color: #e0e0e0;
-  border-radius: 50%;
-  margin: 0 0.9rem;
 `;
 
 export const StyledNotificationsIcon = styled(NotificationsIcon)`
   color: #868686;
   font-size: 2.5rem;
-  background-color: #e0e0e0;
-  border-radius: 50%;
-  margin: 0 0.9rem;
 `;

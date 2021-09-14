@@ -1,15 +1,16 @@
 import * as React from 'react';
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useRef, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { InputBase } from '@material-ui/core';
+import { useHistory, useLocation } from 'react-router-dom';
+
 import SearchIcon from '@material-ui/icons/Search';
-import axios from 'axios';
-import SearchBarStyles, { SearchBarWrapper, SearchIconWrapper } from './styles';
+import { SearchBarWrapper, SearchIconWrapper } from './styles';
 import { SEARCH_POST_REQUEST } from '../../reducers/actions';
 
 function SearchBar(): JSX.Element {
-  const classes = SearchBarStyles();
   const dispatch = useDispatch();
+  const history = useHistory();
+  const { pathname } = useLocation();
 
   const [search, setSearch] = useState('');
 
@@ -20,31 +21,45 @@ function SearchBar(): JSX.Element {
     [search],
   );
 
+  // 검색 결과 페이지에서 이동시 state 초기화
+  useEffect(() => {
+    if (pathname !== '/searchResult') {
+      setSearch('');
+    }
+  }, [pathname]);
+
+  const inputRef = useRef<HTMLInputElement>(null);
+
   const handleSubmit = useCallback(
     (event) => {
       event.preventDefault();
-      console.log('검색어 ==> ', search);
       dispatch({
         type: SEARCH_POST_REQUEST,
         data: search,
       });
+
+      if (search === '') {
+        return alert('검색어를 입력하세요.');
+      }
+      inputRef.current?.blur();
+      return history.push('/searchResult');
     },
+
     [search],
   );
 
   return (
     <SearchBarWrapper>
-      <SearchIconWrapper>
-        <SearchIcon fontSize='large' />
-      </SearchIconWrapper>
       <form onSubmit={handleSubmit}>
-        <InputBase
-          placeholder='검색어를 입력하세요'
-          classes={{
-            root: classes.inputRoot,
-          }}
-          inputProps={{ 'aria-label': 'search' }}
+        <SearchIconWrapper>
+          <SearchIcon fontSize='large' />
+        </SearchIconWrapper>
+        <input
+          type='text'
+          placeholder='검색어를 입력하세요.'
+          value={search}
           onChange={handleSearch}
+          ref={inputRef}
         />
       </form>
     </SearchBarWrapper>
