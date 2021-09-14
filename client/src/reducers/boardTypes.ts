@@ -9,11 +9,16 @@ import {
   COMMON_POST_REGISTER_REQUEST,
   COMMON_POST_REGISTER_FAILURE,
   COMMON_POST_REGISTER_SUCCESS,
+  SEARCH_POST_REQUEST,
+  SEARCH_POST_SUCCESS,
+  SEARCH_POST_FAILURE,
 } from './actions';
 
 export interface InitialState {
   PostContent: IPost | null;
   BoardList: IBoard | null;
+  // TODO 수정하기
+  searchPostList: any | null;
   commonPostRequest: boolean;
   commonPostSuccess: boolean;
   commonPostFailure: string | null;
@@ -23,6 +28,9 @@ export interface InitialState {
   commonBoardRequest: boolean;
   commonBoardSuccess: boolean;
   commonBoardFailure: string | null;
+  searchPostRequest: boolean;
+  searchPostSuccess: boolean;
+  searchPostFailure: string | null;
 }
 
 // 자유게시판 받아오기
@@ -70,6 +78,21 @@ export interface CommonPostRegisterFailure {
   error: string;
 }
 
+export interface SearchPostRequest {
+  type: typeof SEARCH_POST_REQUEST;
+}
+
+export interface SearchPostSuccess {
+  type: typeof SEARCH_POST_SUCCESS;
+  // TODO 수정하기 타입
+  data: any;
+}
+
+export interface SearchPostFailure {
+  type: typeof SEARCH_POST_FAILURE;
+  error: string;
+}
+
 export type BoardActions =
   | CommonBoardSuccess
   | CommonBoardRequest
@@ -79,4 +102,7 @@ export type BoardActions =
   | CommonPostFailure
   | CommonPostRegisterSuccess
   | CommonPostRegisterRequest
-  | CommonPostRegisterFailure;
+  | CommonPostRegisterFailure
+  | SearchPostRequest
+  | SearchPostSuccess
+  | SearchPostFailure;

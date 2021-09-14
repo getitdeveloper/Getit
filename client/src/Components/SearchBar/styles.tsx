@@ -16,17 +16,12 @@ const SearchBarStyles = makeStyles((theme: Theme) =>
 export default SearchBarStyles;
 
 export const SearchBarWrapper = styled.div`
-  width: 36.75rem;
-  display: flex;
-  justify-content: space-between;
-`;
-
-export const SearchBarInput = styled.div`
+  max-width: 36.75rem;
+  width: 100%;
   position: relative;
   border-radius: 23px;
   background-color: #f5f5f5;
   margin-left: 0;
-  width: 100%;
 `;
 
 export const SearchIconWrapper = styled.div`

@@ -1,5 +1,8 @@
 import * as React from 'react';
-import { Switch, Route, useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
+import { Switch, Route, useLocation, useHistory } from 'react-router-dom';
+import { useSelector, RootStateOrAny } from 'react-redux';
+import axios from 'axios';
 import MainPage from '../pages/MainPage';
 import KakaoOAuth2Callback from '../Auth/KakaoLogin/KakaoOAuth2Callback';
 import GithubCallback from '../Auth/GithubLogin/GithubCallback';
@@ -16,7 +19,23 @@ import RecruitFormPage from '../pages/RecruitFormPage';
 import Header from './Header/index';
 
 function Routes(): JSX.Element {
+  const history = useHistory();
   const { pathname } = useLocation();
+
+  const message = useSelector((state: RootStateOrAny) => state.user.id.message);
+
+  useEffect(() => {
+    if (message === 'register') {
+      return history.push('/register');
+    }
+  }, [message]);
+
+  useEffect(() => {
+    axios
+      .get('/')
+      .then((res) => console.log('서버상태 ===> ', res))
+      .catch((error) => console.log(error));
+  }, []);
 
   return (
     <>

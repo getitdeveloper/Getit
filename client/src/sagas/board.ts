@@ -10,6 +10,9 @@ import {
   COMMON_POST_REGISTER_REQUEST,
   COMMON_POST_REGISTER_FAILURE,
   COMMON_POST_REGISTER_SUCCESS,
+  SEARCH_POST_REQUEST,
+  SEARCH_POST_SUCCESS,
+  SEARCH_POST_FAILURE,
 } from '../reducers/actions';
 import { BoardData, PostData } from './boardTypes';
 
@@ -84,6 +87,29 @@ function* requestCommonPostRegisterSaga(action: any): any {
   }
 }
 
+// 게시글 검색
+const requestSearchPost = (data: string) => {
+  return axios.get(`/api/wholepost/?search=${data}`);
+};
+
+function* requestSearchPostSaga(action: { type: string; data: string }): any {
+  try {
+    const response = yield call(requestSearchPost, action.data);
+    console.log('게시글 전체 검색 응답 ===>', response);
+
+    yield put({
+      type: SEARCH_POST_SUCCESS,
+      data: response.data,
+    });
+  } catch (error) {
+    console.error(error);
+    yield put({
+      type: SEARCH_POST_FAILURE,
+      error,
+    });
+  }
+}
+
 function* watchRequestCommonBoard() {
   yield takeLatest(COMMON_BOARD_REQUEST, requestCommonBoardSaga);
 }
@@ -96,11 +122,16 @@ function* watchRequestCommonPostRegister() {
   yield takeLatest(COMMON_POST_REGISTER_REQUEST, requestCommonPostRegisterSaga);
 }
 
+function* watchRequestSearchPost() {
+  yield takeLatest(SEARCH_POST_REQUEST, requestSearchPostSaga);
+}
+
 function* boardSaga() {
   yield all([
     fork(watchRequestCommonBoard),
     fork(watchRequestCommonPost),
     fork(watchRequestCommonPostRegister),
+    fork(watchRequestSearchPost),
   ]);
 }
 

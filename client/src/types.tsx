@@ -41,3 +41,7 @@ export interface IComment {
   content: string;
   create_at?: string;
 }
+// 수정하기TODO
+// export interface ISearchPost {
+
+// }

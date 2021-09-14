@@ -10,12 +10,16 @@ import {
   COMMON_POST_REGISTER_REQUEST,
   COMMON_POST_REGISTER_FAILURE,
   COMMON_POST_REGISTER_SUCCESS,
+  SEARCH_POST_REQUEST,
+  SEARCH_POST_SUCCESS,
+  SEARCH_POST_FAILURE,
 } from './actions';
 
 // 초기 상태
 const initialState: InitialState = {
   PostContent: null,
   BoardList: null,
+  searchPostList: null,
   commonPostRequest: false,
   commonPostSuccess: false,
   commonPostFailure: null,
@@ -25,6 +29,9 @@ const initialState: InitialState = {
   commonBoardRequest: false,
   commonBoardSuccess: false,
   commonBoardFailure: null,
+  searchPostRequest: false,
+  searchPostSuccess: false,
+  searchPostFailure: null,
 };
 
 const reducer = (state = initialState, action: BoardActions): InitialState =>
@@ -77,6 +84,23 @@ const reducer = (state = initialState, action: BoardActions): InitialState =>
         draft.commonPostRegisterSuccess = false;
         draft.commonPostRegisterRequest = false;
         draft.commonPostRegisterFailure = action.error;
+        break;
+
+      case SEARCH_POST_REQUEST:
+        draft.searchPostRequest = true;
+        draft.searchPostSuccess = false;
+        draft.searchPostFailure = null;
+        break;
+      case SEARCH_POST_SUCCESS:
+        draft.searchPostRequest = false;
+        draft.searchPostSuccess = true;
+        draft.searchPostFailure = null;
+        draft.searchPostList = action.data;
+        break;
+      case SEARCH_POST_FAILURE:
+        draft.searchPostRequest = false;
+        draft.searchPostSuccess = false;
+        draft.searchPostFailure = action.error;
         break;
       default:
         return state;
