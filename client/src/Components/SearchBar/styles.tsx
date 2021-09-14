@@ -11,6 +11,7 @@ export const SearchBarWrapper = styled.div`
 
   @media ${({ theme }) => theme.tablet} {
     width: 90%;
+    margin: 2.5rem 0;
   }
 
   input {

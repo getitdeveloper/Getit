@@ -13,8 +13,14 @@ export const HeaderWrapper = styled.div`
   position: relative;
 
   @media ${({ theme }) => theme.tablet} {
+    /* width: 100%; */
+    /* display: initial; */
+    flex-direction: column;
+    height: auto;
+  }
+
+  @media ${({ theme }) => theme.mobile} {
     width: 100%;
-    display: initial;
   }
 `;
 
@@ -37,9 +43,14 @@ export const Logo = styled.img.attrs({
   src: LogoSvg,
 })`
   width: 12rem;
+
   @media ${({ theme }) => theme.tablet} {
     width: 10rem;
     margin: 1.2rem;
+  }
+
+  @media ${({ theme }) => theme.mobile} {
+    width: 8rem;
   }
 `;
 
@@ -47,10 +58,15 @@ export const RightHeaderWrapper = styled.div`
   display: inline-block;
   position: absolute;
   right: 0;
+
   @media ${({ theme }) => theme.tablet} {
-    position: fixed;
-    top: 1.5rem;
-    right: 1.5rem;
+    right: 2rem;
+    top: 2rem;
+  }
+
+  @media ${({ theme }) => theme.mobile} {
+    right: 1.3rem;
+    top: 1rem;
   }
 `;
 

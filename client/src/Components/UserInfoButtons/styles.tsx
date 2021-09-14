@@ -8,13 +8,17 @@ export const UserInfoWrapper = styled.div`
   align-items: center;
   p {
     font-size: 1.5rem;
+
+    @media ${({ theme }) => theme.mobile} {
+      display: none;
+    }
   }
 
   button {
     background-color: transparent;
     cursor: pointer;
-    margin: 0 0.5rem;
-    padding: 0.3rem 0.5rem;
+    margin-left: 1rem;
+    padding: 0.7rem 0.9rem;
     border-style: none;
     background-color: #e0e0e0;
     border-radius: 50%;
@@ -23,10 +27,8 @@ export const UserInfoWrapper = styled.div`
 
 export const StyledPersonIcon = styled(PersonIcon)`
   color: #868686;
-  font-size: 2.5rem;
 `;
 
 export const StyledNotificationsIcon = styled(NotificationsIcon)`
   color: #868686;
-  font-size: 2.5rem;
 `;

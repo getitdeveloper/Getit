@@ -1,19 +1,24 @@
-.bannerContainer {
+import styled from 'styled-components';
+
+export const BannerWrapper = styled.div`
   display: flex;
   justify-content: space-around;
   align-items: center;
   height: 15rem;
-}
+`;
 
-.textContainer {
+export const TextWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
   width: 18rem;
-}
+  @media ${({ theme }) => theme.tablet} {
+    margin-left: 1rem;
+  }
+`;
 
-.mainText {
+export const MainText = styled.p`
   width: 100%;
   font-size: 1.813rem;
   font-weight: bold;
@@ -23,9 +28,9 @@
   letter-spacing: normal;
   text-align: left;
   color: #000;
-}
+`;
 
-.subText {
+export const SubText = styled.p`
   width: 100%;
   font-family: NotoSansCJKkr;
   font-size: 0.938rem;
@@ -35,15 +40,18 @@
   line-height: 1.67;
   letter-spacing: normal;
   text-align: left;
-  color: #4dd290;
-}
+  color: ${({ theme }) => theme.colors.main};
+`;
 
-.imgContainer {
+export const ImgContainer = styled.div`
   height: 100%;
-}
+  @media ${({ theme }) => theme.tablet} {
+    margin-right: 1rem;
+  }
+`;
 
-.bannerImg {
+export const BannerImg = styled.img`
   width: 100%;
   height: 100%;
   object-fit: contain;
-}
+`;
