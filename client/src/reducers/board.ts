@@ -10,12 +10,16 @@ import {
   COMMON_POST_REGISTER_REQUEST,
   COMMON_POST_REGISTER_FAILURE,
   COMMON_POST_REGISTER_SUCCESS,
+  MY_POST_LIST_SUCCESS,
+  MY_POST_LIST_REQUEST,
+  MY_POST_LIST_FAILURE,
 } from './actions';
 
 // 초기 상태
 const initialState: InitialState = {
   PostContent: null,
   BoardList: null,
+  MyPostList: null,
   commonPostRequest: false,
   commonPostSuccess: false,
   commonPostFailure: null,
@@ -25,6 +29,9 @@ const initialState: InitialState = {
   commonBoardRequest: false,
   commonBoardSuccess: false,
   commonBoardFailure: null,
+  myPostListRequest: false,
+  myPostListSuccess: false,
+  myPostListFailure: null,
 };
 
 const reducer = (state = initialState, action: BoardActions): InitialState =>
@@ -77,6 +84,22 @@ const reducer = (state = initialState, action: BoardActions): InitialState =>
         draft.commonPostRegisterSuccess = false;
         draft.commonPostRegisterRequest = false;
         draft.commonPostRegisterFailure = action.error;
+        break;
+      case MY_POST_LIST_REQUEST:
+        draft.myPostListSuccess = true;
+        draft.myPostListRequest = false;
+        draft.myPostListFailure = null;
+        break;
+      case MY_POST_LIST_SUCCESS:
+        draft.myPostListSuccess = true;
+        draft.myPostListRequest = false;
+        draft.myPostListFailure = null;
+        draft.MyPostList = action.data;
+        break;
+      case MY_POST_LIST_FAILURE:
+        draft.myPostListSuccess = false;
+        draft.myPostListRequest = false;
+        draft.myPostListFailure = action.error;
         break;
       default:
         return state;

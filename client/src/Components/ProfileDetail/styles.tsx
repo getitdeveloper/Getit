@@ -35,7 +35,7 @@ export const ProfileLeft = styled.div`
 `;
 
 export const ProfileRight = styled.div`
-  width: 70%;
+  width: 75%;
   height: auto;
   padding: 2%;
   @media ${(props) => props.theme.mobile} {
@@ -88,4 +88,37 @@ export const ProfileNavItem = styled.button`
   &:hover {
     color: ${(props) => props.theme.colors.main};
   }
+`;
+
+// MyComments styles
+export const CommentWrapper = styled.div`
+  margin-bottom: 3%;
+  width: 100%;
+  box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.16);
+  border: solid 1px #fbfbfb;
+  border-radius: 7px;
+  background-color: #fff;
+  display: flex;
+  justify-content: space-between;
+  padding: 2%;
+`;
+
+export const CommentDetailWrapper = styled.div`
+  width: 85%;
+  display: flex;
+  justify-content: space-between;
+`;
+
+export const GoBoardButton = styled.button`
+  width: 15%;
+`;
+
+// MyPosts styles
+
+export const PostWrapper = styled.div`
+  box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.16);
+  border: solid 1px #fbfbfb;
+  background-color: #fff;
+  padding: 2%;
+  border-radius: 7px;
 `;

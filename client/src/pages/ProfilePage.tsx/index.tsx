@@ -35,7 +35,7 @@ function ProfilePage(): JSX.Element {
       <SubHeader />
       <PageBackground>
         <PageTitle>내 프로필</PageTitle>
-        <ProfileDetail profileInfo={profileInfo} />
+        <ProfileDetail />
       </PageBackground>
     </div>
   );

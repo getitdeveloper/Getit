@@ -10,6 +10,9 @@ import {
   COMMON_POST_REGISTER_REQUEST,
   COMMON_POST_REGISTER_FAILURE,
   COMMON_POST_REGISTER_SUCCESS,
+  MY_POST_LIST_SUCCESS,
+  MY_POST_LIST_REQUEST,
+  MY_POST_LIST_FAILURE,
 } from '../reducers/actions';
 import { BoardData, PostData } from './boardTypes';
 
@@ -83,6 +86,29 @@ function* requestCommonPostRegisterSaga(action: any): any {
   }
 }
 
+// 내가 쓴 게시글 받아오기
+const requestMyPostList = (data: any) => {
+  return axios.get(`/api/mycommonboard/${data.user}`);
+};
+
+function* requestMyPostListSaga(action: any): any {
+  try {
+    const response = yield call(requestMyPostList, action.data);
+    console.log('내가 쓴 게시글 정보 응답 ===>', response);
+
+    yield put({
+      type: MY_POST_LIST_SUCCESS,
+      data: response.data,
+    });
+  } catch (error) {
+    console.error(error);
+    yield put({
+      type: MY_POST_LIST_FAILURE,
+      error,
+    });
+  }
+}
+
 function* watchRequestCommonBoard() {
   yield takeLatest(COMMON_BOARD_REQUEST, requestCommonBoardSaga);
 }
@@ -95,11 +121,16 @@ function* watchRequestCommonPostRegister() {
   yield takeLatest(COMMON_POST_REGISTER_REQUEST, requestCommonPostRegisterSaga);
 }
 
+function* watchRequestMyPostList() {
+  yield takeLatest(MY_POST_LIST_REQUEST, requestMyPostListSaga);
+}
+
 function* boardSaga() {
   yield all([
     fork(watchRequestCommonBoard),
     fork(watchRequestCommonPost),
     fork(watchRequestCommonPostRegister),
+    fork(watchRequestMyPostList),
   ]);
 }
 

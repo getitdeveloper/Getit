@@ -6,17 +6,24 @@ import {
   COMMENT_REGISTER_REQUEST,
   COMMENT_REGISTER_SUCCESS,
   COMMENT_REGISTER_FAILURE,
+  MY_COMMENT_REQUEST,
+  MY_COMMENT_SUCCESS,
+  MY_COMMENT_FAILURE,
 } from './actions';
 
 export interface InitialState {
   CommentList: ICommentList[] | null;
   Comment: IComment | null;
+  MyComment: ICommentList[] | null;
   commentRequest: boolean;
   commentSuccess: boolean;
   commentFailure: string | null;
   commentRegisterRequest: boolean;
   commentRegisterSuccess: boolean;
   commentRegisterFailure: string | null;
+  myCommentRequest: boolean;
+  myCommentSuccess: boolean;
+  myCommentFailure: string | null;
 }
 
 // 자유게시판 받아오기
@@ -49,10 +56,27 @@ export interface CommentRegisterFailure {
   error: string;
 }
 
+export interface MyCommentRequest {
+  type: typeof MY_COMMENT_REQUEST;
+}
+
+export interface MyCommentSuccess {
+  type: typeof MY_COMMENT_SUCCESS;
+  data: ICommentList[];
+}
+
+export interface MyCommentFailure {
+  type: typeof MY_COMMENT_FAILURE;
+  error: string;
+}
+
 export type CommentActions =
   | CommentSuccess
   | CommentRequest
   | CommentFailure
   | CommentRegisterSuccess
   | CommentRegisterRequest
-  | CommentRegisterFailure;
+  | CommentRegisterFailure
+  | MyCommentRequest
+  | MyCommentSuccess
+  | MyCommentFailure;

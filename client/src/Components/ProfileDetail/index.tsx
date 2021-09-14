@@ -1,33 +1,28 @@
 import * as React from 'react';
-import { useHistory } from 'react-router-dom';
-import Chip from '@material-ui/core/Chip';
+import { useState } from 'react';
+import { RootStateOrAny, useSelector } from 'react-redux';
 import {
   SplittedPageContainer,
   ContentContainer,
-  ProfileRight,
   ProfileLeft,
-  InfoContainer,
-  SubTitle,
   ProfileImage,
   MainProfile,
   ProfileNavItem,
-  useStyles,
 } from './styles';
-import Portfoilo from '../Portfolio';
-import Project from '../Project';
+import MyProfile from './MyProfile';
+import MyComments from './MyComments';
+import MyPosts from './MyPosts';
 import { navItem } from './navTypes';
 
-function ProfileDetail(props: any) {
-  const { profileInfo } = props;
-  const history = useHistory();
-  const classes = useStyles();
+function ProfileDetail() {
+  const profileInfo = useSelector(
+    (state: RootStateOrAny) => state.user.profileInfo,
+  );
+  const [selectMenu, setSelectMenu] = useState(0);
 
   const onHandleNavigation = (content: any) => {
-    if (content.actionType === 'alert') {
-      alert(content.message);
-    } else if (content.actionType === 'push' && content.url) {
-      return history.push(content.url);
-    }
+    // todo click한 메뉴 색 바꾸기
+    setSelectMenu(content.id);
   };
   return (
     <SplittedPageContainer>
@@ -66,19 +61,9 @@ function ProfileDetail(props: any) {
           height: 'auto',
         }}
       />
-      <ProfileRight>
-        <InfoContainer>{profileInfo.info}</InfoContainer>
-        <SubTitle>기술스택</SubTitle>
-        {profileInfo.stack?.map((content: string) => (
-          <Chip label={content} key={content} className={classes.chip} />
-        ))}
-        <SubTitle>포트폴리오</SubTitle>
-        <Portfoilo />
-        <SubTitle>프로젝트 현황</SubTitle>
-        <Project />
-        <SubTitle>완료된 프로젝트</SubTitle>
-        <Project finished />
-      </ProfileRight>
+      {selectMenu === 0 && <MyProfile />}
+      {selectMenu === 2 && <MyComments />}
+      {selectMenu === 3 && <MyPosts />}
     </SplittedPageContainer>
   );
 }

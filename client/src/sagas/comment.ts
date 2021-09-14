@@ -7,6 +7,9 @@ import {
   COMMENT_REGISTER_REQUEST,
   COMMENT_REGISTER_SUCCESS,
   COMMENT_REGISTER_FAILURE,
+  MY_COMMENT_REQUEST,
+  MY_COMMENT_SUCCESS,
+  MY_COMMENT_FAILURE,
 } from '../reducers/actions';
 
 // 댓글 받아오기
@@ -55,6 +58,29 @@ function* requestCommentRegisterSaga(action: any): any {
   }
 }
 
+// 내가 쓴 댓글 받아오기
+const requestMyComment = (data: any) => {
+  return axios.get(`/api/mycomment/${data.user}`);
+};
+
+function* requestMyCommentSaga(action: any): any {
+  try {
+    const response = yield call(requestMyComment, action.data);
+    console.log('내가 쓴 댓글 정보 응답 ===>', response);
+
+    yield put({
+      type: MY_COMMENT_SUCCESS,
+      data: response.data,
+    });
+  } catch (error) {
+    console.error(error);
+    yield put({
+      type: MY_COMMENT_FAILURE,
+      error,
+    });
+  }
+}
+
 function* watchRequestComment() {
   yield takeLatest(COMMENT_REQUEST, requestCommentSaga);
 }
@@ -63,8 +89,16 @@ function* watchRequestCommentRegister() {
   yield takeLatest(COMMENT_REGISTER_REQUEST, requestCommentRegisterSaga);
 }
 
+function* watchRequestMyComment() {
+  yield takeLatest(MY_COMMENT_REQUEST, requestMyCommentSaga);
+}
+
 function* commentSaga() {
-  yield all([fork(watchRequestComment), fork(watchRequestCommentRegister)]);
+  yield all([
+    fork(watchRequestComment),
+    fork(watchRequestCommentRegister),
+    fork(watchRequestMyComment),
+  ]);
 }
 
 export default commentSaga;

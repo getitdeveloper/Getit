@@ -9,11 +9,15 @@ import {
   COMMON_POST_REGISTER_REQUEST,
   COMMON_POST_REGISTER_FAILURE,
   COMMON_POST_REGISTER_SUCCESS,
+  MY_POST_LIST_SUCCESS,
+  MY_POST_LIST_REQUEST,
+  MY_POST_LIST_FAILURE,
 } from './actions';
 
 export interface InitialState {
   PostContent: IPost | null;
   BoardList: IBoard | null;
+  MyPostList: Array<IPost> | null;
   commonPostRequest: boolean;
   commonPostSuccess: boolean;
   commonPostFailure: string | null;
@@ -23,9 +27,12 @@ export interface InitialState {
   commonBoardRequest: boolean;
   commonBoardSuccess: boolean;
   commonBoardFailure: string | null;
+  myPostListRequest: boolean;
+  myPostListSuccess: boolean;
+  myPostListFailure: string | null;
 }
 
-// 자유게시판 받아오기
+// 자유/질문게시판 받아오기
 export interface CommonBoardRequest {
   type: typeof COMMON_BOARD_REQUEST;
 }
@@ -40,7 +47,7 @@ export interface CommonBoardFailure {
   error: string;
 }
 
-// 자유게시판 글 가져오기
+// 자유/질문게시판 글 가져오기
 export interface CommonPostRequest {
   type: typeof COMMON_POST_REQUEST;
 }
@@ -55,7 +62,7 @@ export interface CommonPostFailure {
   error: string;
 }
 
-// 자유게시판 글 쓰기
+// 자유/질문게시판 글 쓰기
 export interface CommonPostRegisterRequest {
   type: typeof COMMON_POST_REGISTER_REQUEST;
 }
@@ -70,6 +77,21 @@ export interface CommonPostRegisterFailure {
   error: string;
 }
 
+// 내가 쓴 게시판 가져오기
+export interface MyPostListRequest {
+  type: typeof MY_POST_LIST_REQUEST;
+}
+
+export interface MyPostListSuccess {
+  type: typeof MY_POST_LIST_SUCCESS;
+  data: Array<IPost>;
+}
+
+export interface MyPostListFailure {
+  type: typeof MY_POST_LIST_FAILURE;
+  error: string;
+}
+
 export type BoardActions =
   | CommonBoardSuccess
   | CommonBoardRequest
@@ -79,4 +101,7 @@ export type BoardActions =
   | CommonPostFailure
   | CommonPostRegisterSuccess
   | CommonPostRegisterRequest
-  | CommonPostRegisterFailure;
+  | CommonPostRegisterFailure
+  | MyPostListRequest
+  | MyPostListSuccess
+  | MyPostListFailure;
