@@ -12,7 +12,7 @@ from rest_framework.parsers import MultiPartParser
 
 from tags.models import Tag
 from .permissions import IsOwnerOrReadOnly, RecruitmentIsOwnerOrReadOnly
-from .serializers import RecruitmentBoardSerializer, CommonBoardListSerializer, CommonBoardDetailSerializer
+from .serializers import RecruitmentBoardSerializer, CommonBoardSerializer
 from rest_framework.response import Response
 from rest_framework import status
 from .models import CommonBoard, RecruitmentBoard
@@ -25,7 +25,7 @@ from rest_framework import viewsets
 class CommonBoardListAPIView(GenericAPIView):
     queryset = CommonBoard.objects.all()
     permission_classes = [IsOwnerOrReadOnly]
-    serializer_class = CommonBoardListSerializer
+    serializer_class = CommonBoardSerializer
     pagination_class = BoardPageNumberPagination
     ordering_fields = ['create_at']
     filter_backends = [SearchFilter]
@@ -34,7 +34,6 @@ class CommonBoardListAPIView(GenericAPIView):
     def get(self, request):
         """
             질문/자유 게시글 list (GET)
-
             ---
                 127.0.0.1:8000/api/board?category=free(question)
             {
@@ -73,27 +72,26 @@ class CommonBoardListAPIView(GenericAPIView):
             posts = self.filter_queryset(posts)
             paginator = BoardPageNumberPagination()
             result_page = paginator.paginate_queryset(posts, request)
-            serializer = CommonBoardListSerializer(result_page, many=True)
+            serializer = CommonBoardSerializer(result_page, many=True)
             return paginator.get_paginated_response(serializer.data)
         elif category == 'question':
             posts = CommonBoard.objects.filter(category=category)
             posts = self.filter_queryset(posts)
             paginator = BoardPageNumberPagination()
             result_page = paginator.paginate_queryset(posts, request)
-            serializer = CommonBoardListSerializer(result_page, many=True)
+            serializer = CommonBoardSerializer(result_page, many=True)
             return paginator.get_paginated_response(serializer.data)
         else:
             posts = CommonBoard.objects.all()
             posts = self.filter_queryset(posts)
             paginator = BoardPageNumberPagination()
             result_page = paginator.paginate_queryset(posts, request)
-            serializer = CommonBoardListSerializer(result_page, many=True)
+            serializer = CommonBoardSerializer(result_page, many=True)
             return paginator.get_paginated_response(serializer.data)
 
     def post(self, request):
         """
             질문/자유 게시글 list (POST)
-
             ---
                 {
                     "title":"asdasdasd",
@@ -105,7 +103,7 @@ class CommonBoardListAPIView(GenericAPIView):
                     "worker":"개발자"
                 }
         """
-        serializer = CommonBoardListSerializer(data=request.data)
+        serializer = CommonBoardSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -114,7 +112,7 @@ class CommonBoardListAPIView(GenericAPIView):
 
 class CommonBoardDetailAPIView(GenericAPIView):
 
-    serializer_class = CommonBoardDetailSerializer
+    serializer_class = CommonBoardSerializer
     permission_classes = [IsOwnerOrReadOnly]
 
     # parser_classes = (MultiPartParser,)
@@ -125,7 +123,6 @@ class CommonBoardDetailAPIView(GenericAPIView):
     def get(self, request, pk, format=None):
         """
             질문/자유 게시글 detail (GET)
-
             ---
             {
                 "id": 1,
@@ -143,13 +140,12 @@ class CommonBoardDetailAPIView(GenericAPIView):
             }
         """
         post = self.get_object(pk)
-        serializer = CommonBoardDetailSerializer(post)
+        serializer = CommonBoardSerializer(post)
         return Response(serializer.data)
 
     def put(self, request, pk):
         """
             질문/자유 게시글 detail (PUT)
-
             ---
                 {
                     "title":"asdasdasd",
@@ -161,7 +157,7 @@ class CommonBoardDetailAPIView(GenericAPIView):
                 }
         """
         post = self.get_object(pk)
-        serializer = CommonBoardDetailSerializer(post, data=request.data)
+        serializer = CommonBoardSerializer(post, data=request.data)
         self.check_object_permissions(self.request, post)
         if serializer.is_valid():
             serializer.save()
@@ -171,7 +167,6 @@ class CommonBoardDetailAPIView(GenericAPIView):
     def delete(self, request, pk):
         """
             질문/자유 게시글 detail (DELETE)
-
             ---
         """
         post = self.get_object(pk)
@@ -193,7 +188,6 @@ class RecruitmentBoardPostListAPIView(GenericAPIView):
     def get(self, request):
         """
             모집 게시글 list (GET)
-
             ---
             {
                 "count": 2,
@@ -265,7 +259,6 @@ class RecruitmentBoardPostListAPIView(GenericAPIView):
     def post(self, request):
         """
             모집 게시글 list (GET)
-
             ---
             {
                 "user": 2,
@@ -298,7 +291,6 @@ class RecruitmentBoardPostDetailAPIView(GenericAPIView):
     def get(self, request, pk, format=None):
         """
             모집 게시글 detail (GET)
-
             ---
             {
                 "id": 1,
@@ -334,7 +326,6 @@ class RecruitmentBoardPostDetailAPIView(GenericAPIView):
     def put(self, request, pk):
         """
         모집 게시글 detail (PUT)
-
         ---
             {
                 "id": 1,
@@ -379,7 +370,6 @@ class WholePostSearch(GenericAPIView):
     def get(self, request):
         """
             전체 게시글 list (GET)
-
             ---
                 127.0.0.1:8000/api/board?category=free(question)
             {
@@ -522,11 +512,11 @@ class WholePostSearch(GenericAPIView):
         free_posts = CommonBoard.objects.filter(category="free")
         free_posts = self.filter_queryset(free_posts)
         free_posts = common_paginator.paginate_queryset(free_posts, request)
-        free_serializer = CommonBoardListSerializer(free_posts, many=True)
+        free_serializer = CommonBoardSerializer(free_posts, many=True)
         question_posts = CommonBoard.objects.filter(category="question")
         question_posts = self.filter_queryset(question_posts)
         question_posts = common_paginator.paginate_queryset(question_posts, request)
-        question_serializer = CommonBoardListSerializer(question_posts, many=True)
+        question_serializer = CommonBoardSerializer(question_posts, many=True)
         recruit_posts = RecruitmentBoard.objects.all()
         recruit_posts = self.filter_queryset(recruit_posts)
         recruit_posts = recruit_paginator.paginate_queryset(recruit_posts, request)
@@ -539,12 +529,11 @@ class WholePostSearch(GenericAPIView):
 
 
 class BoardMyListAPIView(GenericAPIView):
-    serializer_class = CommonBoardListSerializer
+    serializer_class = CommonBoardSerializer
 
     def get(self, request, pk):
         """
             my게시판 list (GET)
-
             ---
                 [{
                 "id":1,
@@ -556,7 +545,7 @@ class BoardMyListAPIView(GenericAPIView):
                 "user":{"id":1,"profile":{"nickname":null,"image":"/media/profile/Untitled.jpeg"}},"worker":"개발자"}]
         """
         boards = CommonBoard.objects.filter(user=pk)
-        serializer = CommonBoardListSerializer(boards, many=True)
+        serializer = CommonBoardSerializer(boards, many=True)
         return Response(serializer.data)
 
 class RecruitmentBoardPostMyListAPIView(GenericAPIView):
@@ -565,7 +554,6 @@ class RecruitmentBoardPostMyListAPIView(GenericAPIView):
     def get(self, request, pk):
         """
             my모집게시판 list (GET)
-
             ---
                 [{
                 "user":1,
@@ -584,4 +572,3 @@ class RecruitmentBoardPostMyListAPIView(GenericAPIView):
         boards = RecruitmentBoard.objects.filter(user=pk)
         serializer = RecruitmentBoardSerializer(boards, many=True)
         return Response(serializer.data)
-

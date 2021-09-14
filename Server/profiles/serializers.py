@@ -4,7 +4,7 @@ from rest_framework.serializers import ModelSerializer
 
 from portfolios.models import Portfolio
 from tags.models import Tag
-from .models import Profile, TeamProfile, IsLeader
+from .models import Profile, TeamProfile
 
 
 class TagSerializer(serializers.ModelSerializer):
@@ -45,13 +45,4 @@ class TeamProfileSerializer(serializers.ModelSerializer):
             'image',
             'stack',
             'created_at'
-        )
-
-class IsLeaderSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = IsLeader
-        fields = (
-            'user',
-            'team_profile',
-            'is_leader',
         )
