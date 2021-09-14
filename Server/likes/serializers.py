@@ -1,9 +1,33 @@
-from .models import Like
+from boards.serializers import CommonBoardSerializer, RecruitmentBoardSerializer
+from .models import CommonBoardLike, RecruitBoardLike
 from rest_framework.serializers import ModelSerializer
 
-from boards.models import CommonBoard, RecruitmentBoard
+from boards.models import CommonBoard
 
-class LikeSerializer(ModelSerializer):
+class CommonBoardLikeSerializer(ModelSerializer):
     class Meta:
-        model = Like
+        model = CommonBoardLike
         fields = ('commonpost', 'user',)
+
+class CommonBoardLikePostSerializer(ModelSerializer):
+    class Meta:
+        model = CommonBoardLike
+        fields = ('commonpost', 'user',)
+
+    def to_representation(self, instance):
+        self.fields['commonpost'] = CommonBoardSerializer(read_only=True)
+        return super().to_representation(instance)
+
+class RecruitBoardLikeSerializer(ModelSerializer):
+    class Meta:
+        model = RecruitBoardLike
+        fields = ('recruitpost', 'user',)
+
+class RecruitBoardLikePostSerializer(ModelSerializer):
+    class Meta:
+        model = RecruitBoardLike
+        fields = ('recruitpost', 'user',)
+
+    def to_representation(self, instance):
+        self.fields['recruitpost'] = RecruitmentBoardSerializer(read_only=True)
+        return super().to_representation(instance)

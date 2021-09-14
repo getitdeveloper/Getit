@@ -6,5 +6,5 @@ class Member(models.Model):
         ('팀장','팀장'),
         ('팀원','팀원'),
     )
-    level = models.CharField('members.Member', max_length=20,null=False, blank=False)
+    level = models.CharField('members.Member', max_length=20,null=False, blank=False, default='팀원')
     create_at = models.DateTimeField(auto_now_add=True)
