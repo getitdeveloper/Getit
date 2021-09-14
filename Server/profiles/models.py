@@ -45,31 +45,13 @@ def save_user_profile(sender, instance, **kwargs):
     instance.profile.save()
 
 class TeamProfile(models.Model):
-    CATEGORY_LEVEL = (
-        ('팀장','팀장'),
-        ('팀원','팀장'),
-    )
     user = models.ForeignKey('accounts.User', on_delete=models.CASCADE, related_name='author')
     name = models.CharField(max_length=20, null=False)
     status = models.BooleanField(default=0)
     member = models.ManyToManyField('members.Member', blank=True, related_name='member')
     content = models.TextField(null=False)
-    level = models.CharField(choices=CATEGORY_LEVEL, default='팀원', max_length=20)
     image = models.ImageField(upload_to='group', null=True, blank=True)
     stack = models.ManyToManyField('tags.Tag')
     created_at = models.DateTimeField(auto_now_add=True)
 
-    def save(self, *args, **kwargs):
-        created = not self.pk
-        super().save(*args, **kwargs)
-        if created:
-            self.member.add(User.objects.get(id=self.user_id))
 
-class IsLeader(models.Model):
-    user = models.ForeignKey('accounts.User', on_delete=models.CASCADE, related_name='user_is_leader')
-    team_profile = models.ForeignKey('profiles.TeamProfile', on_delete=models.CASCADE, related_name='team_profile')
-    is_leader = models.BooleanField(default=0)
-
-@receiver(post_save, sender=TeamProfile)
-def save_is_leader(sender, instance, **kwargs):
-    IsLeader.objects.create(user=instance.user, team_profile=instance, is_leader=True)
