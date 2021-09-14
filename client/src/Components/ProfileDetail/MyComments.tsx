@@ -12,6 +12,7 @@ import {
   CommentDetailWrapper,
   GoBoardButton,
 } from './styles';
+import { IComment } from '../../types';
 
 function MyComments() {
   const userId = useSelector((state: RootStateOrAny) => state.user.id.user_pk);
@@ -35,7 +36,7 @@ function MyComments() {
   return (
     <ProfileRight>
       <p>내가 쓴 댓글</p>
-      {myComments.map((content: any) => (
+      {myComments.map((content: IComment) => (
         <CommentWrapper key={content.create_at}>
           <CommentDetailWrapper>
             <p>{content.content}</p>

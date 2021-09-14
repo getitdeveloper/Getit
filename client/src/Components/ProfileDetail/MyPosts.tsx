@@ -5,6 +5,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { MY_POST_LIST_REQUEST } from '../../reducers/actions';
 import { ProfileRight, PostWrapper, SubTitle } from './styles';
 import PostItem from '../PostItem';
+import { IPost } from '../../types';
 
 function MyPosts() {
   const userId = useSelector((state: RootStateOrAny) => state.user.id.user_pk);
@@ -27,7 +28,7 @@ function MyPosts() {
   return (
     <ProfileRight>
       <p> 내가 쓴 글 </p>
-      {myPosts.map((content: any) => (
+      {myPosts.map((content: IPost) => (
         <PostWrapper key={content.id}>
           <PostItem content={content} detail />
         </PostWrapper>
