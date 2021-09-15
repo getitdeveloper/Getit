@@ -19,10 +19,10 @@ function UserInfoButtons({ nickname }: Nickname): JSX.Element {
     <UserInfoWrapper>
       <p>{nickname} 님</p>
       <button type='button' className='icon-button' onClick={handleRouting}>
-        <StyledPersonIcon />
+        <StyledPersonIcon fontSize='large' />
       </button>
       <button type='button' className='icon-button'>
-        <StyledNotificationsIcon />
+        <StyledNotificationsIcon fontSize='large' />
       </button>
     </UserInfoWrapper>
   );

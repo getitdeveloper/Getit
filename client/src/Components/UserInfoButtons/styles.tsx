@@ -18,7 +18,7 @@ export const UserInfoWrapper = styled.div`
     background-color: transparent;
     cursor: pointer;
     margin-left: 1rem;
-    padding: 0.7rem 0.9rem;
+    padding: 0.4rem 0.6rem;
     border-style: none;
     background-color: #e0e0e0;
     border-radius: 50%;
