@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "paths": {
+      "@assets/*": ["./assets/*"],
+      "@auth/*": ["./auth/*"],
+      "@components/*": ["./components/*"],
+      "@pages/*": ["./pages/*"],
+      "@reducers/*": ["./reducers/*"],
+      "@sagas/*": ["./sagas/*"],
+      "@styles/*": ["./styles/*"],
+      "@typings": ["typings/*"]
+    }
+  }
+}

@@ -16,5 +16,6 @@
     "jsx": "react-jsx",
     "esModuleInterop": true
   },
-  "include": ["src"]
+  "include": ["src", "craco.configjts"],
+  "extends": "./tsconfig.paths.json"
 }
