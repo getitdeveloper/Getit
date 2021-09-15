@@ -6,7 +6,7 @@ import { PageContainer, PageBackground } from '@assets/styles/page';
 import { COMMON_BOARD_REQUEST } from '@reducers/actions';
 import Paging from '@components/Paging';
 import LoadingSpinner from '@components/LoadingSpinner';
-import { IPost } from '../../types';
+import { IPost } from '../types';
 
 function QuestionBardPage(): JSX.Element {
   const dispatch = useDispatch();

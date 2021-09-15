@@ -7,9 +7,9 @@ import Header from '@components/Header/index';
 import MainPage from '@pages/MainPage';
 import KakaoOAuth2Callback from '@auth/KakaoLogin/KakaoOAuth2Callback';
 import GithubCallback from '@auth/GithubLogin/GithubCallback';
-import QuestionBoardPage from '@pages/QuestionBoardPage/index';
-import ProfilePage from '@pages/ProfilePage.tsx';
-import FreeBoardPage from '@pages/FreeBoardPage/index';
+import QuestionBoardPage from '@pages/QuestionBoardPage';
+import ProfilePage from '@pages/ProfilePage';
+import FreeBoardPage from '@pages/FreeBoardPage';
 import FreeBoardDetailPage from '@pages/FreeBoardDetailPage';
 import QuestionDetailPage from '@pages/QuestionDetailPage';
 import RegisterPage from '@pages/RegisterPage';
@@ -17,7 +17,7 @@ import QuestionFormPage from '@pages/QuestionFormPage';
 import RecruitBoardPage from '@pages/RecruitBoardPage';
 import FreeBoardFormPage from '@pages/FreeBoardFormPage';
 import RecruitFormPage from '@pages/RecruitFormPage';
-import SearchResultPage from '@pages/SearchResultPage/index';
+import SearchResultPage from '@pages/SearchResultPage';
 
 function Routes(): JSX.Element {
   const history = useHistory();
