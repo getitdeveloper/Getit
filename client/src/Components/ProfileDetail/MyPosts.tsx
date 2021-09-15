@@ -10,7 +10,7 @@ import LoadingSpinner from '../LoadingSpinner';
 function MyPosts() {
   const userId = useSelector((state: RootStateOrAny) => state.user.id.user_pk);
   const myPosts = useSelector(
-    (state: RootStateOrAny) => state.board.MyPostList,
+    (state: RootStateOrAny) => state.board.myPostList,
   );
   const dispatch = useDispatch();
 

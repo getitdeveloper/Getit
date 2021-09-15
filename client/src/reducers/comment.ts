@@ -14,9 +14,9 @@ import { InitialState, CommentActions } from './commentTypes';
 
 // 초기 상태
 const initialState: InitialState = {
-  CommentList: null,
-  Comment: null,
-  MyComment: null,
+  commentList: null,
+  comment: null,
+  myComment: null,
   commentRequest: false,
   commentSuccess: false,
   commentFailure: null,
@@ -31,36 +31,37 @@ const initialState: InitialState = {
 const reducer = (state = initialState, action: CommentActions): InitialState =>
   produce(state, (draft) => {
     switch (action.type) {
-      case COMMENT_SUCCESS:
-        draft.commentRequest = false;
-        draft.commentSuccess = true;
-        draft.commentFailure = null;
-        draft.CommentList = action.data;
-        break;
       case COMMENT_REQUEST:
         draft.commentRequest = true;
         draft.commentSuccess = false;
         draft.commentFailure = null;
+        break;
+      case COMMENT_SUCCESS:
+        draft.commentRequest = false;
+        draft.commentSuccess = true;
+        draft.commentFailure = null;
+        draft.commentList = action.data;
         break;
       case COMMENT_FAILURE:
         draft.commentRequest = false;
         draft.commentSuccess = false;
         draft.commentFailure = action.error;
         break;
-      case COMMENT_REGISTER_SUCCESS:
-        draft.commentRegisterSuccess = true;
-        draft.commentRegisterRequest = false;
-        draft.commentRegisterFailure = null;
-        draft.Comment = action.data;
-        break;
       case COMMENT_REGISTER_REQUEST:
-        draft.commentRegisterSuccess = false;
         draft.commentRegisterRequest = true;
+        draft.commentRegisterSuccess = false;
         draft.commentRegisterFailure = null;
+        break;
+      case COMMENT_REGISTER_SUCCESS:
+        draft.commentRegisterRequest = false;
+        draft.commentRegisterSuccess = true;
+        draft.commentRegisterFailure = null;
+        draft.comment = action.data;
         break;
       case COMMENT_REGISTER_FAILURE:
-        draft.commentRegisterSuccess = false;
         draft.commentRegisterRequest = false;
+        draft.commentRegisterSuccess = false;
+
         draft.commentRegisterFailure = action.error;
         break;
       case MY_COMMENT_REQUEST:
@@ -72,7 +73,7 @@ const reducer = (state = initialState, action: CommentActions): InitialState =>
         draft.myCommentRequest = false;
         draft.myCommentSuccess = true;
         draft.myCommentFailure = null;
-        draft.MyComment = action.data;
+        draft.myComment = action.data;
         break;
       case MY_COMMENT_FAILURE:
         draft.myCommentRequest = false;

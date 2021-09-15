@@ -1,16 +1,16 @@
 import { IBoard, IPost } from '../types';
 import {
+  COMMON_BOARD_REQUEST,
   COMMON_BOARD_SUCCESS,
   COMMON_BOARD_FAILURE,
-  COMMON_BOARD_REQUEST,
+  COMMON_POST_REQUEST,
   COMMON_POST_SUCCESS,
   COMMON_POST_FAILURE,
-  COMMON_POST_REQUEST,
   COMMON_POST_REGISTER_REQUEST,
-  COMMON_POST_REGISTER_FAILURE,
   COMMON_POST_REGISTER_SUCCESS,
-  MY_POST_LIST_SUCCESS,
+  COMMON_POST_REGISTER_FAILURE,
   MY_POST_LIST_REQUEST,
+  MY_POST_LIST_SUCCESS,
   MY_POST_LIST_FAILURE,
   COMMON_POST_LIKE_REQUEST,
   COMMON_POST_LIKE_SUCCESS,
@@ -18,10 +18,10 @@ import {
 } from './actions';
 
 export interface InitialState {
-  PostContent: IPost | null;
-  BoardList: IBoard | null;
-  MyPostList: Array<IPost> | null;
-  LikeCounts: { counts: number } | null;
+  postContent: IPost | null;
+  boardList: IBoard | null;
+  myPostList: Array<IPost> | null;
+  likeCounts: { counts: number } | null;
   commonPostRequest: boolean;
   commonPostSuccess: boolean;
   commonPostFailure: string | null;
@@ -117,14 +117,14 @@ export interface CommonPostLikeFailure {
 }
 
 export type BoardActions =
-  | CommonBoardSuccess
   | CommonBoardRequest
+  | CommonBoardSuccess
   | CommonBoardFailure
-  | CommonPostSuccess
   | CommonPostRequest
+  | CommonPostSuccess
   | CommonPostFailure
-  | CommonPostRegisterSuccess
   | CommonPostRegisterRequest
+  | CommonPostRegisterSuccess
   | CommonPostRegisterFailure
   | MyPostListRequest
   | MyPostListSuccess

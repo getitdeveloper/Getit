@@ -20,7 +20,7 @@ const defaultProp: HeaderProp = {
 function QuestionBardPage(props: HeaderProp) {
   const dispatch = useDispatch();
   const boardList = useSelector(
-    (state: RootStateOrAny) => state.board.BoardList,
+    (state: RootStateOrAny) => state.board.boardList,
   );
   const [page, setPage] = React.useState(1);
   const { header } = props;

@@ -13,7 +13,7 @@ function QuestionDetailPage(props: any) {
   const contentId = history.location.state;
   const dispatch = useDispatch();
   const questionPost = useSelector(
-    (state: RootStateOrAny) => state.board.PostContent,
+    (state: RootStateOrAny) => state.board.postContent,
   );
 
   React.useEffect(() => {

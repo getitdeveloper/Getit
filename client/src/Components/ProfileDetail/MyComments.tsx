@@ -17,7 +17,7 @@ import LoadingSpinner from '../LoadingSpinner';
 function MyComments() {
   const userId = useSelector((state: RootStateOrAny) => state.user.id.user_pk);
   const myComments = useSelector(
-    (state: RootStateOrAny) => state.comment.MyComment,
+    (state: RootStateOrAny) => state.comment.myComment,
   );
   const dispatch = useDispatch();
 
