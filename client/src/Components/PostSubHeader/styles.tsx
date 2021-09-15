@@ -10,6 +10,11 @@ export const StyledTabs = withStyles({
   },
 })(Tabs);
 
+export const PostSubHeaderWrapper = styled.div`
+  width: 80%;
+  margin: 0 auto;
+`;
+
 export const JobSelectButtonWrapper = styled.div`
   padding: 2rem;
   text-align: center;

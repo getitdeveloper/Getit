@@ -1,8 +1,8 @@
 const breakPoints = {
   mobile: '600px',
-  tablet: '900px',
-  laptop: '1200px',
-  desktop: '1800px',
+  tablet: '960px',
+  laptop: '1280px',
+  desktop: '1920px',
 };
 
 const colors = {
@@ -10,7 +10,7 @@ const colors = {
   background: '#f5f5f5',
   developer: '#4dd290',
   designer: '#ffb65a',
-  planner: '#fc9557',
+  ProjectManager: '#fc9557',
   whiteText: '#ffffff',
   blackText: '#000000',
 };
