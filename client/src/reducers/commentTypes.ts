@@ -12,9 +12,9 @@ import {
 } from './actions';
 
 export interface InitialState {
-  CommentList: ICommentList[] | null;
-  Comment: IComment | null;
-  MyComment: ICommentList[] | null;
+  commentList: ICommentList[] | null;
+  comment: IComment | null;
+  myComment: ICommentList[] | null;
   commentRequest: boolean;
   commentSuccess: boolean;
   commentFailure: string | null;
@@ -71,11 +71,11 @@ export interface MyCommentFailure {
 }
 
 export type CommentActions =
-  | CommentSuccess
   | CommentRequest
+  | CommentSuccess
   | CommentFailure
-  | CommentRegisterSuccess
   | CommentRegisterRequest
+  | CommentRegisterSuccess
   | CommentRegisterFailure
   | MyCommentRequest
   | MyCommentSuccess

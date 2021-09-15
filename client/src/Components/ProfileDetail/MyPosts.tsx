@@ -1,16 +1,16 @@
 import * as React from 'react';
 import { useEffect } from 'react';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import { MY_POST_LIST_REQUEST } from '../../reducers/actions';
 import { ProfileRight, PostWrapper, SubTitle } from './styles';
 import PostItem from '../PostItem';
 import { IPost } from '../../types';
+import LoadingSpinner from '../LoadingSpinner';
 
 function MyPosts() {
   const userId = useSelector((state: RootStateOrAny) => state.user.id.user_pk);
   const myPosts = useSelector(
-    (state: RootStateOrAny) => state.board.MyPostList,
+    (state: RootStateOrAny) => state.board.myPostList,
   );
   const dispatch = useDispatch();
 
@@ -23,7 +23,7 @@ function MyPosts() {
     });
   }, []);
   if (!myPosts) {
-    return <CircularProgress />;
+    return <LoadingSpinner />;
   }
   return (
     <ProfileRight>

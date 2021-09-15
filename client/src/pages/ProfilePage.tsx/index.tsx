@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { useHistory } from 'react-router-dom';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import { USER_PROFILE_REQUEST } from '../../reducers/actions';
 
 import { PageTitle, PageBackground } from '../../styles/page';
 import ProfileDetail from '../../Components/ProfileDetail';
+import LoadingSpinner from '../../Components/LoadingSpinner';
 
 function ProfilePage(): JSX.Element {
   const dispatch = useDispatch();
@@ -28,7 +28,7 @@ function ProfilePage(): JSX.Element {
   if (!user) {
     history.push('/');
   } else if (!profileInfo) {
-    return <CircularProgress />;
+    return <LoadingSpinner />;
   }
   return (
     <div>
