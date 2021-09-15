@@ -114,12 +114,12 @@ function* requestMyPostListSaga(action: any): any {
 
 // 자유/질문 게시글 좋아요 누르기
 const requestCommonPostLike = (data: any) => {
-  return axios.post(`/api/${data.board}/likes`, data.likes);
+  return axios.post(`/api/${data.board}/commonlikes`, data.likes);
 };
 
 function* requestCommonPostLikeSaga(action: any): any {
   try {
-    const response = yield call(requestCommonPostLike, action.data.board);
+    const response = yield call(requestCommonPostLike, action.data);
     console.log('자유/질문 게시글 좋아요 생성 후 정보 응답 ===>', response);
 
     yield put({

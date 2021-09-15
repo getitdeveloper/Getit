@@ -17,13 +17,13 @@ import {
 } from './styles';
 import MemberType from '../RecruitMembers/index';
 import { HorizontalLine } from '../../styles/commons';
-import { COMMON_POST_LIKE_SUCCESS } from '../../reducers/actions';
+import { COMMON_POST_LIKE_REQUEST } from '../../reducers/actions';
 
 function PostItem(props: any) {
   const history = useHistory();
   const dispatch = useDispatch();
   const user = useSelector((state: RootStateOrAny) => state.user);
-  const userId = Number(user.id.user_pk);
+  const userId = user.id.user_pk;
   const { content, boardType, detail } = props;
   const [likes, setLikes] = React.useState(content.likes);
   const [likeStatus, setLikeStatus] = React.useState(false);
@@ -41,7 +41,7 @@ function PostItem(props: any) {
       setLikes(likes + 1);
       try {
         dispatch({
-          type: COMMON_POST_LIKE_SUCCESS,
+          type: COMMON_POST_LIKE_REQUEST,
           data: {
             board: content.id,
             likes: {
