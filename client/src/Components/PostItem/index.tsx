@@ -36,6 +36,20 @@ function PostItem(props: any) {
     if (likeStatus) {
       setLikeStatus(false);
       setLikes(likes - 1);
+      try {
+        dispatch({
+          type: COMMON_POST_LIKE_REQUEST,
+          data: {
+            board: content.id,
+            likes: {
+              commonpost: content.id,
+              user: userId,
+            },
+          },
+        });
+      } catch (error) {
+        console.log(error);
+      }
     } else {
       setLikeStatus(true);
       setLikes(likes + 1);

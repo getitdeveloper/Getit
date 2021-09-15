@@ -117,7 +117,7 @@ function* requestMyPostListSaga(action: any): any {
 
 // 자유/질문 게시글 좋아요 누르기
 const requestCommonPostLike = (data: any) => {
-  return axios.post(`/api/${data.board}/commonlikes`, data.likes);
+  return axios.post(`/api/${data.board}/commonlikes/`, data.likes);
 };
 
 function* requestCommonPostLikeSaga(action: any): any {
