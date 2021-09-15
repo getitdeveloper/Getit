@@ -13,6 +13,9 @@ import {
   MY_POST_LIST_SUCCESS,
   MY_POST_LIST_REQUEST,
   MY_POST_LIST_FAILURE,
+  COMMON_POST_LIKE_REQUEST,
+  COMMON_POST_LIKE_SUCCESS,
+  COMMON_POST_LIKE_FAILURE,
 } from '../reducers/actions';
 import { BoardData, PostData } from './boardTypes';
 
@@ -109,6 +112,29 @@ function* requestMyPostListSaga(action: any): any {
   }
 }
 
+// 자유/질문 게시글 좋아요 누르기
+const requestCommonPostLike = (data: any) => {
+  return axios.post(`/api/${data.board}/commonlikes`, data.likes);
+};
+
+function* requestCommonPostLikeSaga(action: any): any {
+  try {
+    const response = yield call(requestCommonPostLike, action.data);
+    console.log('자유/질문 게시글 좋아요 생성 후 정보 응답 ===>', response);
+
+    yield put({
+      type: COMMON_POST_LIKE_SUCCESS,
+      data: response.data,
+    });
+  } catch (error) {
+    console.error(error);
+    yield put({
+      type: COMMON_POST_LIKE_FAILURE,
+      error,
+    });
+  }
+}
+
 function* watchRequestCommonBoard() {
   yield takeLatest(COMMON_BOARD_REQUEST, requestCommonBoardSaga);
 }
@@ -125,12 +151,17 @@ function* watchRequestMyPostList() {
   yield takeLatest(MY_POST_LIST_REQUEST, requestMyPostListSaga);
 }
 
+function* watchRequestCommonPostLike() {
+  yield takeLatest(COMMON_POST_LIKE_REQUEST, requestCommonPostLikeSaga);
+}
+
 function* boardSaga() {
   yield all([
     fork(watchRequestCommonBoard),
     fork(watchRequestCommonPost),
     fork(watchRequestCommonPostRegister),
     fork(watchRequestMyPostList),
+    fork(watchRequestCommonPostLike),
   ]);
 }
 

@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import SubHeader from '../../Components/Commons/SubHeader/SubHeader';
 import PostItem from '../../Components/PostItem';
 import PostSubHeader from '../../Components/PostSubHeader';
@@ -8,6 +7,7 @@ import { COMMON_BOARD_REQUEST } from '../../reducers/actions';
 import { PageContainer, PageBackground } from '../../styles/page';
 import { IPost } from '../../types';
 import Paging from '../../Components/Paging';
+import LoadingSpinner from '../../Components/LoadingSpinner';
 
 interface HeaderProp {
   header?: boolean;
@@ -20,7 +20,7 @@ const defaultProp: HeaderProp = {
 function FreeBoardPage(props: HeaderProp) {
   const dispatch = useDispatch();
   const boardList = useSelector(
-    (state: RootStateOrAny) => state.board.BoardList,
+    (state: RootStateOrAny) => state.board.boardList,
   );
   const [page, setPage] = React.useState(1);
   const { header } = props;
@@ -38,7 +38,7 @@ function FreeBoardPage(props: HeaderProp) {
   console.log('page number: ', page);
   console.log('freeBoard: ', boardList);
   if (!boardList) {
-    return <CircularProgress />;
+    return <LoadingSpinner />;
   }
 
   return (

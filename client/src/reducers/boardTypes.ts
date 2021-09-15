@@ -1,23 +1,27 @@
 import { IBoard, IPost } from '../types';
 import {
+  COMMON_BOARD_REQUEST,
   COMMON_BOARD_SUCCESS,
   COMMON_BOARD_FAILURE,
-  COMMON_BOARD_REQUEST,
+  COMMON_POST_REQUEST,
   COMMON_POST_SUCCESS,
   COMMON_POST_FAILURE,
-  COMMON_POST_REQUEST,
   COMMON_POST_REGISTER_REQUEST,
-  COMMON_POST_REGISTER_FAILURE,
   COMMON_POST_REGISTER_SUCCESS,
-  MY_POST_LIST_SUCCESS,
+  COMMON_POST_REGISTER_FAILURE,
   MY_POST_LIST_REQUEST,
+  MY_POST_LIST_SUCCESS,
   MY_POST_LIST_FAILURE,
+  COMMON_POST_LIKE_REQUEST,
+  COMMON_POST_LIKE_SUCCESS,
+  COMMON_POST_LIKE_FAILURE,
 } from './actions';
 
 export interface InitialState {
-  PostContent: IPost | null;
-  BoardList: IBoard | null;
-  MyPostList: Array<IPost> | null;
+  postContent: IPost | null;
+  boardList: IBoard | null;
+  myPostList: Array<IPost> | null;
+  likeCounts: { counts: number } | null;
   commonPostRequest: boolean;
   commonPostSuccess: boolean;
   commonPostFailure: string | null;
@@ -30,6 +34,9 @@ export interface InitialState {
   myPostListRequest: boolean;
   myPostListSuccess: boolean;
   myPostListFailure: string | null;
+  commonPostLikeRequest: boolean;
+  commonPostLikeSuccess: boolean;
+  commonPostLikeFailure: string | null;
 }
 
 // 자유/질문게시판 받아오기
@@ -92,16 +99,36 @@ export interface MyPostListFailure {
   error: string;
 }
 
+// 게시글에 좋아요 누르기
+export interface CommonPostLikeRequest {
+  type: typeof COMMON_POST_LIKE_REQUEST;
+}
+
+export interface CommonPostLikeSuccess {
+  type: typeof COMMON_POST_LIKE_SUCCESS;
+  data: {
+    counts: number;
+  };
+}
+
+export interface CommonPostLikeFailure {
+  type: typeof COMMON_POST_LIKE_FAILURE;
+  error: string;
+}
+
 export type BoardActions =
-  | CommonBoardSuccess
   | CommonBoardRequest
+  | CommonBoardSuccess
   | CommonBoardFailure
-  | CommonPostSuccess
   | CommonPostRequest
+  | CommonPostSuccess
   | CommonPostFailure
-  | CommonPostRegisterSuccess
   | CommonPostRegisterRequest
+  | CommonPostRegisterSuccess
   | CommonPostRegisterFailure
   | MyPostListRequest
   | MyPostListSuccess
-  | MyPostListFailure;
+  | MyPostListFailure
+  | CommonPostLikeRequest
+  | CommonPostLikeSuccess
+  | CommonPostLikeFailure;
