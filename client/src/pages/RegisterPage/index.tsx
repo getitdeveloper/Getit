@@ -1,5 +1,5 @@
 import * as React from 'react';
-import RegisterForm from '../../Components/RegisterForm';
+import RegisterForm from '@components/RegisterForm';
 
 function RegisterPage(): JSX.Element {
   return <RegisterForm />;

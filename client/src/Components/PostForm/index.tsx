@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { useSelector, RootStateOrAny, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { COMMON_POST_REGISTER_REQUEST } from '../../reducers/actions';
-import MarkdownRenderer from '../MarkdownRenderer';
+import { COMMON_POST_REGISTER_REQUEST } from '@reducers/actions';
+import MarkdownRenderer from '@components/MarkdownRenderer';
 import {
   TitleForm,
   TextForm,

@@ -5,8 +5,8 @@ import { ThemeProvider } from 'styled-components';
 import reportWebVitals from './reportWebVitals';
 import App from './App';
 import store from './store/index';
-import theme from './styles/theme';
-import GlobalStyle from './styles/global';
+import theme from './assets/styles/theme';
+import GlobalStyle from './assets/styles/global';
 
 ReactDOM.render(
   <Provider store={store}>

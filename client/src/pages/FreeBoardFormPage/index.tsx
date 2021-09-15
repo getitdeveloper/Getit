@@ -1,8 +1,8 @@
 import * as React from 'react';
-import PostForm from '../../Components/PostForm';
-import { PageBackground, PageContainer, PageTitle } from '../../styles/page';
+import PostForm from '@components/PostForm';
+import { PageBackground, PageContainer, PageTitle } from '@assets/styles/page';
 
-function FreeBoardFormPage() {
+function FreeBoardFormPage(): JSX.Element {
   // todo user_pk가 null일 경우 main page로 이동
 
   return (

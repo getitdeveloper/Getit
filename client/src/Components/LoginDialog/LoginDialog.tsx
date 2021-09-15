@@ -1,10 +1,9 @@
 import * as React from 'react';
-import { useCallback } from 'react';
 import { Dialog, List, ListItem } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
-import GithubLogin from '../../Auth/GithubLogin/GithubLogin';
-import GoogleSocialLogin from '../../Auth/GoogleLogin/GoogleLogin';
-import KakaoLogin from '../../Auth/KakaoLogin/KakaoLogin';
+import GithubLogin from '@auth/GithubLogin/GithubLogin';
+import GoogleSocialLogin from '@auth/GoogleLogin/GoogleLogin';
+import KakaoLogin from '@auth/KakaoLogin/KakaoLogin';
 import { useStyles, IconButtonContainer, Title } from './styles';
 import { DialogProps } from './types';
 

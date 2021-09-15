@@ -16,7 +16,7 @@ import {
   DetailInfo,
 } from './styles';
 import MemberType from '../RecruitMembers/index';
-import { HorizontalLine } from '../../styles/commons';
+import { HorizontalLine } from '../../assets/styles/commons';
 import { COMMON_POST_LIKE_REQUEST } from '../../reducers/actions';
 
 function PostItem(props: any) {

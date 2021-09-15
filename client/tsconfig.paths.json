@@ -7,9 +7,7 @@
       "@components/*": ["./components/*"],
       "@pages/*": ["./pages/*"],
       "@reducers/*": ["./reducers/*"],
-      "@sagas/*": ["./sagas/*"],
-      "@styles/*": ["./styles/*"],
-      "@typings": ["typings/*"]
+      "@sagas/*": ["./sagas/*"]
     }
   }
 }

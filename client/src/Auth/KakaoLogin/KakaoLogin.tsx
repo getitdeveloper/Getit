@@ -1,5 +1,5 @@
 import * as React from 'react';
-import KakaoLogo from '../../assets/images/Kakao.svg';
+import KakaoLogo from '@assets/images/Kakao.svg';
 
 function KakaoLogin(): JSX.Element {
   const API_KEY =

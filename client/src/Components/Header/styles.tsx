@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import LogoSvg from '../../assets/images/Logo.svg';
+import LogoSvg from '@assets/images/Logo.svg';
 
 export const HeaderWrapper = styled.div`
   display: flex;

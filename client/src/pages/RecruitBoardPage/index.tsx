@@ -6,6 +6,8 @@ import Grid from '@material-ui/core/Grid';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
 
+import MemberType from '@components/RecruitMembers/index';
+import PostSubHeader from '@components/PostSubHeader';
 import {
   useStyles,
   MemberTypeWrapper,
@@ -16,9 +18,6 @@ import {
   GridWrapper,
 } from './styles';
 import { dummyData } from './dummyData';
-
-import MemberType from '../../Components/RecruitMembers/index';
-import PostSubHeader from '../../Components/PostSubHeader';
 
 function RecruitBoardPage(): JSX.Element {
   const classes = useStyles();

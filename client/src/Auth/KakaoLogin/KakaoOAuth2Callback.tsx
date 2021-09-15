@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { USER_LOGIN_REQUEST } from '../../reducers/actions';
+import { USER_LOGIN_REQUEST } from '@reducers/actions';
 
 function KakaoOAuth2Callback(): null {
   const dispatch = useDispatch();

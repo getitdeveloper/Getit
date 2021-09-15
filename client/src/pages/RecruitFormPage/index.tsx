@@ -1,8 +1,8 @@
 import * as React from 'react';
-import PostForm from '../../Components/PostForm';
-import { PageBackground, PageContainer, PageTitle } from '../../styles/page';
+import PostForm from '@components/PostForm';
+import { PageBackground, PageContainer, PageTitle } from '@assets/styles/page';
 
-function RecruitFormPage() {
+function RecruitFormPage(): JSX.Element {
   return (
     <div>
       <PageBackground>

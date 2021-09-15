@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
-import Routes from './Components/Routes';
-import ScrollToTop from './Components/ScrollToTop';
+import Routes from './components/Routes';
+import ScrollToTop from './components/ScrollToTop';
 
 function App(): JSX.Element {
   return (
