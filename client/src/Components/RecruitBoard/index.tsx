@@ -19,7 +19,7 @@ import {
 } from './styles';
 import { dummyData } from './dummyData';
 
-function RecruitBoardPage(): JSX.Element {
+function RecruitBoard(): JSX.Element {
   const classes = useStyles();
 
   return (
@@ -89,4 +89,4 @@ function RecruitBoardPage(): JSX.Element {
   );
 }
 
-export default RecruitBoardPage;
+export default RecruitBoard;
