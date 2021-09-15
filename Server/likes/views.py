@@ -76,11 +76,9 @@ class CommonBoardLikeAPIView(GenericAPIView):
         """
         if self.get_queryset().exists():
             self.get_queryset().delete()
-            likes = CommonBoardLike.objects.filter(commonpost_id=board_id).count()
-            return JsonResponse({'counts': likes})
-        CommonBoardLike.objects.create(commonpost_id=board_id, user=request.user)
-        likes = CommonBoardLike.objects.filter(commonpost_id=board_id).count()
-        return JsonResponse({'counts': likes})
+            return JsonResponse({'status': 'remove'})
+        CommonBoardLike.objects.create(commonpost_id=board_id, user_id=request.user.id)
+        return JsonResponse({'status': 'add'})
 
 
 class CommonBoardLikePostAPIView(GenericAPIView):
@@ -140,11 +138,9 @@ class RecruitmentBoardLikeAPIView(GenericAPIView):
         """
         if self.get_queryset().exists():
             self.get_queryset().delete()
-            likes = RecruitBoardLike.objects.filter(recruitpost_id=board_id).count()
-            return JsonResponse({'counts': likes})
-        RecruitBoardLike.objects.create(recruitpost_id=board_id, user=request.user)
-        likes = RecruitBoardLike.objects.filter(recruitpost_id=board_id).count()
-        return JsonResponse({'counts': likes})
+            return JsonResponse({'status': 'remove'})
+        RecruitBoardLike.objects.create(recruitpost_id=board_id, user_id=request.user.id)
+        return JsonResponse({'status': 'add'})
 
 
 class RecruitmentBoardLikePostAPIView(GenericAPIView):
