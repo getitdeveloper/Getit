@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
-import SubHeader from '../../Components/Commons/SubHeader/SubHeader';
 import { PageBackground, PageContainer, PageTitle } from '../../styles/page';
 import { COMMON_POST_REQUEST } from '../../reducers/actions';
 import PostDetail from '../../Components/PostDetail';
@@ -31,7 +30,6 @@ function FreeBoardDetailPage(props: any) {
   console.log('freePost: ', freePost);
   return (
     <div>
-      <SubHeader />
       <PageBackground>
         <PageTitle>자유 게시판</PageTitle>
         <PostDetail post={freePost} />

@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
-import SubHeader from '../../Components/Commons/SubHeader/SubHeader';
 import PostItem from '../../Components/PostItem';
 import PostSubHeader from '../../Components/PostSubHeader';
 import { PageContainer, PageBackground } from '../../styles/page';
@@ -9,21 +8,12 @@ import { IPost } from '../../types';
 import Paging from '../../Components/Paging';
 import LoadingSpinner from '../../Components/LoadingSpinner';
 
-interface HeaderProp {
-  header?: boolean;
-}
-
-const defaultProp: HeaderProp = {
-  header: true,
-};
-
-function QuestionBardPage(props: HeaderProp) {
+function QuestionBardPage() {
   const dispatch = useDispatch();
   const boardList = useSelector(
     (state: RootStateOrAny) => state.board.boardList,
   );
   const [page, setPage] = React.useState(1);
-  const { header } = props;
 
   React.useEffect(() => {
     dispatch({
@@ -42,9 +32,8 @@ function QuestionBardPage(props: HeaderProp) {
   }
   return (
     <div>
-      {header ? <SubHeader /> : null}
+      <PostSubHeader boardType='Question' />
       <PageBackground>
-        <PostSubHeader boardType='Question' />
         {boardList ? (
           <PageContainer width='80%'>
             {boardList.results.map((content: IPost) => (
@@ -65,6 +54,5 @@ function QuestionBardPage(props: HeaderProp) {
     </div>
   );
 }
-QuestionBardPage.defaultProps = defaultProp;
 
 export default QuestionBardPage;

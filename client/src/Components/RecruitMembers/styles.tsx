@@ -25,7 +25,7 @@ export const Designer = styled.div`
   ${JobMixin}
 `;
 
-export const Planner = styled.div`
-  background: ${(props) => props.theme.colors.planner};
+export const ProjectManager = styled.div`
+  background: ${(props) => props.theme.colors.ProjectManager};
   ${JobMixin}
 `;

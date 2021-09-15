@@ -16,6 +16,9 @@ import {
   COMMON_POST_LIKE_REQUEST,
   COMMON_POST_LIKE_SUCCESS,
   COMMON_POST_LIKE_FAILURE,
+  SEARCH_POST_REQUEST,
+  SEARCH_POST_SUCCESS,
+  SEARCH_POST_FAILURE,
 } from './actions';
 
 // 초기 상태
@@ -24,6 +27,7 @@ const initialState: InitialState = {
   boardList: null,
   myPostList: null,
   likeCounts: null,
+  searchPostList: null,
   commonPostRequest: false,
   commonPostSuccess: false,
   commonPostFailure: null,
@@ -39,6 +43,9 @@ const initialState: InitialState = {
   commonPostLikeRequest: false,
   commonPostLikeSuccess: false,
   commonPostLikeFailure: null,
+  searchPostRequest: false,
+  searchPostSuccess: false,
+  searchPostFailure: null,
 };
 
 const reducer = (state = initialState, action: BoardActions): InitialState =>
@@ -123,6 +130,22 @@ const reducer = (state = initialState, action: BoardActions): InitialState =>
         draft.commonPostLikeRequest = false;
         draft.commonPostLikeSuccess = false;
         draft.commonPostLikeFailure = action.error;
+        break;
+      case SEARCH_POST_REQUEST:
+        draft.searchPostRequest = true;
+        draft.searchPostSuccess = false;
+        draft.searchPostFailure = null;
+        break;
+      case SEARCH_POST_SUCCESS:
+        draft.searchPostRequest = false;
+        draft.searchPostSuccess = true;
+        draft.searchPostFailure = null;
+        draft.searchPostList = action.data;
+        break;
+      case SEARCH_POST_FAILURE:
+        draft.searchPostRequest = false;
+        draft.searchPostSuccess = false;
+        draft.searchPostFailure = action.error;
         break;
       default:
         return state;

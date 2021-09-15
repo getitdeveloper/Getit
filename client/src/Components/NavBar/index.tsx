@@ -3,9 +3,9 @@ import { useCallback, useState } from 'react';
 import { Tab } from '@material-ui/core';
 
 import { StyledTabs, StyledLabel, NavBarWrapper } from './styles';
-import FreeBoardPage from '../../../pages/FreeBoardPage';
-import QuestionBoardPage from '../../../pages/QuestionBoardPage';
-import RecruitBoardPage from '../../../pages/RecruitBoardPage';
+import FreeBoardPage from '../../pages/FreeBoardPage';
+import QuestionBoardPage from '../../pages/QuestionBoardPage';
+import RecruitBoardPage from '../../pages/RecruitBoardPage';
 
 function NavBar(): JSX.Element {
   const [selectTab, setSelectTab] = useState(0);
@@ -45,9 +45,9 @@ function NavBar(): JSX.Element {
           />
         </StyledTabs>
       </NavBarWrapper>
-      {selectTab === 0 && <RecruitBoardPage header={false} />}
-      {selectTab === 2 && <FreeBoardPage header={false} />}
-      {selectTab === 1 && <QuestionBoardPage header={false} />}
+      {selectTab === 0 && <RecruitBoardPage />}
+      {selectTab === 2 && <FreeBoardPage />}
+      {selectTab === 1 && <QuestionBoardPage />}
     </div>
   );
 }

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { IMemberType } from './types';
-import { Developer, Designer, Planner } from './styles';
+import { Developer, Designer, ProjectManager } from './styles';
 
 function MemberType({ member }: IMemberType): JSX.Element {
   if (member === '개발자') {
@@ -10,7 +10,7 @@ function MemberType({ member }: IMemberType): JSX.Element {
     return <Designer>{member}</Designer>;
   }
   if (member === '기획자') {
-    return <Planner>{member}</Planner>;
+    return <ProjectManager>{member}</ProjectManager>;
   }
   return <div />;
 }
