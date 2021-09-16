@@ -62,10 +62,10 @@ class CommonBoardSerializer(serializers.ModelSerializer):
         source='commoncomments.count',
         read_only=True
     )
-
+    like_user = LikeSerializer(read_only=True, many=True)
     class Meta:
         model = CommonBoard
-        fields = ('id', 'title', 'category', 'worker', 'content', 'image', 'create_at', 'user', 'likes', 'comments',)
+        fields = ('id', 'title', 'category', 'worker', 'content', 'image', 'create_at', 'user', 'likes', 'comments','like_user')
 
     def to_representation(self, instance):
         self.fields['user'] = UserProfileSerializer(read_only=True)

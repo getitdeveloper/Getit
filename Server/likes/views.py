@@ -38,41 +38,28 @@ class CommonBoardLikeAPIView(GenericAPIView):
         post = CommonBoard.objects.get(id=self.kwargs['board_id'])
         return CommonBoardLike.objects.filter(user=user, commonpost=post)
 
-    @swagger_auto_schema(
-        operation_description="좋아요",
-        responses={
-            status.HTTP_201_CREATED: openapi.Response(
-                description="CommonBoardLike Response",
-                schema=resp
-            )
-        }
-    )
     def get(self, request, board_id):
         """
             좋아요 (GET)
+
             ---
-                - user : 글쓴이 번호(user id)
-                - commonpost : 게시글 번호(board id)
+                {
+                    "status": "add"
+                }
         """
         likes = CommonBoardLike.objects.filter(commonpost_id=board_id)
         serializer = CommonBoardLikeSerializer(likes, many=True)
         return Response(serializer.data)
 
-    @swagger_auto_schema(
-        operation_description="좋아요",
-        responses={
-            status.HTTP_201_CREATED: openapi.Response(
-                description="CommonBoardLike Response",
-                schema=resp
-            )
-        }
-    )
     def post(self, request, board_id):
         """
             좋아요 (POST)
+
             ---
-                - user : 글쓴이 번호(user id)
-                - commonpost : 게시글 번호(board id)
+                header에 토큰 탑재한상태로 post만 보내면 됩니다.
+                response
+                {'status':'remove'} --> 좋아요 취소
+                {'status':'add'} --> 좋아요 추가
         """
         if self.get_queryset().exists():
             self.get_queryset().delete()
@@ -100,18 +87,10 @@ class RecruitmentBoardLikeAPIView(GenericAPIView):
         post = RecruitmentBoard.objects.get(id=self.kwargs['board_id'])
         return RecruitBoardLike.objects.filter(user=user, recruitpost=post)
 
-    @swagger_auto_schema(
-        operation_description="좋아요",
-        responses={
-            status.HTTP_201_CREATED: openapi.Response(
-                description="RecruitmentBoardLike Response",
-                schema=resp
-            )
-        }
-    )
     def get(self, request, board_id):
         """
             좋아요 (GET)
+
             ---
                 - user : 글쓴이 번호(user id)
                 - recruitpost : 게시글 번호(board id)
@@ -120,18 +99,10 @@ class RecruitmentBoardLikeAPIView(GenericAPIView):
         serializer = RecruitBoardLikeSerializer(likes, many=True)
         return Response(serializer.data)
 
-    @swagger_auto_schema(
-        operation_description="좋아요",
-        responses={
-            status.HTTP_201_CREATED: openapi.Response(
-                description="RecruitmentBoardLike Response",
-                schema=resp
-            )
-        }
-    )
     def post(self, request, board_id):
         """
             좋아요 (POST)
+
             ---
                 - user : 글쓴이 번호(user id)
                 - recruitpost : 게시글 번호(board id)

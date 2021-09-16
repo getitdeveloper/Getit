@@ -1,3 +1,4 @@
+from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
@@ -18,11 +19,16 @@ from tags.models import Tag
 @api_view(['GET'])
 def status_check(request):
     """
-    서버의 상태를 확인하는 함수
+    유저 정보 요청에 응답하는 함수
     """
-    return Response({
-        "status": "OK"
-    }, status=status.HTTP_200_OK)
+    user_id = request.user.id
+    print(user_id)
+    profile = Profile.objects.get(id=user_id)
+    context = {
+        'user_pk': profile.id,
+        'nickname': profile.nickname
+    }
+    return JsonResponse(context)
 
 @method_decorator(csrf_exempt, name='dispatch')
 class ProfileDetail(GenericAPIView):
@@ -39,16 +45,16 @@ class ProfileDetail(GenericAPIView):
                 ---
                 # GET Response 예시
                     {
-                        "user": 2,
-                        "user_pk": 2,
-                        "nickname": "edcedc1027",
-                        "job": "개발자",
-                        "image": "/media/profile/Untitled.jpeg",
-                        "level": "코린이",
-                        "email": "edcedc1027@gmail.com",
-                        "info": "저는 이형준입니다. 백엔드 개발자가 될껍니다.",
-                        "git": "leeceo97",
-                        "stack": ["django","drf","mysql","postgre","docker","k8s","aws","gcp","nginx"]
+                    "user":1,
+                    "user_pk":1,
+                    "nickname":"edcedcd1027",
+                    "job":"개발자",
+                    "level":"코린이",
+                    "image":null,
+                    "email":"edcedc1027@gmail.com",
+                    "info":"저는 이형준입니다. 백엔드 개발자가 될껍니다.",
+                    "git":"leeceo97",
+                    "stack":["django","drf","mysql","postgre","docker","k8s","aws","gcp","nginx"]
                     }
                 """
         profile = self.get_object(user_pk)
@@ -126,7 +132,8 @@ class ProfileDetail(GenericAPIView):
 
 class TeamProfileCreate(GenericAPIView):
     """
-                팀 list(GET)
+                팀 프로필 list(GET)
+
                 ---
                 # GET Response 예시
                     {
@@ -155,6 +162,7 @@ class TeamProfileCreate(GenericAPIView):
     def post(self, request, user_pk):
         """
         팀 프로필 list(POST)
+
         ---
         # POST request 예시
                 {
@@ -193,7 +201,8 @@ class TeamProfileDetail(GenericAPIView):
 
     def get(self, request, user_id, id):
         """
-                팀 detail(GET)
+                팀 프로필 detail(GET)
+
                 ---
                 # GET Response 예시
                     {
@@ -215,6 +224,7 @@ class TeamProfileDetail(GenericAPIView):
     def put(self, request, user_id, id):
         """
         팀 프로필 detail(PUT)
+
         ---
         # PUT request 예시
                 {

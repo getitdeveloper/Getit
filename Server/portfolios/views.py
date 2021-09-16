@@ -19,11 +19,20 @@ class PortfolioListAPIView(GenericAPIView):
             포트폴리오 list (GET)
 
             ---
-                - id : 포트폴리오 번호(potfolio id)
-                - user : 사용자 번호(user id)
-                - title : 제목
-                - contents : 내용
-                - images : 이미지
+                {
+                "id":1,
+                "user":2,
+                "title":"geit",
+                "contents":"장고,리액트를 활용한 커뮤니티 사이트입니다.",
+                "images":"/media/profile/Untitle.jpeg"
+                },
+                {
+                    "id": 2,
+                    "user": 2,
+                    "title": "youtube",
+                    "contents": "유튜브 클론코딩 사이트입니다..",
+                    "image": "/media/profile/Untitle.jpeg"
+                }
         """
         posts = Portfolio.objects.filter(user=user_id)
         serializer = PortfolioSerializer(posts, many=True)
@@ -34,10 +43,13 @@ class PortfolioListAPIView(GenericAPIView):
             포트폴리오 list (POST)
 
             ---
-                - user : 사용자 번호(user id)
-                - title : 제목
-                - contents : 내용
-                - images : 이미지
+                {
+                        "user": 2,
+                        "title": "geit",
+                        "contents": "장고,리액트를 활용한 커뮤니티 사이트입니다."
+                    }
+                    --> 현재 image필드 지원 안합니다. 빈값으로 보내주세요.
+                    S3 구축후 이미지 필드 지원하겠습니다.
         """
         serializer = PortfolioSerializer(data=request.data)
         if serializer.is_valid():
@@ -60,11 +72,13 @@ class PortfolioDetailAPIView(GenericAPIView):
             포트폴리오 detail (GET)
 
             ---
-                - id : 포트폴리오 번호(potfolio id)
-                - user : 사용자 번호(user id)
-                - title : 제목
-                - contents : 내용
-                - images : 이미지
+                {
+                    "id": 1,
+                    "user": 2,
+                    "title": "geit",
+                    "contents": "장고,리액트를 활용한 커뮤니티 사이트입니다.",
+                    "image": "/media/profile/Untitle.jpeg"
+                }
         """
         portfolio = self.get_object(pk, user_id)
         serializer = PortfolioSerializer(portfolio)
@@ -75,11 +89,12 @@ class PortfolioDetailAPIView(GenericAPIView):
             포트폴리오 detail (PUT:수정)
 
             ---
-                - id : 포트폴리오 번호(potfolio id)
-                - user : 사용자 번호(user id)
-                - title : 제목
-                - contents : 내용
-                - images : 이미지
+                {
+                        "user": 2,
+                        "title": "졸린사람들 모여라",
+                        "contents": "밤샘에 지친 이들을 위한모입니다.",
+                        "image":null
+                    }
         """
         portfolio = self.get_object(pk, user_id)
         serializer = PortfolioSerializer(portfolio, data=request.data)

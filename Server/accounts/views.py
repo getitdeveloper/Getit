@@ -34,7 +34,7 @@ class google_callback(APIView):
             구글 로그인(POST)
 
             ---
-            "accsess_token" : "asdasdasdasdasd"
+            "accsess_token" : "abc.def.ghi"
         """
         accessToken = json.loads(request.body)
         access_token = accessToken['access_token']

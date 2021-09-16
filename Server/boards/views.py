@@ -1,4 +1,6 @@
 import json
+
+import requests
 from django.db.models.query_utils import Q
 from django.http.response import JsonResponse
 from django.utils.translation import get_supported_language_variant
@@ -10,6 +12,7 @@ from rest_framework.generics import GenericAPIView
 from rest_framework.mixins import ListModelMixin
 from rest_framework.parsers import MultiPartParser
 
+from likes.models import CommonBoardLike
 from tags.models import Tag
 from .permissions import IsOwnerOrReadOnly, RecruitmentIsOwnerOrReadOnly
 from .serializers import RecruitmentBoardSerializer, CommonBoardSerializer
@@ -34,36 +37,34 @@ class CommonBoardListAPIView(GenericAPIView):
     def get(self, request):
         """
             질문/자유 게시글 list (GET)
+
             ---
                 127.0.0.1:8000/api/board?category=free(question)
-            {
-                "count": 1,
-                "next": null,
-                "previous": null,
-                "results": [
+                {
+                "count":1,
+                "next":null,
+                "previous":null,
+                    "results":
+                    [
                     {
-                        "id": 1,
-                        "title": "test",
-                        "category": "free",
-                        "worker": "개발자",
-                        "content": "test",
-                        "image": null,
-                        "create_at": "2021-09-12T10:53:19.475337+09:00",
-                        "user": {
-                            "id": 1,
-                            "profile": {
-                                "nickname": null,
-                                "image": "/media/profile/Untitled.jpeg"
-                            }
-                        },
-                        "stack": [
-                            "python"
-                        ],
-                        "likes": 1,
-                        "comments": 1
-                    }
-                ]
-            }
+                    "id":1,
+                    "title":"liketest",
+                    "category":"free",
+                    "worker":"개발자",
+                    "content":"testtesttest",
+                    "image":null,
+                    "create_at":"2021-09-15T20:09:02.707765+09:00",
+                        "user":{
+                            "id":2,
+                            "profile":
+                                {
+                                "nickname":"edcedc1027",
+                                "image":null
+                                }},
+                                    "likes":2,
+                                    "comments":0
+                                    }
+                                    ]}
         """
         category = request.GET.get('category')
         queryset = self.get_queryset()
@@ -92,6 +93,7 @@ class CommonBoardListAPIView(GenericAPIView):
     def post(self, request):
         """
             질문/자유 게시글 list (POST)
+
             ---
                 {
                     "title":"asdasdasd",
@@ -123,21 +125,22 @@ class CommonBoardDetailAPIView(GenericAPIView):
     def get(self, request, pk, format=None):
         """
             질문/자유 게시글 detail (GET)
+
             ---
-            {
-                "id": 1,
-                "title": "test",
-                "category": "free",
-                "content": "test",
-                "image": null,
-                "create_at": "2021-09-12T10:53:19.475337+09:00",
-                "user": 1,
-                "stack": [
-                    "python"
-                ],
-                "likes": 1,
-                "comments": 1
-            }
+                {
+                    "id": 1,
+                    "title": "test",
+                    "category": "free",
+                    "content": "test",
+                    "image": null,
+                    "create_at": "2021-09-12T10:53:19.475337+09:00",
+                    "user": 1,
+                    "stack": [
+                        "python"
+                    ],
+                    "likes": 1,
+                    "comments": 1
+                }
         """
         post = self.get_object(pk)
         serializer = CommonBoardSerializer(post)
@@ -146,6 +149,7 @@ class CommonBoardDetailAPIView(GenericAPIView):
     def put(self, request, pk):
         """
             질문/자유 게시글 detail (PUT)
+
             ---
                 {
                     "title":"asdasdasd",
@@ -167,6 +171,7 @@ class CommonBoardDetailAPIView(GenericAPIView):
     def delete(self, request, pk):
         """
             질문/자유 게시글 detail (DELETE)
+
             ---
         """
         post = self.get_object(pk)
@@ -188,66 +193,67 @@ class RecruitmentBoardPostListAPIView(GenericAPIView):
     def get(self, request):
         """
             모집 게시글 list (GET)
+
             ---
-            {
-                "count": 2,
-                "next": null,
-                "previous": null,
-                "results": [
-                    {
-                        "id": 1,
-                        "user": 2,
-                        "study": {
+                {
+                    "count": 2,
+                    "next": null,
+                    "previous": null,
+                    "results": [
+                        {
                             "id": 1,
                             "user": 2,
-                            "name": "test",
+                            "study": {
+                                "id": 1,
+                                "user": 2,
+                                "name": "test",
+                                "content": "test",
+                                "status": true,
+                                "member": [
+                                    2
+                                ],
+                                "image": null,
+                                "stack": [
+                                    "python"
+                                ],
+                                "created_at": "2021-09-12T11:06:40.929959+09:00"
+                            },
+                            "developer": 1,
+                            "designer": 0,
+                            "pm": 0,
                             "content": "test",
-                            "status": true,
-                            "member": [
-                                2
-                            ],
-                            "image": null,
-                            "stack": [
-                                "python"
-                            ],
-                            "created_at": "2021-09-12T11:06:40.929959+09:00"
+                            "start_date": "2021-09-12",
+                            "end_date": "2021-09-13",
+                            "status": true
                         },
-                        "developer": 1,
-                        "designer": 0,
-                        "pm": 0,
-                        "content": "test",
-                        "start_date": "2021-09-12",
-                        "end_date": "2021-09-13",
-                        "status": true
-                    },
-                    {
-                        "id": 2,
-                        "user": 2,
-                        "study": {
-                            "id": 1,
+                        {
+                            "id": 2,
                             "user": 2,
-                            "name": "test",
-                            "content": "test",
-                            "status": true,
-                            "member": [
-                                2
-                            ],
-                            "image": null,
-                            "stack": [
-                                "python"
-                            ],
-                            "created_at": "2021-09-12T11:06:40.929959+09:00"
-                        },
-                        "developer": 2,
-                        "designer": 0,
-                        "pm": 0,
-                        "content": "test2",
-                        "start_date": "2021-09-12",
-                        "end_date": "2021-09-13",
-                        "status": true
-                    }
-                ]
-            }
+                            "study": {
+                                "id": 1,
+                                "user": 2,
+                                "name": "test",
+                                "content": "test",
+                                "status": true,
+                                "member": [
+                                    2
+                                ],
+                                "image": null,
+                                "stack": [
+                                    "python"
+                                ],
+                                "created_at": "2021-09-12T11:06:40.929959+09:00"
+                            },
+                            "developer": 2,
+                            "designer": 0,
+                            "pm": 0,
+                            "content": "test2",
+                            "start_date": "2021-09-12",
+                            "end_date": "2021-09-13",
+                            "status": true
+                        }
+                    ]
+                }
         """
         posts = RecruitmentBoard.objects.all()
         posts = self.filter_queryset(posts)
@@ -258,19 +264,20 @@ class RecruitmentBoardPostListAPIView(GenericAPIView):
 
     def post(self, request):
         """
-            모집 게시글 list (GET)
+            모집 게시글 list (POST)
+
             ---
-            {
-                "user": 2,
-                "study": 1,
-                "developer": 2,
-                "designer": 0,
-                "pm": 0,
-                "content": "test2",
-                "start_date": "2021-09-12",
-                "end_date": "2021-09-13",
-                "status": true
-            }
+                {
+                    "user": 2,
+                    "study": 1,
+                    "developer": 2,
+                    "designer": 0,
+                    "pm": 0,
+                    "content": "test2",
+                    "start_date": "2021-09-12",
+                    "end_date": "2021-09-13",
+                    "status": true
+                }
         """
         serializer = RecruitmentBoardSerializer(data=request.data)
         if serializer.is_valid():
@@ -291,33 +298,34 @@ class RecruitmentBoardPostDetailAPIView(GenericAPIView):
     def get(self, request, pk, format=None):
         """
             모집 게시글 detail (GET)
+
             ---
-            {
-                "id": 1,
-                "user": 2,
-                "study": {
+                {
                     "id": 1,
                     "user": 2,
-                    "name": "test",
+                    "study": {
+                        "id": 1,
+                        "user": 2,
+                        "name": "test",
+                        "content": "test",
+                        "status": true,
+                        "member": [
+                            2
+                        ],
+                        "image": null,
+                        "stack": [
+                            "python"
+                        ],
+                        "created_at": "2021-09-12T11:06:40.929959+09:00"
+                    },
+                    "developer": 1,
+                    "designer": 0,
+                    "pm": 0,
                     "content": "test",
-                    "status": true,
-                    "member": [
-                        2
-                    ],
-                    "image": null,
-                    "stack": [
-                        "python"
-                    ],
-                    "created_at": "2021-09-12T11:06:40.929959+09:00"
-                },
-                "developer": 1,
-                "designer": 0,
-                "pm": 0,
-                "content": "test",
-                "start_date": "2021-09-12",
-                "end_date": "2021-09-13",
-                "status": true
-            }
+                    "start_date": "2021-09-12",
+                    "end_date": "2021-09-13",
+                    "status": true
+                }
         """
         post = self.get_object(pk)
         serializer = RecruitmentBoardSerializer(post)
@@ -326,6 +334,7 @@ class RecruitmentBoardPostDetailAPIView(GenericAPIView):
     def put(self, request, pk):
         """
         모집 게시글 detail (PUT)
+
         ---
             {
                 "id": 1,
@@ -357,6 +366,11 @@ class RecruitmentBoardPostDetailAPIView(GenericAPIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, pk):
+        """
+                모집 게시글 detail (DELETE)
+
+                ---
+        """
         post = self.get_object(pk)
         self.check_object_permissions(self.request, post)
         post.delete()
@@ -370,10 +384,11 @@ class WholePostSearch(GenericAPIView):
     def get(self, request):
         """
             전체 게시글 list (GET)
+
             ---
                 127.0.0.1:8000/api/board?category=free(question)
-            {
-                "freeboard": [
+                {
+                    "freeboard": [
                     {
                         "id": 13,
                         "title": "test2",
@@ -534,6 +549,7 @@ class BoardMyListAPIView(GenericAPIView):
     def get(self, request, pk):
         """
             my게시판 list (GET)
+
             ---
                 [{
                 "id":1,
@@ -554,6 +570,7 @@ class RecruitmentBoardPostMyListAPIView(GenericAPIView):
     def get(self, request, pk):
         """
             my모집게시판 list (GET)
+
             ---
                 [{
                 "user":1,

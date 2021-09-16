@@ -7,7 +7,7 @@ class Portfolio(models.Model):
     user = models.ForeignKey('accounts.User', on_delete=models.CASCADE)
     title = models.CharField(max_length=50)
     contents = models.TextField(null=False)
-    images = models.ImageField(upload_to='portfolio', blank=True, default="../media/profile/Untitle.jpeg")
+    image = models.ImageField(upload_to='portfolio', blank=True, default="../media/profile/Untitle.jpeg")
 
     def __str__(self):
-        return f"{self.title} {self.images}"
+        return f"{self.title} {self.image}"
