@@ -5,6 +5,9 @@ import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import moment from 'moment';
+import { HorizontalLine } from '@assets/styles/commons';
+import { COMMON_POST_LIKE_REQUEST } from '@reducers/actions';
+import MemberType from '@components/RecruitMembers/index';
 import {
   WriterButton,
   PostContainer,
@@ -15,9 +18,6 @@ import {
   PostDetails,
   DetailInfo,
 } from './styles';
-import MemberType from '../RecruitMembers/index';
-import { HorizontalLine } from '../../assets/styles/commons';
-import { COMMON_POST_LIKE_REQUEST } from '../../reducers/actions';
 
 function PostItem(props: any) {
   const history = useHistory();
