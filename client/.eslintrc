@@ -11,7 +11,7 @@
     "ecmaFeatures": { "jsx": true },
     "project": "./tsconfig.json"
   },
-  "ignorePatterns": ["node_modules/"],
+  "ignorePatterns": ["node_modules/", "craco.config.js"],
   "extends": [
     "airbnb",
     "airbnb-typescript",

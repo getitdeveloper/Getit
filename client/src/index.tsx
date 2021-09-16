@@ -2,11 +2,11 @@ import * as React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { ThemeProvider } from 'styled-components';
+import theme from '@assets/styles/theme';
+import GlobalStyle from '@assets/styles/global';
+import store from '@store/index';
 import reportWebVitals from './reportWebVitals';
 import App from './App';
-import store from './store/index';
-import theme from './styles/theme';
-import GlobalStyle from './styles/global';
 
 ReactDOM.render(
   <Provider store={store}>

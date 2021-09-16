@@ -1,7 +1,7 @@
 import React from 'react';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import styled from 'styled-components';
-import { PageContainer } from '../../styles/page';
+import { PageContainer } from '@assets/styles/page';
 
 export const useStyles = makeStyles((theme: Theme) =>
   createStyles({

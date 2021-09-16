@@ -2,10 +2,10 @@ import * as React from 'react';
 import { useCallback, useState, useEffect } from 'react';
 import { RootStateOrAny, useSelector, useDispatch } from 'react-redux';
 import { useLocation, Link } from 'react-router-dom';
-import SearchBar from '../SearchBar/SearchBar';
-import LoginDialog from '../LoginDialog/LoginDialog';
-import UserInfoButtons from '../UserInfoButtons/UserInfoButtons';
-import HeaderNav from '../HeaderNav/index';
+import SearchBar from '@components/SearchBar/SearchBar';
+import LoginDialog from '@components/LoginDialog/LoginDialog';
+import UserInfoButtons from '@components/UserInfoButtons/UserInfoButtons';
+import HeaderNav from '@components/HeaderNav/index';
 import {
   LoginButton,
   HeaderWrapper,

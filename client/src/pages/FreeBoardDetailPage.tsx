@@ -1,18 +1,17 @@
 import * as React from 'react';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
+import { PageBackground, PageContainer, PageTitle } from '@assets/styles/page';
+import { COMMON_POST_REQUEST } from '@reducers/actions';
+import PostDetail from '@components/PostDetail';
+import Comments from '@components/Comments';
+import LoadingSpinner from '@components/LoadingSpinner';
 
-import { PageBackground, PageContainer, PageTitle } from '../../styles/page';
-import { COMMON_POST_REQUEST, COMMENT_REQUEST } from '../../reducers/actions';
-import PostDetail from '../../Components/PostDetail';
-import Comments from '../../Components/Comments';
-import LoadingSpinner from '../../Components/LoadingSpinner';
-
-function QuestionDetailPage(props: any) {
+function FreeBoardDetailPage(props: any) {
   const { history } = props;
   const contentId = history.location.state;
   const dispatch = useDispatch();
-  const questionPost = useSelector(
+  const freePost = useSelector(
     (state: RootStateOrAny) => state.board.postContent,
   );
 
@@ -25,14 +24,15 @@ function QuestionDetailPage(props: any) {
     });
   }, []);
 
-  if (!questionPost) {
+  if (!freePost) {
     return <LoadingSpinner />;
   }
+  console.log('freePost: ', freePost);
   return (
     <div>
       <PageBackground>
-        <PageTitle>질문 게시판</PageTitle>
-        <PostDetail post={questionPost} />
+        <PageTitle>자유 게시판</PageTitle>
+        <PostDetail post={freePost} />
 
         <div>
           <span>
@@ -44,10 +44,11 @@ function QuestionDetailPage(props: any) {
             좋아요
           </span>
         </div>
+
         <Comments boardId={contentId} />
       </PageBackground>
     </div>
   );
 }
 
-export default QuestionDetailPage;
+export default FreeBoardDetailPage;

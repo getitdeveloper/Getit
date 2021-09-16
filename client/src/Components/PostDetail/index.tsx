@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { PageContainer } from '../../styles/page';
-import PostItem from '../PostItem';
-import MarkdownRenderer from '../MarkdownRenderer';
+import { PageContainer } from '@assets/styles/page';
+import PostItem from '@components/PostItem';
+import MarkdownRenderer from '@components/MarkdownRenderer';
 import { Content } from './styles';
 
 function PostDetail(props: any) {

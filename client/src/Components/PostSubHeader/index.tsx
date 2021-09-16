@@ -3,6 +3,7 @@ import { useState, useCallback } from 'react';
 import CreateIcon from '@material-ui/icons/Create';
 import { useHistory } from 'react-router-dom';
 import { RootStateOrAny, useSelector } from 'react-redux';
+import { HorizontalLine } from '@assets/styles/commons';
 import {
   PostSubHeaderWrapper,
   JobSelectButtonWrapper,
@@ -10,7 +11,6 @@ import {
   WritePost,
   JobSelectButton,
 } from './styles';
-import { HorizontalLine } from '../../styles/commons';
 import { BoardType } from './types';
 
 function PostSubHeader({ boardType }: BoardType): JSX.Element {

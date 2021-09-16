@@ -1,6 +1,6 @@
 import * as React from 'react';
-import Banner from '../../Components/Banner/Banner';
-import NavBar from '../../Components/NavBar/index';
+import Banner from '@components/Banner';
+import NavBar from '@components/NavBar/index';
 
 function MainPage(): JSX.Element {
   return (

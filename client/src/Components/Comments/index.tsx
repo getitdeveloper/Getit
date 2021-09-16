@@ -1,11 +1,8 @@
 import * as React from 'react';
 import { RootStateOrAny, useSelector, useDispatch } from 'react-redux';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import {
-  COMMENT_REGISTER_REQUEST,
-  COMMENT_REQUEST,
-} from '../../reducers/actions';
-import { PageContainer } from '../../styles/page';
+import { COMMENT_REGISTER_REQUEST, COMMENT_REQUEST } from '@reducers/actions';
+import { PageContainer } from '@assets/styles/page';
 import {
   CommentWrapper,
   CommentInput,

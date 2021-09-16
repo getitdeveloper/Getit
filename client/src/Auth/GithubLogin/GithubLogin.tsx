@@ -1,6 +1,5 @@
 import * as React from 'react';
-import NavBar from '../../Components/NavBar';
-import GithubLogo from '../../assets/images/Github.svg';
+import GithubLogo from '@assets/images/Github.svg';
 
 // Github 로그인
 function GithubLogin(): JSX.Element {

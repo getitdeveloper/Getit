@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
-import PostItem from '../../Components/PostItem';
-import PostSubHeader from '../../Components/PostSubHeader';
-import { COMMON_BOARD_REQUEST } from '../../reducers/actions';
-import { PageContainer, PageBackground } from '../../styles/page';
-import { IPost } from '../../types';
-import Paging from '../../Components/Paging';
-import LoadingSpinner from '../../Components/LoadingSpinner';
+import PostItem from '@components/PostItem';
+import PostSubHeader from '@components/PostSubHeader';
+import { COMMON_BOARD_REQUEST } from '@reducers/actions';
+import { PageContainer, PageBackground } from '@assets/styles/page';
+import Paging from '@components/Paging';
+import LoadingSpinner from '@components/LoadingSpinner';
+import { IPost } from '../types';
 
 function FreeBoardPage(): JSX.Element {
   const dispatch = useDispatch();

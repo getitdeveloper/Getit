@@ -1,14 +1,14 @@
 import * as React from 'react';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
-import PostItem from '../../Components/PostItem';
-import PostSubHeader from '../../Components/PostSubHeader';
-import { PageContainer, PageBackground } from '../../styles/page';
-import { COMMON_BOARD_REQUEST } from '../../reducers/actions';
-import { IPost } from '../../types';
-import Paging from '../../Components/Paging';
-import LoadingSpinner from '../../Components/LoadingSpinner';
+import PostItem from '@components/PostItem';
+import PostSubHeader from '@components/PostSubHeader';
+import { PageContainer, PageBackground } from '@assets/styles/page';
+import { COMMON_BOARD_REQUEST } from '@reducers/actions';
+import Paging from '@components/Paging';
+import LoadingSpinner from '@components/LoadingSpinner';
+import { IPost } from '../types';
 
-function QuestionBardPage() {
+function QuestionBardPage(): JSX.Element {
   const dispatch = useDispatch();
   const boardList = useSelector(
     (state: RootStateOrAny) => state.board.boardList,

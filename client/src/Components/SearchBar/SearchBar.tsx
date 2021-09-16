@@ -4,8 +4,8 @@ import { useDispatch } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
 
 import SearchIcon from '@material-ui/icons/Search';
+import { SEARCH_POST_REQUEST } from '@reducers/actions';
 import { SearchBarWrapper, SearchIconWrapper } from './styles';
-import { SEARCH_POST_REQUEST } from '../../reducers/actions';
 
 function SearchBar(): JSX.Element {
   const dispatch = useDispatch();
