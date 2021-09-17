@@ -27,7 +27,6 @@ resp = openapi.Schema(
     }
 )
 
-
 # Create your views here.
 class CommonBoardLikeAPIView(GenericAPIView):
     serializer_class = CommonBoardLikeSerializer
@@ -43,9 +42,16 @@ class CommonBoardLikeAPIView(GenericAPIView):
             좋아요 (GET)
 
             ---
-                {
-                    "status": "add"
-                }
+                [
+                    {
+                        "commonpost": 2,
+                        "user": 2
+                    },
+                    {
+                        "commonpost": 2,
+                        "user": 3
+                    }
+                ]
         """
         likes = CommonBoardLike.objects.filter(commonpost_id=board_id)
         serializer = CommonBoardLikeSerializer(likes, many=True)
@@ -56,10 +62,20 @@ class CommonBoardLikeAPIView(GenericAPIView):
             좋아요 (POST)
 
             ---
-                header에 토큰 탑재한상태로 post만 보내면 됩니다.
-                response
-                {'status':'remove'} --> 좋아요 취소
-                {'status':'add'} --> 좋아요 추가
+                [request]
+                {
+                    "user": 1
+                }
+
+                [response]
+                <좋아요 취소>
+                {
+                    'status':'remove'
+                }
+                <좋아요 추가>
+                {
+                    'status':'add'
+                }
         """
         if self.get_queryset().exists():
             self.get_queryset().delete()
@@ -71,8 +87,54 @@ class CommonBoardLikeAPIView(GenericAPIView):
 class CommonBoardLikePostAPIView(GenericAPIView):
     serializer_class = CommonBoardLikePostSerializer
     permission_classes = [LikePostIsOwnerOnly]
-
+    
     def get(self, request, user_id):
+        """
+            질문/자유 게시판 좋아요한 글 (GET)
+            ---
+                [
+                    {
+                        "commonpost": {
+                            "id": 2,
+                            "title": "test2",
+                            "category": "question",
+                            "worker": "개발자",
+                            "content": "test2",
+                            "image": null,
+                            "create_at": "2021-09-16T19:24:25.437868+09:00",
+                            "user": {
+                                "id": 3,
+                                "profile": {
+                                    "nickname": null,
+                                    "image": "/media/profile/Untitled.jpeg"
+                                }
+                            },
+                            "likes": 2,
+                            "comments": 0
+                        }
+                    },
+                    {
+                        "commonpost": {
+                            "id": 6,
+                            "title": "asdasdasd3",
+                            "category": "question",
+                            "worker": "개발자",
+                            "content": "asdasdasdasd",
+                            "image": null,
+                            "create_at": "2021-09-16T19:44:37.538559+09:00",
+                            "user": {
+                                "id": 3,
+                                "profile": {
+                                    "nickname": null,
+                                    "image": "/media/profile/Untitled.jpeg"
+                                }
+                            },
+                            "likes": 1,
+                            "comments": 0
+                        }
+                    }
+                ]
+        """
         posts = CommonBoardLike.objects.filter(user=user_id)
         serializer = CommonBoardLikePostSerializer(posts, many=True)
         return Response(serializer.data)
@@ -89,11 +151,19 @@ class RecruitmentBoardLikeAPIView(GenericAPIView):
 
     def get(self, request, board_id):
         """
-            좋아요 (GET)
+            모집 게시판 좋아요 (GET)
 
             ---
-                - user : 글쓴이 번호(user id)
-                - recruitpost : 게시글 번호(board id)
+                [
+                    {
+                        "recruitpost": 7,
+                        "user": 2
+                    },
+                    {
+                        "recruitpost": 7,
+                        "user": 3
+                    }
+                ]
         """
         likes = RecruitBoardLike.objects.filter(recruitpost_id=board_id)
         serializer = RecruitBoardLikeSerializer(likes, many=True)
@@ -101,11 +171,23 @@ class RecruitmentBoardLikeAPIView(GenericAPIView):
 
     def post(self, request, board_id):
         """
-            좋아요 (POST)
+            모집 게시판 좋아요 (POST)
 
             ---
-                - user : 글쓴이 번호(user id)
-                - recruitpost : 게시글 번호(board id)
+                [request]
+                {
+                    "user": 1
+                }
+
+                [response]
+                <좋아요 취소>
+                {
+                    'status':'remove'
+                }
+                <좋아요 추가>
+                {
+                    'status':'add'
+                }
         """
         if self.get_queryset().exists():
             self.get_queryset().delete()
@@ -119,6 +201,85 @@ class RecruitmentBoardLikePostAPIView(GenericAPIView):
     permission_classes = [LikePostIsOwnerOnly]
 
     def get(self, request, user_id):
+        """
+            모집 게시판 좋아요한 글 (GET)
+
+            ---
+                [
+                    {
+                        "recruitpost": {
+                            "id": 7,
+                            "user": {
+                                "id": 3,
+                                "profile": {
+                                    "nickname": null,
+                                    "image": "/media/profile/Untitled.jpeg"
+                                }
+                            },
+                            "title": "test",
+                            "study": {
+                                "id": 2,
+                                "user": 3,
+                                "name": "test2",
+                                "content": "test2",
+                                "status": true,
+                                "member": [],
+                                "image": null,
+                                "stack": [
+                                    "test"
+                                ],
+                                "created_at": "2021-09-16T19:25:01.468193+09:00"
+                            },
+                            "developer": 3,
+                            "designer": 0,
+                            "pm": 2,
+                            "content": "test",
+                            "start_date": "2021-09-16",
+                            "end_date": "2021-09-18",
+                            "status": true,
+                            "create_at": "2021-09-16T21:26:25.586511+09:00",
+                            "comments": 0,
+                            "likes": 2
+                        }
+                    },
+                    {
+                        "recruitpost": {
+                            "id": 6,
+                            "user": {
+                                "id": 3,
+                                "profile": {
+                                    "nickname": null,
+                                    "image": "/media/profile/Untitled.jpeg"
+                                }
+                            },
+                            "title": "test",
+                            "study": {
+                                "id": 2,
+                                "user": 3,
+                                "name": "test2",
+                                "content": "test2",
+                                "status": true,
+                                "member": [],
+                                "image": null,
+                                "stack": [
+                                    "test"
+                                ],
+                                "created_at": "2021-09-16T19:25:01.468193+09:00"
+                            },
+                            "developer": 2,
+                            "designer": 0,
+                            "pm": 0,
+                            "content": "test",
+                            "start_date": "2021-09-16",
+                            "end_date": "2021-09-17",
+                            "status": true,
+                            "create_at": "2021-09-16T21:10:39.237667+09:00",
+                            "comments": 0,
+                            "likes": 1
+                        }
+                    }
+                ]
+        """
         posts = RecruitBoardLike.objects.filter(user=user_id)
         serializer = RecruitBoardLikePostSerializer(posts, many=True)
         return Response(serializer.data)

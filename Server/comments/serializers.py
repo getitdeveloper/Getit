@@ -21,7 +21,7 @@ class CommentSerializer(ModelSerializer):
     profile = UserCommentProfileSerializer(read_only=True)
     class Meta:
         model = Comment
-        fields = ('user','commonpost', 'recruitmentpost', 'content', 'create_at', 'profile')
+        fields = ('id', 'user','commonpost', 'recruitmentpost', 'content', 'create_at', 'profile')
 
     def to_representation(self, instance):
         self.fields['user'] = UserCommentProfileSerializer(read_only=True)

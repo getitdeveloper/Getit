@@ -12,7 +12,7 @@ class CommonBoardLikeSerializer(ModelSerializer):
 class CommonBoardLikePostSerializer(ModelSerializer):
     class Meta:
         model = CommonBoardLike
-        fields = ('commonpost', 'user',)
+        fields = ('commonpost',)
 
     def to_representation(self, instance):
         self.fields['commonpost'] = CommonBoardSerializer(read_only=True)
@@ -26,7 +26,7 @@ class RecruitBoardLikeSerializer(ModelSerializer):
 class RecruitBoardLikePostSerializer(ModelSerializer):
     class Meta:
         model = RecruitBoardLike
-        fields = ('recruitpost', 'user',)
+        fields = ('recruitpost',)
 
     def to_representation(self, instance):
         self.fields['recruitpost'] = RecruitmentBoardSerializer(read_only=True)

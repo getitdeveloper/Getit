@@ -15,7 +15,9 @@ from profiles.models import Profile
 
 
 class CommentListAPIView(GenericAPIView):
+
     serializer_class = CommentSerializer
+    permission_classes = [IsOwnerOrReadOnly]
 
     def get(self, request, board_id):
         """
@@ -23,13 +25,35 @@ class CommentListAPIView(GenericAPIView):
 
             ---
                 [
-                {
-                "user":2,
-                "commonpost":1,
-                "recruitmentpost":null,
-                "content":"test",
-                "create_at":"2021-09-12T07:54:17.371579+09:00"
-                }]
+                    {
+                        "id": 3,
+                        "user": {
+                            "id": 3,
+                            "profile": {
+                                "nickname": null,
+                                "image": "/media/profile/Untitled.jpeg"
+                            }
+                        },
+                        "commonpost": 3,
+                        "recruitmentpost": null,
+                        "content": "test",
+                        "create_at": "2021-09-16T21:27:44.476554+09:00"
+                    },
+                    {
+                        "id": 4,
+                        "user": {
+                            "id": 2,
+                            "profile": {
+                                "nickname": null,
+                                "image": "/media/profile/Untitled.jpeg"
+                            }
+                        },
+                        "commonpost": 3,
+                        "recruitmentpost": null,
+                        "content": "test",
+                        "create_at": "2021-09-16T21:27:31.825620+09:00"
+                    }
+                ]
         """
         posts = Comment.objects.filter(commonpost=board_id)
         serializer = CommentSerializer(posts, many=True)
@@ -40,14 +64,12 @@ class CommentListAPIView(GenericAPIView):
             댓글 list (POST)
 
             ---
-                [
                 {
-                "user":2,
-                "commonpost":1,
-                "recruitmentpost":null,
-                "content":"test",
-                "create_at":"2021-09-12T07:54:17.371579+09:00"
-                }]
+                    "user": 3,
+                    "commonpost": 3,
+                    "recruitmentpost": null,
+                    "content": "test",
+                }
         """
         serializer = CommentSerializer(data=request.data)
         if serializer.is_valid():
@@ -58,7 +80,6 @@ class CommentListAPIView(GenericAPIView):
 class CommentDetailAPIView(GenericAPIView):
     serializer_class = CommentSerializer
     permission_classes = [IsOwnerOrReadOnly]
-    queryset = Comment
 
     def get_object(self, pk, board_id):
         return get_object_or_404(Comment, pk=pk, commonpost=board_id)
@@ -69,11 +90,18 @@ class CommentDetailAPIView(GenericAPIView):
 
             ---
                 {
-                "user":2,
-                "commonpost":1,
-                "recruitmentpost":null,
-                "content":"test",
-                "create_at":"2021-09-12T07:54:17.371579+09:00"
+                    "id": 3,
+                    "user": {
+                        "id": 2,
+                        "profile": {
+                            "nickname": null,
+                            "image": "/media/profile/Untitled.jpeg"
+                        }
+                    },
+                    "commonpost": 3,
+                    "recruitmentpost": null,
+                    "content": "test",
+                    "create_at": "2021-09-16T21:27:31.825620+09:00"
                 }
         """
         post = self.get_object(pk, board_id)
@@ -86,16 +114,15 @@ class CommentDetailAPIView(GenericAPIView):
 
             ---
                 {
-                "user":2,
-                "commonpost":1,
-                "recruitmentpost":null,
-                "content":"test",
-                "create_at":"2021-09-12T07:54:17.371579+09:00"
+                    "user":2,
+                    "commonpost":1,
+                    "recruitmentpost":null,
+                    "content":"test",
                 }
         """
         post = self.get_object(pk, board_id)
-        serializer = CommentSerializer(post, data=request.data)
         self.check_object_permissions(self.request, post)
+        serializer = CommentSerializer(post, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)

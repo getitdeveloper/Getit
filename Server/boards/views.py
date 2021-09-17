@@ -41,30 +41,31 @@ class CommonBoardListAPIView(GenericAPIView):
             ---
                 127.0.0.1:8000/api/board?category=free(question)
                 {
-                "count":1,
-                "next":null,
-                "previous":null,
-                    "results":
-                    [
-                    {
-                    "id":1,
-                    "title":"liketest",
-                    "category":"free",
-                    "worker":"개발자",
-                    "content":"testtesttest",
-                    "image":null,
-                    "create_at":"2021-09-15T20:09:02.707765+09:00",
-                        "user":{
-                            "id":2,
-                            "profile":
-                                {
-                                "nickname":"edcedc1027",
-                                "image":null
-                                }},
-                                    "likes":2,
-                                    "comments":0
+                    "count":1,
+                    "next":null,
+                    "previous":null,
+                    "results": [
+                        {
+                            "id":1,
+                            "title":"liketest",
+                            "category":"free",
+                            "worker":"개발자",
+                            "content":"testtesttest",
+                            "image":null,
+                            "create_at":"2021-09-15T20:09:02.707765+09:00",
+                            "user":{
+                                "id":2,
+                                "profile":
+                                    {
+                                        "nickname":"edcedc1027",
+                                        "image":null
                                     }
-                                    ]}
+                            },
+                            "likes":2,
+                            "comments":0
+                        }
+                    ]
+                }
         """
         category = request.GET.get('category')
         queryset = self.get_queryset()
@@ -101,7 +102,10 @@ class CommonBoardListAPIView(GenericAPIView):
                     "content":"asdasdasdasd",
                     "image":null,
                     "user":3,
-                    "stack":["python", "java"],
+                    "stack":[
+                        "python", 
+                        "java"
+                    ],
                     "worker":"개발자"
                 }
         """
@@ -120,7 +124,8 @@ class CommonBoardDetailAPIView(GenericAPIView):
     # parser_classes = (MultiPartParser,)
 
     def get_object(self, pk):
-        return get_object_or_404(CommonBoard, pk=pk)
+        post = get_object_or_404(CommonBoard, pk=pk)
+        return post
 
     def get(self, request, pk, format=None):
         """
@@ -129,17 +134,21 @@ class CommonBoardDetailAPIView(GenericAPIView):
             ---
                 {
                     "id": 1,
-                    "title": "test",
+                    "title": "test1",
                     "category": "free",
-                    "content": "test",
+                    "worker": "개발자",
+                    "content": "test1",
                     "image": null,
-                    "create_at": "2021-09-12T10:53:19.475337+09:00",
-                    "user": 1,
-                    "stack": [
-                        "python"
-                    ],
-                    "likes": 1,
-                    "comments": 1
+                    "create_at": "2021-09-16T19:23:51.532835+09:00",
+                    "user": {
+                        "id": 2,
+                        "profile": {
+                            "nickname": "test",
+                            "image": "/media/profile/Untitled.jpeg"
+                        }
+                    },
+                    "likes": 0,
+                    "comments": 0
                 }
         """
         post = self.get_object(pk)
@@ -157,12 +166,12 @@ class CommonBoardDetailAPIView(GenericAPIView):
                     "content":"asdasdasdasd",
                     "image":null,
                     "user":3,
-                    "stack":["python", "java"]
+                    "stack":["python", "java"],
+                    "worker": "개발자"
                 }
         """
         post = self.get_object(pk)
         serializer = CommonBoardSerializer(post, data=request.data)
-        self.check_object_permissions(self.request, post)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
@@ -288,7 +297,7 @@ class RecruitmentBoardPostListAPIView(GenericAPIView):
 
 class RecruitmentBoardPostDetailAPIView(GenericAPIView):
     serializer_class = RecruitmentBoardSerializer
-    permission_classes = [IsOwnerOrReadOnly]
+    permission_classes = [RecruitmentIsOwnerOrReadOnly]
 
     # parser_classes = (MultiPartParser,)
 
@@ -347,21 +356,23 @@ class RecruitmentBoardPostDetailAPIView(GenericAPIView):
                 "start_date": "2021-09-12",
                 "end_date": "2021-09-13",
                 "status": true,
-                "stack": ["python", "react"]
+                "stack": [
+                    "python", 
+                    "react"
+                ]
             }
         """
         post = self.get_object(pk)
         serializer = RecruitmentBoardSerializer(post, data=request.data)
-        self.check_object_permissions(self.request, post)
         if serializer.is_valid():
             serializer.save()
-            names = request.data['stack']
-            for name in names:
-                if not name:
-                    continue
-                _name, _ = Tag.objects.get_or_create(name=name)
-                post.stack.clear()
-                post.stack.add(_name)
+            # names = request.data['stack']
+            # for name in names:
+            #     if not name:
+            #         continue
+            #     _name, _ = Tag.objects.get_or_create(name=name)
+            #     post.stack.clear()
+            #     post.stack.add(_name)
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -551,14 +562,44 @@ class BoardMyListAPIView(GenericAPIView):
             my게시판 list (GET)
 
             ---
-                [{
-                "id":1,
-                "title":"asd",
-                "category":"free",
-                "content":"asdasdasd",
-                "image":null,
-                "create_at":"2021-09-12T07:11:57.299117+09:00",
-                "user":{"id":1,"profile":{"nickname":null,"image":"/media/profile/Untitled.jpeg"}},"worker":"개발자"}]
+                [
+                    {
+                        "id": 9,
+                        "title": "asdasdasd",
+                        "category": "question",
+                        "worker": "개발자",
+                        "content": "asdasdasdasd",
+                        "image": null,
+                        "create_at": "2021-09-16T20:12:22.257748+09:00",
+                        "user": {
+                            "id": 2,
+                            "profile": {
+                                "nickname": null,
+                                "image": "/media/profile/Untitled.jpeg"
+                            }
+                        },
+                        "likes": 0,
+                        "comments": 0
+                    },
+                    {
+                        "id": 4,
+                        "title": "asdasdasd1",
+                        "category": "question",
+                        "worker": "개발자",
+                        "content": "asdasdasdasd1",
+                        "image": null,
+                        "create_at": "2021-09-16T19:29:51.178213+09:00",
+                        "user": {
+                            "id": 2,
+                            "profile": {
+                                "nickname": null,
+                                "image": "/media/profile/Untitled.jpeg"
+                            }
+                        },
+                        "likes": 0,
+                        "comments": 0
+                    }
+                ]
         """
         boards = CommonBoard.objects.filter(user=pk)
         serializer = CommonBoardSerializer(boards, many=True)
@@ -572,19 +613,76 @@ class RecruitmentBoardPostMyListAPIView(GenericAPIView):
             my모집게시판 list (GET)
 
             ---
-                [{
-                "user":1,
-                "title":"getit",
-                "study":{"id":3,"user":2,"name":"리액트","content":"ㅁㄴㅇㅁㄴㅇ","status":true,"member":[2],"image":null,"stack":["drf","mysql","docker"],"created_at":"2021-09-12T07:48:24.974159+09:00"},
-                "developer":2,
-                "designer":2,
-                "pm":2,
-                "content":"겟잇프로젝트",
-                "start_date":"2021-09-12",
-                "end_date":"2021-09-12",
-                "status":true,
-                "worker":"개발자",
-                "stack":["postgre","docker","k8s"]}]
+                [
+                    {
+                        "id": 7,
+                        "user": {
+                            "id": 3,
+                            "profile": {
+                                "nickname": null,
+                                "image": "/media/profile/Untitled.jpeg"
+                            }
+                        },
+                        "title": "test",
+                        "study": {
+                            "id": 2,
+                            "user": 3,
+                            "name": "test2",
+                            "content": "test2",
+                            "status": true,
+                            "member": [],
+                            "image": null,
+                            "stack": [
+                                "test"
+                            ],
+                            "created_at": "2021-09-16T19:25:01.468193+09:00"
+                        },
+                        "developer": 3,
+                        "designer": 0,
+                        "pm": 2,
+                        "content": "test",
+                        "start_date": "2021-09-16",
+                        "end_date": "2021-09-18",
+                        "status": true,
+                        "create_at": "2021-09-16T21:26:25.586511+09:00",
+                        "comments": 0,
+                        "likes": 0
+                    },
+                    {
+                        "id": 6,
+                        "user": {
+                            "id": 3,
+                            "profile": {
+                                "nickname": null,
+                                "image": "/media/profile/Untitled.jpeg"
+                            }
+                        },
+                        "title": "test",
+                        "study": {
+                            "id": 2,
+                            "user": 3,
+                            "name": "test2",
+                            "content": "test2",
+                            "status": true,
+                            "member": [],
+                            "image": null,
+                            "stack": [
+                                "test"
+                            ],
+                            "created_at": "2021-09-16T19:25:01.468193+09:00"
+                        },
+                        "developer": 2,
+                        "designer": 0,
+                        "pm": 0,
+                        "content": "test",
+                        "start_date": "2021-09-16",
+                        "end_date": "2021-09-17",
+                        "status": true,
+                        "create_at": "2021-09-16T21:10:39.237667+09:00",
+                        "comments": 0,
+                        "likes": 0
+                    }
+                ]
         """
         boards = RecruitmentBoard.objects.filter(user=pk)
         serializer = RecruitmentBoardSerializer(boards, many=True)
