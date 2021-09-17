@@ -295,7 +295,7 @@ class RecruitCommentDetailAPIView(GenericAPIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 class RecruitCommentMyListAPIView(GenericAPIView):
-    serializer_class = CommonCommentSerializer
+    serializer_class = RecruitCommentSerializer
 
     def get(self, request, pk):
         """
