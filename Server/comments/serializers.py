@@ -1,4 +1,4 @@
-from .models import Comment
+from .models import CommonComment, RecruitComment
 from rest_framework.serializers import ModelSerializer
 
 from profiles.models import Profile
@@ -17,11 +17,21 @@ class UserCommentProfileSerializer(ModelSerializer):
         model = User
         fields = ('id', 'profile',)
 
-class CommentSerializer(ModelSerializer):
+class CommonCommentSerializer(ModelSerializer):
     profile = UserCommentProfileSerializer(read_only=True)
     class Meta:
-        model = Comment
-        fields = ('id', 'user','commonpost', 'recruitmentpost', 'content', 'create_at', 'profile')
+        model = CommonComment
+        fields = ('id', 'user', 'commonpost', 'content', 'create_at', 'profile')
+
+    def to_representation(self, instance):
+        self.fields['user'] = UserCommentProfileSerializer(read_only=True)
+        return super().to_representation(instance)
+
+class RecruitCommentSerializer(ModelSerializer):
+    profile = UserCommentProfileSerializer(read_only=True)
+    class Meta:
+        model = RecruitComment
+        fields = ('id', 'user', 'recruitmentpost', 'content', 'create_at', 'profile')
 
     def to_representation(self, instance):
         self.fields['user'] = UserCommentProfileSerializer(read_only=True)

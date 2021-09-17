@@ -1,7 +1,6 @@
 import json
 
 import requests
-from django.db.models.query_utils import Q
 from django.http.response import JsonResponse
 from django.utils.translation import get_supported_language_variant
 
