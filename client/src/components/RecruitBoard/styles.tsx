@@ -19,6 +19,10 @@ export const useStyles = makeStyles((theme) => ({
   },
 }));
 
+export const RecruitBoardWrapper = styled.div`
+  background-color: #f5f5f5;
+`;
+
 export const GridWrapper = styled.div`
   width: 80%;
 `;

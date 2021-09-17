@@ -10,6 +10,7 @@ import MemberType from '@components/RecruitMembers/index';
 import PostSubHeader from '@components/PostSubHeader';
 import {
   useStyles,
+  RecruitBoardWrapper,
   MemberTypeWrapper,
   Title,
   RecruitCondition,
@@ -23,7 +24,7 @@ function RecruitBoard(): JSX.Element {
   const classes = useStyles();
 
   return (
-    <div>
+    <RecruitBoardWrapper>
       <PostSubHeader boardType='Recruit' />
       <div className={classes.root}>
         <GridWrapper>
@@ -85,7 +86,7 @@ function RecruitBoard(): JSX.Element {
           </Grid>
         </GridWrapper>
       </div>
-    </div>
+    </RecruitBoardWrapper>
   );
 }
 

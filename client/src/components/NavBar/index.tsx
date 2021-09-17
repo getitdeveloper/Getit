@@ -26,7 +26,7 @@ function NavBar(): JSX.Element {
   );
 
   return (
-    <div style={{ background: '#f5f5f5' }}>
+    <div>
       {/* 페이지 네이게이션 */}
       <NavBarWrapper>
         <StyledTabs value={selectTab} onChange={handleChange} centered>
