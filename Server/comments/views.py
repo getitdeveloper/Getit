@@ -78,7 +78,7 @@ class CommonCommentListAPIView(GenericAPIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class CommonCommentDetailAPIView(GenericAPIView):
-    serializer_class = RecruitCommentSerializer
+    serializer_class = CommonCommentSerializer
     permission_classes = [IsOwnerOrReadOnly]
 
     def get_object(self, pk, board_id):
