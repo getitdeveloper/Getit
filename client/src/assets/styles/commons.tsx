@@ -4,8 +4,8 @@ interface Size {
   width: string;
 }
 
-export const HorizontalLine = styled.hr`
+export const HorizontalLine = styled.div`
   width: ${(props: Size) => props.width};
-  border: 0.1px dashed #d2d2d2;
-  border-style: none none dotted;
+  border-top: 0.01rem solid #d2d2d2;
+  border-style: none none line;
 `;

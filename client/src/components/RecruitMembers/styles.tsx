@@ -9,7 +9,7 @@ const JobMixin = css`
   padding: 0.2rem 1.9rem;
   margin-right: 0.8rem;
   border-radius: 7px;
-  font-size: 12px;
+  font-size: 1rem;
   color: ${(props) => props.theme.colors.whiteText};
 
   text-align: center;
