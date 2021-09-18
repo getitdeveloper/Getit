@@ -1,36 +1,39 @@
 import styled from 'styled-components';
-import { Tabs } from '@material-ui/core';
-import { withStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
+import { makeStyles } from '@material-ui/core/styles';
 
-// material ui css
-export const StyledTabs = withStyles({
-  indicator: {
-    backgroundColor: '#4dd28f',
+export const useStyles = makeStyles({
+  jobButton: {
+    borderRadius: '1.2rem',
+    fontSize: '1.5rem',
+    margin: '1rem',
+    padding: '0.7rem',
+    width: '10rem',
+    backgroundColor: '#FFFFFF',
+    '&:hover': {
+      backgroundColor: '#4dd290',
+    },
   },
-})(Tabs);
+  writePostButton: {
+    marginLeft: '0.5rem',
+    borderRadius: '25px',
+    backgroundColor: '#4dd290',
+    fontSize: '1.5rem',
+    color: '#FFFFFF',
+    '&:hover': {
+      backgroundColor: '#4dd290',
+    },
+  },
+});
 
 export const PostSubHeaderWrapper = styled.div`
   width: 80%;
   margin: 0 auto;
+  background-color: #f5f5f5;
 `;
 
 export const JobSelectButtonWrapper = styled.div`
   padding: 2rem;
   text-align: center;
-`;
-
-export const JobSelectButton = styled(Button)`
-  border-radius: 1.2rem;
-  font-size: 1.5rem;
-  margin: 1rem;
-  padding: 0.7rem;
-  width: 10rem;
-  background-color: #ffffff;
-
-  &:hover {
-    background-color: ${(props) => props.theme.colors.main};
-  }
 `;
 
 export const SortAndWriteWrapper = styled.div`
@@ -43,17 +46,5 @@ export const SortAndWriteWrapper = styled.div`
     border: none;
     font-size: 1.5rem;
     background: ${(props) => props.theme.colors.background};
-  }
-`;
-
-export const WritePost = styled(Button)`
-  margin-left: 0.5rem;
-  border-radius: 25px;
-  background-color: ${(props) => props.theme.colors.main};
-  font-size: 1.5rem;
-  color: ${(props) => props.theme.colors.whiteText};
-
-  &:hover {
-    background-color: ${(props) => props.theme.colors.main};
   }
 `;

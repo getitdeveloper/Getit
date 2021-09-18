@@ -4,16 +4,18 @@ import CreateIcon from '@material-ui/icons/Create';
 import { useHistory } from 'react-router-dom';
 import { RootStateOrAny, useSelector } from 'react-redux';
 import { HorizontalLine } from '@assets/styles/commons';
+import Button from '@material-ui/core/Button';
 import {
+  useStyles,
   PostSubHeaderWrapper,
   JobSelectButtonWrapper,
   SortAndWriteWrapper,
-  WritePost,
-  JobSelectButton,
 } from './styles';
 import { BoardType } from './types';
 
 function PostSubHeader({ boardType }: BoardType): JSX.Element {
+  const classes = useStyles();
+
   const history = useHistory();
   const [selected, setSelected] = useState(false);
   const [option, setOption] = useState('recent');
@@ -54,34 +56,38 @@ function PostSubHeader({ boardType }: BoardType): JSX.Element {
   return (
     <PostSubHeaderWrapper>
       <JobSelectButtonWrapper>
-        <JobSelectButton
+        <Button
+          className={classes.jobButton}
           data-job='all'
           variant='contained'
           onClick={handleJobSelectButton}
         >
           <span data-job='all'>전체</span>
-        </JobSelectButton>
-        <JobSelectButton
+        </Button>
+        <Button
+          className={classes.jobButton}
           data-job='developer'
           variant='contained'
           onClick={handleJobSelectButton}
         >
           <span data-job='developer'>개발자</span>
-        </JobSelectButton>
-        <JobSelectButton
+        </Button>
+        <Button
+          className={classes.jobButton}
           data-job='designer'
           variant='contained'
           onClick={handleJobSelectButton}
         >
           <span data-job='designer'>디자이너</span>
-        </JobSelectButton>
-        <JobSelectButton
-          data-job='ProjectManager'
+        </Button>
+        <Button
+          className={classes.jobButton}
+          data-job='projectManager'
           variant='contained'
           onClick={handleJobSelectButton}
         >
-          <span data-job='ProjectManager'>기획자</span>
-        </JobSelectButton>
+          <span data-job='projectManager'>기획자</span>
+        </Button>
       </JobSelectButtonWrapper>
       <HorizontalLine width='100%' />
 
@@ -90,10 +96,14 @@ function PostSubHeader({ boardType }: BoardType): JSX.Element {
           <option value='recent'>최신순</option>
           <option value='popular'>인기순</option>
         </select>
-        <WritePost variant='contained' onClick={handlePostType}>
+        <Button
+          className={classes.writePostButton}
+          variant='contained'
+          onClick={handlePostType}
+        >
           게시글 작성
           <CreateIcon />
-        </WritePost>
+        </Button>
       </SortAndWriteWrapper>
     </PostSubHeaderWrapper>
   );
