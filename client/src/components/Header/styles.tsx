@@ -5,15 +5,19 @@ export const HeaderWrapper = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  width: 80%;
+  width: 50%;
   height: 4.6rem;
   margin: 0 auto;
-  margin-top: 1rem;
+  margin-top: 3rem;
   margin-bottom: 1rem;
   position: relative;
 
+  @media ${({ theme }) => theme.desktop} {
+    width: 70%;
+  }
+
   @media ${({ theme }) => theme.tablet} {
-    /* width: 100%; */
+    width: 90%;
     /* display: initial; */
     flex-direction: column;
     height: auto;
@@ -21,6 +25,7 @@ export const HeaderWrapper = styled.div`
 
   @media ${({ theme }) => theme.mobile} {
     width: 100%;
+    margin-top: 1.5rem;
   }
 `;
 

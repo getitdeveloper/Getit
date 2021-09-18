@@ -5,6 +5,20 @@ export const BannerWrapper = styled.div`
   justify-content: space-around;
   align-items: center;
   height: 15rem;
+  margin: 0 auto;
+  width: 50%;
+
+  @media ${({ theme }) => theme.desktop} {
+    width: 70%;
+  }
+
+  @media ${({ theme }) => theme.tablet} {
+    width: 90%;
+  }
+
+  @media ${({ theme }) => theme.mobile} {
+    display: none;
+  }
 `;
 
 export const TextWrapper = styled.div`

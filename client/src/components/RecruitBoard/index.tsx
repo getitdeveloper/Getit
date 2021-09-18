@@ -30,8 +30,8 @@ function RecruitBoard(): JSX.Element {
         <GridWrapper>
           <Grid container spacing={3}>
             {dummyData.map((content) => (
-              <Grid item xs={12} sm={4} md={4} lg={4} key={`${content}`}>
-                <Paper className={classes.paper}>
+              <Grid item xs={12} sm={6} md={6} lg={4} xl={4} key={`${content}`}>
+                <Paper className={classes.post}>
                   {/* 구인 종류 */}
                   <MemberTypeWrapper>
                     {content.memberType.map((member) => {

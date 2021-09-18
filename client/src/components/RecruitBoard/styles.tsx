@@ -11,11 +11,15 @@ export const useStyles = makeStyles((theme) => ({
     paddingTop: '1rem',
     background: '#f5f5f5',
   },
-  paper: {
+  post: {
     padding: theme.spacing(2),
-    height: '320px',
+    minHeight: '324px',
+    height: '100%',
+    maxWidth: '400px',
+    width: '100%',
     borderRadius: '25px',
     position: 'relative',
+    margin: '0 auto',
   },
 }));
 
@@ -24,7 +28,23 @@ export const RecruitBoardWrapper = styled.div`
 `;
 
 export const GridWrapper = styled.div`
-  width: 80%;
+  width: 50%;
+
+  @media ${({ theme }) => theme.desktop} {
+    width: 70%;
+  }
+
+  /* @media ${({ theme }) => theme.laptop} {
+    width: 80%;
+  } */
+
+  @media ${({ theme }) => theme.tablet} {
+    width: 90%;
+  }
+
+  /* @media ${({ theme }) => theme.mobile} {
+    width: 80%;
+  } */
 `;
 
 export const MemberTypeWrapper = styled.ul`
@@ -60,11 +80,12 @@ export const ContentDetail = styled.div`
   position: absolute;
   right: 1rem;
   bottom: 0;
+  padding: 2rem;
   height: auto;
 
   li {
     list-style: none;
-    font-size: 0.9rem;
+    font-size: 1.5rem;
     display: inline-block;
     vertical-align: middle;
     padding-right: 0.5rem;

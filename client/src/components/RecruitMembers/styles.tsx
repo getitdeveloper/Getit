@@ -6,12 +6,11 @@ export const MemberTypeWrapper = styled.div`
 
 const JobMixin = css`
   width: auto;
-  padding: 0.2rem 1.9rem;
+  padding: 0.2rem 1.5rem;
   margin-right: 0.8rem;
   border-radius: 7px;
   font-size: 12px;
   color: ${(props) => props.theme.colors.whiteText};
-
   text-align: center;
 `;
 

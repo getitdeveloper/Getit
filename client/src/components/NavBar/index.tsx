@@ -32,7 +32,7 @@ function NavBar(): JSX.Element {
         <StyledTabs value={selectTab} onChange={handleChange} centered>
           <Tab
             style={activeStyle(selectTab === 0)}
-            label={<StyledLabel>스터디 모집 게시판</StyledLabel>}
+            label={<StyledLabel>스터디 모집</StyledLabel>}
           />
           <Tab
             style={activeStyle(selectTab === 1)}
