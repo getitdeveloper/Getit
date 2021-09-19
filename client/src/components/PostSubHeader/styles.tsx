@@ -34,17 +34,10 @@ export const useStyles = makeStyles((theme) => {
 });
 
 export const PostSubHeaderWrapper = styled.div`
-  width: 70%;
+  max-width: 118rem;
+  width: 100%;
   margin: 0 auto;
   background-color: #f5f5f5;
-
-  @media ${({ theme }) => theme.desktop} {
-    width: 70%;
-  }
-
-  @media ${({ theme }) => theme.laptop} {
-    width: 80%;
-  }
 
   @media ${({ theme }) => theme.tablet} {
     width: 90%;
@@ -68,6 +61,8 @@ export const SortAndWriteWrapper = styled.div`
   justify-content: flex-end;
   padding: 1.5rem 3rem;
   background: ${(props) => props.theme.colors.background};
+  width: 100%;
+  margin: 0 auto;
 
   select {
     border: none;
@@ -77,11 +72,6 @@ export const SortAndWriteWrapper = styled.div`
     @media ${({ theme }) => theme.mobile} {
       font-size: 1.2rem;
     }
-  }
-
-  @media ${({ theme }) => theme.tablet} {
-    width: 90%;
-    margin: 0 auto;
   }
 
   @media ${({ theme }) => theme.mobile} {

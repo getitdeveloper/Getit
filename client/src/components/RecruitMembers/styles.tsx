@@ -6,7 +6,7 @@ export const MemberTypeWrapper = styled.div`
 
 const JobMixin = css`
   width: auto;
-  padding: 0.2rem 1.5rem;
+  padding: 0.2rem 1.3rem;
   margin-right: 0.8rem;
   border-radius: 7px;
   font-size: 12px;

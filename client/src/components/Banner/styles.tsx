@@ -6,11 +6,8 @@ export const BannerWrapper = styled.div`
   align-items: center;
   height: 15rem;
   margin: 0 auto;
-  width: 50%;
-
-  @media ${({ theme }) => theme.desktop} {
-    width: 70%;
-  }
+  max-width: 118rem;
+  width: 100%;
 
   @media ${({ theme }) => theme.tablet} {
     width: 90%;
