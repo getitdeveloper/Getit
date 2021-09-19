@@ -109,8 +109,16 @@ class CommonBoardListAPIView(GenericAPIView):
                 }
         """
         serializer = CommonBoardSerializer(data=request.data)
+
         if serializer.is_valid():
             serializer.save()
+            board = CommonBoard.objects.get(user=request.user.id)
+            names = request.data['stack']
+            for name in names:
+                if not name:
+                    continue
+                _name, _ = Tag.objects.get_or_create(name=name)
+                board.stack.add(_name)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -173,6 +181,14 @@ class CommonBoardDetailAPIView(GenericAPIView):
         serializer = CommonBoardSerializer(post, data=request.data)
         if serializer.is_valid():
             serializer.save()
+            names = request.data['stack']
+            post.stack.clear()
+            for name in names:
+                if not name:
+                    continue
+                _name, _ = Tag.objects.get_or_create(name=name)
+
+                post.stack.add(_name)
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -290,6 +306,13 @@ class RecruitmentBoardPostListAPIView(GenericAPIView):
         serializer = RecruitmentBoardSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
+            board = RecruitmentBoard.objects.get(user=request.user.id)
+            names = request.data['stack']
+            for name in names:
+                if not name:
+                    continue
+                _name, _ = Tag.objects.get_or_create(name=name)
+                board.stack.add(_name)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -365,13 +388,14 @@ class RecruitmentBoardPostDetailAPIView(GenericAPIView):
         serializer = RecruitmentBoardSerializer(post, data=request.data)
         if serializer.is_valid():
             serializer.save()
-            # names = request.data['stack']
-            # for name in names:
-            #     if not name:
-            #         continue
-            #     _name, _ = Tag.objects.get_or_create(name=name)
-            #     post.stack.clear()
-            #     post.stack.add(_name)
+            names = request.data['stack']
+            post.stack.clear()
+            for name in names:
+                if not name:
+                    continue
+                _name, _ = Tag.objects.get_or_create(name=name)
+
+                post.stack.add(_name)
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
