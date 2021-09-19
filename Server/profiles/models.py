@@ -48,7 +48,6 @@ class TeamProfile(models.Model):
     user = models.ForeignKey('accounts.User', on_delete=models.CASCADE, related_name='author')
     name = models.CharField(max_length=20, null=False)
     status = models.BooleanField(default=0)
-    member = models.ManyToManyField('members.Member', blank=True, related_name='member')
     content = models.TextField(null=False)
     image = models.ImageField(upload_to='group', null=True, blank=True)
     stack = models.ManyToManyField('tags.Tag')

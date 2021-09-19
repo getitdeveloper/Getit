@@ -30,6 +30,7 @@ class ProfileSerializer(ModelSerializer):
             'stack',
         )
 
+
 class TeamProfileSerializer(serializers.ModelSerializer):
 
     stack = TagSerializer(read_only=True, many=True)
@@ -41,7 +42,6 @@ class TeamProfileSerializer(serializers.ModelSerializer):
             'name',
             'content',
             'status',
-            'member',
             'image',
             'stack',
             'created_at'

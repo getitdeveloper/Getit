@@ -38,6 +38,7 @@ class UserProfileSerializer(ModelSerializer):
         fields = ('id', 'profile',)
 
 class CommonBoardSerializer(serializers.ModelSerializer):
+    stack = TagSerializer(read_only=True, many=True)
     likes = serializers.IntegerField(
         source='commonlikes.count',
         read_only=True
@@ -52,7 +53,7 @@ class CommonBoardSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CommonBoard
-        fields = ('id', 'title', 'category', 'worker', 'content', 'image', 'create_at', 'user', 'likes', 'comments','like_user')
+        fields = ('id', 'title', 'category', 'worker', 'content', 'image', 'create_at', 'user', 'likes', 'comments','like_user','stack',)
 
     def to_representation(self, instance):
         self.fields['user'] = UserProfileSerializer(read_only=True)
@@ -69,14 +70,13 @@ class RecruitmentBoardSerializer(ModelSerializer):
         source='recruitcomments.count',
         read_only=True
     )
-
-    like_user = RecruitLikeSerializer(read_only=True, many=True)
+    stack = TagSerializer(read_only=True, many=True)
 
     class Meta:
         model = RecruitmentBoard
         fields = (
-        'id', 'user', 'title', 'study', 'developer', 'designer', 'pm', 'content', 'start_date', 'end_date', 'status',
-        'create_at', 'comments', 'likes', 'like_user')
+        'id', 'title', 'developer', 'designer', 'pm', 'content','stack', 'start_date', 'end_date', 'status',
+        'create_at','user','study', 'comments', 'likes')
 
     def to_representation(self, instance):
         self.fields['user'] = UserProfileSerializer(read_only=True)
