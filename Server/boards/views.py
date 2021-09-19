@@ -39,32 +39,34 @@ class CommonBoardListAPIView(GenericAPIView):
 
             ---
                 127.0.0.1:8000/api/board?category=free(question)
-                {
-                    "count":1,
-                    "next":null,
-                    "previous":null,
-                    "results": [
-                        {
-                            "id":1,
-                            "title":"liketest",
-                            "category":"free",
-                            "worker":"개발자",
-                            "content":"testtesttest",
-                            "image":null,
-                            "create_at":"2021-09-15T20:09:02.707765+09:00",
-                            "user":{
-                                "id":2,
-                                "profile":
-                                    {
-                                        "nickname":"edcedc1027",
-                                        "image":null
-                                    }
-                            },
-                            "likes":2,
-                            "comments":0
-                        }
-                    ]
-                }
+
+                "count": 13,
+                "next": "http://127.0.0.1:8000/api/board/?page=2",
+                "previous": null,
+                "results": [
+                    {
+                        "id": 13,
+                        "title": "asdasdasd",
+                        "category": "question",
+                        "worker": "개발자",
+                        "content": "asdasdasdasd",
+                        "image": null,
+                        "create_at": "2021-09-19T17:38:17.667158+09:00",
+                        "user": {
+                            "id": 1,
+                            "profile": {
+                                "nickname": "edcedc1027",
+                                "image": "http://127.0.0.1:8000/media/profile/Untitled.jpeg"
+                            }
+                        },
+                        "likes": 0,
+                        "comments": 0,
+                        "is_like": false,
+                        "stack": [
+                            "python",
+                            "java"
+                        ]
+                    },
         """
         category = request.GET.get('category')
         queryset = self.get_queryset()
@@ -100,20 +102,19 @@ class CommonBoardListAPIView(GenericAPIView):
                     "category":"question",
                     "content":"asdasdasdasd",
                     "image":null,
-                    "user":3,
-                    "stack":[
-                        "python", 
-                        "java"
-                    ],
-                    "worker":"개발자"
+                    "user":1,
+                    "stack":["python", "java"],
+                    "worker": "개발자"
                 }
         """
-        serializer = CommonBoardSerializer(data=request.data)
+        serializer = CommonBoardSerializer(data=request.data,context={'request': request})
 
         if serializer.is_valid():
             serializer.save()
-            board = CommonBoard.objects.get(user=request.user.id)
+            board = CommonBoard.objects.get(id=serializer.data['id'])
+            print(board)
             names = request.data['stack']
+            print(names)
             for name in names:
                 if not name:
                     continue
@@ -140,26 +141,27 @@ class CommonBoardDetailAPIView(GenericAPIView):
 
             ---
                 {
-                    "id": 1,
-                    "title": "test1",
-                    "category": "free",
-                    "worker": "개발자",
-                    "content": "test1",
-                    "image": null,
-                    "create_at": "2021-09-16T19:23:51.532835+09:00",
-                    "user": {
-                        "id": 2,
-                        "profile": {
-                            "nickname": "test",
-                            "image": "/media/profile/Untitled.jpeg"
-                        }
-                    },
-                    "likes": 0,
-                    "comments": 0
-                }
+                "id":3,
+                "title":"asdasdasd",
+                "category":"question",
+                "worker":"개발자",
+                "content":"asdasdasdasd",
+                "image":null,
+                "create_at":"2021-09-19T17:25:49.076897+09:00",
+                "user":
+                    {
+                    "id":1,
+                    "profile":{
+                        "nickname":"edcedc1027",
+                        "image":"http://127.0.0.1:8000/media/profile/Untitled.jpeg"
+                        }},
+                "likes":0,
+                "comments":0,
+                "is_like":false,
+                "stack":["python","java"]}
         """
         post = self.get_object(pk)
-        serializer = CommonBoardSerializer(post)
+        serializer = CommonBoardSerializer(post,context={'request': request})
         return Response(serializer.data)
 
     def put(self, request, pk):
@@ -178,7 +180,7 @@ class CommonBoardDetailAPIView(GenericAPIView):
                 }
         """
         post = self.get_object(pk)
-        serializer = CommonBoardSerializer(post, data=request.data)
+        serializer = CommonBoardSerializer(post, data=request.data,context={'request': request})
         if serializer.is_valid():
             serializer.save()
             names = request.data['stack']
@@ -249,6 +251,7 @@ class RecruitmentBoardPostListAPIView(GenericAPIView):
                             "start_date": "2021-09-12",
                             "end_date": "2021-09-13",
                             "status": true
+
                         },
                         {
                             "id": 2,

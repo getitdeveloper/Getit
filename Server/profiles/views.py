@@ -75,13 +75,12 @@ class ProfileDetail(GenericAPIView):
                     "user_pk": 2,
                     "nickname": "edcedc1027",
                     "job": "개발자",
-                    "image": "/media/profile/Untitled.jpeg",
                     "level": "코린이",
                     "email": "edcedc1027@gmail.com",
                     "info": "저는 이형준입니다. 백엔드 개발자가 될껍니다.",
                     "git": "leeceo97",
                     "stack": ["django","drf","mysql","postgre","docker","k8s","aws","gcp","nginx"]
-                    --> stack의경우 삭제기능은 put만 구현해놨습니다.
+                    --> image의경우 일단은 값은 넣지 말아주세요!
                 }
         """
         profile = self.get_object(user_pk)
@@ -108,13 +107,12 @@ class ProfileDetail(GenericAPIView):
                     "user_pk": 2,
                     "nickname": "edcedc1027",
                     "job": "개발자",
-                    "image": null,
                     "level": "코린이",
                     "email": "edcedc1027@gmail.com",
                     "info": "저는 이형준입니다. 백엔드 개발자가 될껍니다.",
                     "git": "leeceo97",
                     "stack": ["django","drf","mysql","postgre","docker","k8s","aws","gcp","nginx"]
-                    --> stack의경우 삭제기능은 put만 구현해놨습니다.
+                    --> image의경우 일단은 값은 넣지 말아주세요!
                 }
         """
         profile = self.get_object(user_pk)
@@ -185,27 +183,28 @@ class TeamProfileCreate(GenericAPIView):
 
         ---
                 {
-                    "user":2,
+                    "user":1,
                     "name":"장고",
                     "content":"ㅁㄴㅇㅁㄴㅇ",
                     "status":true,
-                    "member":[],
                     "image":null,
-                    "stack":["drf","mysql","docker"]
+                    "stack":["drf","mysql"]
                 }
-                --> 일단 멤버 부분은 빈 리스트로 보내주세요
         """
 
         serializer = TeamProfileSerializer(data=request.data)
+
         if serializer.is_valid():
             serializer.save()
-            # profile = self.get_object(user_pk)
-            # names = request.data['stack']
-            # for name in names:
-            #     if not name:
-            #         continue
-            #     _name, _ = Tag.objects.get_or_create(name=name)
-            #     profile.stack.add(_name)
+            profile = self.get_object(user_pk)
+            names = request.data['stack']
+            profile.stack.clear()
+            for name in names:
+                if not name:
+                    continue
+                _name, _ = Tag.objects.get_or_create(name=name)
+
+                profile.stack.add(_name)
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -231,7 +230,6 @@ class TeamProfileDetail(GenericAPIView):
                         "name":"장고스터디",
                         "content":"ㅁㄴㅇㅁㄴㅇ",
                         "status":true,
-                        "member":[2],
                         "image":null,
                         "stack":["drf","mysql","docker"],
                         "created_at":"2021-09-12T07:07:04.808820+09:00"
@@ -252,7 +250,6 @@ class TeamProfileDetail(GenericAPIView):
                     "name":"장고스터디",
                     "content":"ㅁㄴㅇㅁㄴㅇ",
                     "status":true,
-                    "member":[2],
                     "image":null,
                     "stack":["drf","mysql","docker"]
                 }
@@ -262,13 +259,14 @@ class TeamProfileDetail(GenericAPIView):
 
         if serializer.is_valid():
             serializer.save()
-            # names = request.data['stack']
-            # for name in names:
-            #     if not name:
-            #         continue
-            #     _name, _ = Tag.objects.get_or_create(name=name)
-            #     profile.stack.clear()
-            #     profile.stack.add(_name)
+            names = request.data['stack']
+            profile.stack.clear()
+            for name in names:
+                if not name:
+                    continue
+                _name, _ = Tag.objects.get_or_create(name=name)
+
+                profile.stack.add(_name)
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
