@@ -1,5 +1,6 @@
 from django.db.models import fields
 from django.db.models.base import Model
+from rest_framework.fields import CurrentUserDefault, SerializerMethodField
 from likes.models import CommonBoardLike, RecruitBoardLike
 from profiles.models import Profile
 from rest_framework import serializers
@@ -49,15 +50,24 @@ class CommonBoardSerializer(serializers.ModelSerializer):
         read_only=True
     )
 
-    like_user = CommonLikeSerializer(read_only=True, many=True)
+    # like_user = CommonLikeSerializer(read_only=True, many=True)
+    is_like = SerializerMethodField()
 
     class Meta:
         model = CommonBoard
-        fields = ('id', 'title', 'category', 'worker', 'content', 'image', 'create_at', 'user', 'likes', 'comments','like_user','stack',)
+        fields = ('id', 'title', 'category', 'worker', 'content', 'image', 'create_at', 'user', 'likes', 'comments', 'is_like', 'stack',)
 
     def to_representation(self, instance):
         self.fields['user'] = UserProfileSerializer(read_only=True)
         return super().to_representation(instance)
+
+    def get_is_like(self, obj):
+        user = self.context.get('request').user.id
+        like = CommonBoardLike.objects.filter(commonpost=obj.id, user=user)
+        if like.exists():
+            return True
+        else:
+            return False
 
 
 class RecruitmentBoardSerializer(ModelSerializer):
@@ -72,13 +82,23 @@ class RecruitmentBoardSerializer(ModelSerializer):
     )
     stack = TagSerializer(read_only=True, many=True)
 
+    is_like = SerializerMethodField()
+
     class Meta:
         model = RecruitmentBoard
         fields = (
         'id', 'title', 'developer', 'designer', 'pm', 'content','stack', 'start_date', 'end_date', 'status',
-        'create_at','user','study', 'comments', 'likes')
+        'create_at','user','study', 'comments', 'likes', 'is_like',)
 
     def to_representation(self, instance):
         self.fields['user'] = UserProfileSerializer(read_only=True)
         self.fields['study'] = TeamProfileSerializer(read_only=True)
         return super().to_representation(instance)
+
+    def get_is_like(self, obj):
+        user = self.context.get('request').user.id
+        like = RecruitBoardLike.objects.filter(recruitpost=obj.id, user=user)
+        if like.exists():
+            return True
+        else:
+            return False

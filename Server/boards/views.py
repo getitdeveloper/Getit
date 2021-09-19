@@ -73,21 +73,21 @@ class CommonBoardListAPIView(GenericAPIView):
             posts = self.filter_queryset(posts)
             paginator = BoardPageNumberPagination()
             result_page = paginator.paginate_queryset(posts, request)
-            serializer = CommonBoardSerializer(result_page, many=True)
+            serializer = CommonBoardSerializer(result_page, many=True, context={'request': request})
             return paginator.get_paginated_response(serializer.data)
         elif category == 'question':
             posts = CommonBoard.objects.filter(category=category)
             posts = self.filter_queryset(posts)
             paginator = BoardPageNumberPagination()
             result_page = paginator.paginate_queryset(posts, request)
-            serializer = CommonBoardSerializer(result_page, many=True)
+            serializer = CommonBoardSerializer(result_page, many=True, context={'request': request})
             return paginator.get_paginated_response(serializer.data)
         else:
             posts = CommonBoard.objects.all()
             posts = self.filter_queryset(posts)
             paginator = BoardPageNumberPagination()
             result_page = paginator.paginate_queryset(posts, request)
-            serializer = CommonBoardSerializer(result_page, many=True)
+            serializer = CommonBoardSerializer(result_page, many=True, context={'request': request})
             return paginator.get_paginated_response(serializer.data)
 
     def post(self, request):
@@ -283,7 +283,7 @@ class RecruitmentBoardPostListAPIView(GenericAPIView):
         posts = self.filter_queryset(posts)
         paginator = BoardPageNumberPagination()
         result_page = paginator.paginate_queryset(posts, request)
-        serializer = RecruitmentBoardSerializer(result_page, many=True)
+        serializer = RecruitmentBoardSerializer(result_page, many=True, context={'request': request})
         return paginator.get_paginated_response(serializer.data)
 
     def post(self, request):
