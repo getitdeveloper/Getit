@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useState, useCallback } from 'react';
-import CreateIcon from '@material-ui/icons/Create';
+
 import { useHistory } from 'react-router-dom';
 import { RootStateOrAny, useSelector } from 'react-redux';
 import { HorizontalLine } from '@assets/styles/commons';
@@ -10,6 +10,8 @@ import {
   PostSubHeaderWrapper,
   JobSelectButtonWrapper,
   SortAndWriteWrapper,
+  WritePostText,
+  WritePostIcon,
 } from './styles';
 import { BoardType } from './types';
 
@@ -96,13 +98,17 @@ function PostSubHeader({ boardType }: BoardType): JSX.Element {
           <option value='recent'>최신순</option>
           <option value='popular'>인기순</option>
         </select>
+        <select name='statusPost' onChange={handleSortPost}>
+          <option value='open'>모집 진행중</option>
+          <option value='close'>모집 마감</option>
+        </select>
         <Button
           className={classes.writePostButton}
           variant='contained'
           onClick={handlePostType}
         >
-          게시글 작성
-          <CreateIcon />
+          <WritePostText>게시글 작성</WritePostText>
+          <WritePostIcon />
         </Button>
       </SortAndWriteWrapper>
     </PostSubHeaderWrapper>

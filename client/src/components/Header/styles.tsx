@@ -5,15 +5,16 @@ export const HeaderWrapper = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  width: 80%;
+  max-width: 118rem;
+  width: 100%;
   height: 4.6rem;
   margin: 0 auto;
-  margin-top: 1rem;
+  margin-top: 3rem;
   margin-bottom: 1rem;
   position: relative;
 
   @media ${({ theme }) => theme.tablet} {
-    /* width: 100%; */
+    width: 90%;
     /* display: initial; */
     flex-direction: column;
     height: auto;
@@ -21,6 +22,7 @@ export const HeaderWrapper = styled.div`
 
   @media ${({ theme }) => theme.mobile} {
     width: 100%;
+    margin-top: 1.5rem;
   }
 `;
 
@@ -43,7 +45,7 @@ export const Logo = styled.img.attrs({
   src: LogoSvg,
 })`
   width: 12rem;
-
+  margin-left: 2rem;
   @media ${({ theme }) => theme.tablet} {
     width: 10rem;
     margin: 1.2rem;
@@ -58,6 +60,7 @@ export const RightHeaderWrapper = styled.div`
   display: inline-block;
   position: absolute;
   right: 0;
+  margin-right: 2rem;
 
   @media ${({ theme }) => theme.tablet} {
     right: 2rem;
