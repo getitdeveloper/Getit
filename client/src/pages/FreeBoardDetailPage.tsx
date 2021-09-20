@@ -6,6 +6,7 @@ import { COMMON_POST_REQUEST } from '@reducers/actions';
 import PostDetail from '@components/PostDetail';
 import Comments from '@components/Comments';
 import LoadingSpinner from '@components/LoadingSpinner';
+import LikeImg from '@assets/icons/like.svg';
 
 function FreeBoardDetailPage(props: any) {
   const { history } = props;
@@ -40,7 +41,7 @@ function FreeBoardDetailPage(props: any) {
             쪽지보내기
           </span>
           <span>
-            <img src='/icons/like.svg' alt='like-button' />
+            <img src={LikeImg} alt='like-button' />
             좋아요
           </span>
         </div>

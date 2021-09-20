@@ -8,6 +8,7 @@ import moment from 'moment';
 import { HorizontalLine } from '@assets/styles/commons';
 import { COMMON_POST_LIKE_REQUEST } from '@reducers/actions';
 import MemberType from '@components/RecruitMembers/index';
+import CalendarImg from '@assets/icons/calendar.svg';
 import {
   WriterButton,
   PostContainer,
@@ -99,7 +100,7 @@ function PostItem(props: any) {
       </PostContainer>
       <PostDetails>
         <DetailInfo>
-          <img src='/icons/calendar.svg' alt='write-date' />
+          <img src={CalendarImg} alt='write-date' />
           {moment(content.create_at).format('YYYY년 MM월 DD일')}
         </DetailInfo>
         <DetailInfo>

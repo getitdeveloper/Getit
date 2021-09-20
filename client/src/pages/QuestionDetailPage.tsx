@@ -6,6 +6,7 @@ import { COMMON_POST_REQUEST, COMMENT_REQUEST } from '@reducers/actions';
 import PostDetail from '@components/PostDetail';
 import Comments from '@components/Comments';
 import LoadingSpinner from '@components/LoadingSpinner';
+import LikeImg from '@assets/icons/like.svg';
 
 function QuestionDetailPage(props: any): JSX.Element {
   const { history } = props;
@@ -39,7 +40,7 @@ function QuestionDetailPage(props: any): JSX.Element {
             쪽지보내기
           </span>
           <span>
-            <img src='/icons/like.svg' alt='like-button' />
+            <img src={LikeImg} alt='like-button' />
             좋아요
           </span>
         </div>

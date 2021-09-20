@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { useState } from 'react';
 import { RootStateOrAny, useSelector } from 'react-redux';
+import UserImg from '@assets/icons/user.svg';
 import {
   SplittedPageContainer,
   ContentContainer,
@@ -28,7 +29,7 @@ function ProfileDetail() {
     <SplittedPageContainer>
       <ProfileLeft>
         <MainProfile>
-          <ProfileImage src='/icons/user.svg' alt='profileImage' />
+          <ProfileImage src={UserImg} alt='profileImage' />
           {/* {profileDummyData.img ? (
             <ProfileImage src={profileDummyData.img} alt='profileImage' />
           ) : (

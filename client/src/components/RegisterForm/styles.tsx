@@ -90,19 +90,6 @@ export const EmailInput = styled.input`
   padding-left: 1.5rem;
 `;
 
-// export const ArrowImg = styled.div`
-//   position: relative;
-//   &::after {
-//     content: '▼';
-//     font-size: 1.4rem;
-//     color: #000000;
-//     position: absolute;
-//     right: 2.1rem;
-//     bottom: 1.2rem;
-//     ${Pointer}
-//   }
-// `;
-
 export const SelectWrapper = styled.div`
   position: relative;
   img {

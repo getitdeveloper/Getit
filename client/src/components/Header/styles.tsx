@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import LogoSvg from '@assets/images/Logo.svg';
+import LogoImg from '@assets/images/Logo.svg';
 
 export const HeaderWrapper = styled.div`
   display: flex;
@@ -42,7 +42,7 @@ export const LeftHeaderWrapper = styled.div`
 
 export const Logo = styled.img.attrs({
   alt: 'getit logo',
-  src: LogoSvg,
+  src: LogoImg,
 })`
   width: 12rem;
   margin-left: 2rem;

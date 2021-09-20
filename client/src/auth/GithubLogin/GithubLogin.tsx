@@ -1,5 +1,5 @@
 import * as React from 'react';
-import GithubLogo from '@assets/images/Github.svg';
+import GithubLogoImg from '@assets/images/Github.svg';
 
 // Github 로그인
 function GithubLogin(): JSX.Element {
@@ -38,7 +38,7 @@ function GithubLogin(): JSX.Element {
         }}
       >
         <img
-          src={GithubLogo}
+          src={GithubLogoImg}
           alt='Github login'
           style={{
             width: '2rem',

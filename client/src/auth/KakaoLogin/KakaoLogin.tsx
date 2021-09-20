@@ -1,5 +1,5 @@
 import * as React from 'react';
-import KakaoLogo from '@assets/images/Kakao.svg';
+import KakaoLogoImg from '@assets/images/Kakao.svg';
 
 function KakaoLogin(): JSX.Element {
   const API_KEY =
@@ -34,7 +34,7 @@ function KakaoLogin(): JSX.Element {
         }}
       >
         <img
-          src={KakaoLogo}
+          src={KakaoLogoImg}
           alt='Kakao login'
           style={{ width: '2rem', position: 'absolute', left: '1rem' }}
         />

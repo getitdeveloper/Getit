@@ -3,6 +3,7 @@ import { RootStateOrAny, useSelector, useDispatch } from 'react-redux';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { COMMENT_REGISTER_REQUEST, COMMENT_REQUEST } from '@reducers/actions';
 import { PageContainer } from '@assets/styles/page';
+import UserImg from '@assets/icons/user.svg';
 import {
   CommentWrapper,
   CommentInput,
@@ -69,7 +70,7 @@ function Comments(props: any) {
   return (
     <PageContainer width='80%'>
       <CommentForm>
-        <WriterImage src='/icons/user.svg' alt='profile' />
+        <WriterImage src={UserImg} alt='profile' />
         <CommentInput
           name='content'
           type='text'
@@ -88,7 +89,7 @@ function Comments(props: any) {
         <CommentWrapper>
           {commentList.map((contents: any) => (
             <Comment key={contents.key}>
-              <WriterImage src='/icons/user.svg' alt='profile' />
+              <WriterImage src={UserImg} alt='profile' />
               <CommentDetail>
                 <WriterNickName>
                   {contents.user.profile.nickname}

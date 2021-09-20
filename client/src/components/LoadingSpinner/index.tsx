@@ -1,5 +1,6 @@
 import * as React from 'react';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import bannerImg from '@assets/images/bannerImg.webp';
 import { MessageWrapper, MessageImage, Message } from './styles';
 
 function LoadingSpinner() {
@@ -14,11 +15,7 @@ function LoadingSpinner() {
   if (loadFail) {
     return (
       <MessageWrapper>
-        <MessageImage
-          src='/images/bannerImg.webp'
-          alt='banner'
-          className='bannerImg'
-        />
+        <MessageImage src={bannerImg} alt='banner' className='bannerImg' />
         <Message>
           {`죄송합니다. 현재 서비스가 원활히 운영되지 않습니다. 
         이 문제가 반복될 경우 서비스팀에 문의주시기 바랍니다.

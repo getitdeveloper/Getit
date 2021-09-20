@@ -1,4 +1,5 @@
 import * as React from 'react';
+import bannerImg from '@assets/images/bannerImg.webp';
 import {
   BannerWrapper,
   TextWrapper,
@@ -23,7 +24,7 @@ function Banner(): JSX.Element {
         </SubText>
       </TextWrapper>
       <ImgContainer>
-        <BannerImg src='/images/bannerImg.webp' alt='banner' />
+        <BannerImg src={bannerImg} alt='banner' />
       </ImgContainer>
     </BannerWrapper>
   );
