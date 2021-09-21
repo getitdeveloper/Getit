@@ -264,8 +264,8 @@ class kakao_callback(APIView):
                 'message': 'login',
                 'user_pk': upk,
                 'accept_json': accept_json})
-            res.set_cookie(key='Auth', value=access_token, httponly=True,
-                           domain='getittest.shop', samesite=None)
+            res.set_cookie(key='Authorization', value=access_token, httponly=True,
+                           domain='getittest.shop', samesite=None, secure=False)
             return res
         except:
             # 기존에 가입된 유저가 없으면 새로 가입
@@ -284,8 +284,8 @@ class kakao_callback(APIView):
                 'message': 'register',
                 'user_pk': upk,
                 'accept_json': accept_json})
-            res.set_cookie(key='Auth', value=access_token, httponly=True,
-                           domain='getittest.shop', samesite=None)
+            res.set_cookie(key='Authorization', value=access_token, httponly=True,
+                           domain='getittest.shop', samesite=None, secure=False)
             return res
 
 class KakaoLogin(SocialLoginView):
