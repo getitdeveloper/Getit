@@ -112,15 +112,14 @@ class CommonBoardListAPIView(GenericAPIView):
         if serializer.is_valid():
             serializer.save()
             board = CommonBoard.objects.get(id=serializer.data['id'])
-            print(board)
             names = request.data['stack']
-            print(names)
             for name in names:
                 if not name:
                     continue
                 _name, _ = Tag.objects.get_or_create(name=name)
                 board.stack.add(_name)
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+                print(board.stack.name)
+            return JsonResponse(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -222,64 +221,40 @@ class RecruitmentBoardPostListAPIView(GenericAPIView):
 
             ---
                 {
-                    "count": 2,
-                    "next": null,
-                    "previous": null,
-                    "results": [
-                        {
-                            "id": 1,
-                            "user": 2,
-                            "study": {
-                                "id": 1,
-                                "user": 2,
-                                "name": "test",
-                                "content": "test",
-                                "status": true,
-                                "member": [
-                                    2
-                                ],
-                                "image": null,
-                                "stack": [
-                                    "python"
-                                ],
-                                "created_at": "2021-09-12T11:06:40.929959+09:00"
-                            },
-                            "developer": 1,
-                            "designer": 0,
-                            "pm": 0,
-                            "content": "test",
-                            "start_date": "2021-09-12",
-                            "end_date": "2021-09-13",
-                            "status": true
-
-                        },
-                        {
-                            "id": 2,
-                            "user": 2,
-                            "study": {
-                                "id": 1,
-                                "user": 2,
-                                "name": "test",
-                                "content": "test",
-                                "status": true,
-                                "member": [
-                                    2
-                                ],
-                                "image": null,
-                                "stack": [
-                                    "python"
-                                ],
-                                "created_at": "2021-09-12T11:06:40.929959+09:00"
-                            },
-                            "developer": 2,
-                            "designer": 0,
-                            "pm": 0,
-                            "content": "test2",
-                            "start_date": "2021-09-12",
-                            "end_date": "2021-09-13",
-                            "status": true
+                    "id": 8,
+                    "title": "getit",
+                    "developer": 2,
+                    "designer": 0,
+                    "pm": 0,
+                    "content": "test2",
+                    "stack": [],
+                    "start_date": "2021-09-12",
+                    "end_date": "2021-09-13",
+                    "status": true,
+                    "create_at": "2021-09-22T01:49:40.310951+09:00",
+                    "user": {
+                        "id": 1,
+                        "profile": {
+                            "nickname": "edcedc1027",
+                            "image": "http://127.0.0.1:8000/media/profile/Untitled.jpeg"
                         }
-                    ]
+                    },
+                    "study": {
+                        "id": 2,
+                        "user": 1,
+                        "name": "장고",
+                        "content": "ㅁㄴㅇㅁㄴㅇ",
+                        "status": true,
+                        "image": null,
+                        "stack": [
+                            "drf",
+                            "mysql"
+                        ],
+                        "created_at": "2021-09-19T17:18:20.434826+09:00"
+                    },
+                    "comments": 0,
+                    "likes": 0,
+                    "is_like": false
                 }
         """
         posts = RecruitmentBoard.objects.all()
@@ -295,21 +270,23 @@ class RecruitmentBoardPostListAPIView(GenericAPIView):
 
             ---
                 {
-                    "user": 2,
-                    "study": 1,
+                    "user": 1,
+                    "study": 2,
+                    "title":"getit",
                     "developer": 2,
                     "designer": 0,
                     "pm": 0,
                     "content": "test2",
                     "start_date": "2021-09-12",
                     "end_date": "2021-09-13",
-                    "status": true
+                    "status": true,
+                    "stack":["spring","vue"]
                 }
         """
-        serializer = RecruitmentBoardSerializer(data=request.data)
+        serializer = RecruitmentBoardSerializer(data=request.data,context={'request': request})
         if serializer.is_valid():
             serializer.save()
-            board = RecruitmentBoard.objects.get(user=request.user.id)
+            board = RecruitmentBoard.objects.get(id=serializer.data['id'])
             names = request.data['stack']
             for name in names:
                 if not name:
@@ -335,34 +312,47 @@ class RecruitmentBoardPostDetailAPIView(GenericAPIView):
 
             ---
                 {
-                    "id": 1,
-                    "user": 2,
-                    "study": {
-                        "id": 1,
-                        "user": 2,
-                        "name": "test",
-                        "content": "test",
-                        "status": true,
-                        "member": [
-                            2
-                        ],
-                        "image": null,
-                        "stack": [
-                            "python"
-                        ],
-                        "created_at": "2021-09-12T11:06:40.929959+09:00"
-                    },
-                    "developer": 1,
+                    "id": 6,
+                    "title": "asdasd",
+                    "developer": 2,
                     "designer": 0,
                     "pm": 0,
                     "content": "test",
+                    "stack": [
+                        "python",
+                        "react"
+                    ],
                     "start_date": "2021-09-12",
                     "end_date": "2021-09-13",
-                    "status": true
+                    "status": true,
+                    "create_at": "2021-09-22T01:25:44.660147+09:00",
+                    "user": {
+                        "id": 1,
+                        "profile": {
+                            "nickname": "edcedc1027",
+                            "image": "http://127.0.0.1:8000/media/profile/Untitled.jpeg"
+                        }
+                    },
+                    "study": {
+                        "id": 2,
+                        "user": 1,
+                        "name": "장고",
+                        "content": "ㅁㄴㅇㅁㄴㅇ",
+                        "status": true,
+                        "image": null,
+                        "stack": [
+                            "drf",
+                            "mysql"
+                        ],
+                        "created_at": "2021-09-19T17:18:20.434826+09:00"
+                    },
+                    "comments": 0,
+                    "likes": 0,
+                    "is_like": false
                 }
         """
         post = self.get_object(pk)
-        serializer = RecruitmentBoardSerializer(post)
+        serializer = RecruitmentBoardSerializer(post,context={'request': request})
         return Response(serializer.data)
 
     def put(self, request, pk):
@@ -371,24 +361,21 @@ class RecruitmentBoardPostDetailAPIView(GenericAPIView):
 
         ---
             {
-                "id": 1,
-                "user": 2,
-                "study": 1,
-                "developer": 2,
-                "designer": 0,
-                "pm": 0,
-                "content": "test",
-                "start_date": "2021-09-12",
-                "end_date": "2021-09-13",
-                "status": true,
-                "stack": [
-                    "python", 
-                    "react"
-                ]
-            }
+                    "user": 1,
+                    "study": 2,
+                    "title":"getit",
+                    "developer": 2,
+                    "designer": 0,
+                    "pm": 0,
+                    "content": "test2",
+                    "start_date": "2021-09-12",
+                    "end_date": "2021-09-13",
+                    "status": true,
+                    "stack":["spring","vue"]
+                }
         """
         post = self.get_object(pk)
-        serializer = RecruitmentBoardSerializer(post, data=request.data)
+        serializer = RecruitmentBoardSerializer(post, data=request.data,context={'request': request})
         if serializer.is_valid():
             serializer.save()
             names = request.data['stack']
