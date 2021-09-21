@@ -264,7 +264,7 @@ class kakao_callback(APIView):
                 'message': 'login',
                 'user_pk': upk,
                 'accept_json': accept_json})
-            res.set_cookie(key='Authorization', value=access_token, httponly=True,
+            res.set_cookie(key='Auth', value=access_token, httponly=True,
                            domain='getittest.shop', samesite=None)
             return res
         except:
@@ -284,7 +284,7 @@ class kakao_callback(APIView):
                 'message': 'register',
                 'user_pk': upk,
                 'accept_json': accept_json})
-            res.set_cookie(key='Authorization', value=access_token, httponly=True,
+            res.set_cookie(key='Auth', value=access_token, httponly=True,
                            domain='getittest.shop', samesite=None)
             return res
 
