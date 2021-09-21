@@ -1,30 +1,42 @@
-import { makeStyles } from '@material-ui/core/styles';
 import styled from 'styled-components';
+import Paper from '@material-ui/core/Paper';
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
 
-// material ui css
-export const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingTop: '1rem',
-    background: '#f5f5f5',
-  },
-  paper: {
-    padding: theme.spacing(2),
-    height: '320px',
-    borderRadius: '25px',
-    position: 'relative',
-  },
-}));
+export const Post = styled(Paper)`
+  && {
+    position: relative;
+    margin: 0 auto;
+    padding: 1.5rem;
+    /* min-width: 300px; */
+    width: 100%;
+    height: 30rem;
+    border-radius: 25px;
+  }
+  @media ${({ theme }) => theme.mobile} {
+    && {
+      width: 90%;
+    }
+  }
+`;
 
 export const RecruitBoardWrapper = styled.div`
   background-color: #f5f5f5;
 `;
 
 export const GridWrapper = styled.div`
-  width: 80%;
+  max-width: 118rem;
+  width: 100%;
+  margin: 0 auto;
+  padding: 1rem 1rem;
+
+  @media ${({ theme }) => theme.tablet} {
+    width: 90%;
+  }
+
+  @media ${({ theme }) => theme.mobile} {
+    width: 100%;
+  }
 `;
 
 export const MemberTypeWrapper = styled.ul`
@@ -35,44 +47,50 @@ export const MemberTypeWrapper = styled.ul`
 `;
 
 export const Title = styled.div`
-  padding-top: 0.8rem;
+  padding-top: 1.4rem;
 
   h1 {
-    font-size: 20px;
-    color: ${(props) => props.theme.colors.blackText};
+    font-size: 2rem;
+    color: ${({ theme }) => theme.colors.blackText};
   }
 `;
 
 export const RecruitCondition = styled.ul`
   list-style: none;
-  padding-top: 0.5rem;
-  font-size: 12px;
-  margin: 0;
-  padding: 0;
+  margin-top: 1rem;
+  font-size: 1.4rem;
   opacity: 0.55;
 `;
 
 export const Content = styled.div`
-  height: 100%;
+  height: 50%;
+  margin-top: 1rem;
+  font-size: 1.5rem;
 `;
 
 export const ContentDetail = styled.div`
   position: absolute;
   right: 1rem;
   bottom: 0;
+  padding: 2rem;
   height: auto;
 
   li {
     list-style: none;
-    font-size: 0.9rem;
+    font-size: 1.5rem;
     display: inline-block;
-    vertical-align: middle;
-    padding-right: 0.5rem;
-  }
 
-  span {
-    display: inline-block;
-    vertical-align: middle;
     padding-right: 0.5rem;
+
+    span {
+      padding-right: 0.5rem;
+    }
   }
+`;
+
+export const LikeIcon = styled(FavoriteBorderIcon)`
+  vertical-align: middle;
+`;
+export const CommentIcon = styled(ChatBubbleOutlineIcon)`
+  vertical-align: middle;
 `;

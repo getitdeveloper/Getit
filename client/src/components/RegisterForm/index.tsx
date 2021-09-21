@@ -2,6 +2,8 @@ import * as React from 'react';
 import { useState, useCallback, useEffect } from 'react';
 import { useSelector, RootStateOrAny, useDispatch } from 'react-redux';
 import { useHistory, Link } from 'react-router-dom';
+import LogoImg from '@assets/images/Logo.svg';
+import SelectImg from '@assets/images/Select.svg';
 import { IRegisterData } from './types';
 import {
   RegisterWrapper,
@@ -32,8 +34,6 @@ import {
 import OptionDev from './OptionDev';
 import OptionDesign from './OptionDesign';
 import OptionPM from './OptionPM';
-import LogoSvg from './Logo.svg';
-import SelectSvg from './Select.svg';
 
 function RegisterForm(): JSX.Element {
   const history = useHistory();
@@ -298,7 +298,7 @@ function RegisterForm(): JSX.Element {
     <RegisterWrapper>
       <Logo onClick={handleRouting}>
         <Link to='/'>
-          <img src={LogoSvg} alt='logo' />
+          <img src={LogoImg} alt='logo' />
         </Link>
       </Logo>
 
@@ -341,7 +341,7 @@ function RegisterForm(): JSX.Element {
             <StyledLabel>분야(필수)</StyledLabel>
             {/* <ArrowImg> */}
             <SelectWrapper>
-              <img src={SelectSvg} alt='select arrow button' />
+              <img src={SelectImg} alt='select arrow button' />
               <FieldSelect
                 name='user-field'
                 required
@@ -368,21 +368,21 @@ function RegisterForm(): JSX.Element {
               {field === '개발자' && (
                 <OptionDev
                   field={field}
-                  image={SelectSvg}
+                  image={SelectImg}
                   handleChange={handleChangeLevel}
                 />
               )}
               {field === '디자이너' && (
                 <OptionDesign
                   field={field}
-                  image={SelectSvg}
+                  image={SelectImg}
                   handleChange={handleChangeLevel}
                 />
               )}
               {field === '기획자' && (
                 <OptionPM
                   field={field}
-                  image={SelectSvg}
+                  image={SelectImg}
                   handleChange={handleChangeLevel}
                 />
               )}

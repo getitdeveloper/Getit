@@ -20,7 +20,7 @@ const theme = {
   mobile: `(max-width: ${breakPoints.mobile})`,
   tablet: `(max-width: ${breakPoints.tablet})`,
   laptop: `(max-width: ${breakPoints.laptop})`,
-  desktop: `(min-width: ${breakPoints.desktop})`,
+  desktop: `(max-width: ${breakPoints.desktop})`,
 };
 
 export default theme;

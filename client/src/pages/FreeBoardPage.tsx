@@ -32,7 +32,7 @@ function FreeBoardPage(): JSX.Element {
   }
 
   return (
-    <div>
+    <div style={{ backgroundColor: '#f5f5f5' }}>
       <PostSubHeader boardType='Free' />
       <PageBackground>
         <PageContainer width='80%'>

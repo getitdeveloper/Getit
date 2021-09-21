@@ -3,7 +3,7 @@ import { useCallback } from 'react';
 import GoogleLogin from 'react-google-login';
 import { useDispatch } from 'react-redux';
 import { USER_LOGIN_REQUEST } from '@reducers/actions';
-import GoogleLogo from '@assets/images/Google.svg';
+import GoogleLogoImg from '@assets/images/Google.svg';
 
 function GoogleSocialLogin(): JSX.Element {
   const dispatch = useDispatch();
@@ -63,7 +63,7 @@ function GoogleSocialLogin(): JSX.Element {
           }}
         >
           <img
-            src={GoogleLogo}
+            src={GoogleLogoImg}
             alt='Google login'
             style={{ width: '2rem', position: 'absolute', left: '1rem' }}
           />

@@ -31,7 +31,7 @@ function QuestionBardPage(): JSX.Element {
     return <LoadingSpinner />;
   }
   return (
-    <div>
+    <div style={{ backgroundColor: '#f5f5f5' }}>
       <PostSubHeader boardType='Question' />
       <PageBackground>
         {boardList ? (
