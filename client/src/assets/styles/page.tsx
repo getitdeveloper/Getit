@@ -13,6 +13,12 @@ export const PageBackground = styled.div`
   align-items: center;
   background-color: ${(props) => props.theme.colors.background};
   padding: 2% 5%;
+  @media ${(props) => props.theme.mobile} {
+    width: 100%;
+    box-shadow: 1px 1px 20px 0 rgba(0, 0, 0, 0.16);
+    background-color: white;
+    padding: 0;
+  }
 `;
 
 export const PageTitle = styled.p`
@@ -32,4 +38,11 @@ export const PageContainer = styled.div`
   padding: ${(props: Size) => (props.padding ? props.padding : '5%')};
   margin-bottom: 5%;
   margin-top: 2%;
+
+  @media ${(props) => props.theme.mobile} {
+    box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+    margin: 0;
+    border-radius: 0;
+    padding: 0;
+  }
 `;

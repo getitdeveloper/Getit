@@ -1,11 +1,12 @@
 import * as React from 'react';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
-import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
+
 import { PageBackground, PageContainer, PageTitle } from '@assets/styles/page';
 import { COMMON_POST_REQUEST } from '@reducers/actions';
 import PostDetail from '@components/PostDetail';
 import Comments from '@components/Comments';
 import LoadingSpinner from '@components/LoadingSpinner';
+import PostReactions from '@components/PostReactions';
 
 function FreeBoardDetailPage(props: any) {
   const { history } = props;
@@ -29,25 +30,12 @@ function FreeBoardDetailPage(props: any) {
   }
   console.log('freePost: ', freePost);
   return (
-    <div>
-      <PageBackground>
-        <PageTitle>자유 게시판</PageTitle>
-        <PostDetail post={freePost} />
-
-        <div>
-          <span>
-            <ChatBubbleOutlineIcon />
-            쪽지보내기
-          </span>
-          <span>
-            <img src='/icons/like.svg' alt='like-button' />
-            좋아요
-          </span>
-        </div>
-
-        <Comments boardId={contentId} />
-      </PageBackground>
-    </div>
+    <PageBackground>
+      <PageTitle>자유 게시판</PageTitle>
+      <PostDetail post={freePost} />
+      <PostReactions />
+      <Comments boardId={contentId} />
+    </PageBackground>
   );
 }
 

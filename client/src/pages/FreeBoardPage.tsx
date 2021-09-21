@@ -35,13 +35,11 @@ function FreeBoardPage(): JSX.Element {
     <div>
       <PostSubHeader boardType='Free' />
       <PageBackground>
-        {boardList ? (
-          <PageContainer width='80%'>
-            {boardList.results.map((content: IPost) => (
-              <PostItem key={content.id} content={content} boardType='Free' />
-            ))}
-          </PageContainer>
-        ) : null}
+        <PageContainer width='80%'>
+          {boardList.results.map((content: IPost) => (
+            <PostItem key={content.id} content={content} boardType='Free' />
+          ))}
+        </PageContainer>
         <Paging
           activePage={page}
           totalPage={boardList.count}

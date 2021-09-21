@@ -8,15 +8,19 @@ import moment from 'moment';
 import { HorizontalLine } from '@assets/styles/commons';
 import { COMMON_POST_LIKE_REQUEST } from '@reducers/actions';
 import MemberType from '@components/RecruitMembers/index';
+import userIcon from '@assets/icons/userIcon.svg';
 import {
   WriterButton,
-  PostContainer,
+  PostWrapper,
   PostInfoButton,
   PostText,
   PostTitle,
   TagWrapper,
-  PostDetails,
+  PostDetailWrapper,
   DetailInfo,
+  WriterImage,
+  WriterName,
+  LikeButton,
 } from './styles';
 
 function PostItem(props: any) {
@@ -28,6 +32,16 @@ function PostItem(props: any) {
   const [likes, setLikes] = React.useState(content.likes);
   const [likeStatus, setLikeStatus] = React.useState(false);
 
+  const onHandleWirterProfile = () => {
+    alert(`글쓴이의 프로필로 이동`);
+  };
+  const onHandlePost = () => {
+    if (boardType === 'Question') {
+      history.push('/questionBoard/detail', content.id);
+    } else if (boardType === 'Free') {
+      history.push('/freeBoard/detail', content.id);
+    }
+  };
   const onHandleLike = () => {
     if (userId === null) {
       alert('로그인 한 후에 이용가능하십니다!');
@@ -72,48 +86,37 @@ function PostItem(props: any) {
 
   return (
     <div>
-      <PostContainer>
-        {/* <WriterButton
-          onClick={() => alert(`${content.writer}의 프로필로 이동`)}
-        >
-          <img src={content.writerImage} alt='writer-profile' width='15%' />
-          <p style={{ fontSize: 'x-small' }}>{content.writer}</p>
-        </WriterButton> */}
-        <PostInfoButton
-          onClick={() => {
-            if (boardType === 'Question') {
-              history.push('/questionBoard/detail', content.id);
-            } else if (boardType === 'Free') {
-              history.push('/freeBoard/detail', content.id);
-            }
-          }}
-        >
-          {/* <TagWrapper>
-            {content.tagType.map((member: string) => (
-              <MemberType key={member} member={member} />
-            ))}
-          </TagWrapper> */}
+      <PostWrapper>
+        <WriterButton onClick={onHandleWirterProfile}>
+          <WriterImage src={userIcon} alt='writer-profile' width='15%' />
+          <WriterName>닉네임</WriterName>
+        </WriterButton>
+
+        <PostInfoButton onClick={onHandlePost}>
+          <TagWrapper>
+            <MemberType member={content.worker} />
+          </TagWrapper>
           <PostTitle>{content.title}</PostTitle>
           {detail ? null : <PostText>{content.content}</PostText>}
         </PostInfoButton>
-      </PostContainer>
-      <PostDetails>
+      </PostWrapper>
+
+      <PostDetailWrapper>
+        <img src='/icons/calendar.svg' alt='write-date' />
         <DetailInfo>
-          <img src='/icons/calendar.svg' alt='write-date' />
           {moment(content.create_at).format('YYYY년 MM월 DD일')}
         </DetailInfo>
-        <DetailInfo>
-          <button type='button' onClick={onHandleLike}>
-            {!likeStatus && <FavoriteBorderIcon />}
-            {likeStatus && <FavoriteIcon />}
-          </button>
-          {likes}
-        </DetailInfo>
-        <DetailInfo>
-          <ChatBubbleOutlineIcon />
-          {content.comments}
-        </DetailInfo>
-      </PostDetails>
+
+        <LikeButton type='button' onClick={onHandleLike}>
+          {!likeStatus && <FavoriteBorderIcon htmlColor='#868686' />}
+          {likeStatus && <FavoriteIcon htmlColor='#868686' />}
+        </LikeButton>
+        <DetailInfo>{likes}</DetailInfo>
+
+        <ChatBubbleOutlineIcon htmlColor='#868686' />
+        <DetailInfo>{content.comments}</DetailInfo>
+      </PostDetailWrapper>
+
       <HorizontalLine width='100%' />
     </div>
   );

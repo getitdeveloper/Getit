@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
-import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
+import PostReactions from '@components/PostReactions';
 import { PageBackground, PageContainer, PageTitle } from '@assets/styles/page';
 import { COMMON_POST_REQUEST, COMMENT_REQUEST } from '@reducers/actions';
 import PostDetail from '@components/PostDetail';
@@ -33,16 +33,7 @@ function QuestionDetailPage(props: any): JSX.Element {
         <PageTitle>질문 게시판</PageTitle>
         <PostDetail post={questionPost} />
 
-        <div>
-          <span>
-            <ChatBubbleOutlineIcon />
-            쪽지보내기
-          </span>
-          <span>
-            <img src='/icons/like.svg' alt='like-button' />
-            좋아요
-          </span>
-        </div>
+        <PostReactions />
         <Comments boardId={contentId} />
       </PageBackground>
     </div>
