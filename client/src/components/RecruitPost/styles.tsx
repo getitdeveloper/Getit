@@ -20,10 +20,6 @@ export const Post = styled(Paper)`
   }
 `;
 
-export const RecruitBoardWrapper = styled.div`
-  background-color: #f5f5f5;
-`;
-
 export const GridWrapper = styled.div`
   max-width: 118rem;
   width: 100%;

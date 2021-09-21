@@ -6,9 +6,9 @@ import { COMMON_BOARD_REQUEST } from '@reducers/actions';
 import { PageContainer, PageBackground } from '@assets/styles/page';
 import Paging from '@components/Paging';
 import LoadingSpinner from '@components/LoadingSpinner';
-import { IPost } from '../types';
+import { IPost, ISelectTab } from '@types';
 
-function FreeBoardPage(): JSX.Element {
+function FreeBoardPage({ selectTab }: ISelectTab): JSX.Element {
   const dispatch = useDispatch();
   const boardList = useSelector(
     (state: RootStateOrAny) => state.board.boardList,
@@ -33,7 +33,7 @@ function FreeBoardPage(): JSX.Element {
 
   return (
     <div style={{ backgroundColor: '#f5f5f5' }}>
-      <PostSubHeader boardType='Free' />
+      <PostSubHeader boardType='Free' selectTab={selectTab} />
       <PageBackground>
         <PageContainer width='80%'>
           {boardList.results.map((content: IPost) => (

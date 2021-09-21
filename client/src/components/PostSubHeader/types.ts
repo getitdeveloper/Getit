@@ -1,3 +1,4 @@
-export interface BoardType {
+export interface ISubHeader {
   boardType: string;
+  selectTab: number;
 }

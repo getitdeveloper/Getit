@@ -6,9 +6,9 @@ import { PageContainer, PageBackground } from '@assets/styles/page';
 import { COMMON_BOARD_REQUEST } from '@reducers/actions';
 import Paging from '@components/Paging';
 import LoadingSpinner from '@components/LoadingSpinner';
-import { IPost } from '../types';
+import { IPost, ISelectTab } from '@types';
 
-function QuestionBardPage(): JSX.Element {
+function QuestionBardPage({ selectTab }: ISelectTab): JSX.Element {
   const dispatch = useDispatch();
   const boardList = useSelector(
     (state: RootStateOrAny) => state.board.boardList,
@@ -32,7 +32,7 @@ function QuestionBardPage(): JSX.Element {
   }
   return (
     <div style={{ backgroundColor: '#f5f5f5' }}>
-      <PostSubHeader boardType='Question' />
+      <PostSubHeader boardType='Question' selectTab={selectTab} />
       <PageBackground>
         {boardList ? (
           <PageContainer width='80%'>
