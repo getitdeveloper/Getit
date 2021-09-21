@@ -1,6 +1,6 @@
 import * as React from 'react';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import bannerImg from '@assets/images/bannerImg.webp';
+import bannerImg from '@assets/images/Banner.svg';
 import { MessageWrapper, MessageImage, Message } from './styles';
 
 function LoadingSpinner() {

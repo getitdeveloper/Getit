@@ -1,5 +1,5 @@
 import * as React from 'react';
-import bannerImg from '@assets/images/bannerImg.webp';
+import bannerImg from '@assets/images/Banner.svg';
 import {
   BannerWrapper,
   TextWrapper,
