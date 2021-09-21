@@ -9,7 +9,7 @@
       "@reducers/*": ["./reducers/*"],
       "@sagas/*": ["./sagas/*"],
       "@store/*": ["./store/*"],
-      "@types": ["./types.tsx"]
+      "@types": ["./types.ts"]
     }
   }
 }
