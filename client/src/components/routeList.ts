@@ -14,7 +14,12 @@ import RecruitFormPage from '@pages/RecruitFormPage';
 import SearchResultPage from '@pages/SearchResultPage';
 import NotFoundPage from '@pages/NotFoundPage';
 
-export const routeList = [
+interface RouteList {
+  path: string;
+  page: (props?: any) => JSX.Element | null;
+}
+// 라우팅 경로 및 페이지
+export const routeList: Array<RouteList> = [
   {
     path: '/',
     page: MainPage,
