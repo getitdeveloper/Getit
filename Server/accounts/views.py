@@ -69,13 +69,14 @@ class google_callback(APIView):
             if nickname is None:
                 raise Exception
             access_token = accept_json['access_token']
+            access_token = f'Bearer {access_token}'
             accept_json.pop('user', None)
             
             res = JsonResponse({
                 'message': 'login',
                 'user_pk': upk,
                 'accept_json': accept_json})
-            res.set_cookie(key='Authorization', value=access_token, httponly=True,
+            res.set_cookie(key='Authorization', value=dequote(access_token), httponly=True,
                            domain='getittest.shop', samesite=None)
             return res
         except:
@@ -89,12 +90,13 @@ class google_callback(APIView):
             upk = accept_json.get('user')
             upk = upk['pk']
             access_token = accept_json['access_token']
+            access_token = f'Bearer {access_token}'
             accept_json.pop('user', None)
             res = JsonResponse({
                 'message': 'register',
                 'user_pk': upk,
                 'accept_json': accept_json})
-            res.set_cookie(key='Authorization', value=access_token, httponly=True,
+            res.set_cookie(key='Authorization', value=dequote(access_token), httponly=True,
                            domain='getittest.shop', samesite=None)
             return res
 
@@ -265,7 +267,7 @@ class kakao_callback(APIView):
                 'user_pk': upk,
                 'accept_json': accept_json})
             res.set_cookie(key='Authorization', value=access_token, httponly=True,
-                           domain='getittest.shop', samesite=None, secure=False)
+                           domain='getittest.shop', samesite=None)
             return res
         except:
             # 기존에 가입된 유저가 없으면 새로 가입
@@ -279,13 +281,14 @@ class kakao_callback(APIView):
             upk = accept_json.get('user')
             upk = upk['pk']
             access_token = accept_json['access_token']
+
             accept_json.pop('user', None)
             res = JsonResponse({
                 'message': 'register',
                 'user_pk': upk,
                 'accept_json': accept_json})
             res.set_cookie(key='Authorization', value=access_token, httponly=True,
-                           domain='getittest.shop', samesite=None, secure=False)
+                           domain='getittest.shop', samesite=None)
             return res
 
 class KakaoLogin(SocialLoginView):
@@ -306,3 +309,8 @@ def duplicate_check(request):
         duplicate = "fail"
     context = {'duplicate': duplicate}
     return JsonResponse(context)
+
+def dequote(access_token):
+    if (access_token[0] == access_token[-1]) and access_token.startswith(("'", '"')):
+        return access_token[1:-1]
+    return access_token
