@@ -69,8 +69,7 @@ class google_callback(APIView):
             if nickname is None:
                 raise Exception
             access_token = accept_json['access_token']
-            access_token = f'Bearer {access_token}'
-            access_token = access_token.replace("\"","")
+
             accept_json.pop('user', None)
             
             res = JsonResponse({
@@ -91,8 +90,7 @@ class google_callback(APIView):
             upk = accept_json.get('user')
             upk = upk['pk']
             access_token = accept_json['access_token']
-            access_token = f'Bearer {access_token}'
-            access_token = access_token.replace("\"", "")
+            
             accept_json.pop('user', None)
             res = JsonResponse({
                 'message': 'register',
