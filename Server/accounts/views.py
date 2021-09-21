@@ -70,13 +70,14 @@ class google_callback(APIView):
                 raise Exception
             access_token = accept_json['access_token']
             access_token = f'Bearer {access_token}'
+            access_token = access_token.replace("\"","")
             accept_json.pop('user', None)
             
             res = JsonResponse({
                 'message': 'login',
                 'user_pk': upk,
                 'accept_json': accept_json})
-            res.set_cookie(key='Authorization', value=dequote(access_token), httponly=True,
+            res.set_cookie(key='Authorization', value=access_token, httponly=True,
                            domain='getittest.shop', samesite=None)
             return res
         except:
@@ -91,12 +92,13 @@ class google_callback(APIView):
             upk = upk['pk']
             access_token = accept_json['access_token']
             access_token = f'Bearer {access_token}'
+            access_token = access_token.replace("\"", "")
             accept_json.pop('user', None)
             res = JsonResponse({
                 'message': 'register',
                 'user_pk': upk,
                 'accept_json': accept_json})
-            res.set_cookie(key='Authorization', value=dequote(access_token), httponly=True,
+            res.set_cookie(key='Authorization', value=access_token, httponly=True,
                            domain='getittest.shop', samesite=None)
             return res
 
