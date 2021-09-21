@@ -43,6 +43,11 @@ function Header(): JSX.Element {
     });
   }, [id]);
 
+  // 회원가입 페이지인 경우 header 감추기
+  if (pathname === '/register') {
+    return <div />;
+  }
+
   return (
     <HeaderWrapper>
       {/* GetIt 로고 */}
