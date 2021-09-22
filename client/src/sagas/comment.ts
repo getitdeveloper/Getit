@@ -14,7 +14,7 @@ import {
 
 // 댓글 받아오기
 const requestComment = (data: any) => {
-  return axios.get(`/api/${data.board}/comment/`);
+  return axios.get(`/api/${data.board}/commoncomment/`);
 };
 
 function* requestCommentSaga(action: any): any {
@@ -35,9 +35,9 @@ function* requestCommentSaga(action: any): any {
   }
 }
 
-// 댓글 작성하기
+// 자유/질문게시글 댓글 작성하기
 const requestCommentRegister = (data: any) => {
-  return axios.post(`/api/${data.board}/comment/`, data.comment);
+  return axios.post(`/api/${data.board}/commoncomment/`, data.comment);
 };
 
 function* requestCommentRegisterSaga(action: any): any {
@@ -60,7 +60,7 @@ function* requestCommentRegisterSaga(action: any): any {
 
 // 내가 쓴 댓글 받아오기
 const requestMyComment = (data: any) => {
-  return axios.get(`/api/mycomment/${data.user}`);
+  return axios.get(`/api/mycommoncomment/${data.user}`);
 };
 
 function* requestMyCommentSaga(action: any): any {
