@@ -13,9 +13,9 @@ import {
   WritePostText,
   WritePostIcon,
 } from './styles';
-import { ISubHeader } from './types';
+import { IBoardType } from './types';
 
-function PostSubHeader({ boardType, selectTab }: ISubHeader): JSX.Element {
+function PostSubHeader({ boardType }: IBoardType): JSX.Element {
   const classes = useStyles();
 
   const history = useHistory();
@@ -99,7 +99,7 @@ function PostSubHeader({ boardType, selectTab }: ISubHeader): JSX.Element {
           <option value='popular'>인기순</option>
         </select>
         {/* 모집 게시판에서만 보인다. */}
-        {selectTab === 0 && (
+        {boardType === 'Recruit' && (
           <select name='statusPost' onChange={handleSortPost}>
             <option value='open'>모집 진행중</option>
             <option value='close'>모집 마감</option>

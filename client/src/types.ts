@@ -62,7 +62,3 @@ export interface IComment {
 // export interface ISearchPost {
 
 // }
-
-export interface ISelectTab {
-  selectTab: number;
-}
