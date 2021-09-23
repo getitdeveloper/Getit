@@ -1,4 +1,4 @@
-import { IBoard, IPost } from '../types';
+import { IBoard, IPostItem } from '../types';
 import {
   COMMON_BOARD_REQUEST,
   COMMON_BOARD_SUCCESS,
@@ -21,9 +21,9 @@ import {
 } from './actions';
 
 export interface InitialState {
-  postContent: IPost | null;
+  postContent: IPostItem | null;
   boardList: IBoard | null;
-  myPostList: Array<IPost> | null;
+  myPostList: Array<IPostItem> | null;
   likeCounts: { counts: number } | null;
   // TODO 수정하기
   searchPostList: any | null;
@@ -69,7 +69,7 @@ export interface CommonPostRequest {
 
 export interface CommonPostSuccess {
   type: typeof COMMON_POST_SUCCESS;
-  data: IPost;
+  data: IPostItem;
 }
 
 export interface CommonPostFailure {
@@ -84,7 +84,7 @@ export interface CommonPostRegisterRequest {
 
 export interface CommonPostRegisterSuccess {
   type: typeof COMMON_POST_REGISTER_SUCCESS;
-  data: IPost;
+  data: IPostItem;
 }
 
 export interface CommonPostRegisterFailure {
@@ -99,7 +99,7 @@ export interface MyPostListRequest {
 
 export interface MyPostListSuccess {
   type: typeof MY_POST_LIST_SUCCESS;
-  data: Array<IPost>;
+  data: Array<IPostItem>;
 }
 
 export interface MyPostListFailure {

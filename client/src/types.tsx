@@ -21,7 +21,28 @@ export interface IBoard {
   count: number;
   next: string;
   previous: string;
-  results: IPost[];
+  results: IPostItem[];
+}
+
+export interface IPostItem {
+  id: number;
+  title: string;
+  category: string;
+  content: string;
+  image?: string;
+  create_at?: string;
+  user: {
+    id: number;
+    profile: {
+      nickname: string;
+      image: string;
+    };
+  };
+  likes?: number;
+  comments?: number;
+  is_like?: boolean;
+  worker: string;
+  stack: Array<string>;
 }
 
 export interface IPost {
@@ -35,6 +56,7 @@ export interface IPost {
   likes?: number;
   comments?: number;
   worker: string;
+  stack: Array<string>;
 }
 
 export interface ICommentList {

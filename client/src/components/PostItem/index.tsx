@@ -85,12 +85,13 @@ function PostItem(props: any) {
     }
   };
 
+  console.log(content);
   return (
     <div>
       <PostWrapper>
         <WriterButton onClick={onHandleWirterProfile}>
           <WriterImage src={userIcon} alt='writer-profile' width='15%' />
-          <WriterName>닉네임</WriterName>
+          <WriterName>{content.user.profile.nickname}</WriterName>
         </WriterButton>
 
         <PostInfoButton onClick={onHandlePost}>
