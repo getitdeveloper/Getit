@@ -8,7 +8,7 @@ function FreeBoardFormPage(): JSX.Element {
   return (
     <div>
       <PageBackground>
-        <PageTitle>자유 게시판 글 작성</PageTitle>
+        <PageTitle>자유 게시글 작성</PageTitle>
         <PageContainer width='80%' padding='3%'>
           <PostForm />
         </PageContainer>

@@ -6,7 +6,7 @@ import { PageBackground, PageContainer, PageTitle } from '@assets/styles/page';
 function QuestionFormPage() {
   return (
     <PageBackground>
-      <PageTitle>질문 게시판 글 작성</PageTitle>
+      <PageTitle>질문게시글 작성</PageTitle>
       <PageContainer width='80%' padding='3%'>
         <PostForm />
       </PageContainer>

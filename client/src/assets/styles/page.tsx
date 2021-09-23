@@ -23,6 +23,7 @@ export const PageBackground = styled.div`
 
 export const PageTitle = styled.p`
   width: 75%;
+  font-size: 1.2rem;
   font-stretch: normal;
   font-style: bold;
   text-align: left;
