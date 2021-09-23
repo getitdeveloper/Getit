@@ -2,10 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="14847226-151c-4591-a157-0243461eac9c" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/Getit.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Getit.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/boards/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/Server/boards/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/comments/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/Server/comments/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/likes/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/Server/likes/serializers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/accounts/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/Server/accounts/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/apis/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/Server/apis/settings.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,5 +55,6 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>

@@ -90,7 +90,7 @@ class google_callback(APIView):
             upk = accept_json.get('user')
             upk = upk['pk']
             access_token = accept_json['access_token']
-            
+
             accept_json.pop('user', None)
             res = JsonResponse({
                 'message': 'register',
