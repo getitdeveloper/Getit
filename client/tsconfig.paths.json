@@ -8,7 +8,8 @@
       "@pages/*": ["./pages/*"],
       "@reducers/*": ["./reducers/*"],
       "@sagas/*": ["./sagas/*"],
-      "@store/*": ["./store/*"]
+      "@store/*": ["./store/*"],
+      "@types": ["./types.ts"]
     }
   }
 }
