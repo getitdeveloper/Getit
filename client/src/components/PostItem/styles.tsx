@@ -28,9 +28,7 @@ export const WriterButton = styled.button`
   border: 0;
   background-color: transparent;
   @media ${(props) => props.theme.mobile} {
-    justify-content: flex-start;
-    padding: 0;
-    flex-direction: row;
+    display: none;
   }
 `;
 
@@ -40,11 +38,24 @@ export const WriterImage = styled.img`
   background-color: #dcdcdc;
   padding: 0.8rem;
   border-radius: 50%;
+  @media ${(props) => props.theme.mobile} {
+    width: 1.5rem;
+    padding: 0.4rem;
+    margin-right: 0.4rem;
+  }
 `;
 
 export const WriterName = styled.p`
   font-size: 1rem;
   text-align: center;
+  @media ${(props) => props.theme.mobile} {
+    width: 7.5rem;
+    font-size: 0.8rem;
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 `;
 
 export const PostInfoButton = styled.button`
@@ -59,8 +70,19 @@ export const PostInfoButton = styled.button`
   &: hover {
     cursor: pointer;
   }
+
+  @media ${(props) => props.theme.desktop} {
+    width: 90rem;
+    padding: 0;
+  }
+
+  @media ${(props) => props.theme.tablet} {
+    width: 60rem;
+    padding: 0;
+  }
+
   @media ${(props) => props.theme.mobile} {
-    width: 35rem;
+    width: 100%;
     padding: 0;
   }
 `;
@@ -84,13 +106,24 @@ export const PostText = styled.p`
   color: #b5b5b5;
 `;
 
-export const PostDetailWrapper = styled.div`
+export const DetailWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: flex-start;
   margin: 0.4rem 0rem;
   @media ${(props) => props.theme.mobile} {
-    justify-content: flex-start;
+    justify-content: space-between;
+  }
+`;
+
+export const PostDetailWrapper = styled.div`
+  display: flex;
+`;
+
+export const MobileWriterDetailWrapper = styled.div`
+  display: none;
+  @media ${(props) => props.theme.mobile} {
+    display: flex;
   }
 `;
 
