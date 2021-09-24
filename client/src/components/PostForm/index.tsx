@@ -11,7 +11,7 @@ import {
   MarkdownWrapper,
 } from './styles';
 
-function PostForm() {
+function PostForm(): JSX.Element {
   const history = useHistory();
   const dispatch = useDispatch();
   const boardType = history.location.state;

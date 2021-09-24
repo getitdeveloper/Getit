@@ -4,7 +4,7 @@ import PostItem from '@components/PostItem';
 import MarkdownRenderer from '@components/MarkdownRenderer';
 import { Content } from './styles';
 
-function PostDetail(props: any) {
+function PostDetail(props: any): JSX.Element {
   const { post } = props;
 
   return (

@@ -22,7 +22,7 @@ function RecruitPost(): JSX.Element {
     <GridWrapper>
       <Grid container spacing={3}>
         {dummyData.map((content) => (
-          <Grid item xs={12} sm={6} md={4} lg={4} xl={4} key={`${content}`}>
+          <Grid item xs={12} sm={6} md={4} lg={4} xl={4} key={content.title}>
             <Post>
               {/* 구인 종류 */}
               <MemberTypeWrapper>

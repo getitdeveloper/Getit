@@ -24,7 +24,7 @@ import {
   LikeButton,
 } from './styles';
 
-function PostItem(props: any) {
+function PostItem(props: any): JSX.Element {
   const history = useHistory();
   const dispatch = useDispatch();
   const user = useSelector((state: RootStateOrAny) => state.user);

@@ -16,7 +16,7 @@ import NotFoundPage from '@pages/NotFoundPage';
 
 interface RouteList {
   path: string;
-  page: (props?: any) => JSX.Element | null;
+  page: (props?: JSX.Element) => JSX.Element | null;
 }
 // 라우팅 경로 및 페이지
 export const routeList: Array<RouteList> = [
