@@ -2,6 +2,11 @@ import styled from 'styled-components';
 import LogoImg from '@assets/images/Logo.svg';
 
 export const HeaderWrapper = styled.div`
+  border-bottom: ${(props) =>
+    props.className === '/' ? null : '1px solid #b7b7b7'};
+`;
+
+export const HeaderContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -9,8 +14,8 @@ export const HeaderWrapper = styled.div`
   width: 100%;
   height: 4.6rem;
   margin: 0 auto;
-  margin-top: 3rem;
-  margin-bottom: 1rem;
+  margin-top: ${(props) => (props.className === '/' ? '3rem' : '1rem')};
+  margin-bottom: ${(props) => (props.className === '/' ? '3rem' : '1rem')};
   position: relative;
 
   @media ${({ theme }) => theme.tablet} {
@@ -65,11 +70,13 @@ export const RightHeaderWrapper = styled.div`
   @media ${({ theme }) => theme.tablet} {
     right: 2rem;
     top: 2rem;
+    margin-right: 1rem;
   }
 
   @media ${({ theme }) => theme.mobile} {
     right: 1.3rem;
     top: 1rem;
+    margin-right: 0.6rem;
   }
 `;
 

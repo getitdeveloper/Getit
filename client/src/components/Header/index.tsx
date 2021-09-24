@@ -9,6 +9,7 @@ import HeaderNav from '@components/HeaderNav/index';
 import {
   LoginButton,
   HeaderWrapper,
+  HeaderContainer,
   LeftHeaderWrapper,
   RightHeaderWrapper,
   Logo,
@@ -47,37 +48,38 @@ function Header(): JSX.Element {
   if (pathname === '/register') {
     return <div />;
   }
-
   return (
-    <HeaderWrapper>
-      {/* GetIt 로고 */}
-      <LeftHeaderWrapper>
-        <Link to='/'>
-          <Logo />
-        </Link>
-      </LeftHeaderWrapper>
+    <HeaderWrapper className={pathname}>
+      <HeaderContainer className={pathname}>
+        {/* GetIt 로고 */}
+        <LeftHeaderWrapper>
+          <Link to='/'>
+            <Logo />
+          </Link>
+        </LeftHeaderWrapper>
 
-      {/* 전체 검색창 또는 navigation */}
-      {pathname === '/' || pathname === '/searchResult' ? (
-        <SearchBar />
-      ) : (
-        <HeaderNav />
-      )}
-
-      {/* 로그인한 경우  */}
-      <RightHeaderWrapper>
-        {profileInfo ? (
-          <UserInfoButtons nickname={profileInfo.nickname} />
+        {/* 전체 검색창 또는 navigation */}
+        {pathname === '/' || pathname === '/searchResult' ? (
+          <SearchBar />
         ) : (
-          // 로그인하지 않은 경우
-          <>
-            <LoginButton type='button' onClick={handleOpen}>
-              Login
-            </LoginButton>
-            <LoginDialog open={open} onClose={handleClose} />
-          </>
+          <HeaderNav />
         )}
-      </RightHeaderWrapper>
+
+        {/* 로그인한 경우  */}
+        <RightHeaderWrapper>
+          {profileInfo ? (
+            <UserInfoButtons nickname={profileInfo.nickname} />
+          ) : (
+            // 로그인하지 않은 경우
+            <>
+              <LoginButton type='button' onClick={handleOpen}>
+                Login
+              </LoginButton>
+              <LoginDialog open={open} onClose={handleClose} />
+            </>
+          )}
+        </RightHeaderWrapper>
+      </HeaderContainer>
     </HeaderWrapper>
   );
 }

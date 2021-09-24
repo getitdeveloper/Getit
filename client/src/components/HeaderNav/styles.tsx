@@ -12,8 +12,7 @@ export const Nav = styled.ul`
   }
 
   @media ${({ theme }) => theme.tablet} {
-    width: 100%;
-    justify-content: center;
+    display: none;
   }
 `;
 

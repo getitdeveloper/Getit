@@ -6,6 +6,7 @@ export const UserInfoWrapper = styled.div`
   display: flex;
   justify-content: space-around;
   align-items: center;
+
   p {
     font-size: 1.5rem;
 
@@ -27,8 +28,20 @@ export const UserInfoWrapper = styled.div`
 
 export const StyledPersonIcon = styled(PersonIcon)`
   color: #868686;
+
+  @media ${({ theme }) => theme.mobile} {
+    && {
+      font-size: medium;
+    }
+  }
 `;
 
 export const StyledNotificationsIcon = styled(NotificationsIcon)`
   color: #868686;
+
+  @media ${({ theme }) => theme.mobile} {
+    && {
+      font-size: medium;
+    }
+  }
 `;
