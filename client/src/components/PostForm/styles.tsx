@@ -16,6 +16,14 @@ export const TitleInput = styled.input`
   }
 `;
 
+export const WorkerWrapper = styled.div`
+  display: flex;
+  margin-left: 0.4rem;
+  margin-bottom: 1rem;
+`;
+
+export const WorkerOption = styled.input``;
+
 export const TextForm = styled.textarea`
   width: 100%;
   height: 30rem;
@@ -28,6 +36,16 @@ export const TextForm = styled.textarea`
   }
 `;
 
+export const TextFormTab = styled.button`
+  padding: 0;
+  margin-left: 0.8rem;
+  border: 0;
+  background-color: transparent;
+  font-size: 0.8rem;
+  color: #bcbcbc;
+  cursor: pointer;
+`;
+
 export const StacksWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -35,7 +53,6 @@ export const StacksWrapper = styled.div`
   border-radius: 1.2rem;
   border: solid 1px #bcbcbc;
   padding: 1rem 0.8rem;
-  margin-bottom: 1rem;
 `;
 
 export const StackInput = styled.input`
@@ -44,6 +61,17 @@ export const StackInput = styled.input`
   :focus {
     outline: none;
   }
+  @media ${(props) => props.theme.mobile} {
+    width: 50%;
+    font-size: 0.8rem;
+  }
+`;
+
+export const StackMessage = styled.p`
+  margin-left: 0.8rem;
+  margin-bottom: 1rem;
+  color: #bcbcbc;
+  font-size: 0.8rem;
 `;
 
 export const DeleteButton = styled.button`

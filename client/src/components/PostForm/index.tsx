@@ -10,25 +10,29 @@ import {
   StacksWrapper,
   TitleInput,
   TextForm,
+  TextFormTab,
   FormButton,
   ButtonWrapper,
   MarkdownWrapper,
   StackInput,
   DeleteButton,
+  WorkerWrapper,
+  StackMessage,
 } from './styles';
 
 function PostForm() {
+  const initialStack: string[] = [];
   const history = useHistory();
   const dispatch = useDispatch();
   const boardType = history.location.state;
   const user = useSelector((state: RootStateOrAny) => state.user);
   const userId = Number(user.id.user_pk);
 
-  const initialStack: string[] = [];
   const [postTitle, setTitle] = useState('');
   const [text, setText] = useState('');
   const [stack, setStack] = useState('');
   const [hidden, setHidden] = useState(false);
+  const [currentTab, setCurrentTab] = useState('edit');
   const [stacks, setStacks] = useState(initialStack);
 
   const onChange = (e: any) => {
@@ -48,7 +52,8 @@ function PostForm() {
     }
   };
 
-  const onHidden = (status: boolean) => {
+  const onHidden = (status: boolean, e: any) => {
+    setCurrentTab(e.target.id);
     setHidden(status);
   };
 
@@ -67,6 +72,7 @@ function PostForm() {
     if (postTitle === '' || text === '') {
       return alert('제목과 내용은 필수로 입력하셔야 합니다!');
     }
+    console.log(stacks);
     const postData = {
       title: postTitle,
       category: boardType,
@@ -97,18 +103,22 @@ function PostForm() {
         required
         value={postTitle}
       />
-      <div>
+      <WorkerWrapper>
         <span> 작성하시는 글과 연관된 직무를 선택해주세요! </span>
         <input type='checkbox' name='worker' value='개발자' /> 개발자
         <input type='checkbox' name='worker' value='디자이너' /> 디자이너
         <input type='checkbox' name='worker' value='기획자' /> 기획자
-      </div>
-      <button type='button' onClick={() => onHidden(false)}>
+      </WorkerWrapper>
+      <TextFormTab id='edit' type='button' onClick={(e) => onHidden(false, e)}>
         작성하기
-      </button>
-      <button type='button' onClick={() => onHidden(true)}>
+      </TextFormTab>
+      <TextFormTab
+        id='preview'
+        type='button'
+        onClick={(e) => onHidden(true, e)}
+      >
         미리보기
-      </button>
+      </TextFormTab>
       <TextForm
         name='text'
         onChange={onChange}
@@ -138,6 +148,7 @@ function PostForm() {
           onKeyPress={onHandleAddStack}
         />
       </StacksWrapper>
+      <StackMessage>*Enter를 눌러 작성하신 스택을 생성해주세요!</StackMessage>
 
       <ButtonWrapper>
         <FormButton type='button' onClick={() => history.push('/')}>
