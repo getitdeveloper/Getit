@@ -15,6 +15,7 @@ import {
   Logo,
 } from './styles';
 import { USER_PROFILE_REQUEST } from '../../reducers/actions';
+import ToggleMenu from './ToggleMenu';
 
 function Header(): JSX.Element {
   const dispatch = useDispatch();
@@ -51,6 +52,8 @@ function Header(): JSX.Element {
   return (
     <HeaderWrapper className={pathname}>
       <HeaderContainer className={pathname}>
+        {/* 테블릿, 모바일 버전 메뉴 */}
+        <ToggleMenu />
         {/* GetIt 로고 */}
         <LeftHeaderWrapper>
           <Link to='/'>

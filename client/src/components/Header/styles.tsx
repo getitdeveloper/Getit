@@ -1,6 +1,20 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import LogoImg from '@assets/images/Logo.svg';
 import { Link } from 'react-router-dom';
+import MenuIcon from '@material-ui/icons/Menu';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import HomeIcon from '@material-ui/icons/Home';
+import PersonIcon from '@material-ui/icons/Person';
+import GroupIcon from '@material-ui/icons/Group';
+import HelpIcon from '@material-ui/icons/Help';
+import NoteIcon from '@material-ui/icons/Note';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import BorderColorIcon from '@material-ui/icons/BorderColor';
+import NotificationsIcon from '@material-ui/icons/Notifications';
+import ChatBubbleIcon from '@material-ui/icons/ChatBubble';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import ListItemText from '@material-ui/core/ListItemText';
+import Divider from '@material-ui/core/Divider';
 
 export const HeaderWrapper = styled.div`
   border-bottom: ${(props) =>
@@ -24,11 +38,12 @@ export const HeaderContainer = styled.div`
     /* display: initial; */
     flex-direction: column;
     height: auto;
+    margin-top: 0;
+    margin-bottom: 0;
   }
 
   @media ${({ theme }) => theme.mobile} {
     width: 100%;
-    margin-top: 1.5rem;
   }
 `;
 
@@ -70,13 +85,13 @@ export const RightHeaderWrapper = styled.div`
 
   @media ${({ theme }) => theme.tablet} {
     right: 2rem;
-    top: 2rem;
+    top: 1.6rem;
     margin-right: 1rem;
   }
 
   @media ${({ theme }) => theme.mobile} {
     right: 1.3rem;
-    top: 1rem;
+    top: 1.3rem;
     margin-right: 0.6rem;
   }
 `;
@@ -97,7 +112,7 @@ export const LoginButton = styled.button`
   cursor: pointer;
 `;
 
-// Navigation Bar
+// Navigation Bar Styles
 export const Nav = styled.ul`
   display: flex;
   flex-direction: row;
@@ -116,4 +131,140 @@ export const Nav = styled.ul`
 export const StyledLink = styled(Link)`
   text-decoration: none;
   color: #000000;
+`;
+
+// Toggle Menu Styles
+export const ToggleMenuWrapper = styled.div`
+  display: none;
+  position: absolute;
+  left: 0;
+  top: 0.5rem;
+
+  @media ${({ theme }) => theme.tablet} {
+    display: block;
+  }
+`;
+
+export const MenuWrapper = styled.div`
+  min-width: 28rem;
+`;
+
+export const StyledMenuIcon = styled(MenuIcon)`
+  && {
+    font-size: 3.5rem;
+    color: ${({ theme }) => theme.colors.main};
+  }
+`;
+
+export const ToggleMenuLogo = styled.img`
+  width: 10rem;
+  margin: 2.5rem 2.5rem;
+`;
+
+export const StyledListItemIcon = styled(ListItemIcon)`
+  && {
+    min-width: 0;
+    margin-right: 1.5rem;
+  }
+`;
+
+const IconMixin = css`
+  && {
+    font-size: 3rem;
+  }
+`;
+
+export const StyledHomeIcon = styled(HomeIcon)`
+  ${IconMixin}
+`;
+export const StyledPersonIcon = styled(PersonIcon)`
+  ${IconMixin}
+`;
+export const StyledGroupIcon = styled(GroupIcon)`
+  ${IconMixin}
+`;
+export const StyledHelpIcon = styled(HelpIcon)`
+  ${IconMixin}
+`;
+export const StyledNoteIcon = styled(NoteIcon)`
+  ${IconMixin}
+`;
+export const StyledFavoriteIcon = styled(FavoriteIcon)`
+  ${IconMixin}
+`;
+export const StyledBorderColorIcon = styled(BorderColorIcon)`
+  ${IconMixin}
+`;
+export const StyledNotificationsIcon = styled(NotificationsIcon)`
+  ${IconMixin}
+`;
+export const StyledChatBubbleIcon = styled(ChatBubbleIcon)`
+  ${IconMixin}
+`;
+export const StyledExitToAppIcon = styled(ExitToAppIcon)`
+  ${IconMixin}
+`;
+
+export const StyledListItemText = styled(ListItemText)`
+  && {
+    font-size: 1.6rem;
+  }
+`;
+
+export const StyledDivider = styled(Divider)`
+  width: 90%;
+`;
+
+export const DividerWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
+const HoverColorMixin = css`
+  color: ${({ theme }) => theme.colors.main};
+`;
+
+export const ListItemWrapper = styled.div`
+  &:hover {
+    ${HoverColorMixin}
+
+    ${StyledHomeIcon} {
+      ${HoverColorMixin}
+    }
+
+    ${StyledPersonIcon} {
+      ${HoverColorMixin}
+    }
+
+    ${StyledGroupIcon} {
+      ${HoverColorMixin}
+    }
+
+    ${StyledHelpIcon} {
+      ${HoverColorMixin}
+    }
+    ${StyledNoteIcon} {
+      ${HoverColorMixin}
+    }
+
+    ${StyledFavoriteIcon} {
+      ${HoverColorMixin}
+    }
+
+    ${StyledBorderColorIcon} {
+      ${HoverColorMixin}
+    }
+
+    ${StyledNotificationsIcon} {
+      ${HoverColorMixin}
+    }
+
+    ${StyledChatBubbleIcon} {
+      ${HoverColorMixin}
+    }
+
+    ${StyledExitToAppIcon} {
+      ${HoverColorMixin}
+    }
+  }
 `;
