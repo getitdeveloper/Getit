@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import LogoImg from '@assets/images/Logo.svg';
+import { Link } from 'react-router-dom';
 
 export const HeaderWrapper = styled.div`
   border-bottom: ${(props) =>
@@ -94,4 +95,25 @@ export const LoginButton = styled.button`
   font-size: 1.5rem;
   border-style: none;
   cursor: pointer;
+`;
+
+// Navigation Bar
+export const Nav = styled.ul`
+  display: flex;
+  flex-direction: row;
+  margin: 0 auto;
+
+  li {
+    font-size: 1.6rem;
+    padding: 0 0.8rem;
+  }
+
+  @media ${({ theme }) => theme.tablet} {
+    display: none;
+  }
+`;
+
+export const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: #000000;
 `;

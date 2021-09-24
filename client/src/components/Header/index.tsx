@@ -5,7 +5,7 @@ import { useLocation, Link } from 'react-router-dom';
 import SearchBar from '@components/SearchBar/SearchBar';
 import LoginDialog from '@components/LoginDialog/LoginDialog';
 import UserInfoButtons from '@components/UserInfoButtons/UserInfoButtons';
-import HeaderNav from '@components/HeaderNav/index';
+import HeaderNav from '@components/Header/HeaderNav';
 import {
   LoginButton,
   HeaderWrapper,
