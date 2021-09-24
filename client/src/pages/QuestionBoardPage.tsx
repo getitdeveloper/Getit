@@ -26,7 +26,6 @@ function QuestionBardPage(): JSX.Element {
   }, [page]);
 
   console.log('page number: ', page);
-  console.log('questionBoard: ', boardList);
   if (!boardList) {
     return <LoadingSpinner />;
   }
