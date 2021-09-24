@@ -30,7 +30,7 @@ import {
 
 type Anchor = 'top' | 'left' | 'bottom' | 'right';
 
-// TODO route 채워넣기
+// TODO route 채워넣기 및 로그인시 로그아웃시 다르게 보이도록 수정
 const menuList = [
   { text: '홈', icon: <StyledHomeIcon />, route: '/' },
   { text: '내 프로필', icon: <StyledPersonIcon />, route: '/myprofile' },
