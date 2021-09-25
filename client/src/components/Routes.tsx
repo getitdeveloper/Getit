@@ -1,12 +1,14 @@
 import * as React from 'react';
 import { useEffect } from 'react';
 import { Switch, Route, useLocation, useHistory } from 'react-router-dom';
-import { useSelector, RootStateOrAny } from 'react-redux';
+import { useSelector, RootStateOrAny, useDispatch } from 'react-redux';
 import axios from 'axios';
 import Header from '@components/Header/index';
 import { routeList } from '@components/routeList';
+import { USER_PROFILE_REQUEST } from '@reducers/actions';
 
 function Routes(): JSX.Element {
+  const dispatch = useDispatch();
   const history = useHistory();
   const { pathname } = useLocation();
 
@@ -21,9 +23,17 @@ function Routes(): JSX.Element {
   useEffect(() => {
     axios
       .get('/')
-      .then((res) => console.log('서버상태 ===> ', res))
-      .catch((error) => console.log('서버상태 ===> ', error));
-  }, []);
+      .then((res) => {
+        console.log('서버와 쿠키 공유 상태 ===> ', res);
+        dispatch({
+          type: USER_PROFILE_REQUEST,
+          data: {
+            user_pk: res.data.user_pk,
+          },
+        });
+      })
+      .catch((error) => console.log('서버와 쿠키 공유 상태 ===>', error));
+  }, [message]);
 
   return (
     <>

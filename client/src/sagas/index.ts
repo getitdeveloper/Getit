@@ -14,6 +14,9 @@ axios.defaults.baseURL =
 // cookie 전송을 위한 설정
 axios.defaults.withCredentials = true;
 
+// const accessToken = response.data.accept_json.access_token;
+// axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
+
 export default function* rootSaga(): Generator {
   yield all([fork(userSaga)]);
   yield all([fork(boardSaga)]);
