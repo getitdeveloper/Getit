@@ -42,7 +42,7 @@ class UserProfileSerializer(ModelSerializer):
 class ChoicesFilterSerializer(ModelSerializer):
     class Meta:
         model = ChoicesFilter
-        fields = ('workers')
+        fields = ('workers',)
 
     def to_representation(self, value):
         return value.workers
@@ -98,7 +98,7 @@ class RecruitmentBoardSerializer(ModelSerializer):
         model = RecruitmentBoard
         fields = (
         'id', 'title', 'developer', 'designer', 'pm', 'content','stack', 'start_date', 'end_date', 'status',
-        'create_at','user','study', 'comments', 'likes', 'is_like',)
+        'create_at','user','study', 'comments', 'likes', 'is_like','worker',)
 
     def to_representation(self, instance):
         self.fields['user'] = UserProfileSerializer(read_only=True)

@@ -91,6 +91,7 @@ class CommonBoardLikePostAPIView(GenericAPIView):
     def get(self, request, user_id):
         """
             질문/자유 게시판 좋아요한 글 (GET)
+
             ---
                 [
                     {

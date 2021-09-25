@@ -22,19 +22,19 @@ class UserCommentProfileSerializer(ModelSerializer):
 class BoardPlusCommentSerializer(ModelSerializer):
     class Meta:
         model = CommonBoard
-        fields = ('title','category','worker')
+        fields = ('title','category','worker',)
 
 class ReBoardPlusCommentSerializer(ModelSerializer):
     class Meta:
         model = CommonBoard
-        fields = ('title','category','worker')
+        fields = ('title','category','worker',)
 
 class CommonCommentSerializer(ModelSerializer):
     profile = UserCommentProfileSerializer(read_only=True)
     board = BoardPlusCommentSerializer(read_only=True)
     class Meta:
         model = CommonComment
-        fields = ('id', 'user', 'commonpost', 'content', 'create_at', 'profile', 'board')
+        fields = ('id', 'user', 'commonpost', 'content', 'create_at', 'profile', 'board',)
 
     def to_representation(self, instance):
         self.fields['user'] = UserCommentProfileSerializer(read_only=True)
@@ -45,7 +45,7 @@ class RecruitCommentSerializer(ModelSerializer):
     board = ReBoardPlusCommentSerializer(read_only=True)
     class Meta:
         model = RecruitComment
-        fields = ('id', 'user', 'recruitmentpost', 'content', 'create_at', 'profile', 'board')
+        fields = ('id', 'user', 'recruitmentpost', 'content', 'create_at', 'profile', 'board',)
 
     def to_representation(self, instance):
         self.fields['user'] = UserCommentProfileSerializer(read_only=True)

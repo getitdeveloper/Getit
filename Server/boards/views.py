@@ -48,7 +48,7 @@ class CommonBoardListAPIView(GenericAPIView):
                         "id": 13,
                         "title": "asdasdasd",
                         "category": "question",
-                        "worker": "개발자",
+                        "worker": ["개발자"],
                         "content": "asdasdasdasd",
                         "image": null,
                         "create_at": "2021-09-19T17:38:17.667158+09:00",
@@ -149,7 +149,6 @@ class CommonBoardDetailAPIView(GenericAPIView):
                 "id":3,
                 "title":"asdasdasd",
                 "category":"question",
-                "worker":"개발자",
                 "content":"asdasdasdasd",
                 "image":null,
                 "create_at":"2021-09-19T17:25:49.076897+09:00",
@@ -236,6 +235,7 @@ class RecruitmentBoardPostListAPIView(GenericAPIView):
                     "pm": 0,
                     "content": "test2",
                     "stack": [],
+                    "worker": ["개발자"],
                     "start_date": "2021-09-12",
                     "end_date": "2021-09-13",
                     "status": true,
@@ -288,6 +288,7 @@ class RecruitmentBoardPostListAPIView(GenericAPIView):
                     "start_date": "2021-09-12",
                     "end_date": "2021-09-13",
                     "status": true,
+                    "worker": ["개발자"],
                     "stack":["spring","vue"]
 
                 }
@@ -337,6 +338,7 @@ class RecruitmentBoardPostDetailAPIView(GenericAPIView):
                         "python",
                         "react"
                     ],
+                    "worker": ["개발자"],
                     "start_date": "2021-09-12",
                     "end_date": "2021-09-13",
                     "status": true,
@@ -386,7 +388,8 @@ class RecruitmentBoardPostDetailAPIView(GenericAPIView):
                     "start_date": "2021-09-12",
                     "end_date": "2021-09-13",
                     "status": true,
-                    "stack":["spring","vue"]
+                    "stack":["spring","vue"],
+                    "worker": ["개발자"],
                 }
         """
         post = self.get_object(pk)
@@ -432,7 +435,7 @@ class WholePostSearch(GenericAPIView):
                         "id": 13,
                         "title": "test2",
                         "category": "free",
-                        "worker": "개발자",
+                        "worker": ["개발자"],
                         "content": "test1",
                         "image": null,
                         "create_at": "2021-09-12T16:44:50.233830+09:00",
@@ -595,7 +598,7 @@ class BoardMyListAPIView(GenericAPIView):
                         "id": 9,
                         "title": "asdasdasd",
                         "category": "question",
-                        "worker": "개발자",
+                        "worker": ["개발자"],
                         "content": "asdasdasdasd",
                         "image": null,
                         "create_at": "2021-09-16T20:12:22.257748+09:00",
