@@ -13,9 +13,9 @@ import {
   WritePostText,
   WritePostIcon,
 } from './styles';
-import { BoardType } from './types';
+import { IBoardType } from './types';
 
-function PostSubHeader({ boardType }: BoardType): JSX.Element {
+function PostSubHeader({ boardType }: IBoardType): JSX.Element {
   const classes = useStyles();
 
   const history = useHistory();
@@ -98,10 +98,14 @@ function PostSubHeader({ boardType }: BoardType): JSX.Element {
           <option value='recent'>최신순</option>
           <option value='popular'>인기순</option>
         </select>
-        <select name='statusPost' onChange={handleSortPost}>
-          <option value='open'>모집 진행중</option>
-          <option value='close'>모집 마감</option>
-        </select>
+        {/* 모집 게시판에서만 보인다. */}
+        {boardType === 'Recruit' && (
+          <select name='statusPost' onChange={handleSortPost}>
+            <option value='open'>모집 진행중</option>
+            <option value='close'>모집 마감</option>
+          </select>
+        )}
+
         <Button
           className={classes.writePostButton}
           variant='contained'

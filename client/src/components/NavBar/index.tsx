@@ -45,8 +45,8 @@ function NavBar(): JSX.Element {
         </StyledTabs>
       </NavBarWrapper>
       {selectTab === 0 && <RecruitBoardPage />}
-      {selectTab === 2 && <FreeBoardPage />}
       {selectTab === 1 && <QuestionBoardPage />}
+      {selectTab === 2 && <FreeBoardPage />}
     </div>
   );
 }

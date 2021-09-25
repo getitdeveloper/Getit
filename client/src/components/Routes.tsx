@@ -22,7 +22,7 @@ function Routes(): JSX.Element {
     axios
       .get('/')
       .then((res) => console.log('서버상태 ===> ', res))
-      .catch((error) => console.log(error));
+      .catch((error) => console.log('서버상태 ===> ', error));
   }, []);
 
   return (

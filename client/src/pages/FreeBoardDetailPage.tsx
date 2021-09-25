@@ -1,14 +1,14 @@
 import * as React from 'react';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 
-import { PageBackground, PageContainer, PageTitle } from '@assets/styles/page';
+import { PageBackground, PageTitle } from '@assets/styles/page';
 import { COMMON_POST_REQUEST } from '@reducers/actions';
 import PostDetail from '@components/PostDetail';
 import Comments from '@components/Comments';
 import LoadingSpinner from '@components/LoadingSpinner';
 import PostReactions from '@components/PostReactions';
 
-function FreeBoardDetailPage(props: any) {
+function FreeBoardDetailPage(props: any): JSX.Element {
   const { history } = props;
   const contentId = history.location.state;
   const dispatch = useDispatch();

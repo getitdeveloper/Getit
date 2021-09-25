@@ -15,7 +15,7 @@ import MyComments from './MyComments';
 import MyPosts from './MyPosts';
 import { navItem } from './navTypes';
 
-function ProfileDetail() {
+function ProfileDetail(): JSX.Element {
   const profileInfo = useSelector(
     (state: RootStateOrAny) => state.user.profileInfo,
   );

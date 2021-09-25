@@ -5,7 +5,7 @@ import MarkdownRenderer from '@components/MarkdownRenderer';
 import { Stack } from '@assets/styles/commons';
 import { Content, StacksWrapper } from './styles';
 
-function PostDetail(props: any) {
+function PostDetail(props: any): JSX.Element {
   const { post } = props;
   console.log(post.stack);
   return (

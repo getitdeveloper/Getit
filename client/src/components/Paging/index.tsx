@@ -2,7 +2,7 @@ import * as React from 'react';
 import Pagination from 'react-js-pagination';
 import './styles.css';
 
-function Paging({ activePage, totalPage, setPage }: any) {
+function Paging({ activePage, totalPage, setPage }: any): JSX.Element {
   const onHandleChange = (page: number) => {
     setPage(page);
     console.log(page);

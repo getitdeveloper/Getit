@@ -26,7 +26,7 @@ function GoogleSocialLogin(): JSX.Element {
 
   const handleFailure = useCallback(() => {
     // 사용자가 로그인 취소시에도 failure가 동작한다.
-    console.error('문제가 발생했습니다. 잠시후 다시 시도해 주세요.');
+    alert('문제가 발생했습니다. 잠시후 다시 시도해 주세요.');
   }, []);
 
   // Google Login Access URL
@@ -36,7 +36,7 @@ function GoogleSocialLogin(): JSX.Element {
       : process.env.REACT_APP_DEV_GOOGLE_CLIENT_ID;
 
   if (!clientId) {
-    console.log('문제가 발생했습니다. 잠시후 다시 시도해 주세요.');
+    alert('문제가 발생했습니다. 잠시후 다시 시도해 주세요.');
     return <div />;
   }
 

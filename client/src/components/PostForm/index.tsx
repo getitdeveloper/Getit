@@ -20,7 +20,7 @@ import {
   StackMessage,
 } from './styles';
 
-function PostForm() {
+function PostForm(): JSX.Element {
   const initialStack: string[] = [];
   const history = useHistory();
   const dispatch = useDispatch();

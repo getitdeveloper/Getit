@@ -3,7 +3,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import bannerImg from '@assets/images/Banner.svg';
 import { MessageWrapper, MessageImage, Message } from './styles';
 
-function LoadingSpinner() {
+function LoadingSpinner(): JSX.Element {
   const [loadFail, setLoadFail] = React.useState(false);
 
   React.useEffect(() => {

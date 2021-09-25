@@ -29,18 +29,7 @@ export interface InitialState {
   nickDoubleCheck: {
     duplicate: null | string;
   };
-  profile: {
-    user: number | null;
-    user_id: number | null;
-    nickname: string | null;
-    job: string | null;
-    developer_level: string | null;
-    designer_and_pm_level: string | null;
-    image: string | null;
-    email: string | null;
-    info: string | null;
-    git: string | null;
-  };
+
   profileInfo: IProfileInfo | null;
   portfolio: IPortfolio | null;
   userLogInRequest: boolean;
@@ -140,18 +129,7 @@ export interface IUserProfileRegisterRequest {
 
 export interface IUserProfileRegisterSuccess {
   type: typeof USER_PROFILE_REGISTER_SUCCESS;
-  data: {
-    user: number;
-    user_id: number;
-    nickname: string;
-    job: string;
-    developer_level: string;
-    designer_and_pm_level: string;
-    image: string;
-    email: string;
-    info: string;
-    git: string;
-  };
+  data: IProfileInfo;
 }
 
 export interface IUserProfileRegisterFailure {
