@@ -4,10 +4,10 @@ import GoogleLogin from 'react-google-login';
 import { useDispatch } from 'react-redux';
 import { USER_LOGIN_REQUEST } from '@reducers/actions';
 import GoogleLogoImg from '@assets/images/Google.svg';
+import { LoginProps } from '@types';
 import { Button } from './style';
-
 // 구글 로그인
-function GoogleSocialLogin(): JSX.Element {
+function GoogleSocialLogin({ onClose }: LoginProps): JSX.Element {
   const dispatch = useDispatch();
 
   const handleSuccess = useCallback(
@@ -48,7 +48,10 @@ function GoogleSocialLogin(): JSX.Element {
       render={(renderProps) => (
         <Button
           type='button'
-          onClick={renderProps.onClick}
+          onClick={() => {
+            renderProps.onClick();
+            onClose();
+          }}
           disabled={renderProps.disabled}
         >
           <div>

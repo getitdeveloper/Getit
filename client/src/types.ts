@@ -89,3 +89,7 @@ export interface IComment {
 // export interface ISearchPost {
 
 // }
+
+export interface LoginProps {
+  onClose: () => void;
+}

@@ -17,9 +17,9 @@ function LoginDialog({ open, onClose }: DialogProps): JSX.Element {
       <Title disableTypography>로그인</Title>
 
       <SocialLoginWrapper>
-        <KakaoLogin />
-        <GithubLogin />
-        <GoogleSocialLogin />
+        <KakaoLogin onClose={onClose} />
+        <GithubLogin onClose={onClose} />
+        <GoogleSocialLogin onClose={onClose} />
       </SocialLoginWrapper>
     </Dialog>
   );
