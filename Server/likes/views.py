@@ -136,7 +136,7 @@ class CommonBoardLikePostAPIView(GenericAPIView):
                 ]
         """
         posts = CommonBoardLike.objects.filter(user=user_id)
-        serializer = CommonBoardLikePostSerializer(posts, many=True)
+        serializer = CommonBoardLikePostSerializer(posts, many=True,context={'request': request})
         return Response(serializer.data)
 
 

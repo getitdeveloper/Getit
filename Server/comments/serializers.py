@@ -5,6 +5,8 @@ from profiles.models import Profile
 
 from accounts.models import User
 
+from boards.models import CommonBoard
+
 
 class SpecificAuthorProfile(ModelSerializer):
     class Meta:
@@ -17,11 +19,22 @@ class UserCommentProfileSerializer(ModelSerializer):
         model = User
         fields = ('id', 'profile',)
 
+class BoardPlusCommentSerializer(ModelSerializer):
+    class Meta:
+        model = CommonBoard
+        fields = ('title','category','worker')
+
+class ReBoardPlusCommentSerializer(ModelSerializer):
+    class Meta:
+        model = CommonBoard
+        fields = ('title','category','worker')
+
 class CommonCommentSerializer(ModelSerializer):
     profile = UserCommentProfileSerializer(read_only=True)
+    board = BoardPlusCommentSerializer(read_only=True)
     class Meta:
         model = CommonComment
-        fields = ('id', 'user', 'commonpost', 'content', 'create_at', 'profile')
+        fields = ('id', 'user', 'commonpost', 'content', 'create_at', 'profile', 'board')
 
     def to_representation(self, instance):
         self.fields['user'] = UserCommentProfileSerializer(read_only=True)
@@ -29,9 +42,10 @@ class CommonCommentSerializer(ModelSerializer):
 
 class RecruitCommentSerializer(ModelSerializer):
     profile = UserCommentProfileSerializer(read_only=True)
+    board = ReBoardPlusCommentSerializer(read_only=True)
     class Meta:
         model = RecruitComment
-        fields = ('id', 'user', 'recruitmentpost', 'content', 'create_at', 'profile')
+        fields = ('id', 'user', 'recruitmentpost', 'content', 'create_at', 'profile', 'board')
 
     def to_representation(self, instance):
         self.fields['user'] = UserCommentProfileSerializer(read_only=True)
