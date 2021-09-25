@@ -311,5 +311,5 @@ def dequote(access_token):
 
 def logout(request):
     res = JsonResponse({})
-    res.delete_cookie('Authorization', samesite=None)
+    res.delete_cookie('Authorization', domain='getittest.shop', samesite=None)
     return res
