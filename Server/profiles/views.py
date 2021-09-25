@@ -34,7 +34,8 @@ def status_check(request):
     profile = Profile.objects.get(id=user_id)
     context = {
         'user_pk': profile.id,
-        'nickname': profile.nickname
+        'nickname': profile.nickname,
+        'access_token': access_token
     }
     return JsonResponse(context)
 
