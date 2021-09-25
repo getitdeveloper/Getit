@@ -7,9 +7,10 @@ function LoadingSpinner() {
   const [loadFail, setLoadFail] = React.useState(false);
 
   React.useEffect(() => {
-    setTimeout(() => {
+    const timer = setTimeout(() => {
       setLoadFail(true);
     }, 5000);
+    return () => clearTimeout(timer);
   }, []);
 
   if (loadFail) {

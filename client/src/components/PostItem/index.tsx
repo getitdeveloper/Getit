@@ -17,11 +17,13 @@ import {
   PostText,
   PostTitle,
   TagWrapper,
+  DetailWrapper,
   PostDetailWrapper,
   DetailInfo,
   WriterImage,
   WriterName,
   LikeButton,
+  MobileWriterDetailWrapper,
 } from './styles';
 
 function PostItem(props: any) {
@@ -31,7 +33,7 @@ function PostItem(props: any) {
   const userId = user.id.user_pk;
   const { content, boardType, detail } = props;
   const [likes, setLikes] = React.useState(content.likes);
-  const [likeStatus, setLikeStatus] = React.useState(false);
+  const [likeStatus, setLikeStatus] = React.useState(content.is_like);
 
   const onHandleWirterProfile = () => {
     alert(`글쓴이의 프로필로 이동`);
@@ -85,12 +87,13 @@ function PostItem(props: any) {
     }
   };
 
+  console.log(content);
   return (
     <div>
       <PostWrapper>
         <WriterButton onClick={onHandleWirterProfile}>
           <WriterImage src={userIcon} alt='writer-profile' width='15%' />
-          <WriterName>닉네임</WriterName>
+          <WriterName>{content.user.profile.nickname}</WriterName>
         </WriterButton>
 
         <PostInfoButton onClick={onHandlePost}>
@@ -102,21 +105,27 @@ function PostItem(props: any) {
         </PostInfoButton>
       </PostWrapper>
 
-      <PostDetailWrapper>
-        <img src={CalendarImg} alt='write-date' />
-        <DetailInfo>
-          {moment(content.create_at).format('YYYY년 MM월 DD일')}
-        </DetailInfo>
+      <DetailWrapper>
+        <MobileWriterDetailWrapper>
+          <WriterImage src={userIcon} alt='writer-profile' width='15%' />
+          <WriterName>{content.user.profile.nickname}</WriterName>
+        </MobileWriterDetailWrapper>
+        <PostDetailWrapper>
+          <img src={CalendarImg} alt='write-date' />
+          <DetailInfo>
+            {moment(content.create_at).format('YYYY년 MM월 DD일')}
+          </DetailInfo>
 
-        <LikeButton type='button' onClick={onHandleLike}>
-          {!likeStatus && <FavoriteBorderIcon htmlColor='#868686' />}
-          {likeStatus && <FavoriteIcon htmlColor='#868686' />}
-        </LikeButton>
-        <DetailInfo>{likes}</DetailInfo>
+          <LikeButton type='button' onClick={onHandleLike}>
+            {!likeStatus && <FavoriteBorderIcon htmlColor='#868686' />}
+            {likeStatus && <FavoriteIcon htmlColor='#868686' />}
+          </LikeButton>
+          <DetailInfo>{likes}</DetailInfo>
 
-        <ChatBubbleOutlineIcon htmlColor='#868686' />
-        <DetailInfo>{content.comments}</DetailInfo>
-      </PostDetailWrapper>
+          <ChatBubbleOutlineIcon htmlColor='#868686' />
+          <DetailInfo>{content.comments}</DetailInfo>
+        </PostDetailWrapper>
+      </DetailWrapper>
 
       <HorizontalLine width='100%' />
     </div>

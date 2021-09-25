@@ -15,7 +15,6 @@ export const PageBackground = styled.div`
   padding: 2% 5%;
   @media ${(props) => props.theme.mobile} {
     width: 100%;
-    box-shadow: 1px 1px 20px 0 rgba(0, 0, 0, 0.16);
     background-color: white;
     padding: 0;
   }
@@ -23,10 +22,14 @@ export const PageBackground = styled.div`
 
 export const PageTitle = styled.p`
   width: 75%;
+  font-size: 1.2rem;
   font-stretch: normal;
   font-style: bold;
   text-align: left;
   color: ${(props) => props.theme.colors.blackText};
+  @media ${(props) => props.theme.mobile} {
+    display: none;
+  }
 `;
 
 export const PageContainer = styled.div`

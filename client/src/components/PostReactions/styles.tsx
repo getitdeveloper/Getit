@@ -7,6 +7,9 @@ export const ReactionFieldWrapper = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+  @media ${(props) => props.theme.mobile} {
+    display: none;
+  }
 `;
 
 export const ReactionWrapper = styled.div`

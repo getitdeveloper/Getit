@@ -26,7 +26,6 @@ function FreeBoardPage(): JSX.Element {
   }, [page]);
 
   console.log('page number: ', page);
-  console.log('freeBoard: ', boardList);
   if (!boardList) {
     return <LoadingSpinner />;
   }

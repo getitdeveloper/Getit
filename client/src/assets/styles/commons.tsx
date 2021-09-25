@@ -9,3 +9,14 @@ export const HorizontalLine = styled.div`
   border-top: 0.01rem dashed #d2d2d2;
   border-style: none none line;
 `;
+
+export const Stack = styled.div`
+  max-width: 30rem;
+  background-color: ${(props) => props.theme.colors.background};
+  border-radius: 1.5rem;
+  padding: 0.6rem;
+  margin-right: 0.6rem;
+  text-align: center;
+  display: flex;
+  align-items: center;
+`;

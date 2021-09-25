@@ -1,50 +1,84 @@
 import * as React from 'react';
+import { useState } from 'react';
 import { useSelector, RootStateOrAny, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import CloseIcon from '@material-ui/icons/Close';
 import { COMMON_POST_REGISTER_REQUEST } from '@reducers/actions';
 import MarkdownRenderer from '@components/MarkdownRenderer';
+import { Stack } from '@assets/styles/commons';
 import {
-  TitleForm,
+  StacksWrapper,
+  TitleInput,
   TextForm,
+  TextFormTab,
   FormButton,
   ButtonWrapper,
   MarkdownWrapper,
+  StackInput,
+  DeleteButton,
+  WorkerWrapper,
+  StackMessage,
 } from './styles';
 
 function PostForm() {
+  const initialStack: string[] = [];
   const history = useHistory();
   const dispatch = useDispatch();
   const boardType = history.location.state;
   const user = useSelector((state: RootStateOrAny) => state.user);
   const userId = Number(user.id.user_pk);
-  const [inputs, setInputs] = React.useState({
-    title: '',
-    text: '',
-  });
-  const [hidden, setHidden] = React.useState(false);
-  const { title, text } = inputs;
+
+  const [postTitle, setTitle] = useState('');
+  const [text, setText] = useState('');
+  const [stack, setStack] = useState('');
+  const [hidden, setHidden] = useState(false);
+  const [currentTab, setCurrentTab] = useState('edit');
+  const [stacks, setStacks] = useState(initialStack);
 
   const onChange = (e: any) => {
     const { name, value } = e.target;
-    const changedInputs = {
-      ...inputs,
-      [name]: value,
-    };
-    setInputs(changedInputs);
+    switch (name) {
+      case 'postTitle':
+        setTitle(value);
+        break;
+      case 'text':
+        setText(value);
+        break;
+      case 'stack':
+        setStack(value);
+        break;
+      default:
+        break;
+    }
   };
 
-  const onHidden = (status: boolean) => {
+  const onHidden = (status: boolean, e: any) => {
+    setCurrentTab(e.target.id);
     setHidden(status);
   };
 
-  const onSubmit = (postTitle: string, postContent: string) => {
-    console.log(user);
+  const onHandleAddStack = (e: any) => {
+    if (e.key === 'Enter') {
+      setStacks([...stacks, stack]);
+      setStack('');
+    }
+  };
+
+  const onDeleteStack = (currentStack: string) => {
+    const filtered = stacks.filter((element) => element !== currentStack);
+    setStacks(filtered);
+  };
+  const onSubmit = () => {
+    if (postTitle === '' || text === '') {
+      return alert('제목과 내용은 필수로 입력하셔야 합니다!');
+    }
+    console.log(stacks);
     const postData = {
       title: postTitle,
       category: boardType,
-      content: postContent,
+      content: text,
       user: userId,
-      stack: ['1', '123123', 'apple', 'banana'], // stack 작성하기?!!
+      stack: stacks,
       worker: '개발자',
     };
     console.log(postData);
@@ -61,20 +95,30 @@ function PostForm() {
 
   return (
     <form>
-      <TitleForm
-        name='title'
+      <TitleInput
+        name='postTitle'
         onChange={onChange}
         type='text'
         placeholder='제목'
         required
-        value={title}
+        value={postTitle}
       />
-      <button type='button' onClick={() => onHidden(false)}>
+      <WorkerWrapper>
+        <span> 작성하시는 글과 연관된 직무를 선택해주세요! </span>
+        <input type='checkbox' name='worker' value='개발자' /> 개발자
+        <input type='checkbox' name='worker' value='디자이너' /> 디자이너
+        <input type='checkbox' name='worker' value='기획자' /> 기획자
+      </WorkerWrapper>
+      <TextFormTab id='edit' type='button' onClick={(e) => onHidden(false, e)}>
         작성하기
-      </button>
-      <button type='button' onClick={() => onHidden(true)}>
+      </TextFormTab>
+      <TextFormTab
+        id='preview'
+        type='button'
+        onClick={(e) => onHidden(true, e)}
+      >
         미리보기
-      </button>
+      </TextFormTab>
       <TextForm
         name='text'
         onChange={onChange}
@@ -87,12 +131,31 @@ function PostForm() {
         <MarkdownRenderer text={text} open={hidden} />
       </MarkdownWrapper>
 
+      <StacksWrapper>
+        {stacks.map((content: string) => (
+          <Stack key={content}>
+            {content}
+            <DeleteButton type='button' onClick={() => onDeleteStack(content)}>
+              <CloseIcon />
+            </DeleteButton>
+          </Stack>
+        ))}
+        <StackInput
+          name='stack'
+          onChange={onChange}
+          value={stack}
+          placeholder='관련 기술 스택을 입력하세요'
+          onKeyPress={onHandleAddStack}
+        />
+      </StacksWrapper>
+      <StackMessage>*Enter를 눌러 작성하신 스택을 생성해주세요!</StackMessage>
+
       <ButtonWrapper>
         <FormButton type='button' onClick={() => history.push('/')}>
           {' '}
           작성 취소{' '}
         </FormButton>
-        <FormButton type='button' onClick={() => onSubmit(title, text)}>
+        <FormButton type='button' onClick={onSubmit}>
           제출하기
         </FormButton>
       </ButtonWrapper>

@@ -1,9 +1,10 @@
 import * as React from 'react';
 import { RootStateOrAny, useSelector, useDispatch } from 'react-redux';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import moment from 'moment';
 import { COMMENT_REGISTER_REQUEST, COMMENT_REQUEST } from '@reducers/actions';
 import { PageContainer } from '@assets/styles/page';
 import UserImg from '@assets/icons/user.svg';
+import LoadingSpinner from '@components/LoadingSpinner';
 import {
   CommentWrapper,
   CommentInput,
@@ -15,6 +16,8 @@ import {
   CommentDetail,
   CommentForm,
   NoComments,
+  CommentDetailWrapper,
+  CreatedTime,
 } from './styles';
 
 function Comments(props: any) {
@@ -22,7 +25,7 @@ function Comments(props: any) {
   const dispatch = useDispatch();
   const [content, setContent] = React.useState('');
   const user = useSelector((state: RootStateOrAny) => state.user);
-  const userId = Number(user.id.user_pk);
+  const userId = user.id.user_pk;
   const commentList = useSelector(
     (state: RootStateOrAny) => state.comment.commentList,
   );
@@ -37,20 +40,20 @@ function Comments(props: any) {
     });
   }, [clicked]);
 
-  if (!commentList) {
-    return <CircularProgress />;
-  }
-
   const onChange = (e: any) => {
     const { value } = e.target;
     setContent(value);
   };
 
   const onSubmit = (contentText: string) => {
+    if (userId === null) {
+      alert('로그인 한 후에 이용가능하십니다!');
+      return;
+    }
     const commentData = {
       board: boardId,
       comment: {
-        user: userId,
+        user: Number(userId),
         commonpost: boardId,
         content: contentText,
       },
@@ -66,6 +69,10 @@ function Comments(props: any) {
     }
     setClicked(clicked * -1);
   };
+
+  if (!commentList) {
+    return <LoadingSpinner />;
+  }
 
   return (
     <PageContainer width='80%'>
@@ -90,13 +97,19 @@ function Comments(props: any) {
           {commentList.map((contents: any) => (
             <Comment key={contents.key}>
               <WriterImage src={UserImg} alt='profile' />
-              <CommentDetail>
-                <WriterNickName>
-                  {contents.user.profile.nickname}
-                </WriterNickName>
+              <CommentDetailWrapper>
+                <CommentDetail>
+                  <WriterNickName>
+                    {contents.user.profile.nickname}
+                  </WriterNickName>
+                  <CreatedTime>
+                    {moment(`${contents.create_at}`).fromNow()}
+                  </CreatedTime>
+
+                  {/* <p>{contents.create_at}</p> */}
+                </CommentDetail>
                 <CommentContent>{contents.content}</CommentContent>
-                {/* <p>{contents.create_at}</p> */}
-              </CommentDetail>
+              </CommentDetailWrapper>
             </Comment>
           ))}
         </CommentWrapper>
