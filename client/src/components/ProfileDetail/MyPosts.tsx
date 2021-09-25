@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useEffect } from 'react';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import { MY_POST_LIST_REQUEST } from '../../reducers/actions';
-import { ProfileRight, PostWrapper, SubTitle } from './styles';
+import { ProfileRight, PostWrapper } from './styles';
 import PostItem from '../PostItem';
 import { IPost } from '../../types';
 import LoadingSpinner from '../LoadingSpinner';

@@ -24,7 +24,7 @@ export const SplittedPageContainer = styled(PageContainer)`
 `;
 
 export const ProfileLeft = styled.div`
-  width: 25%;
+  width: 15%;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -33,60 +33,97 @@ export const ProfileLeft = styled.div`
   }
 `;
 
+export const ProfileMenuOption = styled.button`
+  border-radius: 0.8rem;
+  border: solid 1px #e8e8e8;
+  background-color: transparent;
+  padding: 0.8rem;
+  margin-bottom: 1.6rem;
+  font-size: 0.8rem;
+  cursor: pointer;
+  &: hover {
+    color: ${(props) => props.theme.colors.main};
+  }
+  @media ${(props) => props.theme.mobile} {
+    display: none;
+  }
+`;
+
+export const ProfileSelectedMenu = styled(ProfileMenuOption)`
+  color: white;
+  background-color: ${(props) => props.theme.colors.main};
+  &: hover {
+    color: white;
+  }
+`;
+
+export const VerticalLine = styled.div`
+  width: 0.8rem;
+  height: 65rem;
+  border-right: solid 1px #e8e8e8;
+  margin: 0rem 2rem;
+  @media ${(props) => props.theme.mobile} {
+    display: none;
+  }
+`;
+
 export const ProfileRight = styled.div`
-  width: 75%;
+  width: 80%;
   height: auto;
-  padding: 2%;
+  padding: 0rem 2.5rem;
   @media ${(props) => props.theme.mobile} {
     width: 100%;
   }
 `;
 
-export const ContentContainer = styled.div`
-  margin: 1% 0%;
-  padding: 2%;
+// MyProfile styles
+
+export const MainProfile = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2.5rem;
+`;
+
+export const ProfileImage = styled.img`
+  width: 12rem;
+  height: auto;
+  align-self: center;
+  background-color: #e0e0e0;
+  padding: 4rem;
+  border-radius: 1rem;
+`;
+
+export const PersonalInfoWrapper = styled.div`
+  width: 35rem;
+  margin-bottom: 0.8rem;
+  padding: 0.8rem;
   background-color: ${(props) => props.theme.colors.background};
   font-size: 70%;
   border-radius: 22px;
 `;
 
-export const InfoContainer = styled.div`
-  height: 30%;
+export const IntroWrapper = styled.div`
   width: 100%;
-  padding: 5%;
+  height: auto;
+  min-height: 10rem;
+  display: flex;
+  align-items: center;
+
+  margin: 1.5rem 0rem;
+  padding: 2.5rem;
   background-color: ${(props) => props.theme.colors.background};
-  font-size: 80%;
+  border-radius: 2rem;
+  font-size: 1rem;
 `;
 
-export const SubTitle = styled.div`
+export const SubTitleWrapper = styled.div`
   height: auto;
   weight: 100%;
-  align-self: center;
-  margin-top: 10%;
-  margin-bottom: 5%;
-`;
-
-export const ProfileImage = styled.img`
-  width: 30%;
-  height: auto;
-  align-self: center;
-  margin-bottom: 15%;
-`;
-
-export const MainProfile = styled.div`
-  height: 70%;
   display: flex;
-  flex-direction: column;
-  padding: 5%;
   justify-content: space-between;
-`;
-
-export const ProfileNavItem = styled.button`
-  align-self: flex-start;
-  margin: 2% 0%;
-  &:hover {
-    color: ${(props) => props.theme.colors.main};
-  }
+  algin-items: center;
+  margin: 2.5rem 0rem;
 `;
 
 // MyComments styles
@@ -108,8 +145,8 @@ export const CommentDetailWrapper = styled.div`
   justify-content: space-between;
 `;
 
-export const GoBoardButton = styled.button`
-  width: 15%;
+export const CommentDate = styled.p`
+  color: #818181;
 `;
 
 // MyPosts styles
