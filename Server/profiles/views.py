@@ -1,3 +1,5 @@
+import jwt
+import requests
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.utils.decorators import method_decorator
@@ -15,14 +17,20 @@ from rest_framework.parsers import MultiPartParser
 from profiles.models import Profile, TeamProfile
 from profiles.serializers import ProfileSerializer, TeamProfileSerializer
 from tags.models import Tag
+from rest_framework_jwt.settings import api_settings
 
+from apis.settings import SECRET_KEY
+
+
+@method_decorator(csrf_exempt, name='dispatch')
 @api_view(['GET'])
 def status_check(request):
     """
     유저 정보 요청에 응답하는 함수
     """
-    user_id = request.user.id
-    print(user_id)
+    access_token = request.COOKIES["Authorize"]
+    payload = jwt.decode(access_token, SECRET_KEY, 'HS256')
+    user_id = payload['user_id']
     profile = Profile.objects.get(id=user_id)
     context = {
         'user_pk': profile.id,
