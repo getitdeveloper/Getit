@@ -1,15 +1,13 @@
 import * as React from 'react';
-import { Dialog, List, ListItem } from '@material-ui/core';
+import { Dialog } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import GithubLogin from '@auth/GithubLogin/GithubLogin';
 import GoogleSocialLogin from '@auth/GoogleLogin/GoogleLogin';
 import KakaoLogin from '@auth/KakaoLogin/KakaoLogin';
-import { useStyles, IconButtonContainer, Title } from './styles';
+import { IconButtonContainer, Title, SocialLoginWrapper } from './styles';
 import { DialogProps } from './types';
 
 function LoginDialog({ open, onClose }: DialogProps): JSX.Element {
-  const classes = useStyles();
-
   return (
     <Dialog onClose={onClose} aria-labelledby='simple-dialog-title' open={open}>
       <IconButtonContainer aria-label='close' onClick={onClose}>
@@ -17,17 +15,12 @@ function LoginDialog({ open, onClose }: DialogProps): JSX.Element {
       </IconButtonContainer>
 
       <Title disableTypography>로그인</Title>
-      <List className={classes.buttonList}>
-        <ListItem onClick={onClose} className={classes.button}>
-          <KakaoLogin />
-        </ListItem>
-        <ListItem onClick={onClose} className={classes.button}>
-          <GithubLogin />
-        </ListItem>
-        <ListItem onClick={onClose} className={classes.button}>
-          <GoogleSocialLogin />
-        </ListItem>
-      </List>
+
+      <SocialLoginWrapper>
+        <KakaoLogin />
+        <GithubLogin />
+        <GoogleSocialLogin />
+      </SocialLoginWrapper>
     </Dialog>
   );
 }

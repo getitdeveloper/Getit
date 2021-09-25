@@ -4,7 +4,9 @@ import GoogleLogin from 'react-google-login';
 import { useDispatch } from 'react-redux';
 import { USER_LOGIN_REQUEST } from '@reducers/actions';
 import GoogleLogoImg from '@assets/images/Google.svg';
+import { Button } from './style';
 
+// 구글 로그인
 function GoogleSocialLogin(): JSX.Element {
   const dispatch = useDispatch();
 
@@ -44,31 +46,16 @@ function GoogleSocialLogin(): JSX.Element {
     <GoogleLogin
       clientId={clientId}
       render={(renderProps) => (
-        <button
+        <Button
           type='button'
           onClick={renderProps.onClick}
           disabled={renderProps.disabled}
-          style={{
-            padding: '5% 0%',
-            width: '100%',
-            borderRadius: '4px',
-            boxShadow: '0px 3px 6px 3px rgba(0, 0, 0, 0.16)',
-            display: 'flex',
-            justifyContent: 'space-around',
-            alignItems: 'center',
-            position: 'relative',
-            borderStyle: 'none',
-            cursor: 'pointer',
-            backgroundColor: '#FFFFFF',
-          }}
         >
-          <img
-            src={GoogleLogoImg}
-            alt='Google login'
-            style={{ width: '2rem', position: 'absolute', left: '1rem' }}
-          />
-          <p style={{ fontSize: '1.2rem' }}>구글 아이디로 시작하기</p>
-        </button>
+          <div>
+            <img src={GoogleLogoImg} alt='Google login' />
+            <p>구글 아이디로 시작하기</p>
+          </div>
+        </Button>
       )}
       onSuccess={handleSuccess}
       onFailure={handleFailure}
