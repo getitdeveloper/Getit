@@ -6,9 +6,10 @@ from profiles.models import Profile
 from rest_framework import serializers
 
 from profiles.serializers import ProfileSerializer, TagSerializer, TeamProfileSerializer
-from .models import RecruitmentBoard, CommonBoard
+from .models import RecruitmentBoard, CommonBoard, ChoicesFilter
 from accounts.models import User
 from rest_framework.serializers import ModelSerializer
+
 
 
 # 좋아요
@@ -38,6 +39,14 @@ class UserProfileSerializer(ModelSerializer):
         model = User
         fields = ('id', 'profile',)
 
+class ChoicesFilterSerializer(ModelSerializer):
+    class Meta:
+        model = ChoicesFilter
+        fields = ('workers')
+
+    def to_representation(self, value):
+        return value.workers
+
 class CommonBoardSerializer(serializers.ModelSerializer):
     stack = TagSerializer(read_only=True, many=True)
     likes = serializers.IntegerField(
@@ -52,6 +61,7 @@ class CommonBoardSerializer(serializers.ModelSerializer):
 
     # like_user = CommonLikeSerializer(read_only=True, many=True)
     is_like = SerializerMethodField()
+    worker = ChoicesFilterSerializer(read_only=True, many=True)
 
     class Meta:
         model = CommonBoard
@@ -83,7 +93,7 @@ class RecruitmentBoardSerializer(ModelSerializer):
     stack = TagSerializer(read_only=True, many=True)
 
     is_like = SerializerMethodField()
-
+    worker = ChoicesFilterSerializer(read_only=True, many=True)
     class Meta:
         model = RecruitmentBoard
         fields = (

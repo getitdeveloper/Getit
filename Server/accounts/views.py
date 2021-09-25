@@ -3,6 +3,8 @@ from json import JSONDecodeError
 
 import requests
 from allauth.socialaccount.models import SocialAccount
+from allauth.socialaccount.providers.apple.views import AppleOAuth2Adapter
+from allauth.socialaccount.providers.naver.views import NaverOAuth2Adapter
 from allauth.socialaccount.providers.oauth2.client import OAuth2Client
 from django.http import JsonResponse
 from django.utils.decorators import method_decorator
@@ -200,6 +202,10 @@ class github_callback(APIView):
 
 class GithubLogin(SocialLoginView):
     adapter_class = GitHubOAuth2Adapter
+    client_class = OAuth2Client
+
+class GithubLogin(SocialLoginView):
+    adapter_class = AppleOAuth2Adapter
     client_class = OAuth2Client
 
 @method_decorator(csrf_exempt, name='dispatch')

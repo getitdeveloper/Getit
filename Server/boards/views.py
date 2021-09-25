@@ -17,7 +17,7 @@ from .permissions import IsOwnerOrReadOnly, RecruitmentIsOwnerOrReadOnly
 from .serializers import RecruitmentBoardSerializer, CommonBoardSerializer
 from rest_framework.response import Response
 from rest_framework import status
-from .models import CommonBoard, RecruitmentBoard
+from .models import CommonBoard, RecruitmentBoard, ChoicesFilter
 from django.shortcuts import get_object_or_404
 from rest_framework.views import APIView
 from .pagenation import BoardPageNumberPagination, WholeBoardCommonPageNumberPagination, WholeBoardRecruitmentPageNumberPagination
@@ -104,21 +104,27 @@ class CommonBoardListAPIView(GenericAPIView):
                     "image":null,
                     "user":1,
                     "stack":["python", "java"],
-                    "worker": "개발자"
+                    "worker": ["개발자","디자이너","기획자"]
                 }
         """
         serializer = CommonBoardSerializer(data=request.data,context={'request': request})
-
+        print(request)
         if serializer.is_valid():
             serializer.save()
             board = CommonBoard.objects.get(id=serializer.data['id'])
+
             names = request.data['stack']
+            filters = request.data['worker']
             for name in names:
                 if not name:
                     continue
                 _name, _ = Tag.objects.get_or_create(name=name)
                 board.stack.add(_name)
-                print(board.stack.name)
+            for filter in filters:
+                if not filter:
+                    continue
+                _filter, _ = ChoicesFilter.objects.get_or_create(workers=filter)
+                board.worker.add(_filter)
             return JsonResponse(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -157,7 +163,9 @@ class CommonBoardDetailAPIView(GenericAPIView):
                 "likes":0,
                 "comments":0,
                 "is_like":false,
-                "stack":["python","java"]}
+                "stack":["python","java"],
+                "worker": ["개발자","디자이너","기획자"]
+                }
         """
         post = self.get_object(pk)
         serializer = CommonBoardSerializer(post,context={'request': request})
@@ -175,7 +183,7 @@ class CommonBoardDetailAPIView(GenericAPIView):
                     "image":null,
                     "user":3,
                     "stack":["python", "java"],
-                    "worker": "개발자"
+                    "worker": ["개발자","디자이너","기획자"]
                 }
         """
         post = self.get_object(pk)
@@ -281,6 +289,7 @@ class RecruitmentBoardPostListAPIView(GenericAPIView):
                     "end_date": "2021-09-13",
                     "status": true,
                     "stack":["spring","vue"]
+
                 }
         """
         serializer = RecruitmentBoardSerializer(data=request.data,context={'request': request})
@@ -288,11 +297,17 @@ class RecruitmentBoardPostListAPIView(GenericAPIView):
             serializer.save()
             board = RecruitmentBoard.objects.get(id=serializer.data['id'])
             names = request.data['stack']
+            filters = request.data['worker']
             for name in names:
                 if not name:
                     continue
                 _name, _ = Tag.objects.get_or_create(name=name)
                 board.stack.add(_name)
+            for filter in filters:
+                if not filter:
+                    continue
+                _filter, _ = ChoicesFilter.objects.get_or_create(workers=filter)
+                board.worker.add(_filter)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -615,7 +630,7 @@ class BoardMyListAPIView(GenericAPIView):
                 ]
         """
         boards = CommonBoard.objects.filter(user=pk)
-        serializer = CommonBoardSerializer(boards, many=True)
+        serializer = CommonBoardSerializer(boards, many=True,context={'request': request})
         return Response(serializer.data)
 
 class RecruitmentBoardPostMyListAPIView(GenericAPIView):
@@ -698,5 +713,5 @@ class RecruitmentBoardPostMyListAPIView(GenericAPIView):
                 ]
         """
         boards = RecruitmentBoard.objects.filter(user=pk)
-        serializer = RecruitmentBoardSerializer(boards, many=True)
+        serializer = RecruitmentBoardSerializer(boards, many=True,context={'request': request})
         return Response(serializer.data)
