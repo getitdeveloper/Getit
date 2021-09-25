@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { RootStateOrAny, useSelector, useDispatch } from 'react-redux';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import moment from 'moment';
 import { COMMENT_REGISTER_REQUEST, COMMENT_REQUEST } from '@reducers/actions';
 import { PageContainer } from '@assets/styles/page';
 import UserImg from '@assets/icons/user.svg';
+import LoadingSpinner from '@components/LoadingSpinner';
 import {
   CommentWrapper,
   CommentInput,
@@ -71,7 +71,7 @@ function Comments(props: any) {
   };
 
   if (!commentList) {
-    return <CircularProgress />;
+    return <LoadingSpinner />;
   }
 
   return (
