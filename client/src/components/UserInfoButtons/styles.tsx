@@ -10,7 +10,7 @@ export const UserInfoWrapper = styled.div`
   p {
     font-size: 1.5rem;
 
-    @media ${({ theme }) => theme.mobile} {
+    @media ${({ theme }) => theme.tablet} {
       display: none;
     }
   }

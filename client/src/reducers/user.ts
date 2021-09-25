@@ -30,18 +30,6 @@ const initialState: InitialState = {
   nickDoubleCheck: {
     duplicate: null,
   },
-  profile: {
-    user: null,
-    user_id: null,
-    nickname: null,
-    job: null,
-    developer_level: null,
-    designer_and_pm_level: null,
-    image: null,
-    email: null,
-    info: null,
-    git: null,
-  },
   profileInfo: null,
   portfolio: null,
   userLogInRequest: false,
@@ -147,7 +135,7 @@ const reducer = (state = initialState, action: UserActions): InitialState =>
         draft.userProfileRegisterRequest = false;
         draft.userProfileRegisterSuccess = true;
         draft.userProfileRegisterFailure = null;
-        draft.profile = action.data;
+        draft.profileInfo = action.data;
         break;
       case USER_PROFILE_REGISTER_FAILURE:
         draft.userProfileRegisterRequest = false;

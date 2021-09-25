@@ -70,7 +70,7 @@ function Header(): JSX.Element {
 
         {/* 로그인한 경우  */}
         <RightHeaderWrapper>
-          {profileInfo ? (
+          {profileInfo?.nickname ? (
             <UserInfoButtons nickname={profileInfo.nickname} />
           ) : (
             // 로그인하지 않은 경우
