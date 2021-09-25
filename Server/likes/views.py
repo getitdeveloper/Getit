@@ -86,7 +86,7 @@ class CommonBoardLikeAPIView(GenericAPIView):
 
 class CommonBoardLikePostAPIView(GenericAPIView):
     serializer_class = CommonBoardLikePostSerializer
-    permission_classes = [LikePostIsOwnerOnly]
+    permission_classes = [IsOwnerOrReadOnly]
     
     def get(self, request, user_id):
         """
