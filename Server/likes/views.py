@@ -54,7 +54,7 @@ class CommonBoardLikeAPIView(GenericAPIView):
                 ]
         """
         likes = CommonBoardLike.objects.filter(commonpost_id=board_id)
-        serializer = CommonBoardLikeSerializer(likes, many=True)
+        serializer = CommonBoardLikeSerializer(likes, many=True,context={'request': request})
         return Response(serializer.data)
 
     def post(self, request, board_id):
@@ -166,7 +166,7 @@ class RecruitmentBoardLikeAPIView(GenericAPIView):
                 ]
         """
         likes = RecruitBoardLike.objects.filter(recruitpost_id=board_id)
-        serializer = RecruitBoardLikeSerializer(likes, many=True)
+        serializer = RecruitBoardLikeSerializer(likes, many=True,context={'request': request})
         return Response(serializer.data)
 
     def post(self, request, board_id):
@@ -281,5 +281,5 @@ class RecruitmentBoardLikePostAPIView(GenericAPIView):
                 ]
         """
         posts = RecruitBoardLike.objects.filter(user=user_id)
-        serializer = RecruitBoardLikePostSerializer(posts, many=True)
+        serializer = RecruitBoardLikePostSerializer(posts, many=True,context={'request': request})
         return Response(serializer.data)
