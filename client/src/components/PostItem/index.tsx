@@ -3,13 +3,13 @@ import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector, RootStateOrAny } from 'react-redux';
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+import DateRangeIcon from '@material-ui/icons/DateRange';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import moment from 'moment';
-import { HorizontalLine } from '@assets/styles/commons';
+import { HorizontalLine, IconButton } from '@assets/styles/commons';
 import { COMMON_POST_LIKE_REQUEST } from '@reducers/actions';
 import MemberType from '@components/RecruitMembers/index';
 import userIcon from '@assets/icons/userIcon.svg';
-import CalendarImg from '@assets/icons/calendar.svg';
 import {
   WriterButton,
   PostWrapper,
@@ -22,7 +22,6 @@ import {
   DetailInfo,
   WriterImage,
   WriterName,
-  LikeButton,
   MobileWriterDetailWrapper,
 } from './styles';
 
@@ -87,7 +86,6 @@ function PostItem(props: any): JSX.Element {
     }
   };
 
-  console.log(content);
   return (
     <div>
       <PostWrapper>
@@ -110,16 +108,17 @@ function PostItem(props: any): JSX.Element {
           <WriterImage src={userIcon} alt='writer-profile' width='15%' />
           <WriterName>{content.user.profile.nickname}</WriterName>
         </MobileWriterDetailWrapper>
+
         <PostDetailWrapper>
-          <img src={CalendarImg} alt='write-date' />
+          <DateRangeIcon htmlColor='#868686' />
           <DetailInfo>
             {moment(content.create_at).format('YYYY년 MM월 DD일')}
           </DetailInfo>
 
-          <LikeButton type='button' onClick={onHandleLike}>
+          <IconButton type='button' onClick={onHandleLike}>
             {!likeStatus && <FavoriteBorderIcon htmlColor='#868686' />}
             {likeStatus && <FavoriteIcon htmlColor='#868686' />}
-          </LikeButton>
+          </IconButton>
           <DetailInfo>{likes}</DetailInfo>
 
           <ChatBubbleOutlineIcon htmlColor='#868686' />

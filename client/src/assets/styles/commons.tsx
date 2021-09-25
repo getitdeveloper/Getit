@@ -20,3 +20,11 @@ export const Stack = styled.div`
   display: flex;
   align-items: center;
 `;
+
+export const IconButton = styled.button`
+  background-color: transparent;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  cursor: pointer;
+`;

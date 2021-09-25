@@ -78,8 +78,9 @@ export interface IComment {
   commonpost?: number;
   recruitpost?: number;
   content: string;
-  create_at?: string;
+  create_at: string;
 }
+
 // 수정하기TODO
 // export interface ISearchPost {
 

@@ -133,13 +133,3 @@ export const DetailInfo = styled.span`
   margin-left: 0.4rem;
   margin-right: 1rem;
 `;
-
-export const LikeButton = styled.button`
-  margin: 0;
-  padding: 0;
-  border: 0;
-  background-color: transparent;
-  &: hover {
-    cursor: pointer;
-  }
-`;
