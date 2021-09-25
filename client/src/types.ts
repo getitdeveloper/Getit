@@ -24,6 +24,10 @@ export interface IBoard {
   results: IPostItem[];
 }
 
+export interface ILikedPost {
+  commonpost: IPostItem;
+}
+
 export interface IPostItem {
   id: number;
   title: string;
@@ -41,7 +45,7 @@ export interface IPostItem {
   likes?: number;
   comments?: number;
   is_like?: boolean;
-  worker: string;
+  worker: Array<string>;
   stack: Array<string>;
 }
 
@@ -55,7 +59,7 @@ export interface IPost {
   user: number;
   likes?: number;
   comments?: number;
-  worker: string;
+  worker: Array<string>;
   stack: Array<string>;
 }
 
@@ -78,8 +82,9 @@ export interface IComment {
   commonpost?: number;
   recruitpost?: number;
   content: string;
-  create_at?: string;
+  create_at: string;
 }
+
 // 수정하기TODO
 // export interface ISearchPost {
 

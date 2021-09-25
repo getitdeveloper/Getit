@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { useEffect } from 'react';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
-import { MY_POST_LIST_REQUEST } from '../../reducers/actions';
-import { ProfileRight, PostWrapper, SubTitle } from './styles';
-import PostItem from '../PostItem';
-import { IPost } from '../../types';
-import LoadingSpinner from '../LoadingSpinner';
+import { MY_POST_LIST_REQUEST } from '@reducers/actions';
+import { IPost } from '@types';
+import LoadingSpinner from '@components/LoadingSpinner';
+import MemberType from '@components/RecruitMembers/index';
+import { ProfileRight, PostWrapper, TagWrapper, PostTitle } from './styles';
 
 function MyPosts() {
   const userId = useSelector((state: RootStateOrAny) => state.user.id.user_pk);
@@ -27,10 +27,14 @@ function MyPosts() {
   }
   return (
     <ProfileRight>
-      <p> 내가 쓴 글 </p>
       {myPosts.map((content: IPost) => (
         <PostWrapper key={content.id}>
-          <PostItem content={content} detail />
+          <TagWrapper>
+            {content.worker.map((workerType: string) => (
+              <MemberType key={workerType} member={workerType} />
+            ))}
+          </TagWrapper>
+          <PostTitle>{content.title}</PostTitle>
         </PostWrapper>
       ))}
     </ProfileRight>

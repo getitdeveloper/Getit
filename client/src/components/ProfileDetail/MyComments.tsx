@@ -1,18 +1,19 @@
 import * as React from 'react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import moment from 'moment';
 import 'moment/locale/ko';
+import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
-import { MY_COMMENT_REQUEST } from '../../reducers/actions';
+import { MY_COMMENT_REQUEST } from '@reducers/actions';
+import { IconButton } from '@assets/styles/commons';
+import { IComment } from '@types';
+import LoadingSpinner from '@components/LoadingSpinner';
 import {
   ProfileRight,
-  SubTitle,
   CommentWrapper,
   CommentDetailWrapper,
-  GoBoardButton,
+  CommentDate,
 } from './styles';
-import { IComment } from '../../types';
-import LoadingSpinner from '../LoadingSpinner';
 
 function MyComments() {
   const userId = useSelector((state: RootStateOrAny) => state.user.id.user_pk);
@@ -20,6 +21,9 @@ function MyComments() {
     (state: RootStateOrAny) => state.comment.myComment,
   );
   const dispatch = useDispatch();
+  const initialCreatedDate: string[] = [];
+  const [createdDate, setCreatedDate] = useState(initialCreatedDate);
+  const [hideDate, setHideDate] = useState(true);
 
   useEffect(() => {
     dispatch({
@@ -35,16 +39,22 @@ function MyComments() {
   }
   return (
     <ProfileRight>
-      <p>내가 쓴 댓글</p>
       {myComments.map((content: IComment) => (
-        <CommentWrapper key={content.create_at}>
-          <CommentDetailWrapper>
-            <p>{content.content}</p>
-            <p>{moment(`${content.create_at}`).fromNow()}</p>
-          </CommentDetailWrapper>
+        <div key={content.create_at}>
+          <CommentDate>
+            {moment(`${content.create_at}`).format('YYYY.MM.DD')}
+          </CommentDate>
+          <CommentWrapper>
+            <CommentDetailWrapper>
+              <p>{content.content}</p>
+              <p>{moment(`${content.create_at}`).fromNow()}</p>
+            </CommentDetailWrapper>
 
-          <GoBoardButton type='button'>게시물로 가기</GoBoardButton>
-        </CommentWrapper>
+            <IconButton>
+              <NavigateNextIcon htmlColor='#707070' />
+            </IconButton>
+          </CommentWrapper>
+        </div>
       ))}
     </ProfileRight>
   );

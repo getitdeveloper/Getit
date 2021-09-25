@@ -6,7 +6,7 @@ export const PostWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  padding-top: 3.5rem;
+  margin-top: 3.5rem;
   @media ${(props) => props.theme.mobile} {
     flex-direction: column;
   }
@@ -132,14 +132,4 @@ export const DetailInfo = styled.span`
   color: #868686;
   margin-left: 0.4rem;
   margin-right: 1rem;
-`;
-
-export const LikeButton = styled.button`
-  margin: 0;
-  padding: 0;
-  border: 0;
-  background-color: transparent;
-  &: hover {
-    cursor: pointer;
-  }
 `;

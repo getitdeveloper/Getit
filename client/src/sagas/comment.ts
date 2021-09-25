@@ -58,7 +58,7 @@ function* requestCommentRegisterSaga(action: any): any {
   }
 }
 
-// 내가 쓴 댓글 받아오기
+// 자유/질문게시글에 내가 쓴 댓글 받아오기
 const requestMyComment = (data: any) => {
   return axios.get(`/api/mycommoncomment/${data.user}`);
 };
