@@ -96,7 +96,9 @@ function PostItem(props: any): JSX.Element {
 
         <PostInfoButton onClick={onHandlePost}>
           <TagWrapper>
-            <MemberType member={content.worker} />
+            {content.worker.map((workerType: string) => (
+              <MemberType key={workerType} member={workerType} />
+            ))}
           </TagWrapper>
           <PostTitle>{content.title}</PostTitle>
           {detail ? null : <PostText>{content.content}</PostText>}

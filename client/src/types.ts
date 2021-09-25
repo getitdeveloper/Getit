@@ -41,7 +41,7 @@ export interface IPostItem {
   likes?: number;
   comments?: number;
   is_like?: boolean;
-  worker: string;
+  worker: Array<string>;
   stack: Array<string>;
 }
 
@@ -55,7 +55,7 @@ export interface IPost {
   user: number;
   likes?: number;
   comments?: number;
-  worker: string;
+  worker: Array<string>;
   stack: Array<string>;
 }
 

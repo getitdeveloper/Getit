@@ -22,6 +22,7 @@ import {
 
 function PostForm(): JSX.Element {
   const initialStack: string[] = [];
+  const initialWorker: string[] = [];
   const history = useHistory();
   const dispatch = useDispatch();
   const boardType = history.location.state;
@@ -34,6 +35,7 @@ function PostForm(): JSX.Element {
   const [hidden, setHidden] = useState(false);
   const [currentTab, setCurrentTab] = useState('edit');
   const [stacks, setStacks] = useState(initialStack);
+  const [workers, setWorkers] = useState(initialWorker);
 
   const onChange = (e: any) => {
     const { name, value } = e.target;
@@ -68,18 +70,30 @@ function PostForm(): JSX.Element {
     const filtered = stacks.filter((element) => element !== currentStack);
     setStacks(filtered);
   };
+
+  const onHandleWorker = (e: any) => {
+    const { value } = e.target;
+    if (workers.includes(value)) {
+      setWorkers(workers.filter((item) => item !== value));
+    } else {
+      setWorkers([...workers, value]);
+    }
+  };
+
   const onSubmit = () => {
     if (postTitle === '' || text === '') {
       return alert('제목과 내용은 필수로 입력하셔야 합니다!');
     }
-    console.log(stacks);
+    if (workers.length === 0) {
+      return alert('적어도 하나의 관련 직무를 선택해주세요!');
+    }
     const postData = {
       title: postTitle,
       category: boardType,
       content: text,
       user: userId,
       stack: stacks,
-      worker: '개발자',
+      worker: workers,
     };
     console.log(postData);
     try {
@@ -105,9 +119,27 @@ function PostForm(): JSX.Element {
       />
       <WorkerWrapper>
         <span> 작성하시는 글과 연관된 직무를 선택해주세요! </span>
-        <input type='checkbox' name='worker' value='개발자' /> 개발자
-        <input type='checkbox' name='worker' value='디자이너' /> 디자이너
-        <input type='checkbox' name='worker' value='기획자' /> 기획자
+        <input
+          type='checkbox'
+          name='worker'
+          value='개발자'
+          onClick={onHandleWorker}
+        />{' '}
+        개발자
+        <input
+          type='checkbox'
+          name='worker'
+          value='디자이너'
+          onClick={onHandleWorker}
+        />{' '}
+        디자이너
+        <input
+          type='checkbox'
+          name='worker'
+          value='기획자'
+          onClick={onHandleWorker}
+        />{' '}
+        기획자
       </WorkerWrapper>
       <TextFormTab id='edit' type='button' onClick={(e) => onHidden(false, e)}>
         작성하기
