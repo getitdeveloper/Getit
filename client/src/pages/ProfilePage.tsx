@@ -13,7 +13,6 @@ function ProfilePage(): JSX.Element {
     (state: RootStateOrAny) => state.user.profileInfo,
   );
   const history = useHistory();
-  console.log(profileInfo);
 
   React.useEffect(() => {
     dispatch({
@@ -32,7 +31,6 @@ function ProfilePage(): JSX.Element {
   return (
     <div>
       <PageBackground>
-        <PageTitle>내 프로필</PageTitle>
         <ProfileDetail />
       </PageBackground>
     </div>

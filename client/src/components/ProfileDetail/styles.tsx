@@ -155,6 +155,21 @@ export const PostWrapper = styled.div`
   box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.16);
   border: solid 1px #fbfbfb;
   background-color: #fff;
-  padding: 2%;
+  padding: 1rem 2rem;
   border-radius: 7px;
+  margin-bottom: 3rem;
+`;
+
+export const TagWrapper = styled.div`
+  margin-bottom: 0.8rem;
+  display: flex;
+`;
+
+export const PostTitle = styled.p`
+  width: 100%;
+  margin-bottom: 0.4rem;
+  padding: 0;
+  font-weight: 500;
+  font-size: 1.2rem;
+  text-align: left;
 `;

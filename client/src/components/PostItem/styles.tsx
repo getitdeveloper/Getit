@@ -6,7 +6,7 @@ export const PostWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  padding-top: 3.5rem;
+  margin-top: 3.5rem;
   @media ${(props) => props.theme.mobile} {
     flex-direction: column;
   }
