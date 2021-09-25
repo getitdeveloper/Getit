@@ -308,3 +308,8 @@ def dequote(access_token):
     if (access_token[0] == access_token[-1]) and access_token.startswith(("'", '"')):
         return access_token[1:-1]
     return access_token
+
+def logout(request):
+    res = JsonResponse({})
+    res.delete_cookie('Authorization', samesite=None)
+    return res

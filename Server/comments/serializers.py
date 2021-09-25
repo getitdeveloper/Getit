@@ -7,6 +7,8 @@ from accounts.models import User
 
 from boards.models import CommonBoard
 
+from boards.models import RecruitmentBoard
+
 
 class SpecificAuthorProfile(ModelSerializer):
     class Meta:
@@ -26,7 +28,7 @@ class BoardPlusCommentSerializer(ModelSerializer):
 
 class ReBoardPlusCommentSerializer(ModelSerializer):
     class Meta:
-        model = CommonBoard
+        model = RecruitmentBoard
         fields = ('title','category','worker',)
 
 class CommonCommentSerializer(ModelSerializer):
