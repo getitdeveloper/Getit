@@ -19,6 +19,9 @@ import {
   SEARCH_POST_REQUEST,
   SEARCH_POST_SUCCESS,
   SEARCH_POST_FAILURE,
+  LIKED_POST_LIST_REQUEST,
+  LIKED_POST_LIST_SUCCESS,
+  LIKED_POST_LIST_FAILURE,
 } from '../reducers/actions';
 import { BoardData, PostData } from './boardTypes';
 
@@ -92,9 +95,9 @@ function* requestCommonPostRegisterSaga(action: any): any {
   }
 }
 
-// 내가 쓴 게시글 받아오기
+// 내가 쓴 자유/질문 게시글 받아오기
 const requestMyPostList = (data: any) => {
-  return axios.get(`/api/mycommonboard/${data.user}`);
+  return axios.get(`/api/mycommonboard/${data.user}/`);
 };
 
 function* requestMyPostListSaga(action: any): any {
@@ -110,6 +113,29 @@ function* requestMyPostListSaga(action: any): any {
     console.error(error);
     yield put({
       type: MY_POST_LIST_FAILURE,
+      error,
+    });
+  }
+}
+
+// 좋아요 누른 게시글 받아오기
+const requestLikedPostList = (data: any) => {
+  return axios.get(`/api/commonlikepost/${data.user}/`);
+};
+
+function* requestLikedPostListSaga(action: any): any {
+  try {
+    const response = yield call(requestLikedPostList, action.data);
+    console.log('좋아요 누른 글 정보 응답 ===>', response);
+
+    yield put({
+      type: LIKED_POST_LIST_SUCCESS,
+      data: response.data,
+    });
+  } catch (error) {
+    console.error(error);
+    yield put({
+      type: LIKED_POST_LIST_FAILURE,
       error,
     });
   }
@@ -137,6 +163,7 @@ function* requestCommonPostLikeSaga(action: any): any {
     });
   }
 }
+
 // 게시글 검색
 const requestSearchPost = (data: string) => {
   return axios.get(`/api/wholepost/?search=${data}`);
@@ -175,6 +202,11 @@ function* watchRequestCommonPostRegister() {
 function* watchRequestMyPostList() {
   yield takeLatest(MY_POST_LIST_REQUEST, requestMyPostListSaga);
 }
+
+function* watchRequestLikedPostList() {
+  yield takeLatest(LIKED_POST_LIST_REQUEST, requestLikedPostListSaga);
+}
+
 function* watchRequestSearchPost() {
   yield takeLatest(SEARCH_POST_REQUEST, requestSearchPostSaga);
 }
@@ -191,6 +223,7 @@ function* boardSaga() {
     fork(watchRequestMyPostList),
     fork(watchRequestCommonPostLike),
     fork(watchRequestSearchPost),
+    fork(watchRequestLikedPostList),
   ]);
 }
 

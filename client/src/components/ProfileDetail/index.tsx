@@ -10,6 +10,7 @@ import {
 import MyProfile from './MyProfile';
 import MyComments from './MyComments';
 import MyPosts from './MyPosts';
+import LikedPosts from './LikedPosts';
 import { navItem } from './types';
 
 function ProfileDetail(): JSX.Element {
@@ -40,6 +41,7 @@ function ProfileDetail(): JSX.Element {
       <VerticalLine />
 
       {selectMenu === 0 && <MyProfile />}
+      {selectMenu === 2 && <LikedPosts />}
       {selectMenu === 3 && <MyPosts />}
       {selectMenu === 4 && <MyComments />}
     </SplittedPageContainer>

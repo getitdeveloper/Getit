@@ -24,6 +24,10 @@ export interface IBoard {
   results: IPostItem[];
 }
 
+export interface ILikedPost {
+  commonpost: IPostItem;
+}
+
 export interface IPostItem {
   id: number;
   title: string;

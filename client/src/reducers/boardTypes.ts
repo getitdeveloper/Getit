@@ -1,4 +1,4 @@
-import { IBoard, IPostItem } from '../types';
+import { IBoard, ILikedPost, IPostItem } from '../types';
 import {
   COMMON_BOARD_REQUEST,
   COMMON_BOARD_SUCCESS,
@@ -18,12 +18,16 @@ import {
   SEARCH_POST_REQUEST,
   SEARCH_POST_SUCCESS,
   SEARCH_POST_FAILURE,
+  LIKED_POST_LIST_REQUEST,
+  LIKED_POST_LIST_SUCCESS,
+  LIKED_POST_LIST_FAILURE,
 } from './actions';
 
 export interface InitialState {
   postContent: IPostItem | null;
   boardList: IBoard | null;
   myPostList: Array<IPostItem> | null;
+  likedPostList: Array<ILikedPost> | null;
   likeCounts: { counts: number } | null;
   // TODO 수정하기
   searchPostList: any | null;
@@ -45,6 +49,9 @@ export interface InitialState {
   searchPostRequest: boolean;
   searchPostSuccess: boolean;
   searchPostFailure: string | null;
+  likedPostListRequest: boolean;
+  likedPostListSuccess: boolean;
+  likedPostListFailure: string | null;
 }
 
 // 자유/질문게시판 받아오기
@@ -106,6 +113,7 @@ export interface MyPostListFailure {
   type: typeof MY_POST_LIST_FAILURE;
   error: string;
 }
+
 export interface SearchPostRequest {
   type: typeof SEARCH_POST_REQUEST;
 }
@@ -138,6 +146,21 @@ export interface CommonPostLikeFailure {
   error: string;
 }
 
+// 좋아요 누른 글 가져오기
+export interface LikedPostListRequest {
+  type: typeof LIKED_POST_LIST_REQUEST;
+}
+
+export interface LikedPostListSuccess {
+  type: typeof LIKED_POST_LIST_SUCCESS;
+  data: Array<ILikedPost>;
+}
+
+export interface LikedPostListFailure {
+  type: typeof LIKED_POST_LIST_FAILURE;
+  error: string;
+}
+
 export type BoardActions =
   | CommonBoardRequest
   | CommonBoardSuccess
@@ -156,4 +179,7 @@ export type BoardActions =
   | CommonPostLikeFailure
   | SearchPostRequest
   | SearchPostSuccess
-  | SearchPostFailure;
+  | SearchPostFailure
+  | LikedPostListRequest
+  | LikedPostListSuccess
+  | LikedPostListFailure;
