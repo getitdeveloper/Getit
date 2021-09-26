@@ -80,7 +80,8 @@ class google_callback(APIView):
                 'access_token': access_token,
                 'nickname':nickname,
             'user_pk':upk})
-
+            res.set_cookie(key='getit', value=access_token,
+                           domain='getittest.shop', samesite=None)
             return res
         except:
             data = {'access_token': access_token}
@@ -99,7 +100,8 @@ class google_callback(APIView):
                 'message': 'register',
                 'access_token': access_token,
             })
-            
+            res.set_cookie(key='getit', value=access_token,
+                           domain='getittest.shop', samesite=None)
             return res
 
 class GoogleLogin(SocialLoginView):
