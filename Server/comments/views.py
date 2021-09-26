@@ -3,7 +3,7 @@ from drf_yasg.utils import swagger_auto_schema
 from rest_framework.generics import get_object_or_404, GenericAPIView
 from rest_framework.parsers import MultiPartParser
 from .models import CommonComment, RecruitComment
-from .serializers import CommonCommentSerializer, RecruitCommentSerializer
+from .serializers import CommonCommentSerializer, MyCommonCommentSerializer, MyRecruitCommentSerializer, RecruitCommentSerializer
 from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -141,7 +141,7 @@ class CommonCommentDetailAPIView(GenericAPIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 class CommonCommentMyListAPIView(GenericAPIView):
-    serializer_class = CommonCommentSerializer
+    serializer_class = MyCommonCommentSerializer
 
     def get(self, request, pk):
         """
@@ -165,7 +165,7 @@ class CommonCommentMyListAPIView(GenericAPIView):
                 ]
         """
         comments = CommonComment.objects.filter(user=pk)
-        serializer = CommonCommentSerializer(comments, many=True)
+        serializer = MyCommonCommentSerializer(comments, many=True)
         return Response(serializer.data)
 
 class RecruitCommentListAPIView(GenericAPIView):
@@ -295,7 +295,7 @@ class RecruitCommentDetailAPIView(GenericAPIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 class RecruitCommentMyListAPIView(GenericAPIView):
-    serializer_class = RecruitCommentSerializer
+    serializer_class = MyRecruitCommentSerializer
 
     def get(self, request, pk):
         """
@@ -319,5 +319,5 @@ class RecruitCommentMyListAPIView(GenericAPIView):
                 ]
         """
         comments = RecruitComment.objects.filter(user=pk)
-        serializer = RecruitCommentSerializer(comments, many=True)
+        serializer = MyRecruitCommentSerializer(comments, many=True)
         return Response(serializer.data)
