@@ -79,7 +79,7 @@ class google_callback(APIView):
                 'message': 'login',
                 'access_token': access_token,
                 'nickname':nickname,
-            'pk':upk})
+            'user_pk':upk})
             res.set_cookie(key='Authorization', value=access_token, httponly=True,
                            domain='getittest.shop', samesite=None)
             return res
@@ -174,7 +174,7 @@ class github_callback(APIView):
             access_token = accept_json['access_token']
             accept_json.pop('user', None)
             res = JsonResponse({
-                'message': 'login','access_token': access_token,'nickname':nickname,'pk':upk})
+                'message': 'login','access_token': access_token,'nickname':nickname,'user_pk':upk})
             res.set_cookie(key='Authorization', value=access_token, httponly=True,
                            domain='getittest.shop', samesite=None)
             return res
@@ -267,7 +267,7 @@ class kakao_callback(APIView):
             access_token = accept_json['access_token']
             accept_json.pop('user', None)
             res = JsonResponse({
-                'message': 'login','access_token': access_token,'nickname':nickname,'pk':upk})
+                'message': 'login','access_token': access_token,'nickname':nickname,'user_pk':upk})
             res.set_cookie(key='Authorization', value=access_token, httponly=True,
                            domain='getittest.shop', samesite=None)
             return res
