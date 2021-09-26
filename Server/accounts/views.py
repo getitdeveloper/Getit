@@ -80,7 +80,7 @@ class google_callback(APIView):
                 'access_token': access_token,
                 'nickname':nickname,
             'user_pk':upk})
-            res.set_cookie(key='Authorization', value=access_token, httponly=True,
+            res.set_cookie(key='Authorization', value=access_token,
                            domain='getittest.shop', samesite=None)
             return res
         except:
@@ -100,7 +100,7 @@ class google_callback(APIView):
                 'message': 'register',
                 'access_token': access_token,
             })
-            res.set_cookie(key='Authorization', value=access_token, httponly=True,
+            res.set_cookie(key='Authorization', value=access_token,
                            domain='getittest.shop', samesite=None)
             return res
 
@@ -175,7 +175,7 @@ class github_callback(APIView):
             accept_json.pop('user', None)
             res = JsonResponse({
                 'message': 'login','access_token': access_token,'nickname':nickname,'user_pk':upk})
-            res.set_cookie(key='Authorization', value=access_token, httponly=True,
+            res.set_cookie(key='Authorization', value=access_token,
                            domain='getittest.shop', samesite=None)
             return res
         except:
@@ -194,7 +194,7 @@ class github_callback(APIView):
             accept_json.pop('user', None)
             res = JsonResponse({
                 'message': 'register','access_token': access_token})
-            res.set_cookie(key='Authorization', value=access_token, httponly=True,
+            res.set_cookie(key='Authorization', value=access_token,
                            domain='getittest.shop', samesite=None)
             return res
 
@@ -268,7 +268,7 @@ class kakao_callback(APIView):
             accept_json.pop('user', None)
             res = JsonResponse({
                 'message': 'login','access_token': access_token,'nickname':nickname,'user_pk':upk})
-            res.set_cookie(key='Authorization', value=access_token, httponly=True,
+            res.set_cookie(key='Authorization', value=access_token,
                            domain='getittest.shop', samesite=None)
             return res
         except:
@@ -287,7 +287,7 @@ class kakao_callback(APIView):
             accept_json.pop('user', None)
             res = JsonResponse({
                 'message': 'register','access_token': access_token})
-            res.set_cookie(key='Authorization', value=access_token, httponly=True,
+            res.set_cookie(key='Authorization', value=access_token,
                            domain='getittest.shop', samesite=None)
             return res
 
