@@ -28,7 +28,7 @@ def status_check(request):
     """
     유저 정보 요청에 응답하는 함수
     """
-    access_token = request.COOKIES["Authorization"]
+    access_token = request.COOKIES["getit"]
     payload = jwt.decode(access_token, SECRET_KEY, 'HS256')
     user_id = payload['user_id']
     profile = Profile.objects.get(id=user_id)
