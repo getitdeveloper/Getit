@@ -5,7 +5,7 @@ export interface ResponseUserInfo {
     message: string;
     // ! 로컬 테스트용
     access_token: string;
-    pk: number;
+    user_pk: number;
   };
 }
 

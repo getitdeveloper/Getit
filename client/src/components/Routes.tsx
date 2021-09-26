@@ -5,7 +5,7 @@ import { useSelector, RootStateOrAny, useDispatch } from 'react-redux';
 import axios from 'axios';
 import Header from '@components/Header/index';
 import { routeList } from '@components/routeList';
-import { USER_PROFILE_REQUEST } from '@reducers/actions';
+import { USER_LOGIN_SUCCESS, USER_PROFILE_REQUEST } from '@reducers/actions';
 
 function Routes(): JSX.Element {
   const dispatch = useDispatch();
@@ -20,31 +20,19 @@ function Routes(): JSX.Element {
     }
   }, [message]);
 
-  //! 배포용
-  // useEffect(() => {
-  //   axios
-  //     .get('/')
-  //     .then((res) => {
-  //       console.log('서버와 쿠키 공유 상태 ===> ', res);
-  //       dispatch({
-  //         type: USER_PROFILE_REQUEST,
-  //         data: {
-  //           user_pk: res.data.user_pk,
-  //         },
-  //       });
-  //     })
-  //     .catch((error) => console.log('서버와 쿠키 공유 상태 ===>', error));
-  // }, [message]);
-
-  //! 로컬 테스트용
-  const userId = useSelector((state: RootStateOrAny) => state.user.id.pk);
   useEffect(() => {
-    dispatch({
-      type: USER_PROFILE_REQUEST,
-      data: {
-        user_pk: userId,
-      },
-    });
+    axios
+      .get('/')
+      .then((response) => {
+        console.log('서버와 쿠키 공유 상태 ===> ', response);
+        dispatch({
+          type: USER_PROFILE_REQUEST,
+          data: {
+            user_pk: response.data.user_pk,
+          },
+        });
+      })
+      .catch((error) => console.log('서버와 쿠키 공유 상태 ===>', error));
   }, [message]);
 
   return (

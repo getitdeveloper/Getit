@@ -2,7 +2,6 @@ import axios from 'axios';
 import { all, fork } from 'redux-saga/effects';
 import boardSaga from './board';
 import commentSaga from './comment';
-
 import userSaga from './user';
 
 // axios 요청 기본 주소
@@ -13,9 +12,6 @@ axios.defaults.baseURL =
 
 // cookie 전송을 위한 설정
 axios.defaults.withCredentials = true;
-
-// const accessToken = response.data.accept_json.access_token;
-// axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
 
 export default function* rootSaga(): Generator {
   yield all([fork(userSaga)]);

@@ -26,8 +26,7 @@ const initialState: InitialState = {
   id: {
     message: null,
     // ! 로컬테스트용
-    pk: null,
-    nickname: null,
+    user_pk: null,
   },
   nickDoubleCheck: {
     duplicate: null,
@@ -146,7 +145,7 @@ const reducer = (state = initialState, action: UserActions): InitialState =>
         break;
       case USER_REGISTER_RESET:
         draft.userRegisterReset = true;
-        draft.id = { message: null, pk: null, nickname: null };
+        draft.id = { message: null, user_pk: null };
         break;
       case USER_ID_UPDATE:
         draft.userRegisterReset = true;
