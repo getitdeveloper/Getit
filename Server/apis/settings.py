@@ -82,9 +82,9 @@ REST_FRAMEWORK = {
         # 'rest_framework.permissions.IsAuthenticatedOrReadOnly',
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        #'rest_framework_simplejwt.authentication.JWTAuthentication',
         'dj_rest_auth.jwt_auth.JWTCookieAuthentication',
-        'rest_framework.authentication.TokenAuthentication'
+        #'rest_framework.authentication.TokenAuthentication'
     ]
 }
 
@@ -247,5 +247,5 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 REST_USE_JWT = True
-JWT_AUTH_COOKIE = 'jwt-auth'
+JWT_AUTH_COOKIE = 'get_it'
 APPEND_SLASH = True
