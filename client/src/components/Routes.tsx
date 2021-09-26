@@ -37,7 +37,7 @@ function Routes(): JSX.Element {
   // }, [message]);
 
   //! 로컬 테스트용
-  const userId = useSelector((state: RootStateOrAny) => state.user.id.user_pk);
+  const userId = useSelector((state: RootStateOrAny) => state.user.id.pk);
   useEffect(() => {
     dispatch({
       type: USER_PROFILE_REQUEST,

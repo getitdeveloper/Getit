@@ -24,7 +24,9 @@ import {
 export interface InitialState {
   id: {
     message: string | null;
-    user_pk: number | null;
+    // !로컬 테스트용
+    pk: number | null;
+    nickname: string | null;
   };
   nickDoubleCheck: {
     duplicate: null | string;
@@ -61,7 +63,8 @@ export interface UserLogInSuccess {
   type: typeof USER_LOGIN_SUCCESS;
   data: {
     message: string;
-    user_pk: number;
+    pk: number;
+    nickname: string;
   };
 }
 
@@ -79,7 +82,8 @@ export interface UserLogOutSuccess {
   type: typeof USER_LOGOUT_SUCCESS;
   data: {
     message: string;
-    user_pk: number;
+    pk: number;
+    nickname: string;
   };
 }
 
@@ -145,7 +149,8 @@ export interface IUserIdUpdate {
   type: typeof USER_ID_UPDATE;
   data: {
     message: string;
-    user_pk: number;
+    pk: number;
+    nickname: string;
   };
 }
 
