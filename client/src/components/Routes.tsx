@@ -20,19 +20,31 @@ function Routes(): JSX.Element {
     }
   }, [message]);
 
+  //! 배포용
+  // useEffect(() => {
+  //   axios
+  //     .get('/')
+  //     .then((res) => {
+  //       console.log('서버와 쿠키 공유 상태 ===> ', res);
+  //       dispatch({
+  //         type: USER_PROFILE_REQUEST,
+  //         data: {
+  //           user_pk: res.data.user_pk,
+  //         },
+  //       });
+  //     })
+  //     .catch((error) => console.log('서버와 쿠키 공유 상태 ===>', error));
+  // }, [message]);
+
+  //! 로컬 테스트용
+  const userId = useSelector((state: RootStateOrAny) => state.user.id.user_pk);
   useEffect(() => {
-    axios
-      .get('/')
-      .then((res) => {
-        console.log('서버와 쿠키 공유 상태 ===> ', res);
-        dispatch({
-          type: USER_PROFILE_REQUEST,
-          data: {
-            user_pk: res.data.user_pk,
-          },
-        });
-      })
-      .catch((error) => console.log('서버와 쿠키 공유 상태 ===>', error));
+    dispatch({
+      type: USER_PROFILE_REQUEST,
+      data: {
+        user_pk: userId,
+      },
+    });
   }, [message]);
 
   return (
