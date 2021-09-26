@@ -312,5 +312,5 @@ def duplicate_check(request):
 
 def logout(request):
     res = JsonResponse({})
-    res.delete_cookie('Authorization', domain='getittest.shop', samesite=None)
+    res.delete_cookie('getit', domain='getittest.shop', samesite=None)
     return res
