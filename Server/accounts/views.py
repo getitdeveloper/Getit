@@ -66,6 +66,7 @@ class google_callback(APIView):
             accept_json = accept.json()
             upk = accept_json.get('user')
             upk = upk['pk']
+            print(upk)
             profile = Profile.objects.get(user=upk)
             nickname = profile.nickname
             if nickname is None:
@@ -76,7 +77,9 @@ class google_callback(APIView):
             
             res = JsonResponse({
                 'message': 'login',
-                'access_token': access_token,'nickname':nickname})
+                'access_token': access_token,
+                'nickname':nickname,
+            'pk':upk})
             res.set_cookie(key='Authorization', value=access_token, httponly=True,
                            domain='getittest.shop', samesite=None)
             return res
@@ -171,7 +174,7 @@ class github_callback(APIView):
             access_token = accept_json['access_token']
             accept_json.pop('user', None)
             res = JsonResponse({
-                'message': 'login','access_token': access_token,'nickname':nickname})
+                'message': 'login','access_token': access_token,'nickname':nickname,'pk':upk})
             res.set_cookie(key='Authorization', value=access_token, httponly=True,
                            domain='getittest.shop', samesite=None)
             return res
@@ -264,7 +267,7 @@ class kakao_callback(APIView):
             access_token = accept_json['access_token']
             accept_json.pop('user', None)
             res = JsonResponse({
-                'message': 'login','access_token': access_token,'nickname':nickname})
+                'message': 'login','access_token': access_token,'nickname':nickname,'pk':upk})
             res.set_cookie(key='Authorization', value=access_token, httponly=True,
                            domain='getittest.shop', samesite=None)
             return res
