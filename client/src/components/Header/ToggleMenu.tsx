@@ -1,11 +1,13 @@
 import * as React from 'react';
 import { useState, useCallback, KeyboardEvent, MouseEvent } from 'react';
-import { useSelector, RootStateOrAny } from 'react-redux';
+import { useSelector, RootStateOrAny, useDispatch } from 'react-redux';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import Button from '@material-ui/core/Button';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Logo from '@assets/images/Logo.svg';
+import { USER_LOGOUT_REQUEST } from '@reducers/actions';
+
 import {
   StyledLink,
   MenuWrapper,
@@ -31,7 +33,6 @@ import {
 
 type Anchor = 'top' | 'left' | 'bottom' | 'right';
 
-// TODO route 채워넣기 및 로그인시 로그아웃시 다르게 보이도록 수정
 const menuList = [
   { text: '홈', icon: <StyledHomeIcon />, route: '/' },
   { text: '내 프로필', icon: <StyledPersonIcon />, route: '/myprofile' },
@@ -48,6 +49,7 @@ const menuList = [
 ];
 
 export default function ToggleMenu(): JSX.Element {
+  const dispatch = useDispatch();
   const nickname = useSelector(
     (state: RootStateOrAny) => state.user.profileInfo?.nickname,
   );
@@ -55,9 +57,9 @@ export default function ToggleMenu(): JSX.Element {
   const [state, setState] = useState({ left: false });
 
   const handleLogOut = useCallback(() => {
-    // TODO 로그아웃 API 만들어지면 연결하기
-    // type: LOGOUT_REQUEST,
-    // data: testtest
+    dispatch({
+      type: USER_LOGOUT_REQUEST,
+    });
   }, []);
 
   const toggleDrawer =

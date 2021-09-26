@@ -81,7 +81,11 @@ const reducer = (state = initialState, action: UserActions): InitialState =>
         draft.userLogOutRequest = false;
         draft.userLogOutSuccess = true;
         draft.userLogOutFailure = null;
-        draft.id = action.data;
+        draft.id = {
+          message: null,
+          user_pk: null,
+        };
+        draft.profileInfo = null;
         break;
       case USER_LOGOUT_FAILURE:
         draft.userLogOutRequest = false;

@@ -99,8 +99,8 @@ function* requestUserLogInSaga(action: any) {
     console.log('로그인 요청 응답 성공 ===>', response.data);
 
     //! 로컬 테스트용
-    const accessToken = response.data.access_token;
-    axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
+    // const accessToken = response.data.access_token;
+    // axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
 
     yield put({
       type: USER_LOGIN_SUCCESS,
@@ -117,20 +117,20 @@ function* requestUserLogInSaga(action: any) {
 
 // 로그아웃 요청
 const requestUserLogOut = () => {
-  return axios.post('/api/user/logout');
+  return axios.get('/api/logout/');
 };
 
 function* requestUserLogOutSaga(): any {
   try {
     const response = yield call(requestUserLogOut);
-    // console.log('로그아웃 요청 응답 ===>', response);
+    console.log('로그아웃 요청 응답 ===>', response);
 
     yield put({
       type: USER_LOGOUT_SUCCESS,
-      data: response.data,
+      // data: response.data,
     });
   } catch (error) {
-    // console.log('에러 ===>', error);
+    console.log('로그아웃 요청 에러 ===>', error);
     yield put({
       type: USER_LOGOUT_FAILURE,
       error,
