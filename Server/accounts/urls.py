@@ -10,5 +10,5 @@ urlpatterns = [
     path('token_accept/kakao/', KakaoLogin.as_view(), name='kakao_login_todjango'),
     path('token_accept/google/', GoogleLogin.as_view(), name='kakao_login_todjango'),
     path('duplicate_check/', duplicate_check, name='duplicate_check'),
-    path('logout',logout)
+    path('logout/',logout)
 ]
