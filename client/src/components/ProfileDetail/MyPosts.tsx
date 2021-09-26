@@ -8,7 +8,8 @@ import MemberType from '@components/RecruitMembers/index';
 import { ProfileRight, PostWrapper, TagWrapper, PostTitle } from './styles';
 
 function MyPosts() {
-  const userId = useSelector((state: RootStateOrAny) => state.user.id.user_pk);
+  const user = useSelector((state: RootStateOrAny) => state.user);
+  const userId = user.profileInfo?.user_pk;
   const myPosts = useSelector(
     (state: RootStateOrAny) => state.board.myPostList,
   );

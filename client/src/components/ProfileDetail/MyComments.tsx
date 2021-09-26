@@ -16,7 +16,8 @@ import {
 } from './styles';
 
 function MyComments() {
-  const userId = useSelector((state: RootStateOrAny) => state.user.id.user_pk);
+  const user = useSelector((state: RootStateOrAny) => state.user);
+  const userId = user.profileInfo?.user_pk;
   const myComments = useSelector(
     (state: RootStateOrAny) => state.comment.myComment,
   );

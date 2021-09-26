@@ -8,7 +8,8 @@ import LoadingSpinner from '@components/LoadingSpinner';
 import { ProfileRight, PostWrapper } from './styles';
 
 function LikedPosts(): JSX.Element {
-  const userId = useSelector((state: RootStateOrAny) => state.user.id.user_pk);
+  const user = useSelector((state: RootStateOrAny) => state.user);
+  const userId = user.profileInfo?.user_pk;
   const likedPosts = useSelector(
     (state: RootStateOrAny) => state.board.likedPostList,
   );

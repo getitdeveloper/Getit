@@ -21,7 +21,7 @@ function Header(): JSX.Element {
   const dispatch = useDispatch();
   const { pathname } = useLocation();
 
-  const id = useSelector((state: RootStateOrAny) => state.user.id.user_pk);
+  const id = useSelector((state: RootStateOrAny) => state.user.id.pk);
   const profileInfo = useSelector(
     (state: RootStateOrAny) => state.user.profileInfo,
   );

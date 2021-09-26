@@ -27,7 +27,7 @@ function PostForm(): JSX.Element {
   const dispatch = useDispatch();
   const boardType = history.location.state;
   const user = useSelector((state: RootStateOrAny) => state.user);
-  const userId = Number(user.id.user_pk);
+  const userId = Number(user.profileInfo?.user_pk);
 
   const [postTitle, setTitle] = useState('');
   const [text, setText] = useState('');

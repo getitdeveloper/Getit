@@ -9,6 +9,7 @@ import LoadingSpinner from '@components/LoadingSpinner';
 function ProfilePage(): JSX.Element {
   const dispatch = useDispatch();
   const user = useSelector((state: RootStateOrAny) => state.user);
+  const userId = user.profileInfo?.user_pk;
   const profileInfo = useSelector(
     (state: RootStateOrAny) => state.user.profileInfo,
   );
@@ -18,7 +19,7 @@ function ProfilePage(): JSX.Element {
     dispatch({
       type: USER_PROFILE_REQUEST,
       data: {
-        user_pk: user.id.user_pk,
+        user_pk: userId,
       },
     });
   }, []);
