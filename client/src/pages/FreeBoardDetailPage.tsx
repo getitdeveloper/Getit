@@ -9,8 +9,8 @@ import LoadingSpinner from '@components/LoadingSpinner';
 import PostReactions from '@components/PostReactions';
 
 function FreeBoardDetailPage(props: any): JSX.Element {
-  const { history } = props;
-  const contentId = history.location.state;
+  const { match } = props;
+  const contentId = match.params.id;
   const dispatch = useDispatch();
   const freePost = useSelector(
     (state: RootStateOrAny) => state.board.postContent,

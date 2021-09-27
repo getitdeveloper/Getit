@@ -39,9 +39,9 @@ function PostItem(props: any): JSX.Element {
   };
   const onHandlePost = () => {
     if (boardType === 'Question') {
-      history.push('/questionBoard/detail', content.id);
+      history.push(`/questionBoard/${content.id}`);
     } else if (boardType === 'Free') {
-      history.push('/freeBoard/detail', content.id);
+      history.push(`/freeBoard/${content.id}`);
     }
   };
   const onHandleLike = () => {

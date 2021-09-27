@@ -8,8 +8,8 @@ import Comments from '@components/Comments';
 import LoadingSpinner from '@components/LoadingSpinner';
 
 function QuestionDetailPage(props: any): JSX.Element {
-  const { history } = props;
-  const contentId = history.location.state;
+  const { match } = props;
+  const contentId = match.params.id;
   const dispatch = useDispatch();
   const questionPost = useSelector(
     (state: RootStateOrAny) => state.board.postContent,
