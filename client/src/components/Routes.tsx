@@ -38,7 +38,15 @@ function Routes(): JSX.Element {
   return (
     <>
       {/* 작성되지 않은 경로의 경우 렌더링 X  */}
-      {routeList.some((list) => list.path === pathname) ? <Header /> : null}
+      {routeList.some(
+        (list) =>
+          list.path === pathname ||
+          'recruitBoard/*' ||
+          'questionBoard/*' ||
+          'freeBoard/*',
+      ) ? (
+        <Header />
+      ) : null}
 
       <Switch>
         {routeList.map((route) => (
