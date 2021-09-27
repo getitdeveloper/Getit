@@ -22,6 +22,12 @@ import {
   LIKED_POST_LIST_REQUEST,
   LIKED_POST_LIST_SUCCESS,
   LIKED_POST_LIST_FAILURE,
+  RECRUIT_POST_LIST_REQUEST,
+  RECRUIT_POST_LIST_SUCCESS,
+  RECRUIT_POST_LIST_FAILURE,
+  RECRUIT_POST_DETAIL_REQUEST,
+  RECRUIT_POST_DETAIL_SUCCESS,
+  RECRUIT_POST_DETAIL_FAILURE,
 } from './actions';
 
 // 초기 상태
@@ -32,6 +38,8 @@ const initialState: InitialState = {
   likedPostList: null,
   likeCounts: null,
   searchPostList: null,
+  recruitPostList: null,
+  recruitPostDetail: null,
   commonPostRequest: false,
   commonPostSuccess: false,
   commonPostFailure: null,
@@ -53,6 +61,12 @@ const initialState: InitialState = {
   likedPostListRequest: false,
   likedPostListSuccess: false,
   likedPostListFailure: null,
+  recruitPostListRequest: false,
+  recruitPostListSuccess: false,
+  recruitPostListFailure: null,
+  recruitPostDetailRequest: false,
+  recruitPostDetailSuccess: false,
+  recruitPostDetailFailure: null,
 };
 
 const reducer = (state = initialState, action: BoardActions): InitialState =>
@@ -170,6 +184,39 @@ const reducer = (state = initialState, action: BoardActions): InitialState =>
         draft.likedPostListSuccess = false;
         draft.likedPostListFailure = action.error;
         break;
+      case RECRUIT_POST_LIST_REQUEST:
+        draft.recruitPostListRequest = true;
+        draft.recruitPostListSuccess = false;
+        draft.recruitPostListFailure = null;
+        break;
+      case RECRUIT_POST_LIST_SUCCESS:
+        draft.recruitPostListRequest = false;
+        draft.recruitPostListSuccess = true;
+        draft.recruitPostListFailure = null;
+        draft.recruitPostList = action.data;
+        break;
+      case RECRUIT_POST_LIST_FAILURE:
+        draft.recruitPostListRequest = false;
+        draft.recruitPostListSuccess = false;
+        draft.recruitPostListFailure = action.error;
+        break;
+      case RECRUIT_POST_DETAIL_REQUEST:
+        draft.recruitPostDetailRequest = true;
+        draft.recruitPostDetailSuccess = false;
+        draft.recruitPostDetailFailure = null;
+        break;
+      case RECRUIT_POST_DETAIL_SUCCESS:
+        draft.recruitPostDetailRequest = false;
+        draft.recruitPostDetailSuccess = true;
+        draft.recruitPostDetailFailure = null;
+        draft.recruitPostDetail = action.data;
+        break;
+      case RECRUIT_POST_DETAIL_FAILURE:
+        draft.recruitPostDetailRequest = false;
+        draft.recruitPostDetailSuccess = false;
+        draft.recruitPostDetailFailure = action.error;
+        break;
+
       default:
         return state;
     }
