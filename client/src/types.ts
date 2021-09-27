@@ -114,6 +114,7 @@ export interface IRecruitPost {
     id: number;
     image: string | null;
     name: string;
+    user: number;
   };
   title: string;
   user: {

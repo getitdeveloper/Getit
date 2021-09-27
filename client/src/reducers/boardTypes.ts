@@ -24,6 +24,9 @@ import {
   RECRUIT_POST_LIST_REQUEST,
   RECRUIT_POST_LIST_SUCCESS,
   RECRUIT_POST_LIST_FAILURE,
+  RECRUIT_POST_DETAIL_REQUEST,
+  RECRUIT_POST_DETAIL_SUCCESS,
+  RECRUIT_POST_DETAIL_FAILURE,
 } from './actions';
 
 export interface InitialState {
@@ -35,6 +38,7 @@ export interface InitialState {
   // TODO 수정하기
   searchPostList: any | null;
   recruitPostList: Array<IRecruitPost> | null;
+  recruitPostDetail: IRecruitPost | null;
   commonPostRequest: boolean;
   commonPostSuccess: boolean;
   commonPostFailure: string | null;
@@ -59,6 +63,9 @@ export interface InitialState {
   recruitPostListRequest: boolean;
   recruitPostListSuccess: boolean;
   recruitPostListFailure: string | null;
+  recruitPostDetailRequest: boolean;
+  recruitPostDetailSuccess: boolean;
+  recruitPostDetailFailure: string | null;
 }
 
 // 자유/질문게시판 받아오기
@@ -183,6 +190,21 @@ export interface RecruitPostFailure {
   error: string;
 }
 
+// 모집 게시판 글 상세내용 가져오기
+export interface RecruitPostDetailRequest {
+  type: typeof RECRUIT_POST_DETAIL_REQUEST;
+}
+
+export interface RecruitPostDetailSuccess {
+  type: typeof RECRUIT_POST_DETAIL_SUCCESS;
+  data: IRecruitPost;
+}
+
+export interface RecruitPostDetailFailure {
+  type: typeof RECRUIT_POST_DETAIL_FAILURE;
+  error: string;
+}
+
 export type BoardActions =
   | CommonBoardRequest
   | CommonBoardSuccess
@@ -207,4 +229,7 @@ export type BoardActions =
   | LikedPostListFailure
   | RecruitPostRequest
   | RecruitPostSuccess
-  | RecruitPostFailure;
+  | RecruitPostFailure
+  | RecruitPostDetailRequest
+  | RecruitPostDetailSuccess
+  | RecruitPostDetailFailure;

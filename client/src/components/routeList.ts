@@ -13,6 +13,7 @@ import FreeBoardFormPage from '@pages/FreeBoardFormPage';
 import RecruitFormPage from '@pages/RecruitFormPage';
 import SearchResultPage from '@pages/SearchResultPage';
 import NotFoundPage from '@pages/NotFoundPage';
+import RecruitBoardDetailPage from '@pages/RecruitBoardDetailPage';
 
 interface RouteList {
   path: string;
@@ -67,6 +68,10 @@ export const routeList: Array<RouteList> = [
   {
     path: '/recruitBoard',
     page: RecruitBoardPage,
+  },
+  {
+    path: '/recruitBoard/:postId',
+    page: RecruitBoardDetailPage,
   },
   {
     path: '/recruitBoard/form',
