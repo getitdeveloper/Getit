@@ -17,8 +17,8 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
 
 export const HeaderWrapper = styled.div`
-  box-shadow: ${(props) =>
-    props.className === '/' ? null : '0 3px 6px 0 #d2d2d2'};
+  border-bottom: ${(props) =>
+    props.className === '/' ? null : '1px solid #b7b7b7'};
 `;
 
 export const HeaderContainer = styled.div`
@@ -29,7 +29,7 @@ export const HeaderContainer = styled.div`
   width: 100%;
   height: 4.6rem;
   margin: 0 auto;
-  margin-top: ${(props) => (props.className === '/' ? '3rem' : '1rem')};
+  margin-top: ${(props) => (props.className === '/' ? '3rem' : '0.4rem')};
   margin-bottom: ${(props) => (props.className === '/' ? '3rem' : '0.4rem')};
   position: relative;
 
@@ -39,7 +39,7 @@ export const HeaderContainer = styled.div`
     flex-direction: column;
     height: auto;
     margin-top: 0;
-    margin-bottom: ${(props) => (props.className === '/' ? '0rem' : '0.4rem')};
+    margin-bottom: 0;
   }
 
   @media ${({ theme }) => theme.mobile} {
