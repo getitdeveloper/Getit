@@ -61,7 +61,7 @@ export const StackInput = styled.input`
   :focus {
     outline: none;
   }
-  @media ${(props) => props.theme.mobile} {
+  @media ${(props) => props.theme.tablet} {
     width: 50%;
     font-size: 0.8rem;
   }

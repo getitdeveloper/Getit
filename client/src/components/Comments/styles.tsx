@@ -7,7 +7,7 @@ export const CommentForm = styled.div`
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
-  @media ${(props) => props.theme.mobile} {
+  @media ${(props) => props.theme.tablet} {
     margin-top: 3rem;
   }
 `;
@@ -29,7 +29,7 @@ export const SubmitButton = styled.button`
 export const CommentWrapper = styled.div`
   width: 100%;
   height: 100%;
-  @media ${(props) => props.theme.mobile} {
+  @media ${(props) => props.theme.tablet} {
     margin-bottom: 1.5rem;
   }
 `;
@@ -81,7 +81,7 @@ export const CommentContent = styled.p`
 export const NoComments = styled.p`
   margin-top: 5%;
   text-align: center;
-  @media ${(props) => props.theme.mobile} {
+  @media ${(props) => props.theme.tablet} {
     margin-bottom: 1.5rem;
   }
 `;
