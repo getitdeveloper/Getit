@@ -2,11 +2,9 @@ import { IPortfolio, IProfileInfo } from '../types';
 
 export interface ResponseUserInfo {
   data: {
-    accept_json: {
-      access_token: string;
-      refresh_token: string;
-    };
     message: string;
+    // ! 로컬 테스트용
+    access_token: string;
     user_pk: number;
   };
 }

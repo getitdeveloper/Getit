@@ -25,7 +25,7 @@ function Comments(props: any) {
   const dispatch = useDispatch();
   const [content, setContent] = React.useState('');
   const user = useSelector((state: RootStateOrAny) => state.user);
-  const userId = user.id.user_pk;
+  const userId = user.profileInfo?.user_pk;
   const commentList = useSelector(
     (state: RootStateOrAny) => state.comment.commentList,
   );

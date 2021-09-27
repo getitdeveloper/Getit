@@ -45,7 +45,8 @@ function RegisterForm(): JSX.Element {
   const nickDoubleCheck: string = useSelector(
     (state: RootStateOrAny) => state.user.nickDoubleCheck.duplicate,
   );
-  const userId = useSelector((state: RootStateOrAny) => state.user.id.user_pk);
+  const user = useSelector((state: RootStateOrAny) => state.user);
+  const userId = user.profileInfo?.user_pk;
 
   const [nickname, setNickname] = useState('');
   const [nicknameError, setNicknameError] = useState(false);

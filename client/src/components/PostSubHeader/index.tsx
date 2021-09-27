@@ -21,8 +21,9 @@ function PostSubHeader({ boardType }: IBoardType): JSX.Element {
   const history = useHistory();
   const [selected, setSelected] = useState(false);
   const [option, setOption] = useState('recent');
-  const user = useSelector((state: RootStateOrAny) => state.user);
-  const userId = user.id.user_pk;
+  const userId = useSelector(
+    (state: RootStateOrAny) => state.user.profileInfo?.user_pk,
+  );
 
   const handleJobSelectButton = useCallback(
     (event) => {

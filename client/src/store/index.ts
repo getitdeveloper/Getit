@@ -8,10 +8,12 @@ import rootSaga from '../sagas/index';
 // saga 미들웨어 생성
 const sagaMiddleware = createSagaMiddleware();
 
-const enhancer =
-  process.env.NODE_ENV === 'production'
-    ? applyMiddleware(sagaMiddleware)
-    : composeWithDevTools(applyMiddleware(sagaMiddleware));
+// const enhancer =
+//   process.env.NODE_ENV === 'production'
+//     ? applyMiddleware(sagaMiddleware)
+//     : composeWithDevTools(applyMiddleware(sagaMiddleware));
+
+const enhancer = composeWithDevTools(applyMiddleware(sagaMiddleware));
 
 const store = createStore(reducer, enhancer);
 

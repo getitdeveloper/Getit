@@ -29,7 +29,7 @@ function PostItem(props: any): JSX.Element {
   const history = useHistory();
   const dispatch = useDispatch();
   const user = useSelector((state: RootStateOrAny) => state.user);
-  const userId = user.id.user_pk;
+  const userId = user.profileInfo?.user_pk;
   const { content, boardType, detail } = props;
   const [likes, setLikes] = React.useState(content.likes);
   const [likeStatus, setLikeStatus] = React.useState(content.is_like);

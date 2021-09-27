@@ -21,7 +21,7 @@ function Header(): JSX.Element {
   const dispatch = useDispatch();
   const { pathname } = useLocation();
 
-  const id = useSelector((state: RootStateOrAny) => state.user.id.user_pk);
+  const userId = useSelector((state: RootStateOrAny) => state.user.id.user_pk);
   const profileInfo = useSelector(
     (state: RootStateOrAny) => state.user.profileInfo,
   );
@@ -40,10 +40,10 @@ function Header(): JSX.Element {
     dispatch({
       type: USER_PROFILE_REQUEST,
       data: {
-        user_pk: id,
+        user_pk: userId,
       },
     });
-  }, [id]);
+  }, [userId]);
 
   // 회원가입 페이지인 경우 header 감추기
   if (pathname === '/register') {
