@@ -17,7 +17,7 @@ export const SplittedPageContainer = styled(PageContainer)`
   flex-direction: row;
   justify-content: flex-start;
   align-items: flex-start;
-  @media ${(props) => props.theme.mobile} {
+  @media ${(props) => props.theme.tablet} {
     flex-direction: column;
     width: 80%;
   }
@@ -28,7 +28,7 @@ export const ProfileLeft = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
-  @media ${(props) => props.theme.mobile} {
+  @media ${(props) => props.theme.tablet} {
     width: 100%;
   }
 `;
@@ -44,7 +44,7 @@ export const ProfileMenuOption = styled.button`
   &: hover {
     color: ${(props) => props.theme.colors.main};
   }
-  @media ${(props) => props.theme.mobile} {
+  @media ${(props) => props.theme.tablet} {
     display: none;
   }
 `;
@@ -62,7 +62,7 @@ export const VerticalLine = styled.div`
   height: 65rem;
   border-right: solid 1px #e8e8e8;
   margin: 0rem 2rem;
-  @media ${(props) => props.theme.mobile} {
+  @media ${(props) => props.theme.tablet} {
     display: none;
   }
 `;
@@ -71,7 +71,7 @@ export const ProfileRight = styled.div`
   width: 80%;
   height: auto;
   padding: 0rem 2.5rem;
-  @media ${(props) => props.theme.mobile} {
+  @media ${(props) => props.theme.tablet} {
     width: 100%;
   }
 `;

@@ -7,7 +7,7 @@ export const PostWrapper = styled.div`
   justify-content: space-between;
   align-items: flex-start;
   margin-top: 3.5rem;
-  @media ${(props) => props.theme.mobile} {
+  @media ${(props) => props.theme.tablet} {
     flex-direction: column;
   }
 `;
@@ -27,7 +27,7 @@ export const WriterButton = styled.button`
   align-items: center;
   border: 0;
   background-color: transparent;
-  @media ${(props) => props.theme.mobile} {
+  @media ${(props) => props.theme.tablet} {
     display: none;
   }
 `;
@@ -38,7 +38,7 @@ export const WriterImage = styled.img`
   background-color: #dcdcdc;
   padding: 0.8rem;
   border-radius: 50%;
-  @media ${(props) => props.theme.mobile} {
+  @media ${(props) => props.theme.tablet} {
     width: 1.5rem;
     padding: 0.4rem;
     margin-right: 0.4rem;
@@ -48,7 +48,7 @@ export const WriterImage = styled.img`
 export const WriterName = styled.p`
   font-size: 1rem;
   text-align: center;
-  @media ${(props) => props.theme.mobile} {
+  @media ${(props) => props.theme.tablet} {
     width: 7.5rem;
     font-size: 0.8rem;
     text-align: left;
@@ -77,11 +77,6 @@ export const PostInfoButton = styled.button`
   }
 
   @media ${(props) => props.theme.tablet} {
-    width: 60rem;
-    padding: 0;
-  }
-
-  @media ${(props) => props.theme.mobile} {
     width: 100%;
     padding: 0;
   }
@@ -111,7 +106,7 @@ export const DetailWrapper = styled.div`
   justify-content: flex-end;
   align-items: flex-start;
   margin: 0.4rem 0rem;
-  @media ${(props) => props.theme.mobile} {
+  @media ${(props) => props.theme.tablet} {
     justify-content: space-between;
   }
 `;
@@ -122,7 +117,7 @@ export const PostDetailWrapper = styled.div`
 
 export const MobileWriterDetailWrapper = styled.div`
   display: none;
-  @media ${(props) => props.theme.mobile} {
+  @media ${(props) => props.theme.tablet} {
     display: flex;
   }
 `;

@@ -45,11 +45,11 @@ export const routeList: Array<RouteList> = [
     page: ProfilePage,
   },
   {
-    path: '/freeBoard/detail',
+    path: '/freeBoard/post/:id',
     page: FreeBoardDetailPage,
   },
   {
-    path: '/questionBoard/detail',
+    path: '/questionBoard/post/:id',
     page: QuestionDetailPage,
   },
   {

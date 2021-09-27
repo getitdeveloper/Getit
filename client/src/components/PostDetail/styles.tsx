@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const Content = styled.div`
   height: 30rem;
   padding: 2rem;
-  @media ${(props) => props.theme.mobile} {
+  @media ${(props) => props.theme.tablet} {
     padding: 2rem 0rem;
   }
 `;
