@@ -1,4 +1,4 @@
-import { IBoard, ILikedPost, IPostItem } from '../types';
+import { IBoard, ILikedPost, IPostItem, IRecruitPost } from '../types';
 import {
   COMMON_BOARD_REQUEST,
   COMMON_BOARD_SUCCESS,
@@ -21,6 +21,9 @@ import {
   LIKED_POST_LIST_REQUEST,
   LIKED_POST_LIST_SUCCESS,
   LIKED_POST_LIST_FAILURE,
+  RECRUIT_POST_LIST_REQUEST,
+  RECRUIT_POST_LIST_SUCCESS,
+  RECRUIT_POST_LIST_FAILURE,
 } from './actions';
 
 export interface InitialState {
@@ -31,6 +34,7 @@ export interface InitialState {
   likeCounts: { counts: number } | null;
   // TODO 수정하기
   searchPostList: any | null;
+  recruitPostList: Array<IRecruitPost> | null;
   commonPostRequest: boolean;
   commonPostSuccess: boolean;
   commonPostFailure: string | null;
@@ -52,6 +56,9 @@ export interface InitialState {
   likedPostListRequest: boolean;
   likedPostListSuccess: boolean;
   likedPostListFailure: string | null;
+  recruitPostListRequest: boolean;
+  recruitPostListSuccess: boolean;
+  recruitPostListFailure: string | null;
 }
 
 // 자유/질문게시판 받아오기
@@ -161,6 +168,21 @@ export interface LikedPostListFailure {
   error: string;
 }
 
+// 모집 게시판 글 목록 가져오기
+export interface RecruitPostRequest {
+  type: typeof RECRUIT_POST_LIST_REQUEST;
+}
+
+export interface RecruitPostSuccess {
+  type: typeof RECRUIT_POST_LIST_SUCCESS;
+  data: Array<IRecruitPost>;
+}
+
+export interface RecruitPostFailure {
+  type: typeof RECRUIT_POST_LIST_FAILURE;
+  error: string;
+}
+
 export type BoardActions =
   | CommonBoardRequest
   | CommonBoardSuccess
@@ -182,4 +204,7 @@ export type BoardActions =
   | SearchPostFailure
   | LikedPostListRequest
   | LikedPostListSuccess
-  | LikedPostListFailure;
+  | LikedPostListFailure
+  | RecruitPostRequest
+  | RecruitPostSuccess
+  | RecruitPostFailure;

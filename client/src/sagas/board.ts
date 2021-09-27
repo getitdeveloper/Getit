@@ -22,6 +22,9 @@ import {
   LIKED_POST_LIST_REQUEST,
   LIKED_POST_LIST_SUCCESS,
   LIKED_POST_LIST_FAILURE,
+  RECRUIT_POST_LIST_REQUEST,
+  RECRUIT_POST_LIST_SUCCESS,
+  RECRUIT_POST_LIST_FAILURE,
 } from '../reducers/actions';
 import { BoardData, PostData } from './boardTypes';
 
@@ -187,6 +190,32 @@ function* requestSearchPostSaga(action: { type: string; data: string }): any {
   }
 }
 
+// 모집 게시판 게시글 목록
+const requestRecruitPost = (data: number) => {
+  if (data === 1) {
+    return axios.get(`/api/recruitmentboard/`);
+  }
+  return axios.get(`/api/recruitmentboard/?page=${data}`);
+};
+
+function* requestRecruitPostSaga(action: { type: string; data: number }): any {
+  try {
+    const response = yield call(requestRecruitPost, action.data);
+    console.log('모집 게시판 게시글 목록 응답 ===>', response);
+
+    yield put({
+      type: RECRUIT_POST_LIST_SUCCESS,
+      data: response.data,
+    });
+  } catch (error) {
+    console.error('모집 게시판 게시글 목록 응답 ===>', error);
+    yield put({
+      type: RECRUIT_POST_LIST_FAILURE,
+      error,
+    });
+  }
+}
+
 function* watchRequestCommonBoard() {
   yield takeLatest(COMMON_BOARD_REQUEST, requestCommonBoardSaga);
 }
@@ -215,6 +244,10 @@ function* watchRequestCommonPostLike() {
   yield takeLatest(COMMON_POST_LIKE_REQUEST, requestCommonPostLikeSaga);
 }
 
+function* watchRequestRecruitPost() {
+  yield takeLatest(RECRUIT_POST_LIST_REQUEST, requestRecruitPostSaga);
+}
+
 function* boardSaga() {
   yield all([
     fork(watchRequestCommonBoard),
@@ -224,6 +257,7 @@ function* boardSaga() {
     fork(watchRequestCommonPostLike),
     fork(watchRequestSearchPost),
     fork(watchRequestLikedPostList),
+    fork(watchRequestRecruitPost),
   ]);
 }
 

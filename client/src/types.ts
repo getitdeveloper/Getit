@@ -93,3 +93,35 @@ export interface IComment {
 export interface LoginProps {
   onClose: () => void;
 }
+
+export interface IRecruitPost {
+  comments: number;
+  content: string;
+  create_at: string;
+  designer: number;
+  developer: number;
+  end_date: string;
+  id: number;
+  is_like: boolean;
+  likes: number;
+  pm: number;
+  stack: Array<string>;
+  start_date: string;
+  status: boolean;
+  study: {
+    content: string;
+    created_at: string;
+    id: number;
+    image: string | null;
+    name: string;
+  };
+  title: string;
+  user: {
+    id: number;
+    profile: {
+      image: string;
+      nickname: string;
+    };
+  };
+  worker: string[];
+}
