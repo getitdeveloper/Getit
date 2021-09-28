@@ -18,12 +18,12 @@ export const TagWrapper = styled.div`
 `;
 
 export const WriterButton = styled.button`
-  width: 10rem;
+  width: 15%;
   height: 100%;
   display: flex;
   padding-right: 2rem;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   border: 0;
   background-color: transparent;
@@ -46,10 +46,14 @@ export const WriterImage = styled.img`
 `;
 
 export const WriterName = styled.p`
+  width: 100%;
   font-size: 1rem;
   text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   @media ${(props) => props.theme.tablet} {
-    width: 7.5rem;
+    width: 80%;
     font-size: 0.8rem;
     text-align: left;
     white-space: nowrap;
@@ -59,7 +63,7 @@ export const WriterName = styled.p`
 `;
 
 export const PostInfoButton = styled.button`
-  width: 70rem;
+  width: 85%;
   display: flex;
   flex-direction: column;
   padding-left: 2rem;
@@ -69,11 +73,6 @@ export const PostInfoButton = styled.button`
   background-color: transparent;
   &: hover {
     cursor: pointer;
-  }
-
-  @media ${(props) => props.theme.desktop} {
-    width: 90rem;
-    padding: 0;
   }
 
   @media ${(props) => props.theme.tablet} {
@@ -119,6 +118,7 @@ export const MobileWriterDetailWrapper = styled.div`
   display: none;
   @media ${(props) => props.theme.tablet} {
     display: flex;
+    width: 30%;
   }
 `;
 
