@@ -107,8 +107,7 @@ class CommonBoardListAPIView(GenericAPIView):
                     "worker": ["개발자","디자이너","기획자"]
                 }
         """
-        serializer = CommonBoardSerializer(data=request.data,context={'request': request})
-        print(request)
+        serializer = CommonBoardSerializer(data=request.data, context={'request': request})
         if serializer.is_valid():
             serializer.save()
             board = CommonBoard.objects.get(id=serializer.data['id'])

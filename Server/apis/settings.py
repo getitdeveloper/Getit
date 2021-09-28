@@ -51,6 +51,7 @@ PROJECT_APPS = [
     'portfolios',
     'likes',
     'members',
+    'chats',
 ]
 
 THIRD_PARTY_APPS = [
