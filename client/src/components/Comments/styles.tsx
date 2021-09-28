@@ -12,18 +12,43 @@ export const CommentForm = styled.div`
   }
 `;
 
+export const WriterImage = styled.img`
+  margin-right: 2rem;
+  background-color: #e0e0e0;
+  padding: 0.8rem;
+  border-radius: 50%;
+`;
+
 export const CommentInput = styled.input`
-  width: 95%;
+  width: 85%;
   border: 0;
   border-bottom: 1px solid #b7b7b7;
   padding: 1%;
   &:focus {
     outline: none;
   }
+  margin-right: 2rem;
 `;
 
 export const SubmitButton = styled.button`
-  width: 5%;
+  width: 7%;
+  font-size: 1rem;
+  background-color: ${(props) => props.theme.colors.main};
+  color: white;
+  border: 0;
+  margin: 0 auto;
+  padding: 0.4rem 1rem;
+  border-radius: 0.8rem;
+  cursor: pointer;
+  &: hover {
+    color: ${(props) => props.theme.colors.main};
+    background-color: white;
+    border: 1px solid ${(props) => props.theme.colors.main};
+  }
+  @media ${(props) => props.theme.tablet} {
+    width: 6rem;
+    font-size: 0.8rem;
+  }
 `;
 
 export const CommentWrapper = styled.div`
@@ -41,13 +66,6 @@ export const Comment = styled.div`
   justify-content: flex-start;
   align-items: center;
   margin-top: 3%;
-`;
-
-export const WriterImage = styled.img`
-  margin-right: 2rem;
-  background-color: #e0e0e0;
-  padding: 0.8rem;
-  border-radius: 50%;
 `;
 
 export const CommentDetailWrapper = styled.div`
