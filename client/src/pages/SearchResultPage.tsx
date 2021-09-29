@@ -4,7 +4,7 @@ import { useSelector, RootStateOrAny } from 'react-redux';
 
 function SearchResultPage(): JSX.Element {
   const searchResult = useSelector(
-    (state: RootStateOrAny) => state.board.searchPostList,
+    (state: RootStateOrAny) => state.postList.searchPostList,
   );
 
   return (

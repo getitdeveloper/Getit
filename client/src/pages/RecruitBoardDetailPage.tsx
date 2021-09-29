@@ -9,7 +9,7 @@ function RecruitBoardDetailPage(): JSX.Element {
   const dispatch = useDispatch();
   const { postId }: { postId: string } = useParams();
   const recruitPostDetail = useSelector(
-    (state: RootStateOrAny) => state.board.recruitPostDetail,
+    (state: RootStateOrAny) => state.post.recruitPost,
   );
 
   useEffect(() => {

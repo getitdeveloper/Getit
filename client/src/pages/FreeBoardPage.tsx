@@ -11,7 +11,7 @@ import { IPost } from '@types';
 function FreeBoardPage(): JSX.Element {
   const dispatch = useDispatch();
   const boardList = useSelector(
-    (state: RootStateOrAny) => state.board.boardList,
+    (state: RootStateOrAny) => state.postList.commonPostList,
   );
   const [page, setPage] = React.useState(1);
 

@@ -11,7 +11,7 @@ function MyPosts() {
   const user = useSelector((state: RootStateOrAny) => state.user);
   const userId = user.profileInfo?.user_pk;
   const myPosts = useSelector(
-    (state: RootStateOrAny) => state.board.myPostList,
+    (state: RootStateOrAny) => state.postList.myPostList,
   );
   const dispatch = useDispatch();
 

@@ -30,7 +30,7 @@ function Comments(props: any) {
   const user = useSelector((state: RootStateOrAny) => state.user);
   const userId = user.profileInfo?.user_pk;
   const commentList = useSelector(
-    (state: RootStateOrAny) => state.comment.commentList,
+    (state: RootStateOrAny) => state.commentList.commentList,
   );
   const [clicked, setClicked] = React.useState(1);
 

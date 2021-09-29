@@ -12,7 +12,7 @@ function QuestionDetailPage(props: any): JSX.Element {
   const contentId = match.params.id;
   const dispatch = useDispatch();
   const questionPost = useSelector(
-    (state: RootStateOrAny) => state.board.postContent,
+    (state: RootStateOrAny) => state.post.commonPost,
   );
 
   React.useEffect(() => {

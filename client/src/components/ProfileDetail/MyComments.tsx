@@ -19,7 +19,7 @@ function MyComments() {
   const user = useSelector((state: RootStateOrAny) => state.user);
   const userId = user.profileInfo?.user_pk;
   const myComments = useSelector(
-    (state: RootStateOrAny) => state.comment.myComment,
+    (state: RootStateOrAny) => state.commentList.myCommentList,
   );
   const dispatch = useDispatch();
   const initialCreatedDate: string[] = [];

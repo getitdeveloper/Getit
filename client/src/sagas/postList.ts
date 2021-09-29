@@ -20,13 +20,14 @@ import {
 import { BoardData } from './postListTypes';
 
 // 자유/질문 게시판 리스트 받아오기
-const requestCommonPostList = (id: string) => {
-  return axios.get(`/api/board/${id}`);
+const requestCommonPostList = (data: BoardData) => {
+  // return axios.get(`/api/board?category=${data.category}`);
+  return axios.get(`/api/board?category=${data.category}&page=${data.page}`);
 };
 
 function* requestCommonPostListSaga(action: any): any {
   try {
-    const response = yield call(requestCommonPostList, action.data.id);
+    const response = yield call(requestCommonPostList, action.data);
     console.log('자유/질문 게시글 정보 응답 ===>', response);
 
     yield put({
