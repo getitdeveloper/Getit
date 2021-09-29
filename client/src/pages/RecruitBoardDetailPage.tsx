@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { RECRUIT_POST_DETAIL_REQUEST } from '@reducers/actions';
+import { RECRUIT_POST_REQUEST } from '@reducers/actions';
 import { useEffect } from 'react';
 import { useDispatch, useSelector, RootStateOrAny } from 'react-redux';
 import { useParams } from 'react-router-dom';
@@ -10,12 +10,12 @@ function RecruitBoardDetailPage(): JSX.Element {
   const dispatch = useDispatch();
   const { postId }: IPostId = useParams();
   const recruitPostDetail = useSelector(
-    (state: RootStateOrAny) => state.board.recruitPostDetail,
+    (state: RootStateOrAny) => state.post.recruitPost,
   );
 
   useEffect(() => {
     dispatch({
-      type: RECRUIT_POST_DETAIL_REQUEST,
+      type: RECRUIT_POST_REQUEST,
       data: postId,
     });
   }, []);

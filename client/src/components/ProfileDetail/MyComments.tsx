@@ -4,7 +4,7 @@ import moment from 'moment';
 import 'moment/locale/ko';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
-import { MY_COMMENT_REQUEST } from '@reducers/actions';
+import { MY_COMMENT_LIST_REQUEST } from '@reducers/actions';
 import { IconButton } from '@assets/styles/commons';
 import { IComment } from '@types';
 import LoadingSpinner from '@components/LoadingSpinner';
@@ -19,7 +19,7 @@ function MyComments() {
   const user = useSelector((state: RootStateOrAny) => state.user);
   const userId = user.profileInfo?.user_pk;
   const myComments = useSelector(
-    (state: RootStateOrAny) => state.comment.myComment,
+    (state: RootStateOrAny) => state.commentList.myCommentList,
   );
   const dispatch = useDispatch();
   const initialCreatedDate: string[] = [];
@@ -28,7 +28,7 @@ function MyComments() {
 
   useEffect(() => {
     dispatch({
-      type: MY_COMMENT_REQUEST,
+      type: MY_COMMENT_LIST_REQUEST,
       data: {
         user: userId,
       },

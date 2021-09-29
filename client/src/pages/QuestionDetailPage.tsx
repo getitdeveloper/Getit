@@ -2,8 +2,8 @@ import * as React from 'react';
 import { useParams } from 'react-router-dom';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import PostReactions from '@components/PostReactions';
-import { PageBackground, PageContainer, PageTitle } from '@assets/styles/page';
-import { COMMON_POST_REQUEST, COMMENT_REQUEST } from '@reducers/actions';
+import { PageBackground, PageTitle } from '@assets/styles/page';
+import { COMMON_POST_REQUEST } from '@reducers/actions';
 import PostDetail from '@components/PostDetail';
 import Comments from '@components/Comments';
 import LoadingSpinner from '@components/LoadingSpinner';
@@ -13,7 +13,7 @@ function QuestionDetailPage(): JSX.Element {
   const dispatch = useDispatch();
   const { postId }: IPostId = useParams();
   const questionPost = useSelector(
-    (state: RootStateOrAny) => state.board.postContent,
+    (state: RootStateOrAny) => state.post.commonPost,
   );
 
   React.useEffect(() => {

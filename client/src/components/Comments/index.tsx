@@ -1,7 +1,10 @@
 import * as React from 'react';
 import { RootStateOrAny, useSelector, useDispatch } from 'react-redux';
 import moment from 'moment';
-import { COMMENT_REGISTER_REQUEST, COMMENT_REQUEST } from '@reducers/actions';
+import {
+  COMMENT_REGISTER_REQUEST,
+  COMMENT_LIST_REQUEST,
+} from '@reducers/actions';
 import { PageContainer } from '@assets/styles/page';
 import UserImg from '@assets/icons/user.svg';
 import LoadingSpinner from '@components/LoadingSpinner';
@@ -23,17 +26,17 @@ import {
 function Comments(props: any) {
   const { boardId } = props;
   const dispatch = useDispatch();
-  const [content, setContent] = React.useState('');
+  const [newContent, setNewContent] = React.useState('');
   const user = useSelector((state: RootStateOrAny) => state.user);
   const userId = user.profileInfo?.user_pk;
   const commentList = useSelector(
-    (state: RootStateOrAny) => state.comment.commentList,
+    (state: RootStateOrAny) => state.commentList.commentList,
   );
   const [clicked, setClicked] = React.useState(1);
 
   React.useEffect(() => {
     dispatch({
-      type: COMMENT_REQUEST,
+      type: COMMENT_LIST_REQUEST,
       data: {
         board: boardId,
       },
@@ -42,23 +45,22 @@ function Comments(props: any) {
 
   const onChange = (e: any) => {
     const { value } = e.target;
-    setContent(value);
+    setNewContent(value);
   };
 
-  const onSubmit = (contentText: string) => {
+  const onSubmit = () => {
     if (userId === null) {
-      alert('로그인 한 후에 이용가능하십니다!');
-      return;
+      return alert('로그인 한 후에 이용가능하십니다!');
     }
     const commentData = {
       board: boardId,
       comment: {
         user: Number(userId),
         commonpost: boardId,
-        content: contentText,
+        content: newContent,
       },
     };
-    setContent('');
+    setNewContent('');
     try {
       dispatch({
         type: COMMENT_REGISTER_REQUEST,
@@ -82,10 +84,10 @@ function Comments(props: any) {
           name='content'
           type='text'
           width='100%'
-          value={content}
+          value={newContent}
           onChange={onChange}
         />
-        <SubmitButton type='submit' onClick={() => onSubmit(content)}>
+        <SubmitButton type='submit' onClick={onSubmit}>
           등록
         </SubmitButton>
       </CommentForm>

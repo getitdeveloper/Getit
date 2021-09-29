@@ -11,7 +11,7 @@ function LikedPosts(): JSX.Element {
   const user = useSelector((state: RootStateOrAny) => state.user);
   const userId = user.profileInfo?.user_pk;
   const likedPosts = useSelector(
-    (state: RootStateOrAny) => state.board.likedPostList,
+    (state: RootStateOrAny) => state.postList.likedPostList,
   );
   const dispatch = useDispatch();
 

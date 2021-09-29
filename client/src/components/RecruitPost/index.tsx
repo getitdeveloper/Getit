@@ -24,10 +24,10 @@ import {
 function RecruitPost(): JSX.Element {
   const dispatch = useDispatch();
   const recruitPostList = useSelector(
-    (state: RootStateOrAny) => state.board.recruitPostList?.results,
+    (state: RootStateOrAny) => state.postList.recruitPostList?.results,
   );
   const recruitPostTotalCount = useSelector(
-    (state: RootStateOrAny) => state.board.recruitPostList?.count,
+    (state: RootStateOrAny) => state.postList.recruitPostList?.count,
   );
 
   const [page, setPage] = useState(1);

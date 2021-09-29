@@ -14,7 +14,7 @@ function FreeBoardDetailPage(): JSX.Element {
   const dispatch = useDispatch();
   const { postId }: IPostId = useParams();
   const freePost = useSelector(
-    (state: RootStateOrAny) => state.board.postContent,
+    (state: RootStateOrAny) => state.post.commonPost,
   );
 
   React.useEffect(() => {
