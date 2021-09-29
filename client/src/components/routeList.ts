@@ -70,12 +70,12 @@ export const routeList: Array<RouteList> = [
     page: RecruitBoardPage,
   },
   {
-    path: '/recruitBoard/:postId',
-    page: RecruitBoardDetailPage,
-  },
-  {
     path: '/recruitBoard/form',
     page: RecruitFormPage,
+  },
+  {
+    path: '/recruitBoard/:postId',
+    page: RecruitBoardDetailPage,
   },
   {
     path: '/searchResult',
