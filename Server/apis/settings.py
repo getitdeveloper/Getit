@@ -13,16 +13,24 @@ import os
 from pathlib import Path
 from datetime import timedelta
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+import environ
 from apis.MY_SETTINGS import MY_SECRET, MY_DATABASES
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+env = environ.Env(
+    # set casting, default value
+    DEBUG=(bool, False)
+)
 
+environ.Env.read_env(
+    env_file= os.path.join(BASE_DIR,'.env')
+)
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = MY_SECRET['SECRET_KEY']
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -201,6 +209,7 @@ CORS_ORIGIN_WHITELIST = ['http://127.0.0.1:3000',
                          'http://ec2-3-37-167-8.ap-northeast-2.compute.amazonaws.com',
                          'http://3.37.167.8',
                          'http://.getittest.shop',
+                         'http://getit.best',
                          'http://api.getittest.shop',
                          ]
 
@@ -213,6 +222,7 @@ CORS_ALLOWED_ORIGIN_REGEXES = ['http://127.0.0.1:3000',
                          'http://3.37.167.8',
                          'http://.getittest.shop',
                          'http://api.getittest.shop',
+                         'http://getit.best',
                          ]
 
 AUTH_USER_MODEL = "accounts.User"

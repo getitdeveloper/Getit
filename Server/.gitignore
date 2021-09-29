@@ -80,3 +80,5 @@ db.sqlite3
 __pycache__
 leeceo97.pem
 */migrations/*
+.env
+Dockerfile
