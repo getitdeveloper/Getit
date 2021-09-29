@@ -14,7 +14,6 @@ from pathlib import Path
 from datetime import timedelta
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 import environ
-from apis.MY_SETTINGS import MY_SECRET, MY_DATABASES
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
