@@ -12,10 +12,3 @@ export interface BoardData {
   page: number;
   category: string;
 }
-
-export interface PostData {
-  title: string;
-  category: string;
-  content: string;
-  user: number;
-}

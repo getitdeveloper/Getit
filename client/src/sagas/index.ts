@@ -1,8 +1,10 @@
 import axios from 'axios';
 import { all, fork } from 'redux-saga/effects';
-import boardSaga from './board';
+import postListSaga from './postList';
 import commentSaga from './comment';
+import commentListSaga from './commentList';
 import userSaga from './user';
+import postSaga from './post';
 
 // axios 요청 기본 주소
 axios.defaults.baseURL =
@@ -15,6 +17,8 @@ axios.defaults.withCredentials = true;
 
 export default function* rootSaga(): Generator {
   yield all([fork(userSaga)]);
-  yield all([fork(boardSaga)]);
+  yield all([fork(postListSaga)]);
+  yield all([fork(postSaga)]);
   yield all([fork(commentSaga)]);
+  yield all([fork(commentListSaga)]);
 }

@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import PostReactions from '@components/PostReactions';
-import { PageBackground, PageContainer, PageTitle } from '@assets/styles/page';
-import { COMMON_POST_REQUEST, COMMENT_REQUEST } from '@reducers/actions';
+import { PageBackground, PageTitle } from '@assets/styles/page';
+import { COMMON_POST_REQUEST } from '@reducers/actions';
 import PostDetail from '@components/PostDetail';
 import Comments from '@components/Comments';
 import LoadingSpinner from '@components/LoadingSpinner';

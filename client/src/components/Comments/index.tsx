@@ -1,7 +1,10 @@
 import * as React from 'react';
 import { RootStateOrAny, useSelector, useDispatch } from 'react-redux';
 import moment from 'moment';
-import { COMMENT_REGISTER_REQUEST, COMMENT_REQUEST } from '@reducers/actions';
+import {
+  COMMENT_REGISTER_REQUEST,
+  COMMENT_LIST_REQUEST,
+} from '@reducers/actions';
 import { PageContainer } from '@assets/styles/page';
 import UserImg from '@assets/icons/user.svg';
 import LoadingSpinner from '@components/LoadingSpinner';
@@ -33,7 +36,7 @@ function Comments(props: any) {
 
   React.useEffect(() => {
     dispatch({
-      type: COMMENT_REQUEST,
+      type: COMMENT_LIST_REQUEST,
       data: {
         board: boardId,
       },
