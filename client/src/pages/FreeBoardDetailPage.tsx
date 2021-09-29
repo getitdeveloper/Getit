@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useParams } from 'react-router-dom';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 
 import { PageBackground, PageTitle } from '@assets/styles/page';
@@ -7,11 +8,11 @@ import PostDetail from '@components/PostDetail';
 import Comments from '@components/Comments';
 import LoadingSpinner from '@components/LoadingSpinner';
 import PostReactions from '@components/PostReactions';
+import { IPostId } from '@types';
 
-function FreeBoardDetailPage(props: any): JSX.Element {
-  const { match } = props;
-  const contentId = match.params.id;
+function FreeBoardDetailPage(): JSX.Element {
   const dispatch = useDispatch();
+  const { postId }: IPostId = useParams();
   const freePost = useSelector(
     (state: RootStateOrAny) => state.board.postContent,
   );
@@ -20,7 +21,7 @@ function FreeBoardDetailPage(props: any): JSX.Element {
     dispatch({
       type: COMMON_POST_REQUEST,
       data: {
-        id: contentId,
+        id: postId,
       },
     });
   }, []);
@@ -34,7 +35,7 @@ function FreeBoardDetailPage(props: any): JSX.Element {
       <PageTitle>자유 게시판</PageTitle>
       <PostDetail post={freePost} />
       <PostReactions />
-      <Comments boardId={contentId} />
+      <Comments boardId={postId} />
     </PageBackground>
   );
 }

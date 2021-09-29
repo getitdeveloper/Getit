@@ -4,10 +4,11 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector, RootStateOrAny } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import LoadingSpinner from '@components/LoadingSpinner';
+import { IPostId } from '@types';
 
 function RecruitBoardDetailPage(): JSX.Element {
   const dispatch = useDispatch();
-  const { postId }: { postId: string } = useParams();
+  const { postId }: IPostId = useParams();
   const recruitPostDetail = useSelector(
     (state: RootStateOrAny) => state.board.recruitPostDetail,
   );

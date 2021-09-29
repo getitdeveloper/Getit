@@ -26,6 +26,18 @@ export const routeList: Array<RouteList> = [
     page: MainPage,
   },
   {
+    path: '/myprofile',
+    page: ProfilePage,
+  },
+  {
+    path: '/register',
+    page: RegisterPage,
+  },
+  {
+    path: '/searchResult',
+    page: SearchResultPage,
+  },
+  {
     path: '/callback/kakao',
     page: KakaoOAuth2Callback,
   },
@@ -38,32 +50,24 @@ export const routeList: Array<RouteList> = [
     page: QuestionBoardPage,
   },
   {
-    path: '/freeBoard',
-    page: FreeBoardPage,
-  },
-  {
-    path: '/myprofile',
-    page: ProfilePage,
-  },
-  {
-    path: '/freeBoard/post/:id',
-    page: FreeBoardDetailPage,
-  },
-  {
-    path: '/questionBoard/post/:id',
-    page: QuestionDetailPage,
-  },
-  {
-    path: '/register',
-    page: RegisterPage,
-  },
-  {
     path: '/questionBoard/form',
     page: QuestionFormPage,
   },
   {
+    path: '/questionBoard/:postId',
+    page: QuestionDetailPage,
+  },
+  {
+    path: '/freeBoard',
+    page: FreeBoardPage,
+  },
+  {
     path: '/freeBoard/form',
     page: FreeBoardFormPage,
+  },
+  {
+    path: '/freeBoard/:postId',
+    page: FreeBoardDetailPage,
   },
   {
     path: '/recruitBoard',
@@ -76,10 +80,6 @@ export const routeList: Array<RouteList> = [
   {
     path: '/recruitBoard/:postId',
     page: RecruitBoardDetailPage,
-  },
-  {
-    path: '/searchResult',
-    page: SearchResultPage,
   },
   {
     path: '*',

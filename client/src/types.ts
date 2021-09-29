@@ -126,3 +126,7 @@ export interface IRecruitPost {
   };
   worker: string[];
 }
+
+export interface IPostId {
+  postId: string;
+}
