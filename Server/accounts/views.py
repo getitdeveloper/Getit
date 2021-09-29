@@ -81,7 +81,7 @@ class google_callback(APIView):
                 'nickname':nickname,
             'user_pk':upk})
             res.set_cookie(key='getit', value=access_token,httponly=True,
-                           domain='getittest.shop', samesite=None)
+                           domain='getit.best', samesite=None)
             return res
         except:
             data = {'access_token': access_token}
@@ -101,7 +101,7 @@ class google_callback(APIView):
                 'access_token': access_token,
             })
             res.set_cookie(key='getit', value=access_token, httponly=True,
-                           domain='getittest.shop', samesite=None)
+                           domain='getit.best', samesite=None)
             return res
 
 class GoogleLogin(SocialLoginView):
@@ -176,7 +176,7 @@ class github_callback(APIView):
             res = JsonResponse({
                 'message': 'login','access_token': access_token,'nickname':nickname,'user_pk':upk})
             res.set_cookie(key='getit', value=access_token, httponly=True,
-                           domain='getittest.shop', samesite=None)
+                           domain='getit.best', samesite=None)
             return res
         except:
             # 기존에 가입된 유저가 없으면 새로 가입
@@ -195,7 +195,7 @@ class github_callback(APIView):
             res = JsonResponse({
                 'message': 'register','access_token': access_token})
             res.set_cookie(key='getit', value=access_token, httponly=True,
-                           domain='getittest.shop', samesite=None)
+                           domain='getit.best', samesite=None)
             return res
 
 class GithubLogin(SocialLoginView):
@@ -269,7 +269,7 @@ class kakao_callback(APIView):
             res = JsonResponse({
                 'message': 'login','access_token': access_token,'nickname':nickname,'user_pk':upk})
             res.set_cookie(key='getit', value=access_token, httponly=True,
-                           domain='getittest.shop', samesite=None)
+                           domain='getit.best', samesite=None)
             return res
         except:
             # 기존에 가입된 유저가 없으면 새로 가입
@@ -288,7 +288,7 @@ class kakao_callback(APIView):
             res = JsonResponse({
                 'message': 'register','access_token': access_token})
             res.set_cookie(key='getit', value=access_token, httponly=True,
-                           domain='getittest.shop', samesite=None)
+                           domain='getit.best', samesite=None)
             return res
 
 class KakaoLogin(SocialLoginView):
@@ -312,5 +312,5 @@ def duplicate_check(request):
 
 def logout(request):
     res = JsonResponse({})
-    res.delete_cookie('getit', domain='getittest.shop', samesite=None)
+    res.delete_cookie('getit', domain='getit.best', samesite=None)
     return res
