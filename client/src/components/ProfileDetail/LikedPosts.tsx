@@ -30,7 +30,7 @@ function LikedPosts(): JSX.Element {
     <ProfileRight>
       {likedPosts.map((content: ILikedPost) => (
         <PostWrapper key={content.commonpost.id}>
-          <PostItem content={content.commonpost} detail />
+          <PostItem content={content.commonpost} />
         </PostWrapper>
       ))}
     </ProfileRight>
