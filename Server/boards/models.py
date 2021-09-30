@@ -44,3 +44,6 @@ class ChoicesFilter(models.Model):
         ('디자이너', '디자이너'),
     )
     workers = models.CharField(max_length=10, choices=CHOICES_FILTER)
+
+    def __str__(self):
+        return self.workers
