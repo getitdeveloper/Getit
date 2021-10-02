@@ -17,6 +17,9 @@ import {
   USER_PROFILE_REGISTER_REQUEST,
   USER_PROFILE_REGISTER_SUCCESS,
   USER_PROFILE_REGISTER_FAILURE,
+  USER_PROFILE_EDIT_REQUEST,
+  USER_PROFILE_EDIT_SUCCESS,
+  USER_PROFILE_EDIT_FAILURE,
   USER_REGISTER_RESET,
   USER_ID_UPDATE,
 } from './actions';
@@ -49,6 +52,9 @@ const initialState: InitialState = {
   userProfileRegisterRequest: false,
   userProfileRegisterSuccess: false,
   userProfileRegisterFailure: null,
+  userProfileEditRequest: false,
+  userProfileEditSuccess: false,
+  userProfileEditFailure: null,
   userRegisterReset: false,
   userIdUpdate: false,
 };
@@ -146,6 +152,22 @@ const reducer = (state = initialState, action: UserActions): InitialState =>
         draft.userProfileRegisterRequest = false;
         draft.userProfileRegisterSuccess = false;
         draft.userProfileRegisterFailure = action.error;
+        break;
+      case USER_PROFILE_EDIT_REQUEST:
+        draft.userProfileEditRequest = true;
+        draft.userProfileEditSuccess = false;
+        draft.userProfileEditFailure = null;
+        break;
+      case USER_PROFILE_EDIT_SUCCESS:
+        draft.userProfileEditRequest = false;
+        draft.userProfileEditSuccess = true;
+        draft.userProfileEditFailure = null;
+        draft.profileInfo = action.data;
+        break;
+      case USER_PROFILE_EDIT_FAILURE:
+        draft.userProfileEditRequest = false;
+        draft.userProfileEditSuccess = false;
+        draft.userProfileEditFailure = action.error;
         break;
       case USER_REGISTER_RESET:
         draft.userRegisterReset = true;

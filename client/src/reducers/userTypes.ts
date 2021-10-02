@@ -16,6 +16,9 @@ import {
   USER_PROFILE_REGISTER_REQUEST,
   USER_PROFILE_REGISTER_SUCCESS,
   USER_PROFILE_REGISTER_FAILURE,
+  USER_PROFILE_EDIT_REQUEST,
+  USER_PROFILE_EDIT_SUCCESS,
+  USER_PROFILE_EDIT_FAILURE,
   USER_REGISTER_RESET,
   USER_ID_UPDATE,
 } from './actions';
@@ -49,6 +52,9 @@ export interface InitialState {
   userProfileRegisterRequest: boolean;
   userProfileRegisterSuccess: boolean;
   userProfileRegisterFailure: string | null;
+  userProfileEditRequest: boolean;
+  userProfileEditSuccess: boolean;
+  userProfileEditFailure: string | null;
   userRegisterReset: boolean;
   userIdUpdate: boolean;
 }
@@ -140,6 +146,20 @@ export interface IUserProfileRegisterFailure {
   error: string;
 }
 
+export interface UserProfileEditRequest {
+  type: typeof USER_PROFILE_EDIT_REQUEST;
+}
+
+export interface UserProfileEditSuccess {
+  type: typeof USER_PROFILE_EDIT_SUCCESS;
+  data: IProfileInfo;
+}
+
+export interface UserProfileEditFailure {
+  type: typeof USER_PROFILE_EDIT_FAILURE;
+  error: string;
+}
+
 export interface IUserRegisterReset {
   type: typeof USER_REGISTER_RESET;
 }
@@ -170,5 +190,8 @@ export type UserActions =
   | IUserProfileRegisterRequest
   | IUserProfileRegisterSuccess
   | IUserProfileRegisterFailure
+  | UserProfileEditRequest
+  | UserProfileEditSuccess
+  | UserProfileEditFailure
   | IUserRegisterReset
   | IUserIdUpdate;

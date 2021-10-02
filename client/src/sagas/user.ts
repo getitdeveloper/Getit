@@ -16,6 +16,9 @@ import {
   USER_PROFILE_REGISTER_REQUEST,
   USER_PROFILE_REGISTER_SUCCESS,
   USER_PROFILE_REGISTER_FAILURE,
+  USER_PROFILE_EDIT_REQUEST,
+  USER_PROFILE_EDIT_SUCCESS,
+  USER_PROFILE_EDIT_FAILURE,
   USER_ID_UPDATE,
 } from '../reducers/actions';
 import {
@@ -50,6 +53,29 @@ function* requestUserProfileSaga(action: any): any {
     console.error(error);
     yield put({
       type: USER_PROFILE_FAILURE,
+      error,
+    });
+  }
+}
+
+// 사용자 프로필 수정
+const requestUserProfileEdit = (user_pk: string) => {
+  return axios.put(`/api/profile/${user_pk}/`);
+};
+
+function* requestUserProfileEditSaga(action: any): any {
+  try {
+    const response = yield call(requestUserProfileEdit, action.data.user_pk);
+    console.log('프로필 정보 수정 후 응답 ===>', response);
+
+    yield put({
+      type: USER_PROFILE_EDIT_SUCCESS,
+      data: response.data,
+    });
+  } catch (error) {
+    console.error(error);
+    yield put({
+      type: USER_PROFILE_EDIT_FAILURE,
       error,
     });
   }
@@ -100,7 +126,7 @@ function* requestUserLogInSaga(action: any) {
 
     //! 로컬 테스트용
     // const accessToken = response.data.access_token;
-    // axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
+    //  axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
 
     yield put({
       type: USER_LOGIN_SUCCESS,
@@ -222,6 +248,10 @@ function* watchRequestUserProfile() {
   yield takeLatest(USER_PROFILE_REQUEST, requestUserProfileSaga);
 }
 
+function* watchRequestUserProfileEdit() {
+  yield takeLatest(USER_PROFILE_EDIT_REQUEST, requestUserProfileEditSaga);
+}
+
 function* watchRequestUserNickDoubleCheck() {
   yield takeLatest(
     USER_NICK_DOUBLECHECK_REQUEST,
@@ -241,6 +271,7 @@ function* userSaga() {
     fork(watchRequestUserLogIn),
     fork(watchRequestUserLogOut),
     fork(watchRequestUserProfile),
+    fork(watchRequestUserProfileEdit),
     fork(watchRequestUserNickDoubleCheck),
     fork(watchRequestUserPofileRegister),
   ]);
