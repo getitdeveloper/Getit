@@ -128,14 +128,16 @@ class ProfileDetail(GenericAPIView):
         serializer = ProfileSerializer(profile, data=request.data)
 
         if serializer.is_valid():
+            print('serializer')
             serializer.save()
+            print('save complete')
             names = request.data['stack']
             profile.stack.clear()
             for name in names:
                 if not name:
                     continue
                 _name, _ = Tag.objects.get_or_create(name=name)
-
+                
                 profile.stack.add(_name)
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
