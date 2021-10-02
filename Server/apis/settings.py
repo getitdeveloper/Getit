@@ -125,6 +125,7 @@ AUTHENTICATION_BACKENDS = [
 
     # `allauth` specific authentication methods, such as login by e-mail
     'allauth.account.auth_backends.AuthenticationBackend',
+    'rest_framework_simplejwt.authentication.JWTAuthentication',
 ]
 
 SITE_ID = 1
