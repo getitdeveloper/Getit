@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
+import { useState } from 'react';
 import Chip from '@material-ui/core/Chip';
 import UserImg from '@assets/icons/user.svg';
 import { HorizontalLine } from '@assets/styles/commons';
@@ -11,6 +12,8 @@ import {
   IntroWrapper,
   SubTitleWrapper,
   useStyles,
+  PersonalInfo,
+  SubmitButton,
 } from './styles';
 import Portfoilo from '../Portfolio';
 import Project from '../Project';
@@ -20,6 +23,34 @@ function MyProfile() {
   const profileInfo = useSelector(
     (state: RootStateOrAny) => state.user.profileInfo,
   );
+  const [intro, setIntro] = useState(profileInfo.info);
+  const [nickname, setNickname] = useState(profileInfo.nickname);
+  const [email, setEmail] = useState(profileInfo.email);
+  const [job, setJob] = useState(profileInfo.job);
+
+  const onChange = (e: any) => {
+    const { name, value } = e.target;
+    switch (name) {
+      case 'nickname':
+        setNickname(value);
+        break;
+      case 'email':
+        setEmail(value);
+        break;
+      case 'job':
+        setJob(value);
+        break;
+      case 'intro':
+        setIntro(value);
+        break;
+      default:
+        break;
+    }
+  };
+
+  const onSubmit = () => {
+    alert('update profile info');
+  };
 
   return (
     <ProfileRight>
@@ -32,14 +63,29 @@ function MyProfile() {
           )} */}
         <div>
           <PersonalInfoWrapper>
-            닉네임 {profileInfo.nickname}
+            닉네임{' '}
+            <PersonalInfo
+              name='nickname'
+              value={nickname}
+              onChange={onChange}
+            />
           </PersonalInfoWrapper>
-          <PersonalInfoWrapper>이메일 {profileInfo.email}</PersonalInfoWrapper>
-          <PersonalInfoWrapper> 직업 {profileInfo.job} </PersonalInfoWrapper>
+          <PersonalInfoWrapper>
+            이메일{' '}
+            <PersonalInfo name='email' value={email} onChange={onChange} />
+          </PersonalInfoWrapper>
+          <PersonalInfoWrapper>
+            {' '}
+            직업 <PersonalInfo
+              name='job'
+              value={job}
+              onChange={onChange}
+            />{' '}
+          </PersonalInfoWrapper>
         </div>
       </MainProfile>
 
-      <IntroWrapper>{profileInfo.info}</IntroWrapper>
+      <IntroWrapper name='intro' value={intro} onChange={onChange} />
 
       <SubTitleWrapper>
         <HorizontalLine width='40%' />
@@ -70,6 +116,10 @@ function MyProfile() {
         <HorizontalLine width='40%' />
       </SubTitleWrapper>
       <Project finished />
+
+      <SubmitButton type='button' onClick={onSubmit}>
+        저장하기
+      </SubmitButton>
     </ProfileRight>
   );
 }

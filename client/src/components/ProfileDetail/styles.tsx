@@ -103,7 +103,16 @@ export const PersonalInfoWrapper = styled.div`
   border-radius: 22px;
 `;
 
-export const IntroWrapper = styled.div`
+export const PersonalInfo = styled.input`
+  background-color: ${(props) => props.theme.colors.background};
+  border: 0;
+  font-size: 1rem;
+  &:focus {
+    outline: none;
+  }
+`;
+
+export const IntroWrapper = styled.input`
   width: 100%;
   height: auto;
   min-height: 10rem;
@@ -114,7 +123,11 @@ export const IntroWrapper = styled.div`
   padding: 2.5rem;
   background-color: ${(props) => props.theme.colors.background};
   border-radius: 2rem;
+  border: 0;
   font-size: 1rem;
+  &:focus {
+    outline: none;
+  }
 `;
 
 export const SubTitleWrapper = styled.div`
@@ -124,6 +137,18 @@ export const SubTitleWrapper = styled.div`
   justify-content: space-between;
   algin-items: center;
   margin: 2.5rem 0rem;
+`;
+
+export const SubmitButton = styled.button`
+  display: block;
+  margin: 0 auto;
+  margin-top: 5rem;
+  padding: 1rem 3rem;
+  background-color: ${(props) => props.theme.colors.main};
+  border: 0;
+  border-radius: 0.8rem;
+  color: white;
+  cursor: pointer;
 `;
 
 // MyComments styles
