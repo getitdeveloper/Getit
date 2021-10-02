@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { useParams } from 'react-router-dom';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
-import PostReactions from '@components/PostReactions';
 import { PageBackground, PageTitle } from '@assets/styles/page';
 import { COMMON_POST_REQUEST } from '@reducers/actions';
 import PostDetail from '@components/PostDetail';
@@ -33,8 +32,6 @@ function QuestionDetailPage(): JSX.Element {
       <PageBackground>
         <PageTitle>질문 게시판</PageTitle>
         <PostDetail post={questionPost} />
-
-        <PostReactions />
         <Comments boardId={postId} />
       </PageBackground>
     </div>
