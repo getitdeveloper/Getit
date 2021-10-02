@@ -5,6 +5,7 @@ from django.contrib.auth import get_user_model
 class IsOwnerOrReadOnly(permissions.BasePermission):
 
     def has_permission(self, request, view):
+        print(request.data.get('user'))
         if request.method in permissions.SAFE_METHODS:
             return True
         elif request.method in ('POST', 'PUT'):
@@ -15,6 +16,7 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
             return False
 
     def has_object_permission(self, request, view, obj):
+        print(request.data.get('user'))
         if request.user.is_authenticated:
             if request.user.is_staff:
                 return True

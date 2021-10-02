@@ -92,6 +92,7 @@ class ProfileDetail(GenericAPIView):
                     --> image의경우 일단은 값은 넣지 말아주세요!
                 }
         """
+        print(request.data.get('user'))
         profile = self.get_object(user_pk)
         serializer = ProfileSerializer(profile, data=request.data)
 
@@ -124,6 +125,7 @@ class ProfileDetail(GenericAPIView):
                     --> image의경우 일단은 값은 넣지 말아주세요!
                 }
         """
+        print(request.data.get('user'))
         profile = self.get_object(user_pk)
         serializer = ProfileSerializer(profile, data=request.data)
 
@@ -137,7 +139,7 @@ class ProfileDetail(GenericAPIView):
                 if not name:
                     continue
                 _name, _ = Tag.objects.get_or_create(name=name)
-                
+
                 profile.stack.add(_name)
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
