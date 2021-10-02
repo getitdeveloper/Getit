@@ -24,6 +24,14 @@ export interface IBoard {
   results: IPostItem[];
 }
 
+export interface IUser {
+  id: number;
+  profile: {
+    nickname: string;
+    image: string;
+  };
+}
+
 export interface ILikedPost {
   commonpost: IPostItem;
 }
@@ -35,13 +43,7 @@ export interface IPostItem {
   content: string;
   image?: string;
   create_at?: string;
-  user: {
-    id: number;
-    profile: {
-      nickname: string;
-      image: string;
-    };
-  };
+  user: IUser;
   likes?: number;
   comments?: number;
   is_like?: boolean;
@@ -68,17 +70,11 @@ export interface ICommentList {
   content: string;
   create_at: string;
   recruitpostpost?: number;
-  user: {
-    id: number;
-    profile: {
-      image: string;
-      nickname: string;
-    };
-  };
+  user: IUser;
 }
 
 export interface IComment {
-  user: number;
+  user: IUser;
   commonpost?: number;
   recruitpost?: number;
   content: string;
@@ -117,13 +113,7 @@ export interface IRecruitPost {
     user: number;
   };
   title: string;
-  user: {
-    id: number;
-    profile: {
-      image: string;
-      nickname: string;
-    };
-  };
+  user: IUser;
   worker: string[];
 }
 

@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
+import { useHistory } from 'react-router';
 import moment from 'moment';
 import 'moment/locale/ko';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
@@ -13,18 +14,33 @@ import {
   CommentWrapper,
   CommentDetailWrapper,
   CommentDate,
+  CommentInfo,
 } from './styles';
 
+function getOrderedComments(comments: any) {
+  const created: Map<string, Array<undefined>> = new Map();
+  comments.forEach((content: any) => {
+    const createdTime: string = moment(`${content.create_at}`).format(
+      'YYYY.MM.DD',
+    );
+    if (created.has(createdTime)) {
+      created.get(createdTime)?.push(content);
+    } else {
+      created.set(createdTime, [content]);
+    }
+  });
+  return Array.from(created);
+}
+
 function MyComments() {
+  const history = useHistory();
   const user = useSelector((state: RootStateOrAny) => state.user);
   const userId = user.profileInfo?.user_pk;
   const myComments = useSelector(
     (state: RootStateOrAny) => state.commentList.myCommentList,
   );
   const dispatch = useDispatch();
-  const initialCreatedDate: string[] = [];
-  const [createdDate, setCreatedDate] = useState(initialCreatedDate);
-  const [hideDate, setHideDate] = useState(true);
+  const Workers: string[] = ['개발자', '기획자', '디자이너'];
 
   useEffect(() => {
     dispatch({
@@ -38,23 +54,51 @@ function MyComments() {
   if (!myComments) {
     return <LoadingSpinner />;
   }
+
+  const comments = getOrderedComments(myComments);
+  if (!comments) {
+    return <LoadingSpinner />;
+  }
+
+  const onHandlePost = (postId: number, category: string) =>
+    history.push(`/${category}Board/${postId}`);
+
   return (
     <ProfileRight>
-      {myComments.map((content: IComment) => (
-        <div key={content.create_at}>
+      {comments.map((comment: any) => (
+        <div key={comment[0]}>
           <CommentDate>
-            {moment(`${content.create_at}`).format('YYYY.MM.DD')}
+            {moment(`${comment[0]}`).format('YYYY.MM.DD')}
           </CommentDate>
-          <CommentWrapper>
-            <CommentDetailWrapper>
-              <p>{content.content}</p>
-              <p>{moment(`${content.create_at}`).fromNow()}</p>
-            </CommentDetailWrapper>
+          {comment[1].map((content: any) => (
+            <CommentWrapper key={content.id}>
+              <CommentDetailWrapper>
+                <CommentInfo>
+                  {content.commonpost.category === 'question' ? (
+                    <p>질문게시판 </p>
+                  ) : (
+                    <p>자유게시판 </p>
+                  )}
+                  {content.commonpost.worker.map((workerId: number) => (
+                    <p key={workerId}> / {Workers[workerId - 1]} </p>
+                  ))}
+                  <p> / {content.commonpost.title}</p>
+                </CommentInfo>
+                <p>{content.content}</p>
+              </CommentDetailWrapper>
 
-            <IconButton>
-              <NavigateNextIcon htmlColor='#707070' />
-            </IconButton>
-          </CommentWrapper>
+              <IconButton
+                onClick={() =>
+                  onHandlePost(
+                    content.commonpost.id,
+                    content.commonpost.category,
+                  )
+                }
+              >
+                <NavigateNextIcon htmlColor='#707070' />
+              </IconButton>
+            </CommentWrapper>
+          ))}
         </div>
       ))}
     </ProfileRight>

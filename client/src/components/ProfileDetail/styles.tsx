@@ -128,30 +128,38 @@ export const SubTitleWrapper = styled.div`
 
 // MyComments styles
 export const CommentWrapper = styled.div`
-  margin-bottom: 3%;
+  margin-bottom: 1.5rem;
   width: 100%;
   box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.16);
   border: solid 1px #fbfbfb;
-  border-radius: 7px;
+  border-radius: 0.8rem;
   background-color: #fff;
   display: flex;
   justify-content: space-between;
-  padding: 2%;
+  padding: 1.5rem 3rem;
 `;
 
 export const CommentDetailWrapper = styled.div`
   width: 85%;
-  display: flex;
-  justify-content: space-between;
 `;
 
 export const CommentDate = styled.p`
   color: #818181;
+  margin-bottom: 1.5rem;
+  margin-left: 1rem;
+`;
+
+export const CommentInfo = styled.div`
+  width: 100%;
+  display: flex;
+  color: #818181;
+  margin-bottom: 0.8rem;
 `;
 
 // MyPosts styles
 
-export const PostWrapper = styled.div`
+export const PostWrapper = styled.button`
+  width: 100%;
   box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.16);
   border: solid 1px #fbfbfb;
   background-color: #fff;

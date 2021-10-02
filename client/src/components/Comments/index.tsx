@@ -5,6 +5,7 @@ import {
   COMMENT_REGISTER_REQUEST,
   COMMENT_LIST_REQUEST,
 } from '@reducers/actions';
+import { IComment } from '@types';
 import { PageContainer } from '@assets/styles/page';
 import UserImg from '@assets/icons/user.svg';
 import LoadingSpinner from '@components/LoadingSpinner';
@@ -49,7 +50,7 @@ function Comments(props: any) {
   };
 
   const onSubmit = () => {
-    if (userId === null) {
+    if (!userId) {
       return alert('로그인 한 후에 이용가능하십니다!');
     }
     const commentData = {
@@ -96,8 +97,8 @@ function Comments(props: any) {
         <NoComments>등록된 댓글이 없습니다!</NoComments>
       ) : (
         <CommentWrapper>
-          {commentList.map((contents: any) => (
-            <Comment key={contents.key}>
+          {commentList.map((contents: IComment) => (
+            <Comment key={contents.create_at}>
               <WriterImage src={UserImg} alt='profile' />
               <CommentDetailWrapper>
                 <CommentDetail>
