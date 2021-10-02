@@ -92,7 +92,6 @@ class ProfileDetail(GenericAPIView):
                     --> image의경우 일단은 값은 넣지 말아주세요!
                 }
         """
-        print(request.data.get('user'))
         profile = self.get_object(user_pk)
         serializer = ProfileSerializer(profile, data=request.data)
 
