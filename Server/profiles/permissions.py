@@ -20,7 +20,7 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
                 return True
             elif request.method in permissions.SAFE_METHODS:
                 return True
-            elif request.method is 'PUT':
+            elif request.method == 'PUT':
                 return request.user.id == request.data.get('user')
             elif hasattr(obj, 'user'):
                 return obj.user.id == request.user.id
