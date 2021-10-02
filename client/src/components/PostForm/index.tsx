@@ -2,22 +2,17 @@ import * as React from 'react';
 import { useState } from 'react';
 import { useSelector, RootStateOrAny, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import CloseIcon from '@material-ui/icons/Close';
 import { COMMON_POST_REGISTER_REQUEST } from '@reducers/actions';
 import MarkdownRenderer from '@components/MarkdownRenderer';
-import { Stack } from '@assets/styles/commons';
+import StackInput from '@components/StackInput';
 import {
-  StacksWrapper,
   TitleInput,
   TextForm,
   TextFormTab,
   FormButton,
   ButtonWrapper,
   MarkdownWrapper,
-  StackInput,
-  DeleteButton,
   WorkerWrapper,
-  StackMessage,
 } from './styles';
 
 function PostForm(): JSX.Element {
@@ -31,7 +26,6 @@ function PostForm(): JSX.Element {
 
   const [postTitle, setTitle] = useState('');
   const [text, setText] = useState('');
-  const [stack, setStack] = useState('');
   const [hidden, setHidden] = useState(false);
   const [currentTab, setCurrentTab] = useState('edit');
   const [stacks, setStacks] = useState(initialStack);
@@ -46,9 +40,6 @@ function PostForm(): JSX.Element {
       case 'text':
         setText(value);
         break;
-      case 'stack':
-        setStack(value);
-        break;
       default:
         break;
     }
@@ -57,18 +48,6 @@ function PostForm(): JSX.Element {
   const onHidden = (status: boolean, e: any) => {
     setCurrentTab(e.target.id);
     setHidden(status);
-  };
-
-  const onHandleAddStack = (e: any) => {
-    if (e.key === 'Enter') {
-      setStacks([...stacks, stack]);
-      setStack('');
-    }
-  };
-
-  const onDeleteStack = (currentStack: string) => {
-    const filtered = stacks.filter((element) => element !== currentStack);
-    setStacks(filtered);
   };
 
   const onHandleWorker = (e: any) => {
@@ -163,24 +142,11 @@ function PostForm(): JSX.Element {
         <MarkdownRenderer text={text} open={hidden} />
       </MarkdownWrapper>
 
-      <StacksWrapper>
-        {stacks.map((content: string) => (
-          <Stack key={content}>
-            {content}
-            <DeleteButton type='button' onClick={() => onDeleteStack(content)}>
-              <CloseIcon />
-            </DeleteButton>
-          </Stack>
-        ))}
-        <StackInput
-          name='stack'
-          onChange={onChange}
-          value={stack}
-          placeholder='관련 기술 스택을 입력하세요'
-          onKeyPress={onHandleAddStack}
-        />
-      </StacksWrapper>
-      <StackMessage>*Enter를 눌러 작성하신 스택을 생성해주세요!</StackMessage>
+      <StackInput
+        initialStacks={stacks}
+        setInitialStacks={setStacks}
+        placeHolder='관련 기술 스택을 입력하세요'
+      />
 
       <ButtonWrapper>
         <FormButton type='button' onClick={() => history.push('/')}>

@@ -20,8 +20,8 @@ export const PageBackground = styled.div`
   }
 `;
 
-export const PageTitle = styled.p`
-  width: 75%;
+export const PageTitle = styled.h1`
+  width: 78%;
   font-size: 1.2rem;
   font-stretch: normal;
   font-style: bold;
@@ -36,11 +36,11 @@ export const PageContainer = styled.div`
   width: ${(props: Size) => (props.width ? props.width : '100%')};
   height: auto;
   background-color: #ffffff;
-  border-radius: 22px;
+  border-radius: 0.8rem;
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
-  padding: ${(props: Size) => (props.padding ? props.padding : '5%')};
-  margin-bottom: 5%;
-  margin-top: 2%;
+  padding: ${(props: Size) => (props.padding ? props.padding : '4.5rem')};
+  margin-bottom: 4.5rem;
+  margin-top: 1rem;
 
   @media ${(props) => props.theme.tablet} {
     box-shadow: 0 0 0 rgba(0, 0, 0, 0);

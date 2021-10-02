@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useSelector, RootStateOrAny } from 'react-redux';
 import { PageContainer } from '@assets/styles/page';
 import PostItem from '@components/PostItem';
 import MarkdownRenderer from '@components/MarkdownRenderer';
@@ -7,10 +8,10 @@ import { Content, StacksWrapper } from './styles';
 
 function PostDetail(props: any): JSX.Element {
   const { post } = props;
-  console.log(post.stack);
+
   return (
     <PageContainer width='80%'>
-      <PostItem content={post} detail />
+      <PostItem content={post} />
       <Content>
         <MarkdownRenderer text={post.content} open />
       </Content>
