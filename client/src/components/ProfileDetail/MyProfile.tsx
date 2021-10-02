@@ -61,22 +61,27 @@ function MyProfile() {
     ) {
       return alert('닉네임, 이메일, 직업, 자기소개 부분은 빈칸일 수 없습니다!');
     }
-    const updatedProfileInfo: IProfileInfo = {
+    const updatedProfileInfo: any = {
       user: profileInfo.user,
       user_pk: profileInfo.user_pk,
+      nickname: editedNickname,
       job: editedJob,
-      developer_level: profileInfo.developer_level,
-      designer_and_pm_level: profileInfo.designer_and_pm_level,
-      image: profileInfo.image,
+      level: '',
+      // developer_level: profileInfo.developer_level,
+      // designer_and_pm_level: profileInfo.designer_and_pm_level,
       email: editedEmail,
       info: intro,
       git: profileInfo.git,
-      stacks: editedStacks,
+      stack: editedStacks,
     };
+
     console.log(updatedProfileInfo);
     dispatch({
       type: USER_PROFILE_EDIT_REQUEST,
-      data: updatedProfileInfo,
+      data: {
+        updatedProfile: updatedProfileInfo,
+        user_pk: String(profileInfo.user_pk),
+      },
     });
   };
 

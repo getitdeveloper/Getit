@@ -59,13 +59,13 @@ function* requestUserProfileSaga(action: any): any {
 }
 
 // 사용자 프로필 수정
-const requestUserProfileEdit = (user_pk: string) => {
-  return axios.put(`/api/profile/${user_pk}/`);
+const requestUserProfileEdit = (data: any) => {
+  return axios.put(`/api/profile/${data.user_pk}/`, data.updatedProfile);
 };
 
 function* requestUserProfileEditSaga(action: any): any {
   try {
-    const response = yield call(requestUserProfileEdit, action.data.user_pk);
+    const response = yield call(requestUserProfileEdit, action.data);
     console.log('프로필 정보 수정 후 응답 ===>', response);
 
     yield put({
@@ -126,7 +126,7 @@ function* requestUserLogInSaga(action: any) {
 
     //! 로컬 테스트용
     // const accessToken = response.data.access_token;
-    //  axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
+    // axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
 
     yield put({
       type: USER_LOGIN_SUCCESS,

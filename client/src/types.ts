@@ -4,11 +4,11 @@ export interface IProfileInfo {
   job: string;
   developer_level: string;
   designer_and_pm_level: string;
-  image: string | null;
+  image?: string | null;
   email: string;
   info: string | null;
   git: string | null;
-  stacks: string[];
+  stack: string[];
 }
 
 export interface IPortfolio {
