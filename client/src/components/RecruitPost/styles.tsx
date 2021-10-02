@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import Paper from '@material-ui/core/Paper';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
+import { Link } from 'react-router-dom';
 
 export const Post = styled(Paper)`
   && {
@@ -55,7 +56,7 @@ export const RecruitCondition = styled.ul`
   list-style: none;
   margin-top: 1rem;
   font-size: 1.4rem;
-  opacity: 0.55;
+  opacity: 0.35;
 `;
 
 export const Content = styled.div`
@@ -70,6 +71,7 @@ export const ContentDetail = styled.div`
   bottom: 0;
   padding: 2rem;
   height: auto;
+  opacity: 0.55;
 
   li {
     list-style: none;
@@ -84,9 +86,19 @@ export const ContentDetail = styled.div`
   }
 `;
 
+export const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: ${({ theme }) => theme.colors.blackText};
+`;
+
 export const LikeIcon = styled(FavoriteBorderIcon)`
   vertical-align: middle;
 `;
 export const CommentIcon = styled(ChatBubbleOutlineIcon)`
   vertical-align: middle;
+`;
+
+export const PagingWrapper = styled.div`
+  display: flex;
+  justify-content: center;
 `;
