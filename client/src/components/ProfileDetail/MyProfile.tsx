@@ -2,7 +2,7 @@ import * as React from 'react';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
 import Chip from '@material-ui/core/Chip';
-import UserImg from '@assets/icons/user.svg';
+import UserIcon from '@assets/icons/user.svg';
 import { HorizontalLine } from '@assets/styles/commons';
 import StackInput from '@components/StackInput';
 import {
@@ -57,7 +57,7 @@ function MyProfile() {
   return (
     <ProfileRight>
       <MainProfile>
-        <ProfileImage src={UserImg} alt='profileImage' />
+        <ProfileImage src={UserIcon} alt='profileImage' />
         {/* {profileDummyData.img ? (
             <ProfileImage src={profileDummyData.img} alt='profileImage' />
           ) : (

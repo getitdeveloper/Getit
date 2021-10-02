@@ -7,7 +7,7 @@ import {
 } from '@reducers/actions';
 import { IComment } from '@types';
 import { PageContainer } from '@assets/styles/page';
-import UserImg from '@assets/icons/user.svg';
+import UserIcon from '@assets/icons/user.svg';
 import LoadingSpinner from '@components/LoadingSpinner';
 import {
   CommentWrapper,
@@ -80,7 +80,7 @@ function Comments(props: any) {
   return (
     <PageContainer width='80%'>
       <CommentForm>
-        <WriterImage src={UserImg} alt='profile' />
+        <WriterImage src={UserIcon} alt='profile' />
         <CommentInput
           name='content'
           type='text'
@@ -99,7 +99,7 @@ function Comments(props: any) {
         <CommentWrapper>
           {commentList.map((contents: IComment) => (
             <Comment key={contents.create_at}>
-              <WriterImage src={UserImg} alt='profile' />
+              <WriterImage src={UserIcon} alt='profile' />
               <CommentDetailWrapper>
                 <CommentDetail>
                   <WriterNickName>
