@@ -10,7 +10,7 @@ import {
 } from './styles';
 
 function StackInput(props: any) {
-  const { initialStacks, setInitialStacks } = props;
+  const { initialStacks, setInitialStacks, placeHolder } = props;
   const [stack, setStack] = useState('');
 
   const onChange = (e: any) => {
@@ -47,7 +47,7 @@ function StackInput(props: any) {
           name='stack'
           onChange={onChange}
           value={stack}
-          placeholder='관련 기술 스택을 입력하세요'
+          placeholder={placeHolder}
           onKeyPress={onHandleAddStack}
         />
       </StacksWrapper>

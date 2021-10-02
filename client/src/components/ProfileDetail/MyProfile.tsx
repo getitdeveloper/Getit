@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Chip from '@material-ui/core/Chip';
 import UserImg from '@assets/icons/user.svg';
 import { HorizontalLine } from '@assets/styles/commons';
+import StackInput from '@components/StackInput';
 import {
   MainProfile,
   ProfileImage,
@@ -27,6 +28,7 @@ function MyProfile() {
   const [nickname, setNickname] = useState(profileInfo.nickname);
   const [email, setEmail] = useState(profileInfo.email);
   const [job, setJob] = useState(profileInfo.job);
+  const [stacks, setStacks] = useState(profileInfo.stack);
 
   const onChange = (e: any) => {
     const { name, value } = e.target;
@@ -92,9 +94,12 @@ function MyProfile() {
         <p>기술스택</p>
         <HorizontalLine width='40%' />
       </SubTitleWrapper>
-      {profileInfo.stack?.map((content: string) => (
-        <Chip label={content} key={content} className={classes.chip} />
-      ))}
+
+      <StackInput
+        initialStacks={stacks}
+        setInitialStacks={setStacks}
+        placeHolder=''
+      />
 
       <SubTitleWrapper>
         <HorizontalLine width='40%' />
