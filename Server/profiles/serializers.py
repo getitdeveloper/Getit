@@ -44,5 +44,6 @@ class TeamProfileSerializer(serializers.ModelSerializer):
             'status',
             'image',
             'stack',
-            'created_at'
+            'created_at',
+            'is_complete',
         )

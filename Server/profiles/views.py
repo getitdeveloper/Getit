@@ -168,7 +168,8 @@ class TeamProfileCreate(GenericAPIView):
                         "stack": [
                             "test"
                         ],
-                        "created_at": "2021-09-16T19:24:50.408320+09:00"
+                        "created_at": "2021-09-16T19:24:50.408320+09:00",
+                        "is_complete": 0,
                     },
                     {
                         "id": 3,
@@ -181,7 +182,8 @@ class TeamProfileCreate(GenericAPIView):
                         "stack": [
                             "react"
                         ],
-                        "created_at": "2021-09-17T10:16:00.998896+09:00"
+                        "created_at": "2021-09-17T10:16:00.998896+09:00",
+                        "is_complete": 0
                     }
         ]
         """
@@ -244,7 +246,8 @@ class TeamProfileDetail(GenericAPIView):
                         "status":true,
                         "image":null,
                         "stack":["drf","mysql","docker"],
-                        "created_at":"2021-09-12T07:07:04.808820+09:00"
+                        "created_at":"2021-09-12T07:07:04.808820+09:00",
+                        "is_complete": 0
                     }
                 """
         profile = self.get_object(user_id, id)
@@ -263,7 +266,10 @@ class TeamProfileDetail(GenericAPIView):
                     "content":"ㅁㄴㅇㅁㄴㅇ",
                     "status":true,
                     "image":null,
-                    "stack":["drf","mysql","docker"]
+                    "stack":["drf","mysql","docker"],
+                    "is_complete": 0
+                    --> is_complete의경우 팀프로젝트 종료,진행중인걸 나타내는 필드입니다. 진행중엔 default0이고 완료되었을땐
+                    1이므로 종료 버튼을 눌렀을때 1을 request해주시면 됩니다!
                 }
         """
         profile = self.get_object(user_id, id)
