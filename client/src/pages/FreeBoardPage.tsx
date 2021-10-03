@@ -36,7 +36,7 @@ function FreeBoardPage(): JSX.Element {
       <PageBackground>
         <PageContainer width='80%'>
           {boardList.results.map((content: IPost) => (
-            <PostItem key={content.id} content={content} boardType='Free' />
+            <PostItem key={content.id} content={content} boardType='free' />
           ))}
         </PageContainer>
         <Paging
