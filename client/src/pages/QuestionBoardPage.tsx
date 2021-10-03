@@ -39,7 +39,7 @@ function QuestionBardPage(): JSX.Element {
               <PostItem
                 key={content.id}
                 content={content}
-                boardType='Question'
+                boardType='question'
               />
             ))}
           </PageContainer>

@@ -9,7 +9,7 @@ import moment from 'moment';
 import { HorizontalLine, IconButton } from '@assets/styles/commons';
 import { COMMON_POST_LIKE_REQUEST } from '@reducers/actions';
 import MemberType from '@components/RecruitMembers/index';
-import UserIcon from '@assets/icons/user.svg';
+import UserImg from '@assets/images/user.svg';
 import {
   WriterButton,
   PostWrapper,
@@ -33,17 +33,8 @@ function PostItem(props: any): JSX.Element {
   const [likes, setLikes] = React.useState(content.likes);
   const [likeStatus, setLikeStatus] = React.useState(content.is_like);
 
-  const onHandleWirterProfile = () => {
-    alert(`글쓴이의 프로필로 이동`);
-  };
-
-  const onHandlePost = () => {
-    if (boardType === 'Question') {
-      history.push(`/questionBoard/${content.id}`);
-    } else if (boardType === 'Free') {
-      history.push(`/freeBoard/${content.id}`);
-    }
-  };
+  const onHandleWirterProfile = () => alert(`글쓴이의 프로필로 이동`);
+  const onHandlePost = () => history.push(`/${boardType}Board/${content.id}`);
 
   const onHandleLike = () => {
     if (!userId) {
@@ -118,13 +109,13 @@ function PostItem(props: any): JSX.Element {
               <DetailInfo>{content.comments}</DetailInfo>
             </PostDetailWrapper>
             <MobileWriterDetailWrapper>
-              <WriterImage src={UserIcon} alt='writer-profile' width='15%' />
+              <WriterImage src={UserImg} alt='writer-profile' width='15%' />
               <WriterName>{content.user.profile.nickname}</WriterName>
             </MobileWriterDetailWrapper>
           </DetailWrapper>
         </div>
         <WriterButton onClick={onHandleWirterProfile}>
-          <WriterImage src={UserIcon} alt='writer-profile' width='15%' />
+          <WriterImage src={UserImg} alt='writer-profile' width='15%' />
           <WriterName>{content.user.profile.nickname}</WriterName>
         </WriterButton>
       </PostWrapper>
