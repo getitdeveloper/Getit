@@ -2,7 +2,7 @@ FROM python:3.9.0
 
 WORKDIR /home/
 
-RUN git clone -b server --single-branch https://github.com/getitdeveloper/Getit.git
+RUN git clone -b test_server --single-branch https://github.com/getitdeveloper/Getit.git
 
 WORKDIR /home/Getit/Server/
 
