@@ -23,10 +23,10 @@ class MessageListSerializer(ModelSerializer):
 
     class Meta:
         model = Message
-        fields = ('receiver', 'content', 'create_at',)
+        fields = ('chat_room', 'sender', 'content', 'create_at',)
 
     def to_representation(self, instance):
-        self.fields['receiver'] = UserProfileSerializer(read_only=True)
+        self.fields['sender'] = UserProfileSerializer(read_only=True)
         return super().to_representation(instance)
 
 class MessageDetailGetSerializer(ModelSerializer):
@@ -43,4 +43,8 @@ class MessageDetailPostSerializer(ModelSerializer):
 
     class Meta:
         model = Message
-        fields = ('sender', 'receiver', 'content', 'create_at',)
+        fields = ('chat_room', 'sender', 'content', 'create_at',)
+
+    def to_representation(self, instance):
+        self.fields['sender'] = UserProfileSerializer(read_only=True)
+        return super().to_representation(instance)

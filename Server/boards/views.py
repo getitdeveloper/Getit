@@ -69,7 +69,6 @@ class CommonBoardListAPIView(GenericAPIView):
                     },
         """
         category = request.GET.get('category')
-        queryset = self.get_queryset()
         if category == 'free':
             posts = CommonBoard.objects.filter(category=category)
             posts = self.filter_queryset(posts)
@@ -586,6 +585,7 @@ class WholePostSearch(GenericAPIView):
 
 class BoardMyListAPIView(GenericAPIView):
     serializer_class = CommonBoardSerializer
+    pagination_class = BoardPageNumberPagination
 
     def get(self, request, pk):
         """
@@ -631,12 +631,29 @@ class BoardMyListAPIView(GenericAPIView):
                     }
                 ]
         """
-        boards = CommonBoard.objects.filter(user=pk)
-        serializer = CommonBoardSerializer(boards, many=True,context={'request': request})
-        return Response(serializer.data)
+        category = request.GET.get('category')
+        if category == 'free':
+            posts = CommonBoard.objects.filter(category=category)
+            paginator = BoardPageNumberPagination()
+            result_page = paginator.paginate_queryset(posts, request)
+            serializer = CommonBoardSerializer(result_page, many=True, context={'request': request})
+            return paginator.get_paginated_response(serializer.data)
+        elif category == 'question':
+            posts = CommonBoard.objects.filter(category=category)
+            paginator = BoardPageNumberPagination()
+            result_page = paginator.paginate_queryset(posts, request)
+            serializer = CommonBoardSerializer(result_page, many=True, context={'request': request})
+            return paginator.get_paginated_response(serializer.data)
+        else:
+            posts = CommonBoard.objects.all()
+            paginator = BoardPageNumberPagination()
+            result_page = paginator.paginate_queryset(posts, request)
+            serializer = CommonBoardSerializer(result_page, many=True, context={'request': request})
+            return paginator.get_paginated_response(serializer.data)
 
 class RecruitmentBoardPostMyListAPIView(GenericAPIView):
     serializer_class = RecruitmentBoardSerializer
+    pagination_class = BoardPageNumberPagination
 
     def get(self, request, pk):
         """
@@ -714,6 +731,8 @@ class RecruitmentBoardPostMyListAPIView(GenericAPIView):
                     }
                 ]
         """
-        boards = RecruitmentBoard.objects.filter(user=pk)
-        serializer = RecruitmentBoardSerializer(boards, many=True,context={'request': request})
-        return Response(serializer.data)
+        posts = RecruitmentBoard.objects.all()
+        paginator = BoardPageNumberPagination()
+        result_page = paginator.paginate_queryset(posts, request)
+        serializer = RecruitmentBoardSerializer(result_page, many=True, context={'request': request})
+        return paginator.get_paginated_response(serializer.data)
