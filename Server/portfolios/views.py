@@ -11,7 +11,7 @@ from rest_framework.parsers import FormParser, MultiPartParser
 
 class PortfolioListAPIView(GenericAPIView):
     serializer_class = PortfolioSerializer
-    permission_classes = [IsOwnerOrReadOnly]
+
     #parser_classes = (FormParser, MultiPartParser)
 
     def get(self, request, user_id):
@@ -64,7 +64,7 @@ class PortfolioListAPIView(GenericAPIView):
 
 class PortfolioDetailAPIView(GenericAPIView):
     serializer_class = PortfolioSerializer
-    permission_classes = [IsOwnerOrReadOnly]
+
     # parser_classes = (MultiPartParser,)
     # queryset = Portfolio
 
