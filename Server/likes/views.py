@@ -143,13 +143,13 @@ class CommonBoardLikePostAPIView(GenericAPIView):
 
         category = request.GET.get('category')
         if category == 'free':
-            posts = CommonBoardLike.objects.filter(category=category, user=request.user.id)
+            posts = CommonBoardLike.objects.filter(commonpost__category=category, user=request.user.id)
             paginator = LikePageNumberPagination()
             result_page = paginator.paginate_queryset(posts, request)
             serializer = CommonBoardLikePostSerializer(result_page, many=True, context={'request': request})
             return paginator.get_paginated_response(serializer.data)
         elif category == 'question':
-            posts = CommonBoardLike.objects.filter(category=category, user=request.user.id)
+            posts = CommonBoardLike.objects.filter(commonpost__category=category, user=request.user.id)
             paginator = LikePageNumberPagination()
             result_page = paginator.paginate_queryset(posts, request)
             serializer = CommonBoardLikePostSerializer(result_page, many=True, context={'request': request})
