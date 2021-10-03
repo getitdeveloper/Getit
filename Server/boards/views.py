@@ -39,8 +39,6 @@ class CommonBoardListAPIView(GenericAPIView):
 
             ---
                 127.0.0.1:8000/api/board?category=free(question)
-                태그 같은경우, 1=개발자, 2= 기획자, 3= 디자이너입니다.
-                127.0.0.1:8000/api/board?worker=1 과같이 보내주시면되요
 
                 "count": 13,
                 "next": "http://127.0.0.1:8000/api/board/?page=2",
@@ -71,53 +69,27 @@ class CommonBoardListAPIView(GenericAPIView):
                     },
         """
         category = request.GET.get('category')
-        worker = request.GET.get('worker',None)
-        queryset = self.get_queryset()
         if category == 'free':
-            if worker == None:
-                posts = CommonBoard.objects.filter(category=category)
-                posts = self.filter_queryset(posts)
-                paginator = BoardPageNumberPagination()
-                result_page = paginator.paginate_queryset(posts, request)
-                serializer = CommonBoardSerializer(result_page, many=True, context={'request': request})
-                return paginator.get_paginated_response(serializer.data)
-            elif worker != None:
-                posts = CommonBoard.objects.filter(category=category,worker=worker)
-                posts = self.filter_queryset(posts)
-                paginator = BoardPageNumberPagination()
-                result_page = paginator.paginate_queryset(posts, request)
-                serializer = CommonBoardSerializer(result_page, many=True, context={'request': request})
-                return paginator.get_paginated_response(serializer.data)
+            posts = CommonBoard.objects.filter(category=category)
+            posts = self.filter_queryset(posts)
+            paginator = BoardPageNumberPagination()
+            result_page = paginator.paginate_queryset(posts, request)
+            serializer = CommonBoardSerializer(result_page, many=True, context={'request': request})
+            return paginator.get_paginated_response(serializer.data)
         elif category == 'question':
-            if worker == None:
-                posts = CommonBoard.objects.filter(category=category)
-                posts = self.filter_queryset(posts)
-                paginator = BoardPageNumberPagination()
-                result_page = paginator.paginate_queryset(posts, request)
-                serializer = CommonBoardSerializer(result_page, many=True, context={'request': request})
-                return paginator.get_paginated_response(serializer.data)
-            elif worker != None:
-                posts = CommonBoard.objects.filter(category=category, worker=worker)
-                posts = self.filter_queryset(posts)
-                paginator = BoardPageNumberPagination()
-                result_page = paginator.paginate_queryset(posts, request)
-                serializer = CommonBoardSerializer(result_page, many=True, context={'request': request})
-                return paginator.get_paginated_response(serializer.data)
+            posts = CommonBoard.objects.filter(category=category)
+            posts = self.filter_queryset(posts)
+            paginator = BoardPageNumberPagination()
+            result_page = paginator.paginate_queryset(posts, request)
+            serializer = CommonBoardSerializer(result_page, many=True, context={'request': request})
+            return paginator.get_paginated_response(serializer.data)
         else:
-            if worker == None:
-                posts = CommonBoard.objects.all()
-                posts = self.filter_queryset(posts)
-                paginator = BoardPageNumberPagination()
-                result_page = paginator.paginate_queryset(posts, request)
-                serializer = CommonBoardSerializer(result_page, many=True, context={'request': request})
-                return paginator.get_paginated_response(serializer.data)
-            elif worker != None:
-                posts = CommonBoard.objects.filter(worker=worker)
-                posts = self.filter_queryset(posts)
-                paginator = BoardPageNumberPagination()
-                result_page = paginator.paginate_queryset(posts, request)
-                serializer = CommonBoardSerializer(result_page, many=True, context={'request': request})
-                return paginator.get_paginated_response(serializer.data)
+            posts = CommonBoard.objects.all()
+            posts = self.filter_queryset(posts)
+            paginator = BoardPageNumberPagination()
+            result_page = paginator.paginate_queryset(posts, request)
+            serializer = CommonBoardSerializer(result_page, many=True, context={'request': request})
+            return paginator.get_paginated_response(serializer.data)
 
     def post(self, request):
         """
@@ -134,8 +106,7 @@ class CommonBoardListAPIView(GenericAPIView):
                     "worker": ["개발자","디자이너","기획자"]
                 }
         """
-        serializer = CommonBoardSerializer(data=request.data,context={'request': request})
-        print(request)
+        serializer = CommonBoardSerializer(data=request.data, context={'request': request})
         if serializer.is_valid():
             serializer.save()
             board = CommonBoard.objects.get(id=serializer.data['id'])
@@ -614,6 +585,7 @@ class WholePostSearch(GenericAPIView):
 
 class BoardMyListAPIView(GenericAPIView):
     serializer_class = CommonBoardSerializer
+    pagination_class = BoardPageNumberPagination
 
     def get(self, request, pk):
         """
@@ -659,12 +631,29 @@ class BoardMyListAPIView(GenericAPIView):
                     }
                 ]
         """
-        boards = CommonBoard.objects.filter(user=pk)
-        serializer = CommonBoardSerializer(boards, many=True,context={'request': request})
-        return Response(serializer.data)
+        category = request.GET.get('category')
+        if category == 'free':
+            posts = CommonBoard.objects.filter(category=category)
+            paginator = BoardPageNumberPagination()
+            result_page = paginator.paginate_queryset(posts, request)
+            serializer = CommonBoardSerializer(result_page, many=True, context={'request': request})
+            return paginator.get_paginated_response(serializer.data)
+        elif category == 'question':
+            posts = CommonBoard.objects.filter(category=category)
+            paginator = BoardPageNumberPagination()
+            result_page = paginator.paginate_queryset(posts, request)
+            serializer = CommonBoardSerializer(result_page, many=True, context={'request': request})
+            return paginator.get_paginated_response(serializer.data)
+        else:
+            posts = CommonBoard.objects.all()
+            paginator = BoardPageNumberPagination()
+            result_page = paginator.paginate_queryset(posts, request)
+            serializer = CommonBoardSerializer(result_page, many=True, context={'request': request})
+            return paginator.get_paginated_response(serializer.data)
 
 class RecruitmentBoardPostMyListAPIView(GenericAPIView):
     serializer_class = RecruitmentBoardSerializer
+    pagination_class = BoardPageNumberPagination
 
     def get(self, request, pk):
         """
@@ -742,6 +731,8 @@ class RecruitmentBoardPostMyListAPIView(GenericAPIView):
                     }
                 ]
         """
-        boards = RecruitmentBoard.objects.filter(user=pk)
-        serializer = RecruitmentBoardSerializer(boards, many=True,context={'request': request})
-        return Response(serializer.data)
+        posts = RecruitmentBoard.objects.all()
+        paginator = BoardPageNumberPagination()
+        result_page = paginator.paginate_queryset(posts, request)
+        serializer = RecruitmentBoardSerializer(result_page, many=True, context={'request': request})
+        return paginator.get_paginated_response(serializer.data)
