@@ -1,11 +1,14 @@
 import * as React from 'react';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
-import { useState } from 'react';
-import { USER_PROFILE_EDIT_REQUEST } from '@reducers/actions';
+import { useState, useEffect } from 'react';
+import {
+  USER_PROFILE_EDIT_REQUEST,
+  PORTFOLIO_LIST_REQUEST,
+} from '@reducers/actions';
 import UserImg from '@assets/icons/user.svg';
 import { HorizontalLine } from '@assets/styles/commons';
 import StackInput from '@components/StackInput';
-import { IProfileInfo } from '@types';
+import LoadingSpinner from '@components/LoadingSpinner';
 import {
   MainProfile,
   ProfileImage,
@@ -25,12 +28,24 @@ function MyProfile() {
   const profileInfo = useSelector(
     (state: RootStateOrAny) => state.user.profileInfo,
   );
+  const portfolioList = useSelector(
+    (state: RootStateOrAny) => state.user.portfolioList,
+  );
   const dispatch = useDispatch();
   const [intro, setIntro] = useState(profileInfo.info);
   const [editedNickname, setNickname] = useState(profileInfo.nickname);
   const [editedEmail, setEmail] = useState(profileInfo.email);
   const [editedJob, setJob] = useState(profileInfo.job);
   const [editedStacks, setStacks] = useState(profileInfo.stack);
+
+  useEffect(() => {
+    dispatch({
+      type: PORTFOLIO_LIST_REQUEST,
+      data: {
+        user_pk: profileInfo.user_pk,
+      },
+    });
+  }, []);
 
   const onChange = (e: any) => {
     const { name, value } = e.target;
@@ -67,8 +82,6 @@ function MyProfile() {
       nickname: editedNickname,
       job: editedJob,
       level: '',
-      // developer_level: profileInfo.developer_level,
-      // designer_and_pm_level: profileInfo.designer_and_pm_level,
       email: editedEmail,
       info: intro,
       git: profileInfo.git,
@@ -84,6 +97,10 @@ function MyProfile() {
       },
     });
   };
+
+  if (!portfolioList) {
+    return <LoadingSpinner />;
+  }
 
   return (
     <ProfileRight>
@@ -142,7 +159,7 @@ function MyProfile() {
         <p>포트폴리오</p>
         <HorizontalLine width='40%' />
       </SubTitleWrapper>
-      <Portfoilo />
+      {portfolioList && <Portfoilo portfolioList={portfolioList} />}
 
       <SubTitleWrapper>
         <HorizontalLine width='40%' />

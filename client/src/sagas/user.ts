@@ -20,6 +20,12 @@ import {
   USER_PROFILE_EDIT_SUCCESS,
   USER_PROFILE_EDIT_FAILURE,
   USER_ID_UPDATE,
+  PORTFOLIO_LIST_REQUEST,
+  PORTFOLIO_LIST_SUCCESS,
+  PORTFOLIO_LIST_FAILURE,
+  PORTFOLIO_REGISTER_REQUEST,
+  PORTFOLIO_REGISTER_SUCCESS,
+  PORTFOLIO_REGISTER_FAILURE,
 } from '../reducers/actions';
 import {
   ResponseUserProfile,
@@ -236,6 +242,52 @@ function* requestUserProfileRegisterSaga(action: IUserProfileRegisterRequest) {
   }
 }
 
+// 포트폴리오 리스트 받아오기
+const requestPortfolioList = (user_pk: number) => {
+  return axios.get(`/api/${user_pk}/portfolio/`);
+};
+
+function* requestPortfolioListSaga(action: any): any {
+  try {
+    const response = yield call(requestPortfolioList, action.data.user_pk);
+    console.log('포트폴리오 리스트 요청 응답 ===>', response);
+
+    yield put({
+      type: PORTFOLIO_LIST_SUCCESS,
+      data: response.data,
+    });
+  } catch (error) {
+    console.log('포트폴리오 리스트 요청 에러 ===>', error);
+    yield put({
+      type: PORTFOLIO_LIST_FAILURE,
+      error,
+    });
+  }
+}
+
+// 포트폴리오 생성하기
+const requestPortfolioRegister = (data: any) => {
+  return axios.post(`/api/${data.user_pk}/portfolio/`, data.portfolio);
+};
+
+function* requestPortfolioRegisterSaga(action: any): any {
+  try {
+    const response = yield call(requestPortfolioRegister, action.data);
+    console.log('포트폴리오 생성 후 요청 응답 ===>', response);
+
+    yield put({
+      type: PORTFOLIO_REGISTER_SUCCESS,
+      data: response.data,
+    });
+  } catch (error) {
+    console.log('포트폴리오 생성 요청 에러 ===>', error);
+    yield put({
+      type: PORTFOLIO_REGISTER_FAILURE,
+      error,
+    });
+  }
+}
+
 function* watchRequestUserLogIn() {
   yield takeLatest(USER_LOGIN_REQUEST, requestUserLogInSaga);
 }
@@ -266,6 +318,14 @@ function* watchRequestUserPofileRegister() {
   );
 }
 
+function* watchRequestPortfolioList() {
+  yield takeLatest(PORTFOLIO_LIST_REQUEST, requestPortfolioListSaga);
+}
+
+function* watchRequestPortfolioRegister() {
+  yield takeLatest(PORTFOLIO_REGISTER_REQUEST, requestPortfolioRegisterSaga);
+}
+
 function* userSaga() {
   yield all([
     fork(watchRequestUserLogIn),
@@ -274,6 +334,8 @@ function* userSaga() {
     fork(watchRequestUserProfileEdit),
     fork(watchRequestUserNickDoubleCheck),
     fork(watchRequestUserPofileRegister),
+    fork(watchRequestPortfolioList),
+    fork(watchRequestPortfolioRegister),
   ]);
 }
 

@@ -1,10 +1,15 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
+import {
+  PORTFOLIO_LIST_REQUEST,
+  PORTFOLIO_REGISTER_REQUEST,
+} from '@reducers/actions';
+import { useState, useEffect, useLayoutEffect } from 'react';
+import { IPortfolio } from '@types';
 import { Dialog } from '@material-ui/core';
-import CloseIcon from '@material-ui/icons/Close';
 import imageIcon from '@assets/icons/imageIcon.svg';
 import plusIcon from '@assets/icons/plusIcon.svg';
-import { IconButton } from '@assets/styles/commons';
+import LoadingSpinner from '@components/LoadingSpinner';
 import {
   useStyles,
   PortfolioContent,
@@ -17,30 +22,14 @@ import {
   PortfolioInput,
 } from './styles';
 
-const portfolioDummyData = [
-  {
-    title: '포트폴리오1',
-    url: 'https://www.investopedia.com/terms/p/portfolio.asp',
-    image: '',
-    detail: '이 포트폴리오는 이러했습니다.',
-  },
-  {
-    title: '포트폴리오2',
-    url: 'https://youtu.be/oM5_KjJguFU',
-    image: '',
-    detail: '이 포트폴리오는 저러했습니다.',
-  },
-  {
-    title: '포트폴리오3',
-    url: 'https://github.com/alyssa1996',
-    image: '',
-    detail: '이 포트폴리오는 그리했습니다.',
-  },
-];
-
-function Portfolio(): JSX.Element {
+function Portfolio(props: any): JSX.Element {
   const classes = useStyles();
-  const [portfolios, setPortfolios] = useState(portfolioDummyData);
+  const dispatch = useDispatch();
+  const { portfolioList } = props;
+  const userId = useSelector(
+    (state: RootStateOrAny) => state.user.profileInfo?.user_pk,
+  );
+  const [portfolios, setPortfolios] = useState(portfolioList);
   const [projectTitle, setProjectTitle] = useState('');
   const [projectUrl, setProjectUrl] = useState('');
   const [projectDetail, setProjectDetail] = useState('');
@@ -66,24 +55,36 @@ function Portfolio(): JSX.Element {
   };
 
   const onAddNewPortfolio = () => {
-    const NewPortfolio = {
+    const NewPortfolio: IPortfolio = {
       title: projectTitle,
-      url: projectUrl,
-      image: '',
-      detail: projectDetail,
+      user: userId,
+      link: projectUrl,
+      image: null,
+      contents: projectDetail,
     };
+    console.log(NewPortfolio);
     setPortfolios([...portfolios, NewPortfolio]);
+    dispatch({
+      type: PORTFOLIO_REGISTER_REQUEST,
+      data: {
+        user_pk: userId,
+        portfolio: NewPortfolio,
+      },
+    });
     setOpen(false);
   };
 
+  if (!portfolioList) {
+    return <LoadingSpinner />;
+  }
   return (
     <PortfolioWrapper>
-      {portfolios.map((content) => (
-        <PortfolioContent key={content.title}>
+      {portfolios.map((content: IPortfolio) => (
+        <PortfolioContent key={content.id}>
           <PortfolioImage src={imageIcon} alt='default icon' />
           <p>{content.title}</p>
-          <PortfolioUrl href={content.url} target='_self'>
-            {content.url}
+          <PortfolioUrl href={content.link} target='_self'>
+            {content.link}
           </PortfolioUrl>
         </PortfolioContent>
       ))}

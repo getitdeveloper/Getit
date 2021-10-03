@@ -22,6 +22,12 @@ import {
   USER_PROFILE_EDIT_FAILURE,
   USER_REGISTER_RESET,
   USER_ID_UPDATE,
+  PORTFOLIO_LIST_REQUEST,
+  PORTFOLIO_LIST_SUCCESS,
+  PORTFOLIO_LIST_FAILURE,
+  PORTFOLIO_REGISTER_REQUEST,
+  PORTFOLIO_REGISTER_SUCCESS,
+  PORTFOLIO_REGISTER_FAILURE,
 } from './actions';
 
 // 초기 상태
@@ -36,6 +42,7 @@ const initialState: InitialState = {
   },
   profileInfo: null,
   portfolio: null,
+  portfolioList: null,
   userLogInRequest: false,
   userLogInSuccess: false,
   userLogInFailure: null,
@@ -57,6 +64,12 @@ const initialState: InitialState = {
   userProfileEditFailure: null,
   userRegisterReset: false,
   userIdUpdate: false,
+  portfolioListRequest: false,
+  portfolioListSuccess: false,
+  portfolioListFailure: null,
+  portfolioRegisterRequest: false,
+  portfolioRegisterSuccess: false,
+  portfolioRegisterFailure: null,
 };
 
 const reducer = (state = initialState, action: UserActions): InitialState =>
@@ -176,6 +189,38 @@ const reducer = (state = initialState, action: UserActions): InitialState =>
       case USER_ID_UPDATE:
         draft.userRegisterReset = true;
         draft.id = action.data;
+        break;
+      case PORTFOLIO_LIST_REQUEST:
+        draft.portfolioListRequest = true;
+        draft.portfolioListSuccess = false;
+        draft.portfolioListFailure = null;
+        break;
+      case PORTFOLIO_LIST_SUCCESS:
+        draft.portfolioListRequest = false;
+        draft.portfolioListSuccess = true;
+        draft.portfolioListFailure = null;
+        draft.portfolioList = action.data;
+        break;
+      case PORTFOLIO_LIST_FAILURE:
+        draft.portfolioListRequest = false;
+        draft.portfolioListSuccess = false;
+        draft.portfolioListFailure = action.error;
+        break;
+      case PORTFOLIO_REGISTER_REQUEST:
+        draft.portfolioRegisterRequest = true;
+        draft.portfolioRegisterSuccess = false;
+        draft.portfolioRegisterFailure = null;
+        break;
+      case PORTFOLIO_REGISTER_SUCCESS:
+        draft.portfolioRegisterRequest = false;
+        draft.portfolioRegisterSuccess = true;
+        draft.portfolioRegisterFailure = null;
+        draft.portfolio = action.data;
+        break;
+      case PORTFOLIO_REGISTER_FAILURE:
+        draft.portfolioRegisterRequest = false;
+        draft.portfolioRegisterSuccess = false;
+        draft.portfolioRegisterFailure = action.error;
         break;
       default:
         return state;

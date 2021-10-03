@@ -21,6 +21,12 @@ import {
   USER_PROFILE_EDIT_FAILURE,
   USER_REGISTER_RESET,
   USER_ID_UPDATE,
+  PORTFOLIO_LIST_REQUEST,
+  PORTFOLIO_LIST_SUCCESS,
+  PORTFOLIO_LIST_FAILURE,
+  PORTFOLIO_REGISTER_REQUEST,
+  PORTFOLIO_REGISTER_SUCCESS,
+  PORTFOLIO_REGISTER_FAILURE,
 } from './actions';
 
 // 초기 상태값 타입
@@ -33,9 +39,9 @@ export interface InitialState {
   nickDoubleCheck: {
     duplicate: null | string;
   };
-
   profileInfo: IProfileInfo | null;
   portfolio: IPortfolio | null;
+  portfolioList: IPortfolio[] | null;
   userLogInRequest: boolean;
   userLogInSuccess: boolean;
   userLogInFailure: string | null;
@@ -57,6 +63,12 @@ export interface InitialState {
   userProfileEditFailure: string | null;
   userRegisterReset: boolean;
   userIdUpdate: boolean;
+  portfolioListRequest: boolean;
+  portfolioListSuccess: boolean;
+  portfolioListFailure: string | null;
+  portfolioRegisterRequest: boolean;
+  portfolioRegisterSuccess: boolean;
+  portfolioRegisterFailure: string | null;
 }
 
 // 로그인 액션 타입
@@ -173,6 +185,36 @@ export interface IUserIdUpdate {
   };
 }
 
+// 포트폴리오 리스트 받아오기
+export interface PortfolioListRequest {
+  type: typeof PORTFOLIO_LIST_REQUEST;
+}
+
+export interface PortfolioListSuccess {
+  type: typeof PORTFOLIO_LIST_SUCCESS;
+  data: IPortfolio[];
+}
+
+export interface PortfolioListFailure {
+  type: typeof PORTFOLIO_LIST_FAILURE;
+  error: string;
+}
+
+// 포트폴리오 생성하기
+export interface PortfolioRegisterRequest {
+  type: typeof PORTFOLIO_REGISTER_REQUEST;
+}
+
+export interface PortfolioRegisterSuccess {
+  type: typeof PORTFOLIO_REGISTER_SUCCESS;
+  data: IPortfolio;
+}
+
+export interface PortfolioRegisterFailure {
+  type: typeof PORTFOLIO_REGISTER_FAILURE;
+  error: string;
+}
+
 export type UserActions =
   | UserLogInRequest
   | UserLogInSuccess
@@ -194,4 +236,10 @@ export type UserActions =
   | UserProfileEditSuccess
   | UserProfileEditFailure
   | IUserRegisterReset
-  | IUserIdUpdate;
+  | IUserIdUpdate
+  | PortfolioListRequest
+  | PortfolioListSuccess
+  | PortfolioListFailure
+  | PortfolioRegisterRequest
+  | PortfolioRegisterSuccess
+  | PortfolioRegisterFailure;

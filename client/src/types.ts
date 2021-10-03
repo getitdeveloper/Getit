@@ -12,9 +12,12 @@ export interface IProfileInfo {
 }
 
 export interface IPortfolio {
-  id: number;
+  id?: number;
+  user: number;
   title: string;
   contents: string;
+  image?: string | null;
+  link: string;
 }
 
 export interface IBoard {
