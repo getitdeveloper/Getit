@@ -24,6 +24,7 @@ class PortfolioListAPIView(GenericAPIView):
                     "user":2,
                     "title":"geit",
                     "contents":"장고,리액트를 활용한 커뮤니티 사이트입니다.",
+                    "link": "abcdefg.com",
                     "images":"/media/profile/Untitle.jpeg"
                 },
                 {
@@ -31,6 +32,7 @@ class PortfolioListAPIView(GenericAPIView):
                     "user": 2,
                     "title": "youtube",
                     "contents": "유튜브 클론코딩 사이트입니다..",
+                    "link": "abcdefg.com",
                     "image": "/media/profile/Untitle.jpeg"
                 }
         """
@@ -47,7 +49,8 @@ class PortfolioListAPIView(GenericAPIView):
                     "user": 2,
                     "title": "geit",
                     "contents": "장고,리액트를 활용한 커뮤니티 사이트입니다.",
-                    "image": ""
+                    "image": "",
+                    "link": "abcdefg.com"
                 }
                 --> 현재 image필드 지원 안합니다. null값으로 보내주세요.
                 S3 구축후 이미지 필드 지원하겠습니다.
@@ -78,7 +81,8 @@ class PortfolioDetailAPIView(GenericAPIView):
                     "user": 2,
                     "title": "geit",
                     "contents": "장고,리액트를 활용한 커뮤니티 사이트입니다.",
-                    "image": "/media/profile/Untitle.jpeg"
+                    "image": "/media/profile/Untitle.jpeg",
+                    "link": "abcdefg.com"
                 }
         """
         portfolio = self.get_object(pk, user_id)
@@ -94,7 +98,8 @@ class PortfolioDetailAPIView(GenericAPIView):
                     "user": 2,
                     "title": "졸린사람들 모여라",
                     "contents": "밤샘에 지친 이들을 위한모입니다.",
-                    "image":null
+                    "image":null,
+                    "link": "abcdefg.com"
                 }
         """
         portfolio = self.get_object(pk, user_id)
