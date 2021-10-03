@@ -17,8 +17,17 @@ import {
   USER_PROFILE_REGISTER_REQUEST,
   USER_PROFILE_REGISTER_SUCCESS,
   USER_PROFILE_REGISTER_FAILURE,
+  USER_PROFILE_EDIT_REQUEST,
+  USER_PROFILE_EDIT_SUCCESS,
+  USER_PROFILE_EDIT_FAILURE,
   USER_REGISTER_RESET,
   USER_ID_UPDATE,
+  PORTFOLIO_LIST_REQUEST,
+  PORTFOLIO_LIST_SUCCESS,
+  PORTFOLIO_LIST_FAILURE,
+  PORTFOLIO_REGISTER_REQUEST,
+  PORTFOLIO_REGISTER_SUCCESS,
+  PORTFOLIO_REGISTER_FAILURE,
 } from './actions';
 
 // 초기 상태
@@ -33,6 +42,7 @@ const initialState: InitialState = {
   },
   profileInfo: null,
   portfolio: null,
+  portfolioList: null,
   userLogInRequest: false,
   userLogInSuccess: false,
   userLogInFailure: null,
@@ -49,8 +59,17 @@ const initialState: InitialState = {
   userProfileRegisterRequest: false,
   userProfileRegisterSuccess: false,
   userProfileRegisterFailure: null,
+  userProfileEditRequest: false,
+  userProfileEditSuccess: false,
+  userProfileEditFailure: null,
   userRegisterReset: false,
   userIdUpdate: false,
+  portfolioListRequest: false,
+  portfolioListSuccess: false,
+  portfolioListFailure: null,
+  portfolioRegisterRequest: false,
+  portfolioRegisterSuccess: false,
+  portfolioRegisterFailure: null,
 };
 
 const reducer = (state = initialState, action: UserActions): InitialState =>
@@ -147,6 +166,22 @@ const reducer = (state = initialState, action: UserActions): InitialState =>
         draft.userProfileRegisterSuccess = false;
         draft.userProfileRegisterFailure = action.error;
         break;
+      case USER_PROFILE_EDIT_REQUEST:
+        draft.userProfileEditRequest = true;
+        draft.userProfileEditSuccess = false;
+        draft.userProfileEditFailure = null;
+        break;
+      case USER_PROFILE_EDIT_SUCCESS:
+        draft.userProfileEditRequest = false;
+        draft.userProfileEditSuccess = true;
+        draft.userProfileEditFailure = null;
+        draft.profileInfo = action.data;
+        break;
+      case USER_PROFILE_EDIT_FAILURE:
+        draft.userProfileEditRequest = false;
+        draft.userProfileEditSuccess = false;
+        draft.userProfileEditFailure = action.error;
+        break;
       case USER_REGISTER_RESET:
         draft.userRegisterReset = true;
         draft.id = { message: null, user_pk: null };
@@ -154,6 +189,38 @@ const reducer = (state = initialState, action: UserActions): InitialState =>
       case USER_ID_UPDATE:
         draft.userRegisterReset = true;
         draft.id = action.data;
+        break;
+      case PORTFOLIO_LIST_REQUEST:
+        draft.portfolioListRequest = true;
+        draft.portfolioListSuccess = false;
+        draft.portfolioListFailure = null;
+        break;
+      case PORTFOLIO_LIST_SUCCESS:
+        draft.portfolioListRequest = false;
+        draft.portfolioListSuccess = true;
+        draft.portfolioListFailure = null;
+        draft.portfolioList = action.data;
+        break;
+      case PORTFOLIO_LIST_FAILURE:
+        draft.portfolioListRequest = false;
+        draft.portfolioListSuccess = false;
+        draft.portfolioListFailure = action.error;
+        break;
+      case PORTFOLIO_REGISTER_REQUEST:
+        draft.portfolioRegisterRequest = true;
+        draft.portfolioRegisterSuccess = false;
+        draft.portfolioRegisterFailure = null;
+        break;
+      case PORTFOLIO_REGISTER_SUCCESS:
+        draft.portfolioRegisterRequest = false;
+        draft.portfolioRegisterSuccess = true;
+        draft.portfolioRegisterFailure = null;
+        draft.portfolio = action.data;
+        break;
+      case PORTFOLIO_REGISTER_FAILURE:
+        draft.portfolioRegisterRequest = false;
+        draft.portfolioRegisterSuccess = false;
+        draft.portfolioRegisterFailure = action.error;
         break;
       default:
         return state;

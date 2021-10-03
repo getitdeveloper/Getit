@@ -45,7 +45,10 @@ function* requestCommonPostListSaga(action: any): any {
 
 // 내가 쓴 자유/질문 게시글 리스트 받아오기
 const requestMyPostList = (data: any) => {
-  return axios.get(`/api/mycommonboard/${data.user}/`);
+  // return axios.get(`/api/board?category=${data.category}&page=${data.page}`);
+  return axios.get(
+    `/api/mycommonboard/${data.user}?category=${data.category}&page=${data.page}`,
+  );
 };
 
 function* requestMyPostListSaga(action: any): any {
@@ -68,7 +71,10 @@ function* requestMyPostListSaga(action: any): any {
 
 // 좋아요 누른 게시글 리스트 받아오기
 const requestLikedPostList = (data: any) => {
-  return axios.get(`/api/commonlikepost/${data.user}/`);
+  // return axios.get(`/api/board?category=${data.category}&page=${data.page}`);
+  return axios.get(
+    `/api/commonlikepost/${data.user}/?category=${data.category}&page=${data.page}`,
+  );
 };
 
 function* requestLikedPostListSaga(action: any): any {

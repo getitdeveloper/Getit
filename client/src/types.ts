@@ -4,17 +4,20 @@ export interface IProfileInfo {
   job: string;
   developer_level: string;
   designer_and_pm_level: string;
-  image: string | null;
+  image?: string | null;
   email: string;
   info: string | null;
   git: string | null;
-  stacks: string[];
+  stack: string[];
 }
 
 export interface IPortfolio {
-  id: number;
+  id?: number;
+  user: number;
   title: string;
   contents: string;
+  image?: string | null;
+  link: string;
 }
 
 export interface IBoard {

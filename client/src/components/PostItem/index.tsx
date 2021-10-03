@@ -33,17 +33,8 @@ function PostItem(props: any): JSX.Element {
   const [likes, setLikes] = React.useState(content.likes);
   const [likeStatus, setLikeStatus] = React.useState(content.is_like);
 
-  const onHandleWirterProfile = () => {
-    alert(`글쓴이의 프로필로 이동`);
-  };
-
-  const onHandlePost = () => {
-    if (boardType === 'Question') {
-      history.push(`/questionBoard/${content.id}`);
-    } else if (boardType === 'Free') {
-      history.push(`/freeBoard/${content.id}`);
-    }
-  };
+  const onHandleWirterProfile = () => alert(`글쓴이의 프로필로 이동`);
+  const onHandlePost = () => history.push(`/${boardType}Board/${content.id}`);
 
   const onHandleLike = () => {
     if (!userId) {
