@@ -7,8 +7,8 @@ import {
 import { useState, useEffect, useLayoutEffect } from 'react';
 import { IPortfolio } from '@types';
 import { Dialog } from '@material-ui/core';
-import ImageIcon from '@assets/images/image.svg';
-import PlusIcon from '@assets/images/plus.svg';
+import ImageImg from '@assets/images/image.svg';
+import PlusImg from '@assets/images/plus.svg';
 import LoadingSpinner from '@components/LoadingSpinner';
 import {
   useStyles,
@@ -81,7 +81,7 @@ function Portfolio(props: any): JSX.Element {
     <PortfolioWrapper>
       {portfolios.map((content: IPortfolio) => (
         <PortfolioContent key={content.id}>
-          <PortfolioImage src={ImageIcon} alt='default icon' />
+          <PortfolioImage src={ImageImg} alt='default icon' />
           <p>{content.title}</p>
           <PortfolioUrl href={content.link} target='_self'>
             {content.link}
@@ -89,7 +89,7 @@ function Portfolio(props: any): JSX.Element {
         </PortfolioContent>
       ))}
       <AddButton type='button' onClick={AddPortfolio}>
-        <img src={PlusIcon} alt='plus icon' />
+        <img src={PlusImg} alt='plus icon' />
       </AddButton>
 
       <Dialog
@@ -100,7 +100,7 @@ function Portfolio(props: any): JSX.Element {
       >
         <p>포트폴리오 추가</p>
         <PortfolioFieldWrapper>
-          <PortfolioImage src={ImageIcon} alt='default icon' />
+          <PortfolioImage src={ImageImg} alt='default icon' />
           <div>
             <PortfolioInput
               name='title'
