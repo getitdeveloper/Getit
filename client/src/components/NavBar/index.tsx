@@ -6,8 +6,9 @@ import QuestionBoardPage from '@pages/QuestionBoardPage';
 import RecruitBoardPage from '@pages/RecruitBoardPage';
 import { StyledTabs, StyledLabel, NavBarWrapper } from './styles';
 
-function NavBar(): JSX.Element {
-  const [selectTab, setSelectTab] = useState(0);
+function NavBar(props: any): JSX.Element {
+  const { selectTab, setSelectTab } = props;
+  // const [selectTab, setSelectTab] = useState(0);
 
   const handleChange = useCallback(
     (event: React.ChangeEvent<{ event?: EventTarget }>, selection: number) => {
@@ -44,9 +45,9 @@ function NavBar(): JSX.Element {
           />
         </StyledTabs>
       </NavBarWrapper>
-      {selectTab === 0 && <RecruitBoardPage />}
+      {/* {selectTab === 0 && <RecruitBoardPage />}
       {selectTab === 1 && <QuestionBoardPage />}
-      {selectTab === 2 && <FreeBoardPage />}
+      {selectTab === 2 && <FreeBoardPage />} */}
     </div>
   );
 }
