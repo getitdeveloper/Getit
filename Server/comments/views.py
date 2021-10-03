@@ -321,3 +321,4 @@ class RecruitCommentMyListAPIView(GenericAPIView):
         comments = RecruitComment.objects.filter(user=pk)
         serializer = MyRecruitCommentSerializer(comments, many=True)
         return Response(serializer.data)
+
