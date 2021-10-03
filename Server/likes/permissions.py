@@ -16,4 +16,4 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
 class LikePostIsOwnerOnly(permissions.BasePermission):
 
     def has_permission(self, request, view):
-        return request.user.id == request.data.get('user')
+        return request.resolver_match.kwargs.get('user_id') == request.user.id

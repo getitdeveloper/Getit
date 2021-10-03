@@ -82,7 +82,7 @@ class MessageDetailView(GenericAPIView):
                         },
                         "content": "test4",
                         "create_at": "2021-09-30T09:50:04.474397+09:00"
-                    },
+                    },  
                     {
                         "sender": {
                             "id": 2,
