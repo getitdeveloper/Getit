@@ -5,6 +5,7 @@ from rest_framework.parsers import FormParser
 from django.http.response import JsonResponse
 
 from boards.models import CommonBoard, RecruitmentBoard
+from likes.pagenation import LikePageNumberPagination
 from .permissions import IsOwnerOrReadOnly, LikePostIsOwnerOnly
 from rest_framework import serializers, status
 from .serializers import CommonBoardLikeSerializer, CommonBoardLikePostSerializer, RecruitBoardLikePostSerializer, \
@@ -86,7 +87,8 @@ class CommonBoardLikeAPIView(GenericAPIView):
 
 class CommonBoardLikePostAPIView(GenericAPIView):
     serializer_class = CommonBoardLikePostSerializer
-    permission_classes = [IsOwnerOrReadOnly]
+    pagination_class = LikePageNumberPagination
+    permission_classes = [LikePostIsOwnerOnly]
     
     def get(self, request, user_id):
         """
@@ -137,8 +139,10 @@ class CommonBoardLikePostAPIView(GenericAPIView):
                 ]
         """
         posts = CommonBoardLike.objects.filter(user=user_id)
-        serializer = CommonBoardLikePostSerializer(posts, many=True,context={'request': request})
-        return Response(serializer.data)
+        paginator = LikePageNumberPagination()
+        result_page = paginator.paginate_queryset(posts, request)
+        serializer = CommonBoardLikePostSerializer(result_page, many=True, context={'request': request})
+        return paginator.get_paginated_response(serializer.data)
 
 
 class RecruitmentBoardLikeAPIView(GenericAPIView):
@@ -282,5 +286,7 @@ class RecruitmentBoardLikePostAPIView(GenericAPIView):
                 ]
         """
         posts = RecruitBoardLike.objects.filter(user=user_id)
-        serializer = RecruitBoardLikePostSerializer(posts, many=True,context={'request': request})
-        return Response(serializer.data)
+        paginator = LikePageNumberPagination()
+        result_page = paginator.paginate_queryset(posts, request)
+        serializer = RecruitBoardLikePostSerializer(result_page, many=True, context={'request': request})
+        return paginator.get_paginated_response(serializer.data)
