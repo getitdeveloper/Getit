@@ -39,7 +39,7 @@ class TeamProfileSerializer(serializers.ModelSerializer):
         fields = (
             'id',
             'user',
-            'name',
+            'title',
             'content',
             'status',
             'image',
