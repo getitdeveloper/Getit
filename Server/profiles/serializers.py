@@ -45,5 +45,4 @@ class TeamProfileSerializer(serializers.ModelSerializer):
             'image',
             'stack',
             'created_at',
-            'is_complete',
         )
