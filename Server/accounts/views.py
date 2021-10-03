@@ -314,3 +314,22 @@ def logout(request):
     res = JsonResponse({})
     res.delete_cookie('getit', domain='getit.best', samesite=None)
     return res
+
+class DeleteUser(APIView):
+    
+    def post(self, request):
+        """
+                    회원탈퇴 (POST)
+
+                    ---
+                        body에는 아무것도 넣지 않은채로 쿠키에 토큰값만 있으면 됩니다.
+                        성공시 sucess 반환
+                        테스트용도로 만들어둔거에요
+                """
+        user_id = self.request.user.id
+        user= User.objects.get(id=user_id)
+        user.delete()
+        res = {
+            "message": "success"
+        }
+        return JsonResponse(res)
