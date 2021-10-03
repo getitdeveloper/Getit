@@ -1,6 +1,7 @@
 from boards.serializers import RecruitmentBoardSerializer
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
+from rest_framework.filters import SearchFilter
 from rest_framework.parsers import FormParser
 from django.http.response import JsonResponse
 
@@ -32,6 +33,7 @@ resp = openapi.Schema(
 class CommonBoardLikeAPIView(GenericAPIView):
     serializer_class = CommonBoardLikeSerializer
     permission_classes = [IsOwnerOrReadOnly]
+
 
     def get_queryset(self):
         user = self.request.user
@@ -138,11 +140,20 @@ class CommonBoardLikePostAPIView(GenericAPIView):
                     }
                 ]
         """
-        posts = CommonBoardLike.objects.filter(user=user_id)
-        paginator = LikePageNumberPagination()
-        result_page = paginator.paginate_queryset(posts, request)
-        serializer = CommonBoardLikePostSerializer(result_page, many=True, context={'request': request})
-        return paginator.get_paginated_response(serializer.data)
+
+        category = request.GET.get('category')
+        if category == 'free':
+            posts = CommonBoardLike.objects.filter(category=category, user=request.user.id)
+            paginator = LikePageNumberPagination()
+            result_page = paginator.paginate_queryset(posts, request)
+            serializer = CommonBoardLikePostSerializer(result_page, many=True, context={'request': request})
+            return paginator.get_paginated_response(serializer.data)
+        elif category == 'question':
+            posts = CommonBoardLike.objects.filter(category=category, user=request.user.id)
+            paginator = LikePageNumberPagination()
+            result_page = paginator.paginate_queryset(posts, request)
+            serializer = CommonBoardLikePostSerializer(result_page, many=True, context={'request': request})
+            return paginator.get_paginated_response(serializer.data)
 
 
 class RecruitmentBoardLikeAPIView(GenericAPIView):

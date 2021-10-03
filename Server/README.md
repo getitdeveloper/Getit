@@ -3,13 +3,13 @@
 ### ✏ Description
 
 - dj-rest-auth를 활용한 소셜로그인 구현(kakao, google, github) 
-
+- 
 
 ### Model Composition
 
 ```python
 Accounts {
-    abstractbaseuser
+    abstractuser
 }
 
 Boards {
