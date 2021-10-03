@@ -5,6 +5,7 @@ import { useDispatch, useSelector, RootStateOrAny } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import LoadingSpinner from '@components/LoadingSpinner';
 import { IPostId } from '@types';
+import UserIcon from '@assets/icons/user.svg';
 
 function RecruitBoardDetailPage(): JSX.Element {
   const dispatch = useDispatch();
@@ -30,6 +31,7 @@ function RecruitBoardDetailPage(): JSX.Element {
       <div>디테일 페이지</div>
       <h1>{recruitPostDetail.title}</h1>
       <p>{recruitPostDetail.content}</p>
+      <img src={UserIcon} alt='' />
     </div>
   );
 }

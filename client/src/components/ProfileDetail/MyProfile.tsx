@@ -5,7 +5,7 @@ import {
   USER_PROFILE_EDIT_REQUEST,
   PORTFOLIO_LIST_REQUEST,
 } from '@reducers/actions';
-import UserImg from '@assets/icons/user.svg';
+import UserImg from '@assets/images/user.svg';
 import { HorizontalLine } from '@assets/styles/commons';
 import StackInput from '@components/StackInput';
 import LoadingSpinner from '@components/LoadingSpinner';

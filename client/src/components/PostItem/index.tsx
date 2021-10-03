@@ -9,7 +9,7 @@ import moment from 'moment';
 import { HorizontalLine, IconButton } from '@assets/styles/commons';
 import { COMMON_POST_LIKE_REQUEST } from '@reducers/actions';
 import MemberType from '@components/RecruitMembers/index';
-import userIcon from '@assets/icons/userIcon.svg';
+import UserImg from '@assets/images/user.svg';
 import {
   WriterButton,
   PostWrapper,
@@ -109,13 +109,13 @@ function PostItem(props: any): JSX.Element {
               <DetailInfo>{content.comments}</DetailInfo>
             </PostDetailWrapper>
             <MobileWriterDetailWrapper>
-              <WriterImage src={userIcon} alt='writer-profile' width='15%' />
+              <WriterImage src={UserImg} alt='writer-profile' width='15%' />
               <WriterName>{content.user.profile.nickname}</WriterName>
             </MobileWriterDetailWrapper>
           </DetailWrapper>
         </div>
         <WriterButton onClick={onHandleWirterProfile}>
-          <WriterImage src={userIcon} alt='writer-profile' width='15%' />
+          <WriterImage src={UserImg} alt='writer-profile' width='15%' />
           <WriterName>{content.user.profile.nickname}</WriterName>
         </WriterButton>
       </PostWrapper>

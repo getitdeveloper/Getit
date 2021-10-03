@@ -7,7 +7,7 @@ import {
 } from '@reducers/actions';
 import { IComment } from '@types';
 import { PageContainer } from '@assets/styles/page';
-import UserImg from '@assets/icons/user.svg';
+import UserImg from '@assets/images/user.svg';
 import LoadingSpinner from '@components/LoadingSpinner';
 import {
   CommentWrapper,

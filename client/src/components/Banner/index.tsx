@@ -1,12 +1,12 @@
 import * as React from 'react';
-import bannerImg from '@assets/images/Banner.svg';
+import BannerImg from '@assets/images/Banner.svg';
 import {
   BannerWrapper,
   TextWrapper,
   MainText,
   SubText,
   ImgContainer,
-  BannerImg,
+  CharacterImg,
 } from './styles';
 
 function Banner(): JSX.Element {
@@ -24,7 +24,7 @@ function Banner(): JSX.Element {
         </SubText>
       </TextWrapper>
       <ImgContainer>
-        <BannerImg src={bannerImg} alt='banner' />
+        <CharacterImg src={BannerImg} alt='banner' />
       </ImgContainer>
     </BannerWrapper>
   );

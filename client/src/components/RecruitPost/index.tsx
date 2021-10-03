@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { useSelector, RootStateOrAny, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
 import moment from 'moment';
 import Grid from '@material-ui/core/Grid';
 import MemberType from '@components/RecruitMembers/index';
@@ -15,10 +14,12 @@ import {
   RecruitCondition,
   Content,
   ContentDetail,
+  StyledLink,
   GridWrapper,
   Post,
   LikeIcon,
   CommentIcon,
+  PagingWrapper,
 } from './styles';
 
 function RecruitPost(): JSX.Element {
@@ -50,7 +51,7 @@ function RecruitPost(): JSX.Element {
           {recruitPostList.map((post: IRecruitPost) => (
             <Grid item xs={12} sm={6} md={4} lg={4} xl={4} key={post.id}>
               <Post>
-                <Link to={`/recruitBoard/${post.id}`}>
+                <StyledLink to={`/recruitBoard/${post.id}`}>
                   {/* 구인 종류 */}
                   <MemberTypeWrapper>
                     {post.worker.map((member: string) => {
@@ -83,7 +84,7 @@ function RecruitPost(): JSX.Element {
                   <Content>
                     <p>{`${post.content.substring(0, 80)}...`}</p>
                   </Content>
-                </Link>
+                </StyledLink>
                 {/* 게시일, 좋아요, 댓글 */}
                 <ContentDetail>
                   <ul>
@@ -95,12 +96,12 @@ function RecruitPost(): JSX.Element {
                       <span>{post.likes}</span>
                     </li>
                     <li>
-                      <Link to={`/recruitBoard/${post.id}`}>
+                      <StyledLink to={`/recruitBoard/${post.id}`}>
                         <span>
                           <CommentIcon />
                         </span>
                         <span>{post.comments}</span>
-                      </Link>
+                      </StyledLink>
                     </li>
                   </ul>
                 </ContentDetail>
@@ -110,13 +111,13 @@ function RecruitPost(): JSX.Element {
         </Grid>
       </GridWrapper>
 
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
+      <PagingWrapper>
         <Paging
           activePage={page}
           totalPage={recruitPostTotalCount}
           setPage={setPage}
         />
-      </div>
+      </PagingWrapper>
     </div>
   );
 }

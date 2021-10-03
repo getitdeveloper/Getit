@@ -5,7 +5,7 @@ import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import Button from '@material-ui/core/Button';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import Logo from '@assets/images/Logo.svg';
+import LogoImg from '@assets/images/Logo.svg';
 import { USER_LOGOUT_REQUEST } from '@reducers/actions';
 
 import {
@@ -84,7 +84,7 @@ export default function ToggleMenu(): JSX.Element {
     >
       <List>
         {/* 로고 */}
-        <ToggleMenuLogo src={Logo} alt='Getit Logo' />
+        <ToggleMenuLogo src={LogoImg} alt='Getit Logo' />
 
         {/* 메뉴 목록 */}
         {menuList.map((item, index) => (

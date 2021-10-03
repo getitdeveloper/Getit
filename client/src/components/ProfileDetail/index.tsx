@@ -12,6 +12,7 @@ import MyComments from './MyComments';
 import MyPosts from './MyPosts';
 import LikedPosts from './LikedPosts';
 import { navItem } from './types';
+import TeamProfile from './TeamProfile';
 
 function ProfileDetail(): JSX.Element {
   const [selectMenu, setSelectMenu] = useState(0);
@@ -41,6 +42,7 @@ function ProfileDetail(): JSX.Element {
       <VerticalLine />
 
       {selectMenu === 0 && <MyProfile />}
+      {selectMenu === 1 && <TeamProfile />}
       {selectMenu === 2 && <LikedPosts />}
       {selectMenu === 3 && <MyPosts />}
       {selectMenu === 4 && <MyComments />}
