@@ -82,3 +82,4 @@ leeceo97.pem
 */migrations/*
 .env
 Dockerfile
+nginx.conf
