@@ -63,10 +63,18 @@ export const ContainerWrapper = styled.div`
   padding: 3rem 2rem;
   border-radius: 10px;
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+
+  @media ${({ theme }) => theme.tablet} {
+    padding: 3rem 0;
+  }
 `;
 
 export const Container = styled.div`
   display: flex;
+
+  @media ${({ theme }) => theme.tablet} {
+    flex-direction: column;
+  }
 `;
 
 export const LeftContainer = styled.div`
@@ -74,10 +82,19 @@ export const LeftContainer = styled.div`
   flex-direction: column;
   border-right: 1px solid #e4e4e4;
   width: 20%;
+
+  @media ${({ theme }) => theme.tablet} {
+    width: 100%;
+    border-right: none;
+  }
 `;
 
 export const RightContainer = styled.div`
   width: 80%;
+
+  @media ${({ theme }) => theme.tablet} {
+    width: 100%;
+  }
 `;
 
 export const ImageWrapper = styled.div`
@@ -150,12 +167,21 @@ export const RecruitMember = styled.ul`
     border-radius: 12px;
     width: 167px;
     height: 44px;
+
+    @media ${({ theme }) => theme.mobile} {
+      width: 100%;
+      margin: 0.5rem 0;
+    }
+  }
+
+  @media ${({ theme }) => theme.mobile} {
+    flex-direction: column;
   }
 `;
 export const Period = styled.p`
   ${TextMinxin}
-  padding-left: 1rem;
-  width: 100%;
+  padding: 0 2rem;
+  width: fit-content;
   height: auto;
 `;
 
