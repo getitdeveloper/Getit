@@ -1,13 +1,14 @@
 import * as React from 'react';
 import PostSubHeader from '@components/PostSubHeader';
 import RecruitPost from '@components/RecruitPost/index';
+import { PageWrapper } from '@assets/styles/page';
 
 function RecruitBoardPage(): JSX.Element {
   return (
-    <div style={{ backgroundColor: '#f5f5f5' }}>
+    <PageWrapper>
       <PostSubHeader boardType='Recruit' />
       <RecruitPost />
-    </div>
+    </PageWrapper>
   );
 }
 

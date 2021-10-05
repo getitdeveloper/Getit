@@ -10,7 +10,7 @@ function PostDetail(props: any): JSX.Element {
   const { post } = props;
 
   return (
-    <PageContainer width='80%'>
+    <PageContainer width='100%'>
       <PostItem content={post} />
       <Content>
         <MarkdownRenderer text={post.content} open />
