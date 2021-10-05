@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useParams } from 'react-router-dom';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
-import { PageContainer1, PageTitle, PageWrapper } from '@assets/styles/page';
+import { PageWrapper, PageTitle, PageBackground } from '@assets/styles/page';
 import { COMMON_POST_REQUEST } from '@reducers/actions';
 import PostDetail from '@components/PostDetail';
 import Comments from '@components/Comments';
@@ -28,13 +28,13 @@ function QuestionDetailPage(): JSX.Element {
     return <LoadingSpinner />;
   }
   return (
-    <PageWrapper>
-      <PageContainer1>
+    <PageBackground>
+      <PageWrapper>
         <PageTitle>질문 게시판</PageTitle>
         <PostDetail post={questionPost} />
         <Comments boardId={postId} />
-      </PageContainer1>
-    </PageWrapper>
+      </PageWrapper>
+    </PageBackground>
   );
 }
 
