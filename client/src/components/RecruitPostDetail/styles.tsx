@@ -1,10 +1,30 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+
+const TextMinxin = css`
+  border-radius: 12px;
+  padding-left: 1rem;
+  background-color: #f5f5f5;
+  width: 100%;
+  min-height: 5rem;
+  height: auto;
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.4rem;
+  font-size: 1.5rem;
+`;
 
 export const IconWrapper = styled.div`
   display: flex;
   margin: 0 auto;
+`;
+
+export const HorizontalLine = styled.div`
+  padding-top: 3rem;
+  margin: 0 auto;
+  width: 80%;
+  border-bottom: 1px solid #e4e4e4;
 `;
 
 export const IconContainer = styled.div`
@@ -39,7 +59,6 @@ export const ContainerWrapper = styled.div`
   width: 100%;
   margin: 0 auto;
   background-color: #ffffff;
-  /* height: 89.5rem; */
   height: auto;
   padding: 3rem 2rem;
   border-radius: 10px;
@@ -106,29 +125,12 @@ export const ContentWrapper = styled.div`
 `;
 
 export const TitleText = styled.p`
-  border-radius: 12px;
-  padding-left: 1rem;
-  background-color: #f5f5f5;
-  width: 100%;
-  min-height: 5rem;
-  height: auto;
-  display: flex;
-  align-items: center;
-  margin-bottom: 1.4rem;
-  font-size: 1.5rem;
+  ${TextMinxin}
 `;
 
 export const ContentText = styled.p`
-  border-radius: 12px;
-  padding-left: 1rem;
-  background-color: #f5f5f5;
-  width: 100%;
+  ${TextMinxin}
   min-height: 10rem;
-  height: auto;
-  display: flex;
-  align-items: center;
-  margin-bottom: 1.4rem;
-  font-size: 1.5rem;
 `;
 
 export const RecruitMember = styled.ul`
@@ -151,15 +153,10 @@ export const RecruitMember = styled.ul`
   }
 `;
 export const Period = styled.p`
-  border-radius: 12px;
-  padding: 0 1rem;
-  background-color: #f5f5f5;
-  min-height: 5rem;
-  font-size: 1.5rem;
-  display: flex;
-  align-items: center;
-  width: fit-content;
-  margin-bottom: 1.4rem;
+  ${TextMinxin}
+  padding-left: 1rem;
+  width: 100%;
+  height: auto;
 `;
 
 export const Stacks = styled.ul`
@@ -182,14 +179,5 @@ export const Stacks = styled.ul`
 `;
 
 export const JoinMember = styled.p`
-  border-radius: 12px;
-  padding-left: 1rem;
-  background-color: #f5f5f5;
-  width: 100%;
-  min-height: 5rem;
-  height: auto;
-  display: flex;
-  align-items: center;
-  margin-bottom: 1.4rem;
-  font-size: 1.5rem;
+  ${TextMinxin}
 `;

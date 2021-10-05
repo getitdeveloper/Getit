@@ -31,6 +31,7 @@ import {
   IconContainer,
   MailIcon,
   LikeIcon,
+  HorizontalLine,
 } from './styles';
 
 function RecruitPostDetail(): JSX.Element {
@@ -114,6 +115,8 @@ function RecruitPostDetail(): JSX.Element {
                 <LikeIcon />
               </IconContainer>
             </IconWrapper>
+            {/* 수평 구분선 */}
+            <HorizontalLine />
           </LeftContainer>
 
           {/* 오른쪽 컨테이너 */}
