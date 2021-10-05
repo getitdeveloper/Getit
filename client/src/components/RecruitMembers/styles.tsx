@@ -7,7 +7,7 @@ export const MemberTypeWrapper = styled.div`
 const JobMixin = css`
   width: auto;
   padding: 0.2rem 1.3rem;
-  margin-right: 0.8rem;
+  margin: 0 0.5rem;
   border-radius: 7px;
   font-size: 1rem;
   color: ${(props) => props.theme.colors.whiteText};

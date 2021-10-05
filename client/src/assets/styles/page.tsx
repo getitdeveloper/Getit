@@ -5,21 +5,17 @@ interface Size {
   padding?: string;
 }
 
-export const PageWrapper = styled.div`
+export const PageBackground = styled.div`
   background-color: ${({ theme }) => theme.colors.background};
 `;
 
 export const PageContainer1 = styled.div`
-  /* height: auto; */
-  /* display: flex; */
-  /* flex-direction: column; */
-  /* justify-content: space-around; */
-  /* align-items: center; */
   max-width: 1280px;
   width: 100%;
   margin: 0 auto;
+  height: 100vh;
   background-color: ${(props) => props.theme.colors.background};
-  /* padding: 2% 5%; */
+
   @media ${(props) => props.theme.tablet} {
     width: 100%;
     background-color: white;

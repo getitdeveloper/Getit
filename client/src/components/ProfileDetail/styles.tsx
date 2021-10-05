@@ -12,11 +12,8 @@ export const useStyles = makeStyles((theme: Theme) =>
 );
 
 export const SplittedPageContainer = styled(PageContainer)`
-  width: 80%;
+  width: 100%;
   display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: flex-start;
   @media ${(props) => props.theme.tablet} {
     flex-direction: column;
     width: 80%;

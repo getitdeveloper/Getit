@@ -6,7 +6,7 @@ import { COMMON_POST_LIST_REQUEST } from '@reducers/actions';
 import {
   PageContainer,
   PageContainer1,
-  PageWrapper,
+  PageBackground,
 } from '@assets/styles/page';
 import Paging from '@components/Paging';
 import LoadingSpinner from '@components/LoadingSpinner';
@@ -35,7 +35,7 @@ function FreeBoardPage(): JSX.Element {
   }
 
   return (
-    <PageWrapper>
+    <PageBackground>
       <PostSubHeader boardType='Free' />
       <PageContainer1>
         <PageContainer width='100%'>
@@ -49,7 +49,7 @@ function FreeBoardPage(): JSX.Element {
           setPage={setPage}
         />
       </PageContainer1>
-    </PageWrapper>
+    </PageBackground>
   );
 }
 

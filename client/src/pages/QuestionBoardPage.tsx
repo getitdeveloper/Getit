@@ -5,7 +5,7 @@ import PostSubHeader from '@components/PostSubHeader';
 import {
   PageContainer,
   PageContainer1,
-  PageWrapper,
+  PageBackground,
 } from '@assets/styles/page';
 import { COMMON_POST_LIST_REQUEST } from '@reducers/actions';
 import Paging from '@components/Paging';
@@ -34,7 +34,7 @@ function QuestionBardPage(): JSX.Element {
     return <LoadingSpinner />;
   }
   return (
-    <PageWrapper>
+    <PageBackground>
       <PostSubHeader boardType='Question' />
       <PageContainer1>
         {boardList ? (
@@ -54,7 +54,7 @@ function QuestionBardPage(): JSX.Element {
           setPage={setPage}
         />
       </PageContainer1>
-    </PageWrapper>
+    </PageBackground>
   );
 }
 
