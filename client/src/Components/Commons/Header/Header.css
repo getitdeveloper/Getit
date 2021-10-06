@@ -1,0 +1,37 @@
+. {
+  margin: 0px;
+  box-sizing: border-box;
+}
+
+.logo {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.logotext {
+  font-size: 1.875rem;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.5;
+  letter-spacing: normal;
+  color: #4dd290;
+}
+
+.loginbtn {
+  padding: 0.5rem 1.063rem;
+  border-radius: 7px;
+  background-color: #4dd290;
+  border: 0px;
+
+  /* text css */
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.15;
+  letter-spacing: normal;
+  text-align: left;
+  color: #fff;
+}
