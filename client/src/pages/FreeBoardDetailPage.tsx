@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useParams } from 'react-router-dom';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 
-import { PageBackground, PageTitle } from '@assets/styles/page';
+import { PageContainer1, PageTitle, PageBackground } from '@assets/styles/page';
 import { COMMON_POST_REQUEST } from '@reducers/actions';
 import PostDetail from '@components/PostDetail';
 import Comments from '@components/Comments';
@@ -31,9 +31,11 @@ function FreeBoardDetailPage(): JSX.Element {
 
   return (
     <PageBackground>
-      <PageTitle>자유 게시판</PageTitle>
-      <PostDetail post={freePost} />
-      <Comments boardId={postId} />
+      <PageContainer1>
+        <PageTitle>자유 게시판</PageTitle>
+        <PostDetail post={freePost} />
+        <Comments boardId={postId} />
+      </PageContainer1>
     </PageBackground>
   );
 }

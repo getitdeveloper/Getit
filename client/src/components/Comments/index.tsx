@@ -6,7 +6,7 @@ import {
   COMMENT_LIST_REQUEST,
 } from '@reducers/actions';
 import { IComment } from '@types';
-import { PageContainer } from '@assets/styles/page';
+import { FormContainer } from '@assets/styles/page';
 import UserImg from '@assets/images/user.svg';
 import LoadingSpinner from '@components/LoadingSpinner';
 import {
@@ -78,7 +78,7 @@ function Comments(props: any) {
   }
 
   return (
-    <PageContainer width='80%'>
+    <FormContainer width='80%'>
       <CommentForm>
         <WriterImage src={UserImg} alt='profile' />
         <CommentInput
@@ -117,7 +117,7 @@ function Comments(props: any) {
           ))}
         </CommentWrapper>
       )}
-    </PageContainer>
+    </FormContainer>
   );
 }
 
