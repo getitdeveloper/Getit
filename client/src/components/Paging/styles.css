@@ -1,8 +1,7 @@
 .pagination {
-  width: 80%;
   display: flex;
   justify-content: center;
-  margin: 2rem 0rem;
+  padding: 4.5rem 0rem;
 }
 ul {
   list-style: none;

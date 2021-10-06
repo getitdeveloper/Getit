@@ -19,7 +19,7 @@ export const TagWrapper = styled.div`
 `;
 
 export const PostInfoButton = styled.button`
-  width: 85%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -88,7 +88,6 @@ export const WriterName = styled.p`
 export const DetailWrapper = styled.div`
   width: 100%;
   display: flex;
-  justify-content: flex-end;
   align-items: flex-start;
   align-items: center;
   font-size: 1rem;

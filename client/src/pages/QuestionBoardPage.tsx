@@ -2,11 +2,7 @@ import * as React from 'react';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import PostItem from '@components/PostItem';
 import PostSubHeader from '@components/PostSubHeader';
-import {
-  PageContainer,
-  PageContainer1,
-  PageBackground,
-} from '@assets/styles/page';
+import { BlockWrapper, PageWrapper, PageBackground } from '@assets/styles/page';
 import { COMMON_POST_LIST_REQUEST } from '@reducers/actions';
 import Paging from '@components/Paging';
 import LoadingSpinner from '@components/LoadingSpinner';
@@ -36,9 +32,9 @@ function QuestionBardPage(): JSX.Element {
   return (
     <PageBackground>
       <PostSubHeader boardType='Question' />
-      <PageContainer1>
+      <PageWrapper>
         {boardList ? (
-          <PageContainer width='100%'>
+          <BlockWrapper>
             {boardList.results.map((content: IPost) => (
               <PostItem
                 key={content.id}
@@ -46,14 +42,15 @@ function QuestionBardPage(): JSX.Element {
                 boardType='question'
               />
             ))}
-          </PageContainer>
+          </BlockWrapper>
         ) : null}
         <Paging
           activePage={page}
           totalPage={boardList.count}
           setPage={setPage}
         />
-      </PageContainer1>
+      </PageWrapper>
+
     </PageBackground>
   );
 }
