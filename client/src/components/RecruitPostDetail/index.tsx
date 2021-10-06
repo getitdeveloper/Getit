@@ -8,6 +8,32 @@ import { IPostId } from '@types';
 import UserImg from '@assets/images/user.svg';
 import MemberType from '@components/RecruitMembers/index';
 
+import {
+  RecruitPostDetailWrapper,
+  ContainerWrapper,
+  Container,
+  LeftContainer,
+  RightContainer,
+  ImageBackground,
+  ImageWrapper,
+  ImageContainer,
+  StudyName,
+  MemberTypeWrapper,
+  ContentWrapper,
+  TitleText,
+  ContentText,
+  RecruitMember,
+  Period,
+  Label,
+  Stacks,
+  JoinMember,
+  IconWrapper,
+  IconContainer,
+  MailIcon,
+  LikeIcon,
+  HorizontalLine,
+} from './styles';
+
 function RecruitPostDetail(): JSX.Element {
   const dispatch = useDispatch();
   const { postId }: IPostId = useParams();
@@ -53,59 +79,24 @@ function RecruitPostDetail(): JSX.Element {
   }
 
   return (
-    <div style={{ backgroundColor: '#f5f5f5' }}>
-      <div
-        style={{
-          maxWidth: '128rem',
-          width: '100%',
-          margin: '0 auto',
-          backgroundColor: '#FFFFFF',
-          height: '89.5rem',
-        }}
-      >
-        <div style={{ display: 'flex' }}>
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              border: '1px solid black',
-              width: '30.85rem',
-            }}
-          >
-            <div style={{ margin: '0 auto' }}>
-              <div
-                style={{
-                  backgroundColor: '#e0e0e0',
-                  width: '9rem',
-                  height: '9rem',
-                  borderRadius: '13px',
-                }}
-              >
-                <div
-                  style={{
-                    height: '100%',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}
-                >
-                  <img
-                    src={UserImg}
-                    alt='study profile'
-                    style={{
-                      width: '40%',
-                    }}
-                  />
-                </div>
-              </div>
-            </div>
+    <RecruitPostDetailWrapper>
+      <ContainerWrapper>
+        <Container>
+          {/* 왼쪽 컨테이너 */}
+          <LeftContainer>
+            {/* 팀 프로필 이미지 */}
+            <ImageWrapper>
+              <ImageBackground>
+                <ImageContainer>
+                  <img src={UserImg} alt='study profile' />
+                </ImageContainer>
+              </ImageBackground>
+            </ImageWrapper>
 
-            <div style={{ textAlign: 'center', fontSize: '1.5rem' }}>
-              스터디명
-            </div>
-            <div>
-              <ul style={{ display: 'flex' }}>
+            {/* 스터디명 */}
+            <StudyName>스터디명</StudyName>
+            <MemberTypeWrapper>
+              <ul>
                 {worker.map((member: string) => {
                   return (
                     <li key={member}>
@@ -114,111 +105,68 @@ function RecruitPostDetail(): JSX.Element {
                   );
                 })}
               </ul>
-            </div>
-          </div>
+            </MemberTypeWrapper>
+            {/* 쪽지, 좋아요 아이콘 */}
+            <IconWrapper>
+              <IconContainer>
+                <MailIcon />
+              </IconContainer>
+              <IconContainer>
+                <LikeIcon />
+              </IconContainer>
+            </IconWrapper>
+            {/* 수평 구분선 */}
+            <HorizontalLine />
+          </LeftContainer>
 
-          {/* ############### */}
+          {/* 오른쪽 컨테이너 */}
+          <RightContainer>
+            <ContentWrapper>
+              <Label>제목</Label>
+              <TitleText>{recruitPostDetail.title}</TitleText>
+              <br />
 
-          <div style={{ width: '97.15rem' }}>
-            <div style={{ padding: '7rem' }}>
-              <h1>제목</h1>
-              <div
-                style={{
-                  backgroundColor: '#f5f5f5',
-                  maxWidth: '84rem',
-                  width: '100%',
-                  minHeight: '5rem',
-                  height: 'auto',
-                  display: 'flex',
-                  // justifyContent: 'center',
-                  alignItems: 'center',
-                }}
-              >
-                <p style={{ fontSize: '1.5rem' }}>{recruitPostDetail.title}</p>
-              </div>
+              <Label>내용</Label>
+              <ContentText>{recruitPostDetail.content}</ContentText>
+              <br />
 
+              <Label>모집 인원</Label>
+              <RecruitMember>
+                <li>
+                  <div>개발자</div>
+                  <div>{developer}명</div>
+                </li>
+                <li>
+                  <div>디자이너</div>
+                  <div>{designer}명</div>
+                </li>
+                <li>
+                  <div>기획자</div>
+                  <div>{pm}명</div>
+                </li>
+              </RecruitMember>
               <br />
-              <h2>내용</h2>
-              <div
-                style={{
-                  backgroundColor: '#f5f5f5',
-                  maxWidth: '84rem',
-                  width: '100%',
-                  height: '20.9rem',
-                  display: 'flex',
-                  // justifyContent: 'center',
-                  alignItems: 'center',
-                }}
-              >
-                <p style={{ fontSize: '1.5rem' }}>
-                  {recruitPostDetail.content}
-                </p>
-              </div>
+
+              <Label>모집 기간</Label>
+              <Period>{`${startDate} ~ ${endDate}`}</Period>
               <br />
-              <h2>모집 인원</h2>
-              <div>
-                <span
-                  style={{
-                    marginRight: '1rem',
-                    backgroundColor: '#f5f5f5',
-                    // height: '100%',
-                    fontSize: '1.5rem',
-                  }}
-                >
-                  개발자 {developer}명
-                </span>
-                <span
-                  style={{
-                    marginRight: '1rem',
-                    backgroundColor: '#f5f5f5',
-                    // height: '100%',
-                    fontSize: '1.5rem',
-                  }}
-                >
-                  디자이너 {designer}명
-                </span>
-                <span
-                  style={{
-                    marginRight: '1rem',
-                    backgroundColor: '#f5f5f5',
-                    // height: '100%',
-                    fontSize: '1.5rem',
-                  }}
-                >
-                  기획자 {pm}명
-                </span>
-              </div>
-              <br />
-              <h2>모집 기간</h2>
-              <div
-                style={{
-                  backgroundColor: '#f5f5f5',
-                  height: '6.1rem',
-                  fontSize: '1.5rem',
-                  display: 'flex',
-                  // justifyContent: 'center',
-                  alignItems: 'center',
-                }}
-              >{`${startDate} ~ ${endDate}`}</div>
-              <br />
-              <h2>기술 스택</h2>
-              <div>
+
+              <Label>기술 스택</Label>
+              <Stacks>
                 {stacks.map((value: string) => {
-                  return (
-                    <span style={{ fontSize: '1.5rem' }} key={value}>
-                      {value}
-                    </span>
-                  );
+                  return <li key={value}>{value}</li>;
                 })}
-              </div>
+              </Stacks>
               <br />
-              <h2>참여중인 Get Iter</h2>
+
+              <Label>참여중인 Get Iter</Label>
+              <JoinMember>현재 참여중인 Get Iter가 없습니다.</JoinMember>
               <br />
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+            </ContentWrapper>
+          </RightContainer>
+        </Container>
+      </ContainerWrapper>
+    </RecruitPostDetailWrapper>
   );
 }
 

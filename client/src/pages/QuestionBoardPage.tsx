@@ -50,6 +50,7 @@ function QuestionBardPage(): JSX.Element {
           setPage={setPage}
         />
       </PageWrapper>
+
     </PageBackground>
   );
 }

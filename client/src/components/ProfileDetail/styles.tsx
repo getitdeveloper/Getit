@@ -12,6 +12,7 @@ export const useStyles = makeStyles((theme: Theme) =>
 );
 
 export const SplittedPageContainer = styled(BlockWrapper)`
+  width: 100%;
   display: flex;
   @media ${(props) => props.theme.tablet} {
     flex-direction: column;
