@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useHistory } from 'react-router-dom';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import { USER_PROFILE_REQUEST } from '@reducers/actions';
-import { PageTitle, PageBackground } from '@assets/styles/page';
+import { PageBackground, PageWrapper } from '@assets/styles/page';
 import ProfileDetail from '@components/ProfileDetail';
 import LoadingSpinner from '@components/LoadingSpinner';
 
@@ -30,11 +30,11 @@ function ProfilePage(): JSX.Element {
     return <LoadingSpinner />;
   }
   return (
-    <div>
-      <PageBackground>
+    <PageBackground>
+      <PageWrapper>
         <ProfileDetail />
-      </PageBackground>
-    </div>
+      </PageWrapper>
+    </PageBackground>
   );
 }
 

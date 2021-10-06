@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { useState, useCallback } from 'react';
-
 import { useHistory } from 'react-router-dom';
 import { RootStateOrAny, useSelector } from 'react-redux';
 import { HorizontalLine } from '@assets/styles/commons';
@@ -95,6 +94,7 @@ function PostSubHeader({ boardType }: IBoardType): JSX.Element {
       <HorizontalLine width='100%' />
 
       <SortAndWriteWrapper>
+        {/* TODO 컴포넌트로 분리 */}
         <select name='sortPost' onChange={handleSortPost}>
           <option value='recent'>최신순</option>
           <option value='popular'>인기순</option>

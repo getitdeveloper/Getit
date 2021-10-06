@@ -6,14 +6,19 @@ interface Size {
 }
 
 export const PageBackground = styled.div`
-  height: auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
+  background-color: ${({ theme }) => theme.colors.background};
+`;
+
+export const PageWrapper = styled.div`
+  max-width: 1280px;
+  width: 100%;
+  margin: 0 auto;
+  min-height: 845px;
+  padding: 1rem 1rem;
   background-color: ${(props) => props.theme.colors.background};
-  padding: 2% 5%;
+
   @media ${(props) => props.theme.tablet} {
+    min-height: 400px;
     width: 100%;
     background-color: white;
     padding: 0;
@@ -22,9 +27,9 @@ export const PageBackground = styled.div`
 
 export const PageTitle = styled.h1`
   width: 78%;
+  padding-top: 3.5rem;
+  padding-bottom: 1rem;
   font-size: 1.2rem;
-  font-stretch: normal;
-  font-style: bold;
   text-align: left;
   color: ${(props) => props.theme.colors.blackText};
   @media ${(props) => props.theme.tablet} {
@@ -32,8 +37,8 @@ export const PageTitle = styled.h1`
   }
 `;
 
-export const PageContainer = styled.div`
-  width: ${(props: Size) => (props.width ? props.width : '100%')};
+export const BlockWrapper = styled.div`
+  width: 100%;
   height: auto;
   background-color: #ffffff;
   border-radius: 0.8rem;

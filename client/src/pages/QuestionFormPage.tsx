@@ -1,16 +1,16 @@
 import * as React from 'react';
 
 import PostForm from '@components/PostForm';
-import { PageBackground, PageContainer, PageTitle } from '@assets/styles/page';
+import { PageWrapper, BlockWrapper, PageTitle } from '@assets/styles/page';
 
 function QuestionFormPage() {
   return (
-    <PageBackground>
+    <PageWrapper>
       <PageTitle>질문게시글 작성</PageTitle>
-      <PageContainer width='80%' padding='3%'>
+      <BlockWrapper padding='3%'>
         <PostForm />
-      </PageContainer>
-    </PageBackground>
+      </BlockWrapper>
+    </PageWrapper>
   );
 }
 
