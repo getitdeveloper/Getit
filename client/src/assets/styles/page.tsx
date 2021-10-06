@@ -14,6 +14,7 @@ export const PageWrapper = styled.div`
   width: 100%;
   margin: 0 auto;
   min-height: 845px;
+  padding: 1rem 1rem;
   background-color: ${(props) => props.theme.colors.background};
   @media ${(props) => props.theme.tablet} {
     min-height: 400px;
