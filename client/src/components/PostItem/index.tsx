@@ -81,7 +81,7 @@ function PostItem(props: any): JSX.Element {
   return (
     <div>
       <PostWrapper>
-        <div>
+        <div style={{ width: '85%' }}>
           <PostInfoButton onClick={onHandlePost}>
             <TagWrapper>
               {content.worker.map((workerType: string) => (

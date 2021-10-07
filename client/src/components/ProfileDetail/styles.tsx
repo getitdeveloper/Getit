@@ -1,6 +1,6 @@
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import styled from 'styled-components';
-import { PageContainer } from '@assets/styles/page';
+import { BlockWrapper } from '@assets/styles/page';
 
 export const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -11,12 +11,11 @@ export const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-export const SplittedPageContainer = styled(PageContainer)`
+export const SplittedPageContainer = styled(BlockWrapper)`
   width: 100%;
   display: flex;
   @media ${(props) => props.theme.tablet} {
     flex-direction: column;
-    width: 80%;
   }
 `;
 

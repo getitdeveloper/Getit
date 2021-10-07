@@ -26,13 +26,16 @@ export const WorkerOption = styled.input``;
 
 export const TextForm = styled.textarea`
   width: 100%;
-  height: 30rem;
+  min-height: 45rem;
   border-radius: 1.2rem;
   border: solid 1px #bcbcbc;
   padding: 1rem 0.8rem;
   margin-bottom: 1rem;
   :focus {
     outline: none;
+  }
+  @media ${(props) => props.theme.tablet} {
+    min-height: 30rem;
   }
 `;
 
@@ -62,10 +65,13 @@ export const FormButton = styled.button`
 
 export const MarkdownWrapper = styled.div`
   display: ${(props: OpenHandler) => (props.open ? 'block' : 'none')};
-  height: 30rem;
+  min-height: 45rem;
   width: 100%;
   border-radius: 1.2rem;
   border: solid 1px #bcbcbc;
-  padding: 1.5% 1%;
-  margin-bottom: 1.5%;
+  padding: 1rem 0.8rem;
+  margin-bottom: 1rem;
+  @media ${(props) => props.theme.tablet} {
+    min-height: 30rem;
+  }
 `;
