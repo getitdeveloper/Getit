@@ -33,21 +33,21 @@ function PostSubHeader({ boardType }: IBoardType): JSX.Element {
   );
 
   const handlePostType = useCallback(() => {
-    if (userId) {
-      console.log('current board', boardType);
-      switch (boardType) {
-        case 'Question':
-          return history.push('/questionBoard/form', 'question');
-        case 'Free':
-          return history.push('/freeBoard/form', 'free');
-        case 'Recruit':
-          return history.push('/recruitBoard/form', 'recruit');
-        default:
-          break;
-      }
-    } else {
-      alert('로그인이 필요합니다. 먼저 로그인해주세요!');
+    // if (userId) {
+    console.log('current board', boardType);
+    switch (boardType) {
+      case 'Question':
+        return history.push('/questionBoard/form', 'question');
+      case 'Free':
+        return history.push('/freeBoard/form', 'free');
+      case 'Recruit':
+        return history.push('/recruitBoard/form', 'recruit');
+      default:
+        break;
     }
+    // } else {
+    //   alert('로그인이 필요합니다. 먼저 로그인해주세요!');
+    // }
   }, [userId, boardType]);
 
   const handleSortPost = useCallback((event) => {

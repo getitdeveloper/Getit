@@ -16,6 +16,7 @@ import {
   Stacks,
   TextArea,
   DatePicker,
+  SelectItemWrapper,
   SelectItem,
   CountMember,
   ButtonWrapper,
@@ -24,7 +25,8 @@ import {
 
 function RecruitPostForm(): JSX.Element {
   const [click, setClick] = useState(false);
-  const handleFocus = useCallback((event: any) => {
+
+  const handleDatePicker = useCallback((event: any) => {
     event.target.type = 'date';
   }, []);
 
@@ -49,9 +51,13 @@ function RecruitPostForm(): JSX.Element {
               <SelectImgWrapper>
                 <img src={SelectImg} alt='select arrow button' />
               </SelectImgWrapper>
-              <FieldSelect name='pets' id='study-select'>
-                <option value=''>--Please choose an option--</option>
-                <option value='dog'>Dog</option>
+              <FieldSelect name='study-select' id='study-select'>
+                <option value='description' disabled selected>
+                  스터디 프로필 선택
+                </option>
+                <option value='dog'>1번</option>
+                <option value='dog'>2번</option>
+                <option value='dog'>3번</option>
               </FieldSelect>
             </SelectWrapper>
             <StyledLink to='/'>
@@ -90,7 +96,7 @@ function RecruitPostForm(): JSX.Element {
       <BlockWrapper>
         <LeftContainer>모집인원</LeftContainer>
         <RightContainer>
-          <ul>
+          <SelectItemWrapper>
             <li>
               <SelectItem>
                 <input type='radio' onClick={handleRadio} />
@@ -121,7 +127,7 @@ function RecruitPostForm(): JSX.Element {
                 <div>명</div>
               </CountMember>
             </li>
-          </ul>
+          </SelectItemWrapper>
         </RightContainer>
       </BlockWrapper>
       <BlockWrapper>
@@ -131,14 +137,14 @@ function RecruitPostForm(): JSX.Element {
             <DatePicker
               placeholder='시작일'
               type='text'
-              onFocus={handleFocus}
+              onFocus={handleDatePicker}
               onBlur={handleBlur}
             />
             <div>~</div>
             <DatePicker
               placeholder='종료일'
               type='text'
-              onFocus={handleFocus}
+              onFocus={handleDatePicker}
               onBlur={handleBlur}
             />
           </Period>
