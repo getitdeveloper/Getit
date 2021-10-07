@@ -111,13 +111,13 @@ function RecruitPost(): JSX.Element {
         </Grid>
       </GridWrapper>
 
-      <PagingWrapper>
-        <Paging
-          activePage={page}
-          totalPage={recruitPostTotalCount}
-          setPage={setPage}
-        />
-      </PagingWrapper>
+      {/* <PagingWrapper> */}
+      <Paging
+        activePage={page}
+        totalPage={recruitPostTotalCount}
+        setPage={setPage}
+      />
+      {/* </PagingWrapper> */}
     </div>
   );
 }
