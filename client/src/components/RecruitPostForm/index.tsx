@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useEffect } from 'react';
 import SelectImg from '@assets/images/Select.svg';
 import {
   RecruitPostFormWrapper,
@@ -15,16 +15,30 @@ import {
   SelectWrapper,
   Stacks,
   TextArea,
+  TextCount,
   DatePicker,
   SelectItemWrapper,
-  SelectItem,
-  CountMember,
   ButtonWrapper,
   Button,
 } from './styles';
+import RadioButton from './RadioButton';
 
 function RecruitPostForm(): JSX.Element {
-  const [click, setClick] = useState(false);
+  const list = [
+    { text: 'developer', checked: false, count: 0 },
+    { text: 'designer', checked: false, count: 0 },
+    { text: 'pm', checked: false, count: 0 },
+  ];
+
+  const [recruitDeveloper, setRecruitDeveloper] = useState(list[0]);
+  const [recruitDesigner, setRecruitDesigner] = useState(list[1]);
+  const [recruitPm, setRecruitPm] = useState(list[2]);
+
+  const [recruitContent, setRecruitContent] = useState('');
+
+  useEffect(() => {
+    console.log(recruitDeveloper);
+  }, [recruitDeveloper]);
 
   const handleDatePicker = useCallback((event: any) => {
     event.target.type = 'date';
@@ -34,13 +48,69 @@ function RecruitPostForm(): JSX.Element {
     event.target.type = 'text';
   }, []);
 
-  const handleRadio = useCallback(
-    (event: any) => {
-      event.target.checked = !click;
-      setClick(!click);
+  // 라디오버튼 선택
+  const handleRecuitDeveloper = useCallback(() => {
+    setRecruitDeveloper({
+      ...recruitDeveloper,
+      checked: !recruitDeveloper.checked,
+      count: 0,
+    });
+  }, [recruitDeveloper]);
+
+  const handleRecuitDesigner = useCallback(() => {
+    setRecruitDesigner({
+      ...recruitDesigner,
+      checked: !recruitDesigner.checked,
+      count: 0,
+    });
+  }, [recruitDesigner]);
+
+  const handleRecuitPm = useCallback(() => {
+    setRecruitPm({
+      ...recruitPm,
+      checked: !recruitPm.checked,
+      count: 0,
+    });
+  }, [recruitPm]);
+
+  // 인원수 입력
+  const handleRecuitDeveloperNum = useCallback(
+    (event) => {
+      setRecruitDeveloper({
+        ...recruitDeveloper,
+        count: parseInt(event.target.value, 10),
+      });
     },
-    [click],
+    [recruitDeveloper],
   );
+
+  const handleRecuitDesignerNum = useCallback(
+    (event) => {
+      setRecruitDesigner({
+        ...recruitDesigner,
+        count: parseInt(event.target.value, 10),
+      });
+    },
+    [recruitDesigner],
+  );
+
+  const handleRecuitPmNum = useCallback(
+    (event) => {
+      setRecruitPm({
+        ...recruitPm,
+        count: parseInt(event.target.value, 10),
+      });
+    },
+    [recruitPm],
+  );
+
+  const handleChangeRecruitContent = useCallback(
+    (event) => {
+      setRecruitContent(event.target.value);
+    },
+    [recruitContent],
+  );
+
   return (
     <RecruitPostFormWrapper>
       <BlockWrapper>
@@ -90,43 +160,36 @@ function RecruitPostForm(): JSX.Element {
       <BlockWrapper>
         <LeftContainer>모집글</LeftContainer>
         <RightContainer>
-          <TextArea cols={30} rows={10} />
+          <TextArea
+            placeholder='모집글을 작성해주세요.'
+            cols={30}
+            rows={10}
+            onChange={handleChangeRecruitContent}
+            maxLength={500}
+          />
+          <TextCount>{recruitContent.length}/ 500</TextCount>
         </RightContainer>
       </BlockWrapper>
       <BlockWrapper>
         <LeftContainer>모집인원</LeftContainer>
         <RightContainer>
           <SelectItemWrapper>
-            <li>
-              <SelectItem>
-                <input type='radio' onClick={handleRadio} />
-                <div>개발자</div>
-              </SelectItem>
-              <CountMember>
-                <input type='number' />
-                <div>명</div>
-              </CountMember>
-            </li>
-            <li>
-              <SelectItem>
-                <input type='radio' onClick={handleRadio} />
-                <div>디자이너</div>
-              </SelectItem>
-              <CountMember>
-                <input type='number' />
-                <div>명</div>
-              </CountMember>
-            </li>
-            <li>
-              <SelectItem>
-                <input type='radio' onClick={handleRadio} />
-                <div>기획자</div>
-              </SelectItem>
-              <CountMember>
-                <input type='number' />
-                <div>명</div>
-              </CountMember>
-            </li>
+            {/* 라디오 버튼 목록 */}
+            <RadioButton
+              value={recruitDeveloper}
+              onClick={handleRecuitDeveloper}
+              onChange={handleRecuitDeveloperNum}
+            />
+            <RadioButton
+              value={recruitDesigner}
+              onClick={handleRecuitDesigner}
+              onChange={handleRecuitDesignerNum}
+            />
+            <RadioButton
+              value={recruitPm}
+              onClick={handleRecuitPm}
+              onChange={handleRecuitPmNum}
+            />
           </SelectItemWrapper>
         </RightContainer>
       </BlockWrapper>

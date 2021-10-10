@@ -150,6 +150,12 @@ export const TextArea = styled.textarea`
   font-size: 1.5rem;
 `;
 
+export const TextCount = styled.p`
+  font-size: 1.4rem;
+  padding-right: 1rem;
+  float: right;
+`;
+
 export const DatePicker = styled.input`
   width: 242px;
   height: 5rem;
@@ -174,7 +180,7 @@ export const SelectItem = styled.div`
   font-size: 1.5rem;
 
   input {
-    margin: 1rem;
+    margin: 1rem 1rem 1rem 0.4rem;
     appearance: none;
     border: 3px solid gray;
     width: 1.5rem;
