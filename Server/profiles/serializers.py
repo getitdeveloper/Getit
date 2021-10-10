@@ -5,6 +5,7 @@ from rest_framework.serializers import ModelSerializer
 from portfolios.models import Portfolio
 from tags.models import Tag
 from .models import Profile, TeamProfile
+from members.models import Member
 
 
 class TagSerializer(serializers.ModelSerializer):
@@ -34,7 +35,7 @@ class MemberSerializer(serializers.ModelSerializer):
     def to_representation(self, value):
         return value.member
     class Meta:
-        model = Tag
+        model = Member
         fields = ('member',)
 class TeamProfileSerializer(serializers.ModelSerializer):
     stack = TagSerializer(read_only=True, many=True)

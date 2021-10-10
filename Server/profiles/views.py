@@ -273,17 +273,14 @@ class TeamProfileDetail(GenericAPIView):
 
         if serializer.is_valid():
             serializer.save()
-            profile = TeamProfile.objects.get(id=serializer.data['id'])
-            members = request.data['user']
             names = request.data['stack']
+            profile.stack.clear()
             for name in names:
                 if not name:
                     continue
                 _name, _ = Tag.objects.get_or_create(name=name)
 
                 profile.stack.add(_name)
-            _member, _ = Member.objects.get_or_create(member=members)
-            profile.members.add(_member)
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
