@@ -202,3 +202,16 @@ export const PostTitle = styled.p`
   font-size: 1.2rem;
   text-align: left;
 `;
+
+export const ButtonWrapper = styled.div`
+  text-align: center;
+`;
+
+export const Button = styled.button`
+  border-radius: 6px;
+  width: 14.6rem;
+  height: 4.6rem;
+  background-color: ${({ theme }) => theme.colors.main};
+  border-style: none;
+  color: #ffffff;
+`;
