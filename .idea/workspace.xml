@@ -2,11 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="14847226-151c-4591-a157-0243461eac9c" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Server/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/Server/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/apis/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/Server/apis/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Server/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/members/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/Server/members/admin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/members/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/Server/members/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/profiles/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/Server/profiles/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/profiles/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/Server/profiles/serializers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/profiles/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/Server/profiles/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,6 +35,11 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\hp\Desktop\Getit\Server\apis\settings" />
+    </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">

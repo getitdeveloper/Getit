@@ -21,6 +21,8 @@ from rest_framework_jwt.settings import api_settings
 
 from apis.settings import SECRET_KEY
 
+from members.models import Member
+
 
 @method_decorator(csrf_exempt, name='dispatch')
 @api_view(['GET'])
@@ -156,36 +158,23 @@ class TeamProfileCreate(GenericAPIView):
         팀 프로필 list (GET)
         
         ---
-                [
-                    {
-                        "id": 1,
-                        "user": 2,
-                        "name": "test",
-                        "content": "test",
-                        "status": true,
-                        "member": [],
-                        "image": null,
-                        "stack": [
-                            "test"
-                        ],
-                        "created_at": "2021-09-16T19:24:50.408320+09:00",
-                        "is_complete": 0,
-                    },
-                    {
-                        "id": 3,
-                        "user": 2,
-                        "name": "test",
-                        "content": "test",
-                        "status": true,
-                        "member": [],
-                        "image": null,
-                        "stack": [
-                            "react"
-                        ],
-                        "created_at": "2021-09-17T10:16:00.998896+09:00",
-                        "is_complete": 0
-                    }
-        ]
+                        [
+            {
+                "id": 26,
+                "user": 4,
+                "title": "장고",
+                "content": "ㅁㄴㅇㅁㄴㅇ",
+                "status": true,
+                "image": null,
+                "stack": [
+                    "drf",
+                    "mysql"
+                ],
+                "created_at": "2021-10-11T03:27:07.396394+09:00",
+                "members": [
+                    "4"
+                ]
+            }]
         """
         profiles = TeamProfile.objects.filter(user=user_pk)
         serializer = TeamProfileSerializer(profiles, many=True)
@@ -197,10 +186,11 @@ class TeamProfileCreate(GenericAPIView):
 
         ---
                 {
-                    "user":1,
-                    "name":"장고",
-                    "content":"ㅁㄴㅇㅁㄴㅇ",
+                    "user":4,
+                    "title":"장고22",
+                    "content":"테스트입니다.",
                     "status":true,
+                    --> status는 프로젝트의 활성여부입니다. true -> 완료, false -> 진행중
                     "image":null,
                     "stack":["drf","mysql"]
                 }
@@ -210,15 +200,17 @@ class TeamProfileCreate(GenericAPIView):
 
         if serializer.is_valid():
             serializer.save()
-            profile = self.get_object(user_pk)
+            profile = TeamProfile.objects.get(id=serializer.data['id'])
+            members = request.data['user']
             names = request.data['stack']
-            profile.stack.clear()
             for name in names:
                 if not name:
                     continue
                 _name, _ = Tag.objects.get_or_create(name=name)
 
                 profile.stack.add(_name)
+            _member, _ = Member.objects.get_or_create(member=members)
+            profile.members.add(_member)
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -238,16 +230,21 @@ class TeamProfileDetail(GenericAPIView):
 
                 ---
                 # GET Response 예시
-                    {
-                        "id":1,
-                        "user":2,
-                        "name":"장고스터디",
-                        "content":"ㅁㄴㅇㅁㄴㅇ",
-                        "status":true,
-                        "image":null,
-                        "stack":["drf","mysql","docker"],
-                        "created_at":"2021-09-12T07:07:04.808820+09:00",
-                        "is_complete": 0
+                                        {
+                        "id": 26,
+                        "user": 4,
+                        "title": "장고",
+                        "content": "ㅁㄴㅇㅁㄴㅇ",
+                        "status": true,
+                        "image": null,
+                        "stack": [
+                            "drf",
+                            "mysql"
+                        ],
+                        "created_at": "2021-10-11T03:27:07.396394+09:00",
+                        "members": [
+                            "4"
+                        ]
                     }
                 """
         profile = self.get_object(user_id, id)
@@ -261,15 +258,14 @@ class TeamProfileDetail(GenericAPIView):
         ---
         # PUT request 예시
                 {
-                    "user":2,
-                    "name":"장고스터디",
-                    "content":"ㅁㄴㅇㅁㄴㅇ",
+                    "user":4,
+                    "title":"장고22",
+                    "content":"테스트입니다.",
                     "status":true,
+                    --> status는 프로젝트의 활성여부입니다. true -> 완료, false -> 진행중
                     "image":null,
-                    "stack":["drf","mysql","docker"],
-                    "is_complete": 0
-                    --> is_complete의경우 팀프로젝트 종료,진행중인걸 나타내는 필드입니다. 진행중엔 default0이고 완료되었을땐
-                    1이므로 종료 버튼을 눌렀을때 1을 request해주시면 됩니다!
+                    "stack":["drf","mysql"]
+                    "member":["2","3"]
                 }
         """
         profile = self.get_object(user_id, id)
@@ -277,20 +273,23 @@ class TeamProfileDetail(GenericAPIView):
 
         if serializer.is_valid():
             serializer.save()
+            profile = TeamProfile.objects.get(id=serializer.data['id'])
+            members = request.data['user']
             names = request.data['stack']
-            profile.stack.clear()
             for name in names:
                 if not name:
                     continue
                 _name, _ = Tag.objects.get_or_create(name=name)
 
                 profile.stack.add(_name)
+            _member, _ = Member.objects.get_or_create(member=members)
+            profile.members.add(_member)
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
     def delete(self, request, id, user_id):
         """
-            포트폴리오 detail (DELETE)
+            팀프로필 detail (DELETE)
 
             ---
         """

@@ -6,5 +6,8 @@ class Member(models.Model):
         ('팀장','팀장'),
         ('팀원','팀원'),
     )
-    member = models.ForeignKey('accounts.User',on_delete=models.CASCADE)
+    member = models.CharField(max_length=4)
     create_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.member

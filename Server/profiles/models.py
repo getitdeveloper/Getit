@@ -45,7 +45,7 @@ def save_user_profile(sender, instance, **kwargs):
     instance.profile.save()
 
 class TeamProfile(models.Model):
-    user = models.ForeignKey('accounts.User', on_delete=models.CASCADE, related_name='author')
+    user = models.ForeignKey('accounts.User', on_delete=models.CASCADE)
     title = models.CharField(max_length=20, null=False)
     status = models.BooleanField(default=0)
     content = models.TextField(null=False)
