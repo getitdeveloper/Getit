@@ -20,6 +20,7 @@ import {
   SelectItemWrapper,
   ButtonWrapper,
   Button,
+  TitleWrapper,
 } from './styles';
 import RadioButton from './RadioButton';
 
@@ -114,7 +115,12 @@ function RecruitPostForm(): JSX.Element {
   return (
     <RecruitPostFormWrapper>
       <BlockWrapper>
-        <LeftContainer>스터디명</LeftContainer>
+        <LeftContainer>
+          <TitleWrapper>
+            <div>스터디명</div>
+            <div>(필수)</div>
+          </TitleWrapper>
+        </LeftContainer>
         <RightContainer>
           <ContentWrapper>
             <SelectWrapper>
@@ -158,7 +164,12 @@ function RecruitPostForm(): JSX.Element {
         </RightContainer>
       </BlockWrapper>
       <BlockWrapper>
-        <LeftContainer>모집글</LeftContainer>
+        <LeftContainer>
+          <TitleWrapper>
+            <div>모집글</div>
+            <div>(필수)</div>
+          </TitleWrapper>
+        </LeftContainer>
         <RightContainer>
           <TextArea
             placeholder='모집글을 작성해주세요.'
@@ -171,7 +182,12 @@ function RecruitPostForm(): JSX.Element {
         </RightContainer>
       </BlockWrapper>
       <BlockWrapper>
-        <LeftContainer>모집인원</LeftContainer>
+        <LeftContainer>
+          <TitleWrapper>
+            <div>모집인원</div>
+            <div>(필수)</div>
+          </TitleWrapper>
+        </LeftContainer>
         <RightContainer>
           <SelectItemWrapper>
             {/* 라디오 버튼 목록 */}
@@ -194,7 +210,12 @@ function RecruitPostForm(): JSX.Element {
         </RightContainer>
       </BlockWrapper>
       <BlockWrapper>
-        <LeftContainer>모집기간</LeftContainer>
+        <LeftContainer>
+          <TitleWrapper>
+            <div>모집기간</div>
+            <div>(필수)</div>
+          </TitleWrapper>
+        </LeftContainer>
         <RightContainer>
           <Period>
             <DatePicker

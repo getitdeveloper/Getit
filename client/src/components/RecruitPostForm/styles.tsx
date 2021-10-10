@@ -5,6 +5,8 @@ import AddIcon from '@material-ui/icons/Add';
 export const RecruitPostFormWrapper = styled.div`
   background-color: #ffffff;
   padding: 3rem 5rem;
+  border-radius: 10px;
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
 
   @media ${({ theme }) => theme.tablet} {
     padding: 1rem;
@@ -40,9 +42,18 @@ export const LeftContainer = styled.div`
   font-size: 1.5rem;
   font-weight: 500;
   font-stretch: normal;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 
   @media ${({ theme }) => theme.tablet} {
     width: 100%;
+    display: initial;
+    flex-direction: initial;
+    align-items: initial;
+    justify-content: initial;
+    margin-left: 0.5rem;
   }
 `;
 
@@ -219,4 +230,14 @@ export const Button = styled.button`
   background-color: ${({ theme }) => theme.colors.main};
   border-style: none;
   color: #ffffff;
+`;
+
+export const TitleWrapper = styled.div`
+  text-align: center;
+  @media ${({ theme }) => theme.tablet} {
+    display: flex;
+    div {
+      margin-right: 0.5rem;
+    }
+  }
 `;
