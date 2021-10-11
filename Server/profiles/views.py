@@ -197,7 +197,7 @@ class TeamProfileCreate(GenericAPIView):
         """
 
         serializer = TeamProfileSerializer(data=request.data)
-        print(request.body)
+        print(request.data['image'])
         if serializer.is_valid():
             serializer.save()
             profile = TeamProfile.objects.get(id=serializer.data['id'])
