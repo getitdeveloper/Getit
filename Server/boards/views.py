@@ -292,6 +292,7 @@ class RecruitmentBoardPostListAPIView(GenericAPIView):
                 }
         """
         serializer = RecruitmentBoardSerializer(data=request.data,context={'request': request})
+        print(request.data)
         if serializer.is_valid():
             serializer.save()
             board = RecruitmentBoard.objects.get(id=serializer.data['id'])
