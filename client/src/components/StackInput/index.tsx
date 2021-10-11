@@ -20,6 +20,7 @@ function StackInput(props: any) {
 
   const onHandleAddStack = (e: any) => {
     if (e.key === 'Enter') {
+      e.preventDefault();
       setInitialStacks([...initialStacks, stack]);
       setStack('');
     }
@@ -51,7 +52,7 @@ function StackInput(props: any) {
           onKeyPress={onHandleAddStack}
         />
       </StacksWrapper>
-      <StackMessage>*Enter를 눌러 작성하신 스택을 생성해주세요!</StackMessage>
+      <StackMessage>*Enter를 눌러 작성하실 스택을 생성해주세요!</StackMessage>
     </div>
   );
 }
