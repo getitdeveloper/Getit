@@ -144,11 +144,11 @@ class ProfileDetail(GenericAPIView):
                 profile.stack.add(_name)
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-@method_decorator(csrf_exempt, name='dispatch')
+
 class TeamProfileCreate(GenericAPIView):
 
     serializer_class = TeamProfileSerializer
-
+    permission_classes = [IsOwnerOrReadOnly]
 
     def get_object(self, user_pk):
         return get_object_or_404(TeamProfile, user_id=user_pk)
@@ -197,7 +197,7 @@ class TeamProfileCreate(GenericAPIView):
         """
 
         serializer = TeamProfileSerializer(data=request.data)
-        print(request.data['image'])
+        print(request.data)
         if serializer.is_valid():
             serializer.save()
             profile = TeamProfile.objects.get(id=serializer.data['id'])
