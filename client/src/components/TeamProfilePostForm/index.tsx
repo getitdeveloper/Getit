@@ -1,9 +1,10 @@
 import * as React from 'react';
 import { useCallback, useState } from 'react';
-import { useSelector, RootStateOrAny } from 'react-redux';
+import { useSelector, RootStateOrAny, useDispatch } from 'react-redux';
 import UserImg from '@assets/images/user.svg';
 import CrownImg from '@assets/images/leader-crown.svg';
 import StackInput from '@components/StackInput/index';
+import { TEAM_PROFILE_REGISTER_REQUEST } from '@reducers/actions';
 import {
   TeamProfilePostFormWrapper,
   UploadButtonContainer,
@@ -26,11 +27,26 @@ import {
 } from './styles';
 
 function TeamProfilePostForm(): JSX.Element {
+  const dispatch = useDispatch();
   const nickname = useSelector(
     (state: RootStateOrAny) => state.user.profileInfo?.nickname,
   );
+  const userId = useSelector(
+    (state: RootStateOrAny) => state.user.profileInfo?.user_pk,
+  );
+
+  const [profile, setProfile] = useState<FormData>();
+  const [preview, setPreview] = useState('');
+  const [title, setTitle] = useState('');
   const [introduce, setIntroduce] = useState('');
   const [stacks, setStacks] = useState([]);
+
+  const handleTitle = useCallback(
+    (event) => {
+      setTitle(event.target.value);
+    },
+    [title],
+  );
 
   const handleChangeIntroduce = useCallback(
     (event) => {
@@ -38,8 +54,64 @@ function TeamProfilePostForm(): JSX.Element {
     },
     [introduce],
   );
+
+  const CreateTeamProfile = useCallback(
+    (event) => {
+      event.preventDefault();
+
+      if (title === '' || introduce === '' || stacks.length === 0) {
+        return alert('필수 항목을 작성해 주세요.');
+      }
+
+      const profileData = JSON.stringify({
+        user: userId,
+        title,
+        content: introduce,
+        status: false,
+        stack: stacks,
+      });
+
+      // 프로필 사진을 업로드 하지 않는 경우
+      if (!profile) {
+        const formData = new FormData();
+        formData.append('data', profileData);
+        dispatch({
+          type: TEAM_PROFILE_REGISTER_REQUEST,
+          data: formData,
+          userId,
+        });
+      } else {
+        // 프로필 사진을 업로드 하는 경우
+        profile?.append('data', profileData);
+        dispatch({
+          type: TEAM_PROFILE_REGISTER_REQUEST,
+          data: profile,
+          userId,
+        });
+      }
+    },
+    [profile, title, introduce, stacks, userId],
+  );
+
+  const handleProfileImage = useCallback((event) => {
+    const img = event.target.files[0];
+    const formData = new FormData();
+    formData.append('image', img);
+    setProfile(formData);
+
+    const reader = new FileReader();
+    reader.readAsDataURL(img);
+
+    reader.onloadend = (finishedEvent: any) => {
+      // 미리보기
+      if (finishedEvent !== null) {
+        setPreview(finishedEvent.currentTarget.result);
+      }
+    };
+  }, []);
+
   return (
-    <TeamProfilePostFormWrapper>
+    <TeamProfilePostFormWrapper encType='multipart/form-data'>
       <BlockWrapper>
         <LeftContainer>
           <TitleWrapper>
@@ -50,7 +122,12 @@ function TeamProfilePostForm(): JSX.Element {
         <RightContainer>
           <ContentWrapper>
             <div>
-              <ProfileImage src={UserImg} alt='team profile image' />
+              {preview ? (
+                <ProfileImage src={preview} alt='team profile preview image' />
+              ) : (
+                <ProfileImage src={UserImg} alt='team profile image' />
+              )}
+
               <NotificationText>png, jpeg 가능</NotificationText>
             </div>
             <UploadButtonContainer>
@@ -60,6 +137,7 @@ function TeamProfilePostForm(): JSX.Element {
                   type='file'
                   name='team profile image'
                   accept='image/png, image/jpeg'
+                  onChange={handleProfileImage}
                 />
               </RegisterButton>
               <CancelButton type='button'>삭제</CancelButton>
@@ -75,7 +153,12 @@ function TeamProfilePostForm(): JSX.Element {
           </TitleWrapper>
         </LeftContainer>
         <RightContainer>
-          <StyledInput type='text' placeholder='스터디 명을 작성해 주세요.' />
+          <StyledInput
+            type='text'
+            placeholder='스터디 명을 작성해 주세요.'
+            value={title}
+            onChange={handleTitle}
+          />
         </RightContainer>
       </BlockWrapper>
       <BlockWrapper>
@@ -90,6 +173,7 @@ function TeamProfilePostForm(): JSX.Element {
             placeholder='스터디 소개를 작성해 주세요.'
             cols={30}
             rows={10}
+            value={introduce}
             onChange={handleChangeIntroduce}
             maxLength={500}
           />
@@ -130,7 +214,9 @@ function TeamProfilePostForm(): JSX.Element {
         </RightContainer>
       </BlockWrapper>
       <ButtonWrapper>
-        <Button type='button'>생성하기</Button>
+        <Button type='submit' onClick={CreateTeamProfile}>
+          생성하기
+        </Button>
       </ButtonWrapper>
     </TeamProfilePostFormWrapper>
   );

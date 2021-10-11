@@ -13,8 +13,11 @@ import {
   RECRUIT_POST_REQUEST,
   RECRUIT_POST_SUCCESS,
   RECRUIT_POST_FAILURE,
+  TEAM_PROFILE_REGISTER_REQUEST,
+  TEAM_PROFILE_REGISTER_SUCCESS,
+  TEAM_PROFILE_REGISTER_FAILURE,
 } from '../reducers/actions';
-import { PostData } from './postTypes';
+import { PostData, TeamProfileData, TeamProfileApiData } from './postTypes';
 
 // 자유/질문 게시글 받아오기
 const requestCommonPost = (id: string) => {
@@ -108,6 +111,29 @@ function* requestRecruitPostSaga(action: { type: string; data: string }): any {
   }
 }
 
+// 팀 프로필 생성
+const requestTeamProfilePostRegister = (data: TeamProfileApiData) => {
+  return axios.post(`/api/${data.userId}/teamprofilecreate/`, data.formData);
+};
+
+function* requestTeamProfilePostRegisterSaga(action: TeamProfileData): any {
+  try {
+    const response = yield call(requestTeamProfilePostRegister, {
+      formData: action.data,
+      userId: action.userId,
+    });
+    yield put({
+      type: TEAM_PROFILE_REGISTER_SUCCESS,
+      data: response.data,
+    });
+  } catch (error) {
+    yield put({
+      type: TEAM_PROFILE_REGISTER_FAILURE,
+      error,
+    });
+  }
+}
+
 function* watchRequestCommonPost() {
   yield takeLatest(COMMON_POST_REQUEST, requestCommonPostSaga);
 }
@@ -124,12 +150,20 @@ function* watchRequestRecruitPost() {
   yield takeLatest(RECRUIT_POST_REQUEST, requestRecruitPostSaga);
 }
 
+function* watchRequestTeamProfilePostRegister() {
+  yield takeLatest(
+    TEAM_PROFILE_REGISTER_REQUEST,
+    requestTeamProfilePostRegisterSaga,
+  );
+}
+
 function* postSaga() {
   yield all([
     fork(watchRequestCommonPost),
     fork(watchRequestCommonPostRegister),
     fork(watchRequestCommonPostLike),
     fork(watchRequestRecruitPost),
+    fork(watchRequestTeamProfilePostRegister),
   ]);
 }
 

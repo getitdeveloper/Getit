@@ -20,6 +20,7 @@ function StackInput(props: any) {
 
   const onHandleAddStack = (e: any) => {
     if (e.key === 'Enter') {
+      e.preventDefault();
       setInitialStacks([...initialStacks, stack]);
       setStack('');
     }

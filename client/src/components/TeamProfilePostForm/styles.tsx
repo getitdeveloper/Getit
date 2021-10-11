@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-export const TeamProfilePostFormWrapper = styled.div`
+export const TeamProfilePostFormWrapper = styled.form`
   background-color: #ffffff;
   padding: 3rem 5rem;
   border-radius: 10px;
@@ -104,10 +104,14 @@ export const CancelButton = styled.button`
 
 export const ProfileImage = styled.img`
   width: 12rem;
-  height: auto;
-  align-self: center;
+  height: 12rem;
+  /* align-self: center; */
+  align-self: ${(props: { alt: string }) =>
+    props.alt === 'team profile preview image' ? null : 'center'};
   background-color: #e0e0e0;
-  padding: 4rem;
+  /* padding: 4rem; */
+  padding: ${(props: { alt: string }) =>
+    props.alt === 'team profile preview image' ? null : '4rem'};
   border-radius: 1rem;
 `;
 

@@ -13,6 +13,9 @@ import {
   RECRUIT_POST_REQUEST,
   RECRUIT_POST_SUCCESS,
   RECRUIT_POST_FAILURE,
+  TEAM_PROFILE_REGISTER_REQUEST,
+  TEAM_PROFILE_REGISTER_SUCCESS,
+  TEAM_PROFILE_REGISTER_FAILURE,
 } from './actions';
 
 // 초기 상태
@@ -32,6 +35,9 @@ const initialState: InitialState = {
   recruitPostRequest: false,
   recruitPostSuccess: false,
   recruitPostFailure: null,
+  teamProfileRegisterRequest: false,
+  teamProfileRegisterSuccess: false,
+  teamProfileRegisterFailure: null,
 };
 
 const reducer = (state = initialState, action: PostActions): InitialState =>
@@ -102,7 +108,21 @@ const reducer = (state = initialState, action: PostActions): InitialState =>
         draft.recruitPostSuccess = false;
         draft.recruitPostFailure = action.error;
         break;
-
+      case TEAM_PROFILE_REGISTER_REQUEST:
+        draft.teamProfileRegisterRequest = true;
+        draft.teamProfileRegisterSuccess = false;
+        draft.teamProfileRegisterFailure = null;
+        break;
+      case TEAM_PROFILE_REGISTER_SUCCESS:
+        draft.teamProfileRegisterRequest = false;
+        draft.teamProfileRegisterSuccess = true;
+        draft.teamProfileRegisterFailure = null;
+        break;
+      case TEAM_PROFILE_REGISTER_FAILURE:
+        draft.teamProfileRegisterRequest = false;
+        draft.teamProfileRegisterSuccess = false;
+        draft.teamProfileRegisterFailure = action.error;
+        break;
       default:
         return state;
     }
