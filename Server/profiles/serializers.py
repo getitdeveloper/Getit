@@ -40,6 +40,7 @@ class MemberSerializer(serializers.ModelSerializer):
 class TeamProfileSerializer(serializers.ModelSerializer):
     stack = TagSerializer(read_only=True, many=True)
     members = MemberSerializer(read_only=True, many=True)
+    image = serializers.ImageField(use_url=True)
     class Meta:
         model = TeamProfile
         fields = (
