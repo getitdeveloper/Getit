@@ -171,6 +171,7 @@ def teamprofile_create(request):
         profile.stack.add(_stack)
     _member, _ = Member.objects.get_or_create(member=user_id)
     profile.members.add(_member)
+    return True
 
 
 @method_decorator(csrf_exempt, name='dispatch')
