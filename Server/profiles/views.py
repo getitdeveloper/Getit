@@ -155,7 +155,7 @@ class ProfileDetail(GenericAPIView):
 def teamprofile_create(request, user_pk):
     profile = TeamProfile()
     user_id = request.user.id
-    user = request.user.id
+    user = request.data['data']
     uploaded_image = request.data['image']
     profile.title = user.title
     profile.content = user.content
