@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="14847226-151c-4591-a157-0243461eac9c" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Server/profiles/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/Server/profiles/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/profiles/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/Server/profiles/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
