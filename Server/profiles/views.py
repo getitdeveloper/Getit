@@ -149,6 +149,28 @@ class ProfileDetail(GenericAPIView):
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+@method_decorator(csrf_exempt, name='dispatch')
+@api_view(['POST'])
+@renderer_classes((JSONRenderer,))
+def teamprofile_create(request):
+    profile = TeamProfile()
+    user_id = request.user.id
+    user = json.loads(request.data['data'])
+    uploaded_image = request.data['image']
+    profile.user = user_id
+    profile.title = user.title
+    profile.content = user.content
+    profile.image = uploaded_image
+    profile.save()
+    stacks = user.stack
+    for stack in stacks:
+        if not stack:
+            continue
+        _stack, _ = Tag.objects.get_or_create(name=stack)
+
+        profile.stack.add(_stack)
+    _member, _ = Member.objects.get_or_create(member=user_id)
+    profile.members.add(_member)
 
 
 @method_decorator(csrf_exempt, name='dispatch')
@@ -204,9 +226,7 @@ class TeamProfileCreate(GenericAPIView):
         """
 
         serializer = TeamProfileSerializer(data=request.data)
-        data = json.loads(request.data['data'])
-        print(data['user'])
-        print(request.data['image'])
+
         if serializer.is_valid():
             serializer.save()
             profile = TeamProfile.objects.get(id=serializer.data['id'])
