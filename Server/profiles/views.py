@@ -158,11 +158,9 @@ def teamprofile_create(request, user_pk):
     profile = TeamProfile()
     user_id = request.user.id
     user = request.data['data']
-    print(user)
-    form = BoardForm(user.content)
     uploaded_image = request.data['image']
     profile.title = user.title
-    profile.content = form
+    profile.content = user.content
     profile.image = uploaded_image
     profile.save()
     stacks = user.stack
