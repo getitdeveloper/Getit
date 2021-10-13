@@ -1,3 +1,5 @@
+import json
+
 import jwt
 import requests
 from django.http import JsonResponse
@@ -202,7 +204,7 @@ class TeamProfileCreate(GenericAPIView):
         """
 
         serializer = TeamProfileSerializer(data=request.data)
-        print(request.data['data'])
+        print(json.loads(request.data['data']))
         print(request.data['image'])
         if serializer.is_valid():
             serializer.save()
