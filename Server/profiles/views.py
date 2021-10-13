@@ -157,7 +157,6 @@ def teamprofile_create(request):
     user_id = request.user.id
     user = request.user.id
     uploaded_image = request.data['image']
-    profile.user = user_id
     profile.title = user.title
     profile.content = user.content
     profile.image = uploaded_image
