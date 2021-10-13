@@ -5,9 +5,11 @@ from django.shortcuts import render, get_object_or_404
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework import viewsets, status
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, renderer_classes
 
 from portfolios.models import Portfolio
+from rest_framework.renderers import JSONRenderer
+
 from .permissions import IsOwnerOrReadOnly
 from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
@@ -144,6 +146,9 @@ class ProfileDetail(GenericAPIView):
                 profile.stack.add(_name)
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+
 @method_decorator(csrf_exempt, name='dispatch')
 class TeamProfileCreate(GenericAPIView):
 
@@ -198,6 +203,8 @@ class TeamProfileCreate(GenericAPIView):
 
         serializer = TeamProfileSerializer(data=request.data)
         print(request.data)
+        print(request.data['data'])
+        print(request.data['image'])
         if serializer.is_valid():
             serializer.save()
             profile = TeamProfile.objects.get(id=serializer.data['id'])
