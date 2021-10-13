@@ -152,7 +152,7 @@ class ProfileDetail(GenericAPIView):
 @method_decorator(csrf_exempt, name='dispatch')
 @api_view(['POST'])
 @renderer_classes((JSONRenderer,))
-def teamprofile_create(request):
+def teamprofile_create(request, user_pk):
     profile = TeamProfile()
     user_id = request.user.id
     user = request.user.id
