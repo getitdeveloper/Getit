@@ -208,7 +208,7 @@ class TeamProfileCreate(GenericAPIView):
         if serializer.is_valid():
             serializer.save()
             profile = TeamProfile.objects.get(id=serializer.data['id'])
-            members = request.data['user']
+            members = request.data['user']['user']
             names = request.data['stack']
             for name in names:
                 if not name:
