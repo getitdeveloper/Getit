@@ -12,6 +12,7 @@ from rest_framework.decorators import api_view, renderer_classes
 from portfolios.models import Portfolio
 from rest_framework.renderers import JSONRenderer
 
+from .forms import BoardForm
 from .permissions import IsOwnerOrReadOnly
 from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
@@ -153,12 +154,14 @@ class ProfileDetail(GenericAPIView):
 @api_view(['POST'])
 @renderer_classes((JSONRenderer,))
 def teamprofile_create(request, user_pk):
+
     profile = TeamProfile()
     user_id = request.user.id
     user = request.data['data']
+    form = BoardForm(user.content)
     uploaded_image = request.data['image']
     profile.title = user.title
-    profile.content = user.content
+    profile.content = form
     profile.image = uploaded_image
     profile.save()
     stacks = user.stack
@@ -171,7 +174,6 @@ def teamprofile_create(request, user_pk):
     _member, _ = Member.objects.get_or_create(member=user_id)
     profile.members.add(_member)
     return True
-
 
 @method_decorator(csrf_exempt, name='dispatch')
 class TeamProfileCreate(GenericAPIView):
