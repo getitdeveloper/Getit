@@ -155,7 +155,7 @@ class ProfileDetail(GenericAPIView):
 class TeamProfileCreate(GenericAPIView):
 
     serializer_class = TeamProfileSerializer
-    parser_classes = [JSONParser,MultiPartParser]
+    parser_classes = [MultiPartParser]
 
     def get_object(self, user_pk):
         return get_object_or_404(TeamProfile, user_id=user_pk)
