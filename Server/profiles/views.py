@@ -11,7 +11,6 @@ from rest_framework.decorators import api_view, renderer_classes
 
 from portfolios.models import Portfolio
 from rest_framework.renderers import JSONRenderer
-
 from .forms import BoardForm
 from .permissions import IsOwnerOrReadOnly
 from rest_framework.generics import GenericAPIView
@@ -27,6 +26,7 @@ from rest_framework_jwt.settings import api_settings
 from apis.settings import SECRET_KEY
 
 from members.models import Member
+
 
 
 @method_decorator(csrf_exempt, name='dispatch')
@@ -155,7 +155,7 @@ class ProfileDetail(GenericAPIView):
 class TeamProfileCreate(GenericAPIView):
 
     serializer_class = TeamProfileSerializer
-
+    parser_classes = [JSONParser,MultiPartParser]
 
     def get_object(self, user_pk):
         return get_object_or_404(TeamProfile, user_id=user_pk)
@@ -187,7 +187,7 @@ class TeamProfileCreate(GenericAPIView):
         serializer = TeamProfileSerializer(profiles, many=True)
         return Response(serializer.data)
 
-    def post(self, request, user_pk):
+    def post(self, request, user_pk, format=None):
         """
         팀 프로필 list(POST)
 
