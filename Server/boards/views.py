@@ -35,7 +35,7 @@ class CommonBoardListAPIView(GenericAPIView):
 
     def get(self, request):
         """
-            질문/자유 게시글 list (GET)
+            질문/자유 게시글 list (GET) --> 검색필터 적용
 
             ---
                 127.0.0.1:8000/api/board?category=free(question)
@@ -222,7 +222,7 @@ class RecruitmentBoardPostListAPIView(GenericAPIView):
 
     def get(self, request):
         """
-            모집 게시글 list (GET)
+            모집 게시글 list (GET) --> 검색필터 적용
 
             ---
                 {
@@ -424,10 +424,11 @@ class WholePostSearch(GenericAPIView):
 
     def get(self, request):
         """
-            전체 게시글 list (GET)
+            전체 게시글 list (GET) --> 검색필터 적용
 
             ---
-                127.0.0.1:8000/api/board?category=free(question)
+                127.0.0.1:8000/api/board?category=free(question)&search=python
+
                 {
                     "freeboard": [
                     {
