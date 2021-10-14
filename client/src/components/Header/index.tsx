@@ -63,7 +63,7 @@ function Header(): JSX.Element {
 
         {/* 전체 검색창 또는 navigation */}
         {pathname === '/' || pathname === '/searchResult' ? (
-          <SearchBar />
+          <SearchBar maxWidth='36.75rem' />
         ) : (
           <HeaderNav />
         )}

@@ -1,7 +1,11 @@
 import styled from 'styled-components';
 
-export const SearchBarWrapper = styled.div`
-  max-width: 36.75rem;
+interface MaxWidth {
+  maxWidth: string;
+}
+
+export const SearchBarForm = styled.form`
+  max-width: ${(props: MaxWidth) => props.maxWidth};
   width: 100%;
   position: relative;
   border-radius: 23px;
