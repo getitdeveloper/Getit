@@ -1,5 +1,11 @@
 import * as React from 'react';
-import { useState } from 'react';
+import {
+  useState,
+  useCallback,
+  MouseEvent,
+  KeyboardEvent,
+  ChangeEvent,
+} from 'react';
 import CloseIcon from '@material-ui/icons/Close';
 import { Stack } from '@assets/styles/commons';
 import {
@@ -18,33 +24,50 @@ function StackInput({
 }: StackProps): JSX.Element {
   const [stack, setStack] = useState('');
 
-  const onChange = (e: any) => {
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
     setStack(value);
   };
 
-  const onHandleAddStack = (e: any) => {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      setInitialStacks([...initialStacks, stack]);
-      setStack('');
-    }
-  };
+  // 기술 스택 추가
+  const onHandleAddStack = useCallback(
+    (event: KeyboardEvent<HTMLInputElement>) => {
+      if (event.key === 'Enter') {
+        event.preventDefault();
 
-  const onDeleteStack = (currentStack: string) => {
+        if (stack.length < 1) {
+          return alert('기술 스택을 입력하세요!');
+        }
+
+        setInitialStacks([...initialStacks, stack]);
+        setStack('');
+      }
+    },
+    [stack],
+  );
+
+  // 기술 스택 삭제
+  const onDeleteStack = (event: MouseEvent<HTMLButtonElement>) => {
+    const removeTarget = event.currentTarget.name;
+
     const filtered = initialStacks.filter(
-      (element: string) => element !== currentStack,
+      (skill, index) => removeTarget !== `${skill}-${index}`,
     );
+
     setInitialStacks(filtered);
   };
 
   return (
     <>
       <StacksContainer height={heigth}>
-        {initialStacks.map((content: string) => (
-          <Stack key={content}>
+        {initialStacks.map((content, index) => (
+          <Stack key={`${content}-${index}`}>
             <span>{content}</span>
-            <DeleteButton type='button' onClick={() => onDeleteStack(content)}>
+            <DeleteButton
+              name={`${content}-${index}`}
+              type='button'
+              onClick={onDeleteStack}
+            >
               <CloseIcon />
             </DeleteButton>
           </Stack>
