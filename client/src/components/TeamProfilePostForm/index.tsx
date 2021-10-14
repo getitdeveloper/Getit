@@ -39,7 +39,7 @@ function TeamProfilePostForm(): JSX.Element {
   const [preview, setPreview] = useState('');
   const [title, setTitle] = useState('');
   const [introduce, setIntroduce] = useState('');
-  const [stacks, setStacks] = useState([]);
+  const [stacks, setStacks] = useState<Array<string>>([]);
 
   const handleTitle = useCallback(
     (event) => {
@@ -192,7 +192,7 @@ function TeamProfilePostForm(): JSX.Element {
           <StackInput
             initialStacks={stacks}
             setInitialStacks={setStacks}
-            placeHolder='관련 기술 스택을 입력하세요'
+            placeHolder='관련 기술 스택을 입력하세요.'
           />
         </RightContainer>
       </BlockWrapper>

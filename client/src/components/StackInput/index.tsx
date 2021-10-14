@@ -3,14 +3,19 @@ import { useState } from 'react';
 import CloseIcon from '@material-ui/icons/Close';
 import { Stack } from '@assets/styles/commons';
 import {
-  StacksWrapper,
+  StacksContainer,
   StackInputField,
   DeleteButton,
   StackMessage,
 } from './styles';
+import { StackProps } from './types';
 
-function StackInput(props: any) {
-  const { initialStacks, setInitialStacks, placeHolder } = props;
+function StackInput({
+  initialStacks,
+  setInitialStacks,
+  placeHolder,
+  heigth,
+}: StackProps): JSX.Element {
   const [stack, setStack] = useState('');
 
   const onChange = (e: any) => {
@@ -34,11 +39,11 @@ function StackInput(props: any) {
   };
 
   return (
-    <div>
-      <StacksWrapper>
+    <>
+      <StacksContainer height={heigth}>
         {initialStacks.map((content: string) => (
           <Stack key={content}>
-            {content}
+            <span>{content}</span>
             <DeleteButton type='button' onClick={() => onDeleteStack(content)}>
               <CloseIcon />
             </DeleteButton>
@@ -51,10 +56,15 @@ function StackInput(props: any) {
           placeholder={placeHolder}
           onKeyPress={onHandleAddStack}
         />
-      </StacksWrapper>
+      </StacksContainer>
       <StackMessage>*Enter를 눌러 작성하실 스택을 생성해주세요!</StackMessage>
-    </div>
+    </>
   );
 }
+
+StackInput.defaultProps = {
+  placeHolder: '',
+  heigth: '',
+};
 
 export default StackInput;
