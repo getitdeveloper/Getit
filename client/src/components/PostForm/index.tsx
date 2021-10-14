@@ -145,7 +145,7 @@ function PostForm(): JSX.Element {
       <StackInput
         initialStacks={stacks}
         setInitialStacks={setStacks}
-        placeHolder='관련 기술 스택을 입력하세요'
+        placeHolder='관련 기술 스택을 입력하세요.'
       />
 
       <ButtonWrapper>

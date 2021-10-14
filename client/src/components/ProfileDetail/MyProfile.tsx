@@ -148,11 +148,7 @@ function MyProfile() {
         <HorizontalLine width='40%' />
       </SubTitleWrapper>
 
-      <StackInput
-        initialStacks={editedStacks}
-        setInitialStacks={setStacks}
-        placeHolder=''
-      />
+      <StackInput initialStacks={editedStacks} setInitialStacks={setStacks} />
 
       <SubTitleWrapper>
         <HorizontalLine width='40%' />
