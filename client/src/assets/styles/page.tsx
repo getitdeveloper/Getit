@@ -26,15 +26,10 @@ export const PageWrapper = styled.div`
 `;
 
 export const PageTitle = styled.h1`
-  width: 78%;
-  padding-top: 3.5rem;
-  padding-bottom: 1rem;
-  font-size: 1.2rem;
-  text-align: left;
+  width: 100%;
+  padding: 3.5rem 3rem 1rem 3rem;
+  font-size: 1.6rem;
   color: ${(props) => props.theme.colors.blackText};
-  @media ${(props) => props.theme.tablet} {
-    display: none;
-  }
 `;
 
 export const BlockWrapper = styled.div`
