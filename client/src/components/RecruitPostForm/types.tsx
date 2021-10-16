@@ -1,11 +1,11 @@
-import { ChangeEventHandler, MouseEventHandler } from 'react';
+import { ChangeEventHandler } from 'react';
 
-export interface IRadioButton {
-  value: {
+export interface ICountInput {
+  item: {
     text: string;
+    value: string;
     checked: boolean;
     count: number | string;
   };
-  onClick: MouseEventHandler<HTMLInputElement>;
   onChange: ChangeEventHandler<HTMLInputElement>;
 }

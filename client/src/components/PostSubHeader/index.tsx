@@ -1,38 +1,31 @@
 import * as React from 'react';
-import { useState, useCallback } from 'react';
+import { useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 import { RootStateOrAny, useSelector } from 'react-redux';
-import { HorizontalLine } from '@assets/styles/commons';
 import Button from '@material-ui/core/Button';
+import NewFamousSortButton from '@components/SortButton/NewFamous';
+import Recruiting from '@components/SortButton/Recruiting';
+import JobTypeSortButton from '@components/SortButton/JobType';
+import { IBoardType } from './types';
 import {
   useStyles,
   PostSubHeaderWrapper,
-  JobSelectButtonWrapper,
-  SortAndWriteWrapper,
+  RightContainer,
   WritePostText,
   WritePostIcon,
+  LeftContainer,
 } from './styles';
-import { IBoardType } from './types';
 
 function PostSubHeader({ boardType }: IBoardType): JSX.Element {
   const classes = useStyles();
-
   const history = useHistory();
-  const [selected, setSelected] = useState(false);
-  const [option, setOption] = useState('recent');
+
   const userId = useSelector(
     (state: RootStateOrAny) => state.user.profileInfo?.user_pk,
   );
 
-  const handleJobSelectButton = useCallback(
-    (event) => {
-      setSelected(event.target);
-      console.log(event.target);
-    },
-    [selected],
-  );
-
   const handlePostType = useCallback(() => {
+    // TODO 서버 정상 가동시 handlePostType 주석 제거하기
     // if (userId) {
     console.log('current board', boardType);
     switch (boardType) {
@@ -50,63 +43,19 @@ function PostSubHeader({ boardType }: IBoardType): JSX.Element {
     // }
   }, [userId, boardType]);
 
-  const handleSortPost = useCallback((event) => {
-    console.log(event.target.value);
-    setOption(event.target.value);
-  }, []);
-
   return (
     <PostSubHeaderWrapper>
-      <JobSelectButtonWrapper>
-        <Button
-          className={classes.jobButton}
-          data-job='all'
-          variant='contained'
-          onClick={handleJobSelectButton}
-        >
-          <span data-job='all'>전체</span>
-        </Button>
-        <Button
-          className={classes.jobButton}
-          data-job='developer'
-          variant='contained'
-          onClick={handleJobSelectButton}
-        >
-          <span data-job='developer'>개발자</span>
-        </Button>
-        <Button
-          className={classes.jobButton}
-          data-job='designer'
-          variant='contained'
-          onClick={handleJobSelectButton}
-        >
-          <span data-job='designer'>디자이너</span>
-        </Button>
-        <Button
-          className={classes.jobButton}
-          data-job='projectManager'
-          variant='contained'
-          onClick={handleJobSelectButton}
-        >
-          <span data-job='projectManager'>기획자</span>
-        </Button>
-      </JobSelectButtonWrapper>
-      <HorizontalLine width='100%' />
+      <LeftContainer>
+        {/* 직업 필터 버튼 */}
+        <JobTypeSortButton />
+      </LeftContainer>
 
-      <SortAndWriteWrapper>
-        {/* TODO 컴포넌트로 분리 */}
-        <select name='sortPost' onChange={handleSortPost}>
-          <option value='recent'>최신순</option>
-          <option value='popular'>인기순</option>
-        </select>
-        {/* 모집 게시판에서만 보인다. */}
-        {boardType === 'Recruit' && (
-          <select name='statusPost' onChange={handleSortPost}>
-            <option value='open'>모집 진행중</option>
-            <option value='close'>모집 마감</option>
-          </select>
-        )}
-
+      <RightContainer>
+        {/* 최신순, 인기순 정렬 버튼 */}
+        <NewFamousSortButton />
+        {/* 모집 진행중, 모집마감 정렬 버튼. 모집 게시판에서만 보인다. */}
+        {boardType === 'Recruit' && <Recruiting />}
+        {/* 게시글 작성 버튼 */}
         <Button
           className={classes.writePostButton}
           variant='contained'
@@ -115,7 +64,7 @@ function PostSubHeader({ boardType }: IBoardType): JSX.Element {
           <WritePostText>게시글 작성</WritePostText>
           <WritePostIcon />
         </Button>
-      </SortAndWriteWrapper>
+      </RightContainer>
     </PostSubHeaderWrapper>
   );
 }

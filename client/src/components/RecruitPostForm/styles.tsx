@@ -180,7 +180,7 @@ export const DatePicker = styled.input`
   }
 `;
 
-export const SelectItemWrapper = styled.ul`
+export const RecruitMemberWrapper = styled.ul`
   display: inline-flex;
 `;
 
@@ -193,7 +193,7 @@ export const SelectItem = styled.div`
   input {
     margin: 1rem 1rem 1rem 0.4rem;
     appearance: none;
-    border: 3px solid gray;
+    border: 0.2rem solid gray;
     width: 1.5rem;
     height: 1.5rem;
     border-radius: 50%;

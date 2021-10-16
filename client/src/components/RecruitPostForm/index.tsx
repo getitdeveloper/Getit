@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { useCallback, useState, useEffect } from 'react';
 import SelectImg from '@assets/images/Select.svg';
+import RadioButton from '@components/RadioButton';
 import {
   RecruitPostFormWrapper,
   StyledLink,
@@ -17,29 +18,30 @@ import {
   TextArea,
   TextCount,
   DatePicker,
-  SelectItemWrapper,
+  RecruitMemberWrapper,
   ButtonWrapper,
   Button,
   TitleWrapper,
 } from './styles';
-import RadioButton from './RadioButton';
+import CountMemberInput from './CountMember';
+
+const recruitList = [
+  { text: '개발자', value: 'developer', checked: false, count: 0 },
+  { text: '디자이너', value: 'designer', checked: false, count: 0 },
+  { text: '기획자', value: 'pm', checked: false, count: 0 },
+];
 
 function RecruitPostForm(): JSX.Element {
-  const list = [
-    { text: 'developer', checked: false, count: 0 },
-    { text: 'designer', checked: false, count: 0 },
-    { text: 'pm', checked: false, count: 0 },
-  ];
-
-  const [recruitDeveloper, setRecruitDeveloper] = useState(list[0]);
-  const [recruitDesigner, setRecruitDesigner] = useState(list[1]);
-  const [recruitPm, setRecruitPm] = useState(list[2]);
-
+  const [recruitDeveloper, setRecruitDeveloper] = useState(recruitList[0]);
+  const [recruitDesigner, setRecruitDesigner] = useState(recruitList[1]);
+  const [recruitPm, setRecruitPm] = useState(recruitList[2]);
   const [recruitContent, setRecruitContent] = useState('');
 
   useEffect(() => {
     console.log(recruitDeveloper);
-  }, [recruitDeveloper]);
+    console.log(recruitDesigner);
+    console.log(recruitPm);
+  }, [recruitDeveloper, recruitDesigner, recruitPm]);
 
   const handleDatePicker = useCallback((event: any) => {
     event.target.type = 'date';
@@ -111,6 +113,10 @@ function RecruitPostForm(): JSX.Element {
     },
     [recruitContent],
   );
+
+  const handleSubmit = useCallback(() => {
+    console.log(recruitDeveloper, recruitDesigner, recruitPm, recruitContent);
+  }, [recruitDeveloper, recruitDesigner, recruitPm, recruitContent]);
 
   return (
     <RecruitPostFormWrapper>
@@ -189,24 +195,33 @@ function RecruitPostForm(): JSX.Element {
           </TitleWrapper>
         </LeftContainer>
         <RightContainer>
-          <SelectItemWrapper>
+          <RecruitMemberWrapper>
             {/* 라디오 버튼 목록 */}
-            <RadioButton
-              value={recruitDeveloper}
-              onClick={handleRecuitDeveloper}
-              onChange={handleRecuitDeveloperNum}
-            />
-            <RadioButton
-              value={recruitDesigner}
-              onClick={handleRecuitDesigner}
-              onChange={handleRecuitDesignerNum}
-            />
-            <RadioButton
-              value={recruitPm}
-              onClick={handleRecuitPm}
-              onChange={handleRecuitPmNum}
-            />
-          </SelectItemWrapper>
+            <li>
+              <RadioButton
+                item={recruitDeveloper}
+                onClick={handleRecuitDeveloper}
+              />
+              <CountMemberInput
+                item={recruitDeveloper}
+                onChange={handleRecuitDeveloperNum}
+              />
+            </li>
+            <li>
+              <RadioButton
+                item={recruitDesigner}
+                onClick={handleRecuitDesigner}
+              />
+              <CountMemberInput
+                item={recruitDesigner}
+                onChange={handleRecuitDesignerNum}
+              />
+            </li>
+            <li>
+              <RadioButton item={recruitPm} onClick={handleRecuitPm} />
+              <CountMemberInput item={recruitPm} onChange={handleRecuitPmNum} />
+            </li>
+          </RecruitMemberWrapper>
         </RightContainer>
       </BlockWrapper>
       <BlockWrapper>
@@ -235,7 +250,9 @@ function RecruitPostForm(): JSX.Element {
         </RightContainer>
       </BlockWrapper>
       <ButtonWrapper>
-        <Button type='button'>작성하기</Button>
+        <Button type='button' onClick={handleSubmit}>
+          작성하기
+        </Button>
       </ButtonWrapper>
     </RecruitPostFormWrapper>
   );

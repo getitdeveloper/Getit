@@ -4,22 +4,6 @@ import CreateIcon from '@material-ui/icons/Create';
 
 export const useStyles = makeStyles((theme) => {
   return {
-    jobButton: {
-      borderRadius: '1.2rem',
-      fontSize: '1.5rem',
-      margin: '1rem',
-      padding: '0.7rem',
-      width: '10rem',
-      backgroundColor: '#FFFFFF',
-      '&:hover': {
-        backgroundColor: '#4dd290',
-      },
-      [theme.breakpoints.down(600)]: {
-        fontSize: '1.2rem',
-        margin: '0.5rem',
-        width: '6.5rem',
-      },
-    },
     writePostButton: {
       marginLeft: '0.5rem',
       borderRadius: '25px',
@@ -30,10 +14,15 @@ export const useStyles = makeStyles((theme) => {
         backgroundColor: '#4dd290',
       },
     },
+    radioButton: {
+      padding: '1rem',
+    },
   };
 });
 
 export const PostSubHeaderWrapper = styled.div`
+  display: flex;
+  align-items: center;
   max-width: 118rem;
   width: 100%;
   margin: 0 auto;
@@ -48,30 +37,58 @@ export const PostSubHeaderWrapper = styled.div`
   }
 `;
 
-export const JobSelectButtonWrapper = styled.div`
-  padding: 2rem;
-  text-align: center;
-  @media ${({ theme }) => theme.mobile} {
-    padding: 1rem;
-  }
-`;
-
-export const SortAndWriteWrapper = styled.div`
+export const LeftContainer = styled.div`
+  margin-left: 2rem;
+  width: 50%;
   display: flex;
-  justify-content: flex-end;
-  padding: 1.5rem 3rem;
-  background: ${(props) => props.theme.colors.background};
-  width: 100%;
-  margin: 0 auto;
 
   select {
     border: none;
     font-size: 1.5rem;
-    background: ${(props) => props.theme.colors.background};
+    opacity: 60%;
+    background: ${({ theme }) => theme.colors.background};
+    margin-right: 1rem;
+
+    @media ${({ theme }) => theme.desktop} {
+      display: none;
+      margin-right: 0;
+    }
+    @media ${({ theme }) => theme.tablet} {
+      display: initial;
+      width: fit-content;
+    }
+    @media ${({ theme }) => theme.mobile} {
+      font-size: 1.2rem;
+    }
+  }
+`;
+
+export const RightContainer = styled.div`
+  width: 50%;
+  display: flex;
+  justify-content: flex-end;
+  margin: 0 auto;
+  padding: 1.5rem 3rem;
+  background: ${({ theme }) => theme.colors.background};
+
+  select {
+    border: none;
+    font-size: 1.5rem;
+    opacity: 60%;
+    background: ${({ theme }) => theme.colors.background};
+    margin-right: 1rem;
+
+    @media ${({ theme }) => theme.tablet} {
+      margin-right: 0;
+    }
 
     @media ${({ theme }) => theme.mobile} {
       font-size: 1.2rem;
     }
+  }
+
+  @media ${({ theme }) => theme.tablet} {
+    width: 100%;
   }
 
   @media ${({ theme }) => theme.mobile} {
