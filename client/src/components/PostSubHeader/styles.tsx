@@ -23,10 +23,12 @@ export const useStyles = makeStyles((theme) => {
 export const PostSubHeaderWrapper = styled.div`
   display: flex;
   align-items: center;
+  justify-content: space-between;
   max-width: 118rem;
   width: 100%;
   margin: 0 auto;
   background-color: #f5f5f5;
+  padding: 2rem 1rem;
 
   @media ${({ theme }) => theme.tablet} {
     width: 90%;
@@ -34,66 +36,14 @@ export const PostSubHeaderWrapper = styled.div`
 
   @media ${({ theme }) => theme.mobile} {
     width: 100%;
+    padding: 1rem 0rem;
   }
 `;
 
-export const LeftContainer = styled.div`
-  margin-left: 2rem;
-  width: 50%;
-  display: flex;
-
-  select {
-    border: none;
-    font-size: 1.5rem;
-    opacity: 60%;
-    background: ${({ theme }) => theme.colors.background};
-    margin-right: 1rem;
-
-    @media ${({ theme }) => theme.desktop} {
-      display: none;
-      margin-right: 0;
-    }
-    @media ${({ theme }) => theme.tablet} {
-      display: initial;
-      width: fit-content;
-    }
-    @media ${({ theme }) => theme.mobile} {
-      font-size: 1.2rem;
-    }
-  }
-`;
+export const LeftContainer = styled.div``;
 
 export const RightContainer = styled.div`
-  width: 50%;
   display: flex;
-  justify-content: flex-end;
-  margin: 0 auto;
-  padding: 1.5rem 3rem;
-  background: ${({ theme }) => theme.colors.background};
-
-  select {
-    border: none;
-    font-size: 1.5rem;
-    opacity: 60%;
-    background: ${({ theme }) => theme.colors.background};
-    margin-right: 1rem;
-
-    @media ${({ theme }) => theme.tablet} {
-      margin-right: 0;
-    }
-
-    @media ${({ theme }) => theme.mobile} {
-      font-size: 1.2rem;
-    }
-  }
-
-  @media ${({ theme }) => theme.tablet} {
-    width: 100%;
-  }
-
-  @media ${({ theme }) => theme.mobile} {
-    padding: 1rem;
-  }
 `;
 
 export const WritePostText = styled.span`
