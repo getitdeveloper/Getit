@@ -1,6 +1,5 @@
 import json
 from json import JSONDecodeError
-
 import requests
 from allauth.socialaccount.models import SocialAccount
 from allauth.socialaccount.providers.apple.views import AppleOAuth2Adapter
@@ -72,15 +71,11 @@ class google_callback(APIView):
             if nickname is None:
                 raise Exception
             access_token = accept_json['access_token']
-
             accept_json.pop('user', None)
-            
+
             res = JsonResponse({
-                'message': 'login',
-                'access_token': access_token,
-                'nickname':nickname,
-            'user_pk':upk})
-            res.set_cookie(key='getit', value=access_token,httponly=True,
+                'message': 'login', 'access_token': access_token, 'nickname': nickname, 'user_pk': upk})
+            res.set_cookie(key='getit', value=access_token, httponly=True,
                            domain='getit.best', samesite=None)
             return res
         except:
@@ -97,9 +92,7 @@ class google_callback(APIView):
 
             accept_json.pop('user', None)
             res = JsonResponse({
-                'message': 'register',
-                'access_token': access_token,
-            })
+                'message': 'register', 'access_token': access_token})
             res.set_cookie(key='getit', value=access_token, httponly=True,
                            domain='getit.best', samesite=None)
             return res
