@@ -63,18 +63,14 @@ function TeamProfilePostForm(): JSX.Element {
         return alert('필수 항목을 작성해 주세요.');
       }
 
-      const profileData = JSON.stringify({
-        user: userId,
-        title,
-        content: introduce,
-        status: false,
-        stack: stacks,
-      });
-
+      const stacksToString = stacks.toString();
       // 프로필 사진을 업로드 하지 않는 경우
       if (!profile) {
         const formData = new FormData();
-        formData.append('data', profileData);
+        formData.append('user', userId);
+        formData.append('title', title);
+        formData.append('content', introduce);
+        formData.append('stack', stacksToString);
         dispatch({
           type: TEAM_PROFILE_REGISTER_REQUEST,
           data: formData,
@@ -82,7 +78,10 @@ function TeamProfilePostForm(): JSX.Element {
         });
       } else {
         // 프로필 사진을 업로드 하는 경우
-        profile?.append('data', profileData);
+        profile?.append('user', userId);
+        profile?.append('title', title);
+        profile?.append('content', introduce);
+        profile?.append('stack', stacksToString);
         dispatch({
           type: TEAM_PROFILE_REGISTER_REQUEST,
           data: profile,
