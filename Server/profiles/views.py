@@ -27,7 +27,6 @@ from apis.settings import SECRET_KEY
 
 from members.models import Member
 
-from .serializers import TeamProfileformdataSerializer
 
 
 @method_decorator(csrf_exempt, name='dispatch')
@@ -204,7 +203,7 @@ class TeamProfileCreate(GenericAPIView):
                 }
         """
 
-        serializer = TeamProfileformdataSerializer(data=request.data)
+        serializer = TeamProfileSerializer(data=request.data)
         print(request.data)
         if serializer.is_valid():
             serializer.save()
