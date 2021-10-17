@@ -40,7 +40,7 @@ class MemberSerializer(serializers.ModelSerializer):
 class TeamProfileSerializer(serializers.ModelSerializer):
     stack = TagSerializer(read_only=True, many=True)
     members = MemberSerializer(read_only=True, many=True)
-    image = serializers.ImageField(use_url=True)
+
     class Meta:
         model = TeamProfile
         fields = (
@@ -53,4 +53,14 @@ class TeamProfileSerializer(serializers.ModelSerializer):
             'stack',
             'created_at',
             'members'
+        )
+
+class TeamProfileformdataSerializer(serializers.ModelSerializer):
+    data = TagSerializer(read_only=True)
+    image = serializers.ImageField(use_url=True)
+    class Meta:
+        model = TeamProfile
+        fields = (
+            'data',
+            'image',
         )
