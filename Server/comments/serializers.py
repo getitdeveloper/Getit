@@ -1,3 +1,5 @@
+from rest_framework import serializers
+
 from .models import CommonComment, RecruitComment
 from rest_framework.serializers import ModelSerializer
 
@@ -25,11 +27,12 @@ class CommonCommentSerializer(ModelSerializer):
     profile = UserCommentProfileSerializer(read_only=True)
     class Meta:
         model = CommonComment
-        fields = ('id', 'user', 'commonpost', 'content', 'create_at', 'profile',)
+        fields = ('id', 'user', 'commonpost','parent', 'content', 'create_at', 'profile',)
 
     def to_representation(self, instance):
         self.fields['user'] = UserCommentProfileSerializer(read_only=True)
         return super().to_representation(instance)
+
 
 class CommonPostTitleAndCategorySerilaizer(ModelSerializer):
     class Meta:

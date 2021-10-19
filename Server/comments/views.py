@@ -37,6 +37,7 @@ class CommonCommentListAPIView(GenericAPIView):
                         "commonpost": 3,
                         "recruitmentpost": null,
                         "content": "test",
+                        "parent": 2,
                         "create_at": "2021-09-16T21:27:44.476554+09:00"
                     },
                     {
@@ -64,11 +65,20 @@ class CommonCommentListAPIView(GenericAPIView):
             댓글 list (POST)
 
             ---
+                일반 댓글
                 {
                     "user": 3,
                     "commonpost": 3,
                     "recruitmentpost": null,
                     "content": "test",
+                }
+                대댓글
+                {
+                    "user": 3,
+                    "commonpost": 3,
+                    "recruitmentpost": null,
+                    "content": "test",
+                    "parent": 2
                 }
         """
         serializer = CommonCommentSerializer(data=request.data)
