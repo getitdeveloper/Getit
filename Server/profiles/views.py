@@ -210,7 +210,8 @@ class TeamProfileCreate(GenericAPIView):
             profile = TeamProfile.objects.get(id=serializer.data['id'])
             members = request.data['user']
             names = request.data['stack']
-            for name in names:
+            names_split = names.split(',')
+            for name in names_split:
                 if not name:
                     continue
                 _name, _ = Tag.objects.get_or_create(name=name)
@@ -218,7 +219,6 @@ class TeamProfileCreate(GenericAPIView):
                 profile.stack.add(_name)
             _member, _ = Member.objects.get_or_create(member=members)
             profile.members.add(_member)
-            print(serializer.data)
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

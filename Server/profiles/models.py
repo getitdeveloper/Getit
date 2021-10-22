@@ -49,7 +49,7 @@ class TeamProfile(models.Model):
     title = models.CharField(max_length=20, null=False)
     status = models.BooleanField(default=0)
     content = models.TextField(null=False)
-    image = models.ImageField(upload_to='group', null=True, blank=True)
+    image = models.ImageField(upload_to='group', null=True, blank=True,default="../media/profile/Untitled.jpeg")
     stack = models.ManyToManyField('tags.Tag')
     created_at = models.DateTimeField(auto_now_add=True)
     members = models.ManyToManyField('members.Member')
