@@ -31,12 +31,12 @@ class ProfileSerializer(ModelSerializer):
             'stack',
         )
 
+
 class MemberSerializer(serializers.ModelSerializer):
-    def to_representation(self, value):
-        return value.member
     class Meta:
         model = Member
         fields = ('member',)
+
 class TeamProfileSerializer(serializers.ModelSerializer):
     stack = TagSerializer(read_only=True, many=True)
     members = MemberSerializer(read_only=True, many=True)

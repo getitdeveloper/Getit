@@ -219,6 +219,7 @@ class TeamProfileCreate(GenericAPIView):
                 profile.stack.add(_name)
             _member, _ = Member.objects.get_or_create(member=members)
             profile.members.add(_member)
+            members = profile.members
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

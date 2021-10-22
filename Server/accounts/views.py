@@ -92,7 +92,7 @@ class google_callback(APIView):
 
             accept_json.pop('user', None)
             res = JsonResponse({
-                'message': 'register', 'access_token': access_token})
+                'message': 'register', 'access_token': access_token,'user_pk':upk})
             res.set_cookie(key='getit', value=access_token, httponly=True,
                            domain='getit.best', samesite=None)
             return res
@@ -186,7 +186,7 @@ class github_callback(APIView):
             access_token = accept_json['access_token']
             accept_json.pop('user', None)
             res = JsonResponse({
-                'message': 'register','access_token': access_token})
+                'message': 'register','access_token': access_token,'user_pk':upk})
             res.set_cookie(key='getit', value=access_token, httponly=True,
                            domain='getit.best', samesite=None)
             return res
@@ -276,7 +276,7 @@ class kakao_callback(APIView):
 
             accept_json.pop('user', None)
             res = JsonResponse({
-                'message': 'register','access_token': access_token})
+                'message': 'register','access_token': access_token,'user_pk':upk})
             res.set_cookie(key='getit', value=access_token, httponly=True,
                            domain='getit.best', samesite=None)
             return res
