@@ -33,9 +33,14 @@ class ProfileSerializer(ModelSerializer):
 
 
 class MemberSerializer(serializers.ModelSerializer):
+    nickname = serializers.SerializerMethodField()
     class Meta:
         model = Member
-        fields = ('member',)
+        fields = ('member','nickname')
+    def get_nickname(self,obj):
+        profile = Profile.objects.get(id=obj.member)
+        nickname = profile.nickname
+        return nickname
 
 class TeamProfileSerializer(serializers.ModelSerializer):
     stack = TagSerializer(read_only=True, many=True)

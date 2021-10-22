@@ -178,9 +178,7 @@ class TeamProfileCreate(GenericAPIView):
                     "mysql"
                 ],
                 "created_at": "2021-10-11T03:27:07.396394+09:00",
-                "members": [
-                    "4"
-                ]
+                "members": [{"member":"2","nickname":null},{"member":"1","nickname":"edcedc1027"}]
             }]
         """
         profiles = TeamProfile.objects.filter(user=user_pk)
@@ -239,21 +237,16 @@ class TeamProfileDetail(GenericAPIView):
 
                 ---
                 # GET Response 예시
-                                        {
-                        "id": 26,
-                        "user": 4,
-                        "title": "장고",
-                        "content": "ㅁㄴㅇㅁㄴㅇ",
-                        "status": true,
-                        "image": null,
-                        "stack": [
-                            "drf",
-                            "mysql"
-                        ],
-                        "created_at": "2021-10-11T03:27:07.396394+09:00",
-                        "members": [
-                            "4"
-                        ]
+                    {
+                    "id":7,
+                    "user":2,
+                    "title":"test",
+                    "content":"asdasd",
+                    "status":false,
+                    "image":"/media/profile/Untitled.jpeg",
+                    "stack":["asd","awdr","dwasd"],
+                    "created_at":"2021-10-22T23:41:27.633247+09:00",
+                    "members":[{"member":"2","nickname":null},{"member":"1","nickname":"edcedc1027"}]
                     }
                 """
         profile = self.get_object(user_id, id)
