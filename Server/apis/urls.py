@@ -48,6 +48,7 @@ urlpatterns = [
     path('api/', include('comments.urls')),
     path('api/', include('likes.urls')),
     path('api/', include('chats.urls')),
+    path('api/', include('members.urls')),
     url(r'^swagger(?P<format>\.json|\.yaml)/v1$', schema_view_v1.without_ui(cache_timeout=0), name='schema-json'),
     url(r'^swagger/v1/$', schema_view_v1.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     url(r'^redoc/v1/$', schema_view_v1.with_ui('redoc', cache_timeout=0), name='schema-redoc-v1'),

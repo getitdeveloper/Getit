@@ -195,9 +195,6 @@ class GithubLogin(SocialLoginView):
     adapter_class = GitHubOAuth2Adapter
     client_class = OAuth2Client
 
-class GithubLogin(SocialLoginView):
-    adapter_class = AppleOAuth2Adapter
-    client_class = OAuth2Client
 
 @method_decorator(csrf_exempt, name='dispatch')
 class kakao_callback(APIView):
