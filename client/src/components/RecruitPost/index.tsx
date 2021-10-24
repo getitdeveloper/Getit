@@ -54,7 +54,7 @@ function RecruitPost(): JSX.Element {
                 <StyledLink to={`/recruitBoard/${post.id}`}>
                   {/* 구인 종류 */}
                   <MemberTypeWrapper>
-                    {post.worker.map((member: string) => {
+                    {post.worker?.map((member: string) => {
                       return (
                         <li key={member}>
                           <MemberType member={member} />

@@ -1,9 +1,10 @@
 import * as React from 'react';
 import { useCallback, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { useSelector, RootStateOrAny, useDispatch } from 'react-redux';
 import UserImg from '@assets/images/user.svg';
-import CrownImg from '@assets/images/leader-crown.svg';
 import StackInput from '@components/StackInput/index';
+import Participants from '@components/ParticipantsList/index';
 import { TEAM_PROFILE_REGISTER_REQUEST } from '@reducers/actions';
 import {
   TeamProfilePostFormWrapper,
@@ -22,15 +23,18 @@ import {
   StyledInput,
   NotificationText,
   TitleWrapper,
-  BoxContainer,
-  UserContainer,
 } from './styles';
 
 function TeamProfilePostForm(): JSX.Element {
   const dispatch = useDispatch();
-  const nickname = useSelector(
-    (state: RootStateOrAny) => state.user.profileInfo?.nickname,
-  );
+  const history = useHistory();
+
+  const participants = useSelector((state: RootStateOrAny) => {
+    const member = state.user.profileInfo?.user_pk;
+    const nickname = state.user.profileInfo?.nickname;
+    return [{ member, nickname }];
+  });
+
   const userId = useSelector(
     (state: RootStateOrAny) => state.user.profileInfo?.user_pk,
   );
@@ -86,6 +90,7 @@ function TeamProfilePostForm(): JSX.Element {
           type: TEAM_PROFILE_REGISTER_REQUEST,
           data: profile,
           userId,
+          history,
         });
       }
     },
@@ -204,12 +209,7 @@ function TeamProfilePostForm(): JSX.Element {
           </TitleWrapper>
         </LeftContainer>
         <RightContainer>
-          <BoxContainer>
-            <UserContainer>
-              <img src={CrownImg} alt='leader crown' />
-              <span>{nickname}</span>
-            </UserContainer>
-          </BoxContainer>
+          <Participants participants={participants} />
         </RightContainer>
       </BlockWrapper>
       <ButtonWrapper>

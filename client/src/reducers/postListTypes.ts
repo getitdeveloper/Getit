@@ -15,6 +15,9 @@ import {
   RECRUIT_POST_LIST_REQUEST,
   RECRUIT_POST_LIST_SUCCESS,
   RECRUIT_POST_LIST_FAILURE,
+  TEAM_PROFILE_LIST_REQUEST,
+  TEAM_PROFILE_LIST_SUCCESS,
+  TEAM_PROFILE_LIST_FAILURE,
 } from './actions';
 
 export interface InitialState {
@@ -24,6 +27,8 @@ export interface InitialState {
   // TODO 수정하기
   searchPostList: any | null;
   recruitPostList: Array<IRecruitPost> | null;
+  // TODO 수정하기
+  teamProfileList: any;
   commonPostListRequest: boolean;
   commonPostListSuccess: boolean;
   commonPostListFailure: string | null;
@@ -39,6 +44,9 @@ export interface InitialState {
   recruitPostListRequest: boolean;
   recruitPostListSuccess: boolean;
   recruitPostListFailure: string | null;
+  teamProfileListRequest: boolean;
+  teamProfileListSuccess: boolean;
+  teamProfileListFailure: string | null;
 }
 
 // 자유/질문글 리스트 가져오기
@@ -117,6 +125,21 @@ export interface RecruitPostListFailure {
   error: string;
 }
 
+export interface TeamProfileListRequest {
+  type: typeof TEAM_PROFILE_LIST_REQUEST;
+}
+
+export interface TeamProfileListSuccess {
+  type: typeof TEAM_PROFILE_LIST_SUCCESS;
+  // TODO 수정하기
+  data: any;
+}
+
+export interface TeamProfileListFailure {
+  type: typeof TEAM_PROFILE_LIST_FAILURE;
+  error: string;
+}
+
 export type PostListActions =
   | CommonPostListRequest
   | CommonPostListSuccess
@@ -132,4 +155,7 @@ export type PostListActions =
   | LikedPostListFailure
   | RecruitPostListRequest
   | RecruitPostListSuccess
-  | RecruitPostListFailure;
+  | RecruitPostListFailure
+  | TeamProfileListRequest
+  | TeamProfileListSuccess
+  | TeamProfileListFailure;

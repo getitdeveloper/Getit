@@ -1,7 +1,20 @@
 import * as React from 'react';
-import { useCallback, useState, useEffect } from 'react';
+import {
+  useCallback,
+  useState,
+  useEffect,
+  ChangeEvent,
+  FocusEvent,
+} from 'react';
+import { useHistory } from 'react-router-dom';
+import { useDispatch, useSelector, RootStateOrAny } from 'react-redux';
 import SelectImg from '@assets/images/Select.svg';
 import RadioButton from '@components/RadioButton';
+import Participants from '@components/ParticipantsList/index';
+import {
+  RECRUIT_POSTING_REQUEST,
+  TEAM_PROFILE_LIST_REQUEST,
+} from '@reducers/actions';
 import {
   RecruitPostFormWrapper,
   StyledLink,
@@ -22,6 +35,7 @@ import {
   ButtonWrapper,
   Button,
   TitleWrapper,
+  TitleInput,
 } from './styles';
 import CountMemberInput from './CountMember';
 
@@ -32,22 +46,64 @@ const recruitList = [
 ];
 
 function RecruitPostForm(): JSX.Element {
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const userId = useSelector(
+    (state: RootStateOrAny) => state.user.profileInfo?.user,
+  );
+  const teamProfileList = useSelector(
+    (state: RootStateOrAny) => state.postList.teamProfileList,
+  );
+
   const [recruitDeveloper, setRecruitDeveloper] = useState(recruitList[0]);
   const [recruitDesigner, setRecruitDesigner] = useState(recruitList[1]);
   const [recruitPm, setRecruitPm] = useState(recruitList[2]);
   const [recruitContent, setRecruitContent] = useState('');
+  const [selectTeamProfileId, setSelectTeamProfileId] = useState(null);
+  const [stacks, setStacks] = useState([]);
+  const [participants, setParticipants] = useState([]);
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
+  const [title, setTitle] = useState('');
 
   useEffect(() => {
-    console.log(recruitDeveloper);
-    console.log(recruitDesigner);
-    console.log(recruitPm);
-  }, [recruitDeveloper, recruitDesigner, recruitPm]);
+    if (teamProfileList) {
+      const selectResult = teamProfileList.find(
+        (profile: any) => profile.id === Number(selectTeamProfileId),
+      );
+      setStacks(selectResult?.stack);
+      setParticipants(selectResult?.members);
+    }
+  }, [selectTeamProfileId]);
 
-  const handleDatePicker = useCallback((event: any) => {
-    event.target.type = 'date';
+  useEffect(() => {
+    dispatch({
+      type: TEAM_PROFILE_LIST_REQUEST,
+      data: {
+        userId,
+      },
+    });
   }, []);
 
-  const handleBlur = useCallback((event: any) => {
+  const handleDatePicker = useCallback(
+    (event: ChangeEvent<HTMLInputElement>) => {
+      event.target.type = 'date';
+    },
+    [],
+  );
+
+  const handleDate = useCallback((event: ChangeEvent<HTMLInputElement>) => {
+    // 모집 시작일
+    if (event.target.name === 'start') {
+      setStartDate(event.target.value);
+    }
+    // 모집 종료일
+    if (event.target.name === 'end') {
+      setEndDate(event.target.value);
+    }
+  }, []);
+
+  const handleBlur = useCallback((event: FocusEvent<HTMLInputElement>) => {
     event.target.type = 'text';
   }, []);
 
@@ -107,7 +163,14 @@ function RecruitPostForm(): JSX.Element {
     [recruitPm],
   );
 
-  const handleChangeRecruitContent = useCallback(
+  const handleTitle = useCallback(
+    (event) => {
+      setTitle(event.target.value);
+    },
+    [recruitContent],
+  );
+
+  const handleRecruitContent = useCallback(
     (event) => {
       setRecruitContent(event.target.value);
     },
@@ -115,15 +178,60 @@ function RecruitPostForm(): JSX.Element {
   );
 
   const handleSubmit = useCallback(() => {
-    console.log(recruitDeveloper, recruitDesigner, recruitPm, recruitContent);
-  }, [recruitDeveloper, recruitDesigner, recruitPm, recruitContent]);
+    // 필수 입력 내역 미입력 체크
+    if (
+      userId === undefined ||
+      selectTeamProfileId === null ||
+      title === '' ||
+      recruitContent === '' ||
+      (recruitDeveloper.checked === true && recruitDeveloper.count === 0) ||
+      (recruitDesigner.checked === true && recruitDesigner.count === 0) ||
+      (recruitPm.checked === true && recruitPm.count === 0) ||
+      startDate === '' ||
+      endDate === '' ||
+      stacks === []
+    ) {
+      return alert('모든 항목을 작성해 주세요.');
+    }
+
+    dispatch({
+      type: RECRUIT_POSTING_REQUEST,
+      data: {
+        user: userId,
+        study: Number(selectTeamProfileId),
+        title,
+        content: recruitContent,
+        developer: recruitDeveloper.count,
+        designer: recruitDesigner.count,
+        pm: recruitPm.count,
+        start_date: startDate,
+        end_date: endDate,
+        stack: stacks,
+      },
+      history,
+    });
+  }, [
+    userId,
+    selectTeamProfileId,
+    recruitDeveloper,
+    recruitDesigner,
+    recruitPm,
+    recruitContent,
+    startDate,
+    endDate,
+    stacks,
+  ]);
+
+  const handleTeamProfile = useCallback((event) => {
+    setSelectTeamProfileId(event.target.value);
+  }, []);
 
   return (
     <RecruitPostFormWrapper>
       <BlockWrapper>
         <LeftContainer>
           <TitleWrapper>
-            <div>스터디명</div>
+            <div>팀프로필</div>
             <div>(필수)</div>
           </TitleWrapper>
         </LeftContainer>
@@ -133,40 +241,66 @@ function RecruitPostForm(): JSX.Element {
               <SelectImgWrapper>
                 <img src={SelectImg} alt='select arrow button' />
               </SelectImgWrapper>
-              <FieldSelect name='study-select' id='study-select'>
+              <FieldSelect
+                name='study-select'
+                id='study-select'
+                onChange={handleTeamProfile}
+              >
                 <option value='description' disabled selected>
-                  스터디 프로필 선택
+                  팀 프로필 선택
                 </option>
-                <option value='dog'>1번</option>
-                <option value='dog'>2번</option>
-                <option value='dog'>3번</option>
+                {teamProfileList &&
+                  teamProfileList.map((teamProfile: any) => (
+                    <option key={teamProfile.title} value={teamProfile.id}>
+                      {teamProfile.title}
+                    </option>
+                  ))}
               </FieldSelect>
             </SelectWrapper>
             <StyledLink to='/'>
               <div>
                 <AddProjectIcon />
               </div>
-              <div>스터디 만들기</div>
+              <div>팀 프로필 생성</div>
             </StyledLink>
           </ContentWrapper>
         </RightContainer>
       </BlockWrapper>
 
+      {/* 스터디명 (팀프로필) 설정시 렌더링 */}
+      {selectTeamProfileId && (
+        <>
+          <BlockWrapper>
+            <LeftContainer>기술스택</LeftContainer>
+            <RightContainer>
+              <Stacks>
+                {stacks &&
+                  stacks.map((skill: any) => <li key={skill}>{skill}</li>)}
+              </Stacks>
+            </RightContainer>
+          </BlockWrapper>
+          <BlockWrapper>
+            <LeftContainer>참여중인 Get-Iter</LeftContainer>
+            <RightContainer>
+              <Participants participants={participants} />
+            </RightContainer>
+          </BlockWrapper>
+        </>
+      )}
       <BlockWrapper>
-        <LeftContainer>기술스택</LeftContainer>
+        <LeftContainer>
+          <TitleWrapper>
+            <div>제목</div>
+            <div>(필수)</div>
+          </TitleWrapper>
+        </LeftContainer>
         <RightContainer>
-          <Stacks>
-            <li>javascript</li>
-            <li>nodejs</li>
-            <li>파이널컷 프로</li>
-            <li>일러스트레이션</li>
-          </Stacks>
-        </RightContainer>
-      </BlockWrapper>
-      <BlockWrapper>
-        <LeftContainer>참여중인 Get-Iter</LeftContainer>
-        <RightContainer>
-          현재 참여중인 Get-Iter가 존재하지 않습니다.
+          <TitleInput
+            placeholder='제목을 작성해주세요.'
+            value={title}
+            maxLength={500}
+            onChange={handleTitle}
+          />
         </RightContainer>
       </BlockWrapper>
       <BlockWrapper>
@@ -181,8 +315,9 @@ function RecruitPostForm(): JSX.Element {
             placeholder='모집글을 작성해주세요.'
             cols={30}
             rows={10}
-            onChange={handleChangeRecruitContent}
+            value={recruitContent}
             maxLength={500}
+            onChange={handleRecruitContent}
           />
           <TextCount>{recruitContent.length}/ 500</TextCount>
         </RightContainer>
@@ -236,15 +371,19 @@ function RecruitPostForm(): JSX.Element {
             <DatePicker
               placeholder='시작일'
               type='text'
+              name='start'
               onFocus={handleDatePicker}
               onBlur={handleBlur}
+              onChange={handleDate}
             />
             <div>~</div>
             <DatePicker
               placeholder='종료일'
               type='text'
+              name='end'
               onFocus={handleDatePicker}
               onBlur={handleBlur}
+              onChange={handleDate}
             />
           </Period>
         </RightContainer>

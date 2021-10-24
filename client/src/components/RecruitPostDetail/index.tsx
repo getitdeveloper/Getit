@@ -97,7 +97,7 @@ function RecruitPostDetail(): JSX.Element {
             <StudyName>스터디명</StudyName>
             <MemberTypeWrapper>
               <ul>
-                {worker.map((member: string) => {
+                {worker?.map((member: string) => {
                   return (
                     <li key={member}>
                       <MemberType member={member} />

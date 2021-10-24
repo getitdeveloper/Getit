@@ -16,6 +16,9 @@ import {
   RECRUIT_POST_LIST_REQUEST,
   RECRUIT_POST_LIST_SUCCESS,
   RECRUIT_POST_LIST_FAILURE,
+  TEAM_PROFILE_LIST_REQUEST,
+  TEAM_PROFILE_LIST_SUCCESS,
+  TEAM_PROFILE_LIST_FAILURE,
 } from './actions';
 
 // 초기 상태
@@ -25,6 +28,7 @@ const initialState: InitialState = {
   likedPostList: null,
   searchPostList: null,
   recruitPostList: null,
+  teamProfileList: null,
   commonPostListRequest: false,
   commonPostListSuccess: false,
   commonPostListFailure: null,
@@ -40,6 +44,9 @@ const initialState: InitialState = {
   recruitPostListRequest: false,
   recruitPostListSuccess: false,
   recruitPostListFailure: null,
+  teamProfileListRequest: false,
+  teamProfileListSuccess: false,
+  teamProfileListFailure: null,
 };
 
 const reducer = (state = initialState, action: PostListActions): InitialState =>
@@ -125,6 +132,23 @@ const reducer = (state = initialState, action: PostListActions): InitialState =>
         draft.recruitPostListSuccess = false;
         draft.recruitPostListFailure = action.error;
         break;
+      case TEAM_PROFILE_LIST_REQUEST:
+        draft.teamProfileListRequest = true;
+        draft.teamProfileListSuccess = false;
+        draft.teamProfileListFailure = null;
+        break;
+      case TEAM_PROFILE_LIST_SUCCESS:
+        draft.teamProfileListRequest = false;
+        draft.teamProfileListSuccess = true;
+        draft.teamProfileListFailure = null;
+        draft.teamProfileList = action.data;
+        break;
+      case TEAM_PROFILE_LIST_FAILURE:
+        draft.teamProfileListRequest = false;
+        draft.teamProfileListSuccess = false;
+        draft.teamProfileListFailure = action.error;
+        break;
+
       default:
         return state;
     }

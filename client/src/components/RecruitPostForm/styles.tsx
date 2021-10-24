@@ -154,11 +154,20 @@ export const Stacks = styled.ul`
   }
 `;
 
+export const TitleInput = styled.input`
+  width: 100%;
+  border-radius: 12px;
+  padding: 1rem;
+  font-size: 1.5rem;
+  border: 1px solid #bcbcbc;
+`;
+
 export const TextArea = styled.textarea`
   width: 100%;
   border-radius: 12px;
   padding: 1rem;
   font-size: 1.5rem;
+  border: 1px solid #bcbcbc;
 `;
 
 export const TextCount = styled.p`
