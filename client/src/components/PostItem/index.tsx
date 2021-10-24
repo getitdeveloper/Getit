@@ -24,9 +24,8 @@ import {
   MobileWriterDetailWrapper,
 } from './styles';
 
-function PostItem(props: any): JSX.Element {
+function PostItem({ content, boardType }: any): JSX.Element {
   const history = useHistory();
-  const { content, boardType } = props;
   const dispatch = useDispatch();
   const user = useSelector((state: RootStateOrAny) => state.user);
   const userId = user.profileInfo?.user_pk;
@@ -78,15 +77,17 @@ function PostItem(props: any): JSX.Element {
     }
   };
 
+  console.log('확인용 ====>', content);
   return (
     <div>
       <PostWrapper>
         <div style={{ width: '85%' }}>
           <PostInfoButton onClick={onHandlePost}>
             <TagWrapper>
-              {content.worker?.map((workerType: string) => (
+              {/* TODO 디자인 수정, api 수정 요청 후 문제 해결 필요 */}
+              {/* {content.worker?.map((workerType: string) => (
                 <MemberType key={workerType} member={workerType} />
-              ))}
+              ))} */}
             </TagWrapper>
 
             <PostTitle>{content.title}</PostTitle>

@@ -41,10 +41,6 @@ function RecruitPostDetail(): JSX.Element {
     (state: RootStateOrAny) => state.post.recruitPost,
   );
 
-  const worker = useSelector(
-    (state: RootStateOrAny) => state.post.recruitPost?.worker,
-  );
-
   const startDate = useSelector(
     (state: RootStateOrAny) => state.post.recruitPost?.start_date,
   );
@@ -53,15 +49,16 @@ function RecruitPostDetail(): JSX.Element {
     (state: RootStateOrAny) => state.post.recruitPost?.end_date,
   );
 
-  const developer = useSelector(
-    (state: RootStateOrAny) => state.post.recruitPost?.developer,
-  );
-
-  const designer = useSelector(
-    (state: RootStateOrAny) => state.post.recruitPost?.designer,
-  );
-
-  const pm = useSelector((state: RootStateOrAny) => state.post.recruitPost?.pm);
+  const worker = useSelector((state: RootStateOrAny) => {
+    const developer = state.post.recruitPost?.developer;
+    const designer = state.post.recruitPost?.designer;
+    const pm = state.post.recruitPost?.pm;
+    return {
+      developer,
+      designer,
+      pm,
+    };
+  });
 
   const stacks = useSelector(
     (state: RootStateOrAny) => state.post.recruitPost?.stack,
@@ -96,15 +93,11 @@ function RecruitPostDetail(): JSX.Element {
             {/* 스터디명 */}
             <StudyName>스터디명</StudyName>
             <MemberTypeWrapper>
-              <ul>
-                {worker?.map((member: string) => {
-                  return (
-                    <li key={member}>
-                      <MemberType member={member} />
-                    </li>
-                  );
-                })}
-              </ul>
+              <MemberType
+                developer={worker?.developer}
+                designer={worker?.designer}
+                pm={worker?.pm}
+              />
             </MemberTypeWrapper>
             {/* 쪽지, 좋아요 아이콘 */}
             <IconWrapper>
@@ -134,15 +127,15 @@ function RecruitPostDetail(): JSX.Element {
               <RecruitMember>
                 <li>
                   <div>개발자</div>
-                  <div>{developer}명</div>
+                  <div>{worker.developer}명</div>
                 </li>
                 <li>
                   <div>디자이너</div>
-                  <div>{designer}명</div>
+                  <div>{worker.designer}명</div>
                 </li>
                 <li>
                   <div>기획자</div>
-                  <div>{pm}명</div>
+                  <div>{worker.pm}명</div>
                 </li>
               </RecruitMember>
               <br />

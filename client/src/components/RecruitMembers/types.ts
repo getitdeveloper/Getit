@@ -1,3 +1,5 @@
 export interface IMemberType {
-  member: string;
+  developer: number | undefined;
+  designer: number | undefined;
+  pm: number | undefined;
 }
