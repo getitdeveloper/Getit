@@ -17,7 +17,7 @@ from .permissions import IsOwnerOrReadOnly, RecruitmentIsOwnerOrReadOnly
 from .serializers import RecruitmentBoardSerializer, CommonBoardSerializer
 from rest_framework.response import Response
 from rest_framework import status
-from .models import CommonBoard, RecruitmentBoard, ChoicesFilter
+from .models import CommonBoard, RecruitmentBoard
 from django.shortcuts import get_object_or_404
 from rest_framework.views import APIView
 from .pagenation import BoardPageNumberPagination, WholeBoardCommonPageNumberPagination, WholeBoardRecruitmentPageNumberPagination
@@ -31,7 +31,7 @@ class CommonBoardListAPIView(GenericAPIView):
     pagination_class = BoardPageNumberPagination
     ordering_fields = ['create_at']
     filter_backends = [SearchFilter]
-    search_fields = ['title', 'content','worker',]
+    search_fields = ['title', 'content',]
 
     def get(self, request):
         """
@@ -48,7 +48,6 @@ class CommonBoardListAPIView(GenericAPIView):
                         "id": 13,
                         "title": "asdasdasd",
                         "category": "question",
-                        "worker": ["개발자"],
                         "content": "asdasdasdasd",
                         "image": null,
                         "create_at": "2021-09-19T17:38:17.667158+09:00",
@@ -103,7 +102,6 @@ class CommonBoardListAPIView(GenericAPIView):
                     "image":null,
                     "user":1,
                     "stack":["python", "java"],
-                    "worker": ["개발자","디자이너","기획자"]
                 }
         """
         serializer = CommonBoardSerializer(data=request.data, context={'request': request})
@@ -112,17 +110,11 @@ class CommonBoardListAPIView(GenericAPIView):
             board = CommonBoard.objects.get(id=serializer.data['id'])
 
             names = request.data['stack']
-            filters = request.data['worker']
             for name in names:
                 if not name:
                     continue
                 _name, _ = Tag.objects.get_or_create(name=name)
                 board.stack.add(_name)
-            for filter in filters:
-                if not filter:
-                    continue
-                _filter, _ = ChoicesFilter.objects.get_or_create(workers=filter)
-                board.worker.add(_filter)
             return JsonResponse(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -160,8 +152,7 @@ class CommonBoardDetailAPIView(GenericAPIView):
                 "likes":0,
                 "comments":0,
                 "is_like":false,
-                "stack":["python","java"],
-                "worker": ["개발자","디자이너","기획자"]
+                "stack":["python","java"]
                 }
         """
         post = self.get_object(pk)
@@ -179,8 +170,7 @@ class CommonBoardDetailAPIView(GenericAPIView):
                     "content":"asdasdasdasd",
                     "image":null,
                     "user":3,
-                    "stack":["python", "java"],
-                    "worker": ["개발자","디자이너","기획자"]
+                    "stack":["python", "java"]
                 }
         """
         post = self.get_object(pk)
@@ -216,7 +206,7 @@ class RecruitmentBoardPostListAPIView(GenericAPIView):
     pagination_class = BoardPageNumberPagination
     ordering_fields = ['create_at']
     filter_backends = [SearchFilter]
-    search_fields = ['content','worker','title',]
+    search_fields = ['content','title',]
 
     # parser_classes = (MultiPartParser,)
 
@@ -233,7 +223,6 @@ class RecruitmentBoardPostListAPIView(GenericAPIView):
                     "pm": 0,
                     "content": "test2",
                     "stack": [],
-                    "worker": ["개발자"],
                     "start_date": "2021-09-12",
                     "end_date": "2021-09-13",
                     "status": true,
@@ -286,7 +275,6 @@ class RecruitmentBoardPostListAPIView(GenericAPIView):
                     "start_date": "2021-09-12",
                     "end_date": "2021-09-13",
                     "status": true,
-                    "worker": ["개발자"],
                     "stack":["spring","vue"]
 
                 }
@@ -297,17 +285,11 @@ class RecruitmentBoardPostListAPIView(GenericAPIView):
             serializer.save()
             board = RecruitmentBoard.objects.get(id=serializer.data['id'])
             names = request.data['stack']
-            filters = request.data['worker']
             for name in names:
                 if not name:
                     continue
                 _name, _ = Tag.objects.get_or_create(name=name)
                 board.stack.add(_name)
-            for filter in filters:
-                if not filter:
-                    continue
-                _filter, _ = ChoicesFilter.objects.get_or_create(workers=filter)
-                board.worker.add(_filter)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -337,7 +319,6 @@ class RecruitmentBoardPostDetailAPIView(GenericAPIView):
                         "python",
                         "react"
                     ],
-                    "worker": ["개발자"],
                     "start_date": "2021-09-12",
                     "end_date": "2021-09-13",
                     "status": true,
@@ -387,8 +368,7 @@ class RecruitmentBoardPostDetailAPIView(GenericAPIView):
                     "start_date": "2021-09-12",
                     "end_date": "2021-09-13",
                     "status": true,
-                    "stack":["spring","vue"],
-                    "worker": ["개발자"],
+                    "stack":["spring","vue"]
                 }
         """
         post = self.get_object(pk)
@@ -435,7 +415,6 @@ class WholePostSearch(GenericAPIView):
                         "id": 13,
                         "title": "test2",
                         "category": "free",
-                        "worker": ["개발자"],
                         "content": "test1",
                         "image": null,
                         "create_at": "2021-09-12T16:44:50.233830+09:00",
@@ -453,7 +432,6 @@ class WholePostSearch(GenericAPIView):
                         "id": 12,
                         "title": "test2",
                         "category": "free",
-                        "worker": "개발자",
                         "content": "test1",
                         "image": null,
                         "create_at": "2021-09-12T16:44:49.672820+09:00",
@@ -473,7 +451,6 @@ class WholePostSearch(GenericAPIView):
                         "id": 22,
                         "title": "test1",
                         "category": "question",
-                        "worker": "개발자",
                         "content": "test2",
                         "image": null,
                         "create_at": "2021-09-12T16:45:12.362742+09:00",
@@ -491,7 +468,6 @@ class WholePostSearch(GenericAPIView):
                         "id": 21,
                         "title": "test1",
                         "category": "question",
-                        "worker": "개발자",
                         "content": "test2",
                         "image": null,
                         "create_at": "2021-09-12T16:45:11.873442+09:00",
@@ -599,7 +575,6 @@ class BoardMyListAPIView(GenericAPIView):
                         "id": 9,
                         "title": "asdasdasd",
                         "category": "question",
-                        "worker": ["개발자"],
                         "content": "asdasdasdasd",
                         "image": null,
                         "create_at": "2021-09-16T20:12:22.257748+09:00",
@@ -617,7 +592,6 @@ class BoardMyListAPIView(GenericAPIView):
                         "id": 4,
                         "title": "asdasdasd1",
                         "category": "question",
-                        "worker": "개발자",
                         "content": "asdasdasdasd1",
                         "image": null,
                         "create_at": "2021-09-16T19:29:51.178213+09:00",

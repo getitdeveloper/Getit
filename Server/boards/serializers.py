@@ -6,7 +6,7 @@ from profiles.models import Profile
 from rest_framework import serializers
 
 from profiles.serializers import ProfileSerializer, TagSerializer, TeamProfileSerializer
-from .models import RecruitmentBoard, CommonBoard, ChoicesFilter
+from .models import RecruitmentBoard, CommonBoard
 from accounts.models import User
 from rest_framework.serializers import ModelSerializer
 
@@ -39,14 +39,6 @@ class UserProfileSerializer(ModelSerializer):
         model = User
         fields = ('id', 'profile',)
 
-class ChoicesFilterSerializer(ModelSerializer):
-    class Meta:
-        model = ChoicesFilter
-        fields = ('workers',)
-
-    def to_representation(self, value):
-        return value.workers
-
 class CommonBoardSerializer(serializers.ModelSerializer):
     stack = TagSerializer(read_only=True, many=True)
     likes = serializers.IntegerField(
@@ -61,11 +53,10 @@ class CommonBoardSerializer(serializers.ModelSerializer):
 
     # like_user = CommonLikeSerializer(read_only=True, many=True)
     is_like = SerializerMethodField()
-    worker = ChoicesFilterSerializer(read_only=True, many=True)
 
     class Meta:
         model = CommonBoard
-        fields = ('id', 'title', 'category', 'worker', 'content', 'image', 'create_at', 'user', 'likes', 'comments', 'is_like', 'stack',)
+        fields = ('id', 'title', 'category', 'content', 'image', 'create_at', 'user', 'likes', 'comments', 'is_like', 'stack',)
 
     def to_representation(self, instance):
         self.fields['user'] = UserProfileSerializer(read_only=True)
@@ -93,12 +84,11 @@ class RecruitmentBoardSerializer(ModelSerializer):
     stack = TagSerializer(read_only=True, many=True)
 
     is_like = SerializerMethodField()
-    worker = ChoicesFilterSerializer(read_only=True, many=True)
     class Meta:
         model = RecruitmentBoard
         fields = (
         'id', 'title', 'developer', 'designer', 'pm', 'content','stack', 'start_date', 'end_date', 'status',
-        'create_at','user','study', 'comments', 'likes', 'is_like','worker',)
+        'create_at','user','study', 'comments', 'likes', 'is_like',)
 
     def to_representation(self, instance):
         self.fields['user'] = UserProfileSerializer(read_only=True)
