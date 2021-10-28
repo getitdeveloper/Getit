@@ -1,16 +1,15 @@
 import * as React from 'react';
-
 import PostForm from '@components/PostForm';
-import { PageWrapper, BlockWrapper, PageTitle } from '@assets/styles/page';
+import { PageWrapper, PageTitle, PageBackground } from '@assets/styles/page';
 
-function QuestionFormPage() {
+function QuestionFormPage(): JSX.Element {
   return (
-    <PageWrapper>
-      <PageTitle>질문게시글 작성</PageTitle>
-      <BlockWrapper padding='3%'>
+    <PageBackground>
+      <PageWrapper>
+        <PageTitle>질문게시글 작성</PageTitle>
         <PostForm />
-      </BlockWrapper>
-    </PageWrapper>
+      </PageWrapper>
+    </PageBackground>
   );
 }
 

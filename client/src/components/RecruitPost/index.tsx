@@ -8,6 +8,7 @@ import { RECRUIT_POST_LIST_REQUEST } from '@reducers/actions';
 import LoadingSpinner from '@components/LoadingSpinner';
 import Paging from '@components/Paging';
 import { IRecruitPost } from '@types';
+import { PageBackground } from '@assets/styles/page';
 import {
   Title,
   RecruitCondition,
@@ -44,7 +45,7 @@ function RecruitPost(): JSX.Element {
   }
 
   return (
-    <div>
+    <PageBackground>
       <GridWrapper>
         <Grid container spacing={3}>
           {recruitPostList.map((post: IRecruitPost) => (
@@ -111,14 +112,12 @@ function RecruitPost(): JSX.Element {
         </Grid>
       </GridWrapper>
 
-      {/* <PagingWrapper> */}
       <Paging
         activePage={page}
         totalPage={recruitPostTotalCount}
         setPage={setPage}
       />
-      {/* </PagingWrapper> */}
-    </div>
+    </PageBackground>
   );
 }
 

@@ -38,7 +38,7 @@ export const BlockWrapper = styled.div`
   background-color: #ffffff;
   border-radius: 0.8rem;
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
-  padding: ${(props: Size) => (props.padding ? props.padding : '4.5rem')};
+  padding: ${(props: Size) => (props.padding ? props.padding : '2.5rem')};
   margin-bottom: 4.5rem;
   margin-top: 1rem;
 
@@ -47,5 +47,22 @@ export const BlockWrapper = styled.div`
     margin: 0;
     border-radius: 0;
     padding-top: 2.5rem;
+  }
+`;
+
+export const ContentContainer = styled.div`
+  max-width: 128rem;
+  width: 100%;
+  margin: 0 auto;
+  background-color: #ffffff;
+  height: auto;
+  padding: 3rem 2rem;
+  border-radius: 10px;
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+  margin-bottom: 4.5rem;
+  margin-top: 1rem;
+
+  @media ${({ theme }) => theme.tablet} {
+    padding: 3rem 0;
   }
 `;

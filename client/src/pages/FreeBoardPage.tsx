@@ -3,7 +3,11 @@ import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import PostItem from '@components/PostItem';
 import PostSubHeader from '@components/PostSubHeader';
 import { COMMON_POST_LIST_REQUEST } from '@reducers/actions';
-import { BlockWrapper, PageWrapper, PageBackground } from '@assets/styles/page';
+import {
+  ContentContainer,
+  PageWrapper,
+  PageBackground,
+} from '@assets/styles/page';
 import Paging from '@components/Paging';
 import LoadingSpinner from '@components/LoadingSpinner';
 import { IPost } from '@types';
@@ -34,11 +38,11 @@ function FreeBoardPage(): JSX.Element {
     <PageBackground>
       <PostSubHeader boardType='Free' />
       <PageWrapper>
-        <BlockWrapper>
+        <ContentContainer>
           {boardList.results.map((content: IPost) => (
             <PostItem key={content.id} content={content} boardType='free' />
           ))}
-        </BlockWrapper>
+        </ContentContainer>
         <Paging
           activePage={page}
           totalPage={boardList.count}

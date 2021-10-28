@@ -37,7 +37,7 @@ export const ProfileMenuOption = styled.button`
   margin-bottom: 1.6rem;
   font-size: 0.8rem;
   cursor: pointer;
-  &: hover {
+  &:hover {
     color: ${(props) => props.theme.colors.main};
   }
   @media ${(props) => props.theme.tablet} {
@@ -48,7 +48,7 @@ export const ProfileMenuOption = styled.button`
 export const ProfileSelectedMenu = styled(ProfileMenuOption)`
   color: white;
   background-color: ${(props) => props.theme.colors.main};
-  &: hover {
+  &:hover {
     color: white;
   }
 `;

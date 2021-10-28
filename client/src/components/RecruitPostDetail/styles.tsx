@@ -44,30 +44,26 @@ export const LikeIcon = styled(FavoriteBorderIcon)`
   color: #ffffff;
 `;
 
-export const RecruitPostDetailWrapper = styled.div`
-  background-color: #f5f5f5;
-`;
-
 export const Label = styled.div`
   font-size: 1.6rem;
   padding-left: 1rem;
   margin-bottom: 0.6rem;
 `;
 
-export const ContainerWrapper = styled.div`
-  max-width: 128rem;
-  width: 100%;
-  margin: 0 auto;
-  background-color: #ffffff;
-  height: auto;
-  padding: 3rem 2rem;
-  border-radius: 10px;
-  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+// export const ContentContainer = styled.div`
+//   max-width: 128rem;
+//   width: 100%;
+//   margin: 0 auto;
+//   background-color: #ffffff;
+//   height: auto;
+//   padding: 3rem 2rem;
+//   border-radius: 10px;
+//   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
 
-  @media ${({ theme }) => theme.tablet} {
-    padding: 3rem 0;
-  }
-`;
+//   @media ${({ theme }) => theme.tablet} {
+//     padding: 3rem 0;
+//   }
+// `;
 
 export const Container = styled.div`
   display: flex;

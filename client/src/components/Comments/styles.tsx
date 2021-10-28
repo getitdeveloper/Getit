@@ -2,14 +2,9 @@ import styled from 'styled-components';
 
 export const CommentForm = styled.div`
   width: 100%;
-  height: auto;
   display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-  @media ${(props) => props.theme.tablet} {
-    margin-top: 3rem;
-  }
+  justify-content: space-around;
+  margin: 2rem 0 4rem 0;
 `;
 
 export const WriterImage = styled.img`
@@ -20,10 +15,10 @@ export const WriterImage = styled.img`
 `;
 
 export const CommentInput = styled.input`
-  width: 85%;
-  border: 0;
+  width: 70%;
+  border-style: none;
   border-bottom: 1px solid #b7b7b7;
-  padding: 1%;
+  font-size: 1.6rem;
   &:focus {
     outline: none;
   }
@@ -31,24 +26,15 @@ export const CommentInput = styled.input`
 `;
 
 export const SubmitButton = styled.button`
-  width: 7%;
-  font-size: 1rem;
+  && {
+    font-size: 1.4rem;
+  }
   background-color: ${(props) => props.theme.colors.main};
   color: white;
-  border: 0;
-  margin: 0 auto;
+  border-style: none;
   padding: 0.4rem 1rem;
   border-radius: 0.8rem;
   cursor: pointer;
-  &: hover {
-    color: ${(props) => props.theme.colors.main};
-    background-color: white;
-    border: 1px solid ${(props) => props.theme.colors.main};
-  }
-  @media ${(props) => props.theme.tablet} {
-    width: 6rem;
-    font-size: 0.8rem;
-  }
 `;
 
 export const CommentWrapper = styled.div`
@@ -65,7 +51,7 @@ export const Comment = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  margin-top: 3%;
+  margin-top: 2rem;
 `;
 
 export const CommentDetailWrapper = styled.div`
@@ -81,23 +67,25 @@ export const CommentDetail = styled.div`
 `;
 
 export const WriterNickName = styled.p`
-  font-size: 1.2rem;
+  font-size: 1.6rem;
   font-weight: 500;
 `;
 
 export const CreatedTime = styled.p`
   line-height: 2.08;
-  font-size: 0.8rem;
+  font-size: 1.2rem;
   color: #ababab;
   margin-left: 2rem;
 `;
 
 export const CommentContent = styled.p`
-  font-size: 0.5rem;
+  font-size: 1.4rem;
+  padding: 0.4rem;
 `;
 
 export const NoComments = styled.p`
-  margin-top: 5%;
+  margin-top: 2rem;
+  font-size: 1.6rem;
   text-align: center;
   @media ${(props) => props.theme.tablet} {
     margin-bottom: 1.5rem;
