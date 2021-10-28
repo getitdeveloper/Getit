@@ -49,6 +49,8 @@ export const Title = styled.div`
   h1 {
     font-size: 2rem;
     color: ${({ theme }) => theme.colors.blackText};
+    text-overflow: ellipsis;
+    overflow: hidden;
   }
 `;
 

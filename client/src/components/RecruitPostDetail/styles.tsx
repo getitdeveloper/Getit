@@ -4,7 +4,7 @@ import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 
 const TextMinxin = css`
   border-radius: 12px;
-  padding-left: 1rem;
+  padding: 1rem;
   background-color: #f5f5f5;
   width: 100%;
   min-height: 5rem;
@@ -143,11 +143,13 @@ export const ContentWrapper = styled.div`
 
 export const TitleText = styled.p`
   ${TextMinxin}
+  word-break: break-all;
 `;
 
 export const ContentText = styled.p`
   ${TextMinxin}
   min-height: 10rem;
+  word-break: break-all;
 `;
 
 export const RecruitMember = styled.ul`
@@ -190,14 +192,15 @@ export const Stacks = styled.ul`
   min-height: 5rem;
   list-style: none;
   margin-bottom: 1.4rem;
+  flex-wrap: wrap;
 
   li {
     background-color: #f5f5f5;
     font-size: 1.5rem;
     display: flex;
     align-items: center;
+    margin: 0.4rem 1rem;
     padding: 0 1.5rem;
-    margin-right: 1rem;
     border-radius: 12px;
     width: fit-content;
     height: 44px;
