@@ -1,14 +1,4 @@
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import styled from 'styled-components';
-
-export const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    chip: {
-      margin: theme.spacing(0.5),
-      backgroundColor: '#f5f5f5',
-    },
-  }),
-);
 
 export const Container = styled.div`
   display: flex;
@@ -48,9 +38,9 @@ export const ProfileMenuOption = styled.button`
   font-size: 1.4rem;
   cursor: pointer;
   &:hover {
-    color: ${(props) => props.theme.colors.main};
+    color: ${({ theme }) => theme.colors.main};
   }
-  @media ${(props) => props.theme.tablet} {
+  @media ${({ theme }) => theme.tablet} {
     display: none;
   }
 `;
@@ -58,70 +48,119 @@ export const ProfileMenuOption = styled.button`
 export const ProfileSelectedMenu = styled(ProfileMenuOption)`
   color: #ffffff;
   font-size: 1.4rem;
-  background-color: ${(props) => props.theme.colors.main};
+  background-color: ${({ theme }) => theme.colors.main};
+
   &:hover {
     color: #ffffff;
   }
 `;
 
 export const ProfileRight = styled.div`
-  width: 80%;
+  width: 100%;
   height: auto;
   padding: 0rem 2.5rem;
-  @media ${(props) => props.theme.tablet} {
+
+  @media ${({ theme }) => theme.tablet} {
     width: 100%;
   }
 `;
 
-// MyProfile styles
-
+// MyProfile Info
 export const MainProfile = styled.div`
   display: flex;
-  justify-content: space-between;
   align-items: center;
   margin-bottom: 2.5rem;
-`;
 
-export const ProfileImage = styled.img`
-  width: 12rem;
-  height: auto;
-  align-self: center;
-  background-color: #e0e0e0;
-  padding: 4rem;
-  border-radius: 1rem;
-`;
-
-export const PersonalInfoWrapper = styled.div`
-  width: 35rem;
-  margin-bottom: 0.8rem;
-  padding: 0.8rem;
-  background-color: ${(props) => props.theme.colors.background};
-  font-size: 70%;
-  border-radius: 22px;
-`;
-
-export const PersonalInfo = styled.input`
-  background-color: ${(props) => props.theme.colors.background};
-  border: 0;
-  font-size: 1rem;
-  &:focus {
-    outline: none;
+  @media ${({ theme }) => theme.tablet} {
+    display: initial;
   }
 `;
 
-export const IntroWrapper = styled.input`
-  width: 100%;
-  height: auto;
-  min-height: 10rem;
+export const ProfileWrapper = styled.div`
   display: flex;
-  align-items: center;
 
+  @media ${({ theme }) => theme.tablet} {
+    justify-content: center;
+    margin-bottom: 4rem;
+  }
+`;
+
+export const ButtonWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 10rem;
+  margin: 2rem 4rem;
+
+  button {
+    background-color: #ffffff;
+    font-size: 1.4rem;
+    border-radius: 12px;
+    border-width: 2px;
+    border-color: #efefef;
+    border-style: solid;
+    padding: 0.5rem 0rem;
+    margin: 1rem 0rem;
+    cursor: pointer;
+    width: 5rem;
+  }
+`;
+
+export const ProfileImage = styled.img`
+  max-width: 15rem;
+  width: 100%;
+  background-color: #e0e0e0;
+  padding: 4rem;
+  border-radius: 12px;
+`;
+
+export const PersonalInfoWrapper = styled.div`
+  width: 100%;
+  display: flex;
+`;
+
+export const PersonalInfo = styled.div`
+  width: 100%;
+  div {
+    display: flex;
+    background-color: ${(props) => props.theme.colors.background};
+    padding: 1.2rem;
+    border-radius: 12px;
+    margin: 0.8rem 0rem;
+    width: 100%;
+  }
+
+  label {
+    display: block;
+    font-size: 1.4rem;
+    border-right: 2px solid #bfbfbf;
+    width: 5rem;
+  }
+
+  input {
+    background-color: ${(props) => props.theme.colors.background};
+    border-style: none;
+    font-size: 1.4rem;
+    padding-left: 1rem;
+    width: 100%;
+
+    &:focus {
+      outline: none;
+    }
+  }
+`;
+
+export const IntroWrapper = styled.textarea`
+  width: 100%;
+  min-height: 12rem;
   margin: 1.5rem 0rem;
-  padding: 2.5rem;
-  background-color: ${(props) => props.theme.colors.background};
-  border-radius: 2rem;
-  border: 0;
-  font-size: 1rem;
+  padding: 2rem;
+  background-color: ${({ theme }) => theme.colors.background};
+  border-radius: 12px;
+  border-style: none;
+  font-size: 1.4rem;
+  word-break: break-all;
+  resize: none;
+
   &:focus {
     outline: none;
   }
@@ -204,10 +243,6 @@ export const PostTitle = styled.p`
   text-align: left;
 `;
 
-export const ButtonWrapper = styled.div`
-  text-align: center;
-`;
-
 export const Button = styled.button`
   border-radius: 6px;
   width: 14.6rem;
@@ -215,4 +250,9 @@ export const Button = styled.button`
   background-color: ${({ theme }) => theme.colors.main};
   border-style: none;
   color: #ffffff;
+`;
+
+export const BoundaryText = styled.p`
+  font-size: 1.4rem;
+  line-height: 0.2rem;
 `;
