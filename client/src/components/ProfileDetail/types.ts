@@ -24,3 +24,8 @@ export const navItem = [
     id: 5,
   },
 ];
+
+export interface INavItem {
+  menu: string;
+  id: number;
+}

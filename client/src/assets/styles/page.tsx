@@ -32,24 +32,6 @@ export const PageTitle = styled.h1`
   color: ${(props) => props.theme.colors.blackText};
 `;
 
-export const BlockWrapper = styled.div`
-  width: 100%;
-  height: auto;
-  background-color: #ffffff;
-  border-radius: 0.8rem;
-  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
-  padding: ${(props: Size) => (props.padding ? props.padding : '2.5rem')};
-  margin-bottom: 4.5rem;
-  margin-top: 1rem;
-
-  @media ${(props) => props.theme.tablet} {
-    box-shadow: 0 0 0 rgba(0, 0, 0, 0);
-    margin: 0;
-    border-radius: 0;
-    padding-top: 2.5rem;
-  }
-`;
-
 export const ContentContainer = styled.div`
   max-width: 128rem;
   width: 100%;

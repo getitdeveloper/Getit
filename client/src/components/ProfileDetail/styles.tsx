@@ -1,6 +1,5 @@
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import styled from 'styled-components';
-import { BlockWrapper } from '@assets/styles/page';
 
 export const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -11,20 +10,31 @@ export const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-export const SplittedPageContainer = styled(BlockWrapper)`
-  width: 100%;
+export const Container = styled.div`
   display: flex;
-  @media ${(props) => props.theme.tablet} {
+
+  @media ${({ theme }) => theme.tablet} {
     flex-direction: column;
   }
 `;
 
-export const ProfileLeft = styled.div`
-  width: 15%;
-  height: 100%;
+export const LeftContainer = styled.div`
   display: flex;
   flex-direction: column;
-  @media ${(props) => props.theme.tablet} {
+  border-right: 1px solid #e4e4e4;
+  width: 20%;
+  padding: 2rem;
+
+  @media ${({ theme }) => theme.tablet} {
+    width: 100%;
+    border-right: none;
+  }
+`;
+
+export const RightContainer = styled.div`
+  width: 80%;
+
+  @media ${({ theme }) => theme.tablet} {
     width: 100%;
   }
 `;
@@ -33,9 +43,9 @@ export const ProfileMenuOption = styled.button`
   border-radius: 0.8rem;
   border: solid 1px #e8e8e8;
   background-color: transparent;
-  padding: 0.8rem;
+  padding: 1.2rem 0;
   margin-bottom: 1.6rem;
-  font-size: 0.8rem;
+  font-size: 1.4rem;
   cursor: pointer;
   &:hover {
     color: ${(props) => props.theme.colors.main};
@@ -46,20 +56,11 @@ export const ProfileMenuOption = styled.button`
 `;
 
 export const ProfileSelectedMenu = styled(ProfileMenuOption)`
-  color: white;
+  color: #ffffff;
+  font-size: 1.4rem;
   background-color: ${(props) => props.theme.colors.main};
   &:hover {
-    color: white;
-  }
-`;
-
-export const VerticalLine = styled.div`
-  width: 0.8rem;
-  height: 65rem;
-  border-right: solid 1px #e8e8e8;
-  margin: 0rem 2rem;
-  @media ${(props) => props.theme.tablet} {
-    display: none;
+    color: #ffffff;
   }
 `;
 
