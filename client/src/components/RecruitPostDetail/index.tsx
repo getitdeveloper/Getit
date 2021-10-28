@@ -14,11 +14,8 @@ import {
   Container,
   LeftContainer,
   RightContainer,
-  ImageBackground,
-  ImageWrapper,
   ImageContainer,
   StudyName,
-  MemberTypeWrapper,
   ContentWrapper,
   TitleText,
   ContentText,
@@ -32,6 +29,7 @@ import {
   MailIcon,
   LikeIcon,
   HorizontalLine,
+  StudyProfile,
 } from './styles';
 
 function RecruitPostDetail(): JSX.Element {
@@ -63,6 +61,9 @@ function RecruitPostDetail(): JSX.Element {
   const stacks = useSelector(
     (state: RootStateOrAny) => state.post.recruitPost?.stack,
   );
+  const studyProfile = useSelector(
+    (state: RootStateOrAny) => state.post.recruitPost?.study?.image,
+  );
 
   useEffect(() => {
     dispatch({
@@ -82,23 +83,24 @@ function RecruitPostDetail(): JSX.Element {
           {/* 왼쪽 컨테이너 */}
           <LeftContainer>
             {/* 팀 프로필 이미지 */}
-            <ImageWrapper>
-              <ImageBackground>
-                <ImageContainer>
-                  <img src={UserImg} alt='study profile' />
-                </ImageContainer>
-              </ImageBackground>
-            </ImageWrapper>
+            <ImageContainer>
+              <StudyProfile
+                src={studyProfile || UserImg}
+                alt='study profile'
+                studyProfile={studyProfile}
+              />
+            </ImageContainer>
 
             {/* 스터디명 */}
             <StudyName>스터디명</StudyName>
-            <MemberTypeWrapper>
-              <MemberType
-                developer={worker?.developer}
-                designer={worker?.designer}
-                pm={worker?.pm}
-              />
-            </MemberTypeWrapper>
+
+            <MemberType
+              developer={worker?.developer}
+              designer={worker?.designer}
+              pm={worker?.pm}
+              position='center'
+            />
+
             {/* 쪽지, 좋아요 아이콘 */}
             <IconWrapper>
               <IconContainer>

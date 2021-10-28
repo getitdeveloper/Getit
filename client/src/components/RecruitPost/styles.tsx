@@ -36,13 +36,6 @@ export const GridWrapper = styled.div`
   }
 `;
 
-export const MemberTypeWrapper = styled.ul`
-  display: flex;
-  list-style: none;
-  padding: 0;
-  margin: 0;
-`;
-
 export const Title = styled.div`
   padding-top: 1.4rem;
 

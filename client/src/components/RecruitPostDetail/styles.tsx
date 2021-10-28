@@ -97,44 +97,31 @@ export const RightContainer = styled.div`
   }
 `;
 
-export const ImageWrapper = styled.div`
-  margin: 0 auto;
-  margin-top: 2rem;
-`;
-
-export const ImageBackground = styled.div`
-  background-color: #e0e0e0;
-  width: 9rem;
-  height: 9rem;
-  border-radius: 13px;
-`;
+interface ImgUrl {
+  studyProfile: string;
+}
 
 export const ImageContainer = styled.div`
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  margin: 0 auto;
+  width: 12rem;
+  height: 12rem;
+`;
 
-  img {
-    width: 40%;
-  }
+export const StudyProfile = styled.img`
+  max-width: 100%;
+  max-height: 100%;
+  width: ${(props: ImgUrl) => (props.studyProfile ? '100%' : '40%')};
+  height: auto;
+  padding: ${(props: ImgUrl) => (props.studyProfile ? 'none' : '30%')};
+  background-color: ${(props: ImgUrl) =>
+    props.studyProfile ? 'none' : '#e0e0e0'};
+  border-radius: 15px;
 `;
 
 export const StudyName = styled.div`
   text-align: center;
   font-size: 1.5rem;
   margin-top: 1rem;
-`;
-
-export const MemberTypeWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  margin-top: 1rem;
-
-  ul {
-    display: flex;
-  }
 `;
 
 export const ContentWrapper = styled.div`

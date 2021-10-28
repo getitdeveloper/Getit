@@ -9,7 +9,6 @@ import LoadingSpinner from '@components/LoadingSpinner';
 import Paging from '@components/Paging';
 import { IRecruitPost } from '@types';
 import {
-  MemberTypeWrapper,
   Title,
   RecruitCondition,
   Content,
@@ -53,13 +52,12 @@ function RecruitPost(): JSX.Element {
               <Post>
                 <StyledLink to={`/recruitBoard/${post.id}`}>
                   {/* 구인 종류 */}
-                  <MemberTypeWrapper>
-                    <MemberType
-                      developer={post?.developer}
-                      designer={post?.designer}
-                      pm={post?.pm}
-                    />
-                  </MemberTypeWrapper>
+
+                  <MemberType
+                    developer={post?.developer}
+                    designer={post?.designer}
+                    pm={post?.pm}
+                  />
 
                   {/* 제목 */}
                   <Title key={post.title}>
@@ -80,7 +78,11 @@ function RecruitPost(): JSX.Element {
 
                   {/* 내용 */}
                   <Content>
-                    <p>{`${post.content.substring(0, 80)}...`}</p>
+                    <p>
+                      {post.content.length >= 80
+                        ? `${post.content.substring(0, 80)}...`
+                        : post.content}
+                    </p>
                   </Content>
                 </StyledLink>
                 {/* 게시일, 좋아요, 댓글 */}
