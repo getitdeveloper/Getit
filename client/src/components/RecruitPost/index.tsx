@@ -19,7 +19,6 @@ import {
   Post,
   LikeIcon,
   CommentIcon,
-  PagingWrapper,
 } from './styles';
 
 function RecruitPost(): JSX.Element {
@@ -62,7 +61,11 @@ function RecruitPost(): JSX.Element {
 
                   {/* 제목 */}
                   <Title key={post.title}>
-                    <h1>{post.title}</h1>
+                    <h1>
+                      {post.title.length >= 20
+                        ? `${post.title.substring(0, 20)}...`
+                        : post.title}
+                    </h1>
                   </Title>
 
                   {/* 인원 및 기간 */}
@@ -88,23 +91,17 @@ function RecruitPost(): JSX.Element {
                 </StyledLink>
                 {/* 게시일, 좋아요, 댓글 */}
                 <ContentDetail>
-                  <ul>
-                    <li>{moment(post.end_date).format('YYYY.MM.DD')}</li>
-                    <li>
-                      <span>
-                        <LikeIcon />
-                      </span>
-                      <span>{post.likes}</span>
-                    </li>
-                    <li>
-                      <StyledLink to={`/recruitBoard/${post.id}`}>
-                        <span>
-                          <CommentIcon />
-                        </span>
-                        <span>{post.comments}</span>
-                      </StyledLink>
-                    </li>
-                  </ul>
+                  <div>{moment(post.end_date).format('YYYY.MM.DD')}</div>
+                  <div>
+                    <LikeIcon />
+                    {post.likes}
+                  </div>
+                  <div>
+                    <StyledLink to={`/recruitBoard/${post.id}`}>
+                      <CommentIcon />
+                      {post.comments}
+                    </StyledLink>
+                  </div>
                 </ContentDetail>
               </Post>
             </Grid>

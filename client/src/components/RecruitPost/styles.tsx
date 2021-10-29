@@ -61,23 +61,19 @@ export const Content = styled.div`
 `;
 
 export const ContentDetail = styled.div`
+  display: flex;
   position: absolute;
+  opacity: 0.55;
+  font-size: 1.4rem;
   right: 1rem;
   bottom: 0;
   padding: 2rem;
-  height: auto;
   opacity: 0.55;
 
-  li {
-    list-style: none;
-    font-size: 1.5rem;
-    display: inline-block;
-
-    padding-right: 0.5rem;
-
-    span {
-      padding-right: 0.5rem;
-    }
+  div {
+    padding: 0 0.5rem;
+    display: flex;
+    justify-content: center;
   }
 `;
 
@@ -87,13 +83,10 @@ export const StyledLink = styled(Link)`
 `;
 
 export const LikeIcon = styled(FavoriteBorderIcon)`
+  margin: 0 0.4rem;
   vertical-align: middle;
 `;
 export const CommentIcon = styled(ChatBubbleOutlineIcon)`
+  margin: 0 0.4rem;
   vertical-align: middle;
-`;
-
-export const PagingWrapper = styled.div`
-  display: flex;
-  justify-content: center;
 `;
