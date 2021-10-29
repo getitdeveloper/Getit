@@ -4,9 +4,6 @@
     <list default="true" id="14847226-151c-4591-a157-0243461eac9c" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/boards/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/Server/boards/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/boards/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/Server/boards/serializers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/portfolios/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/Server/portfolios/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/profiles/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/Server/profiles/models.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

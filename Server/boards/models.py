@@ -20,7 +20,7 @@ class CommonBoard(models.Model):
 class RecruitmentBoard(models.Model):
 
     user = models.ForeignKey('accounts.User', on_delete=models.SET_NULL, null=True)
-    title = models.CharField(max_length=100)
+    title = models.CharField(max_length=256)
     study = models.ForeignKey('profiles.TeamProfile', on_delete=models.CASCADE, null=False, blank=False)
     developer = models.PositiveIntegerField(default=0)
     designer = models.PositiveIntegerField(default=0)
