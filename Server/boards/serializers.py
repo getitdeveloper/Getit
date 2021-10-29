@@ -13,6 +13,9 @@ from rest_framework.serializers import ModelSerializer
 
 
 # 좋아요
+from members.models import Member
+
+
 class CommonLikeSerializer(ModelSerializer):
     class Meta:
         model = CommonBoardLike
@@ -70,6 +73,15 @@ class CommonBoardSerializer(serializers.ModelSerializer):
         else:
             return False
 
+class MemberSerializer(serializers.ModelSerializer):
+    nickname = serializers.SerializerMethodField()
+    class Meta:
+        model = Member
+        fields = ('member','nickname')
+    def get_nickname(self,obj):
+        profile = Profile.objects.get(id=obj.study.member)
+        nickname = profile.nickname
+        return nickname
 
 class RecruitmentBoardSerializer(ModelSerializer):
     likes = serializers.IntegerField(
@@ -82,13 +94,13 @@ class RecruitmentBoardSerializer(ModelSerializer):
         read_only=True
     )
     stack = TagSerializer(read_only=True, many=True)
-
+    members = MemberSerializer(read_only=True, many=True)
     is_like = SerializerMethodField()
     class Meta:
         model = RecruitmentBoard
         fields = (
         'id', 'title', 'developer', 'designer', 'pm', 'content','stack', 'start_date', 'end_date', 'status',
-        'create_at','user','study', 'comments', 'likes', 'is_like',)
+        'create_at','user','image','study', 'comments', 'likes', 'is_like','members')
 
     def to_representation(self, instance):
         self.fields['user'] = UserProfileSerializer(read_only=True)

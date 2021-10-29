@@ -24,6 +24,7 @@ class RecruitmentBoard(models.Model):
     study = models.ForeignKey('profiles.TeamProfile', on_delete=models.CASCADE, null=False, blank=False)
     developer = models.PositiveIntegerField(default=0)
     designer = models.PositiveIntegerField(default=0)
+    image = models.ImageField(upload_to='board', blank=True, null=True)
     pm = models.PositiveIntegerField(default=0)
     content = models.TextField()
     start_date = models.DateField()
