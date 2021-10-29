@@ -91,12 +91,23 @@ export const ImageContainer = styled.div`
 export const StudyProfile = styled.img`
   max-width: 100%;
   max-height: 100%;
-  width: ${(props: ImgUrl) => (props.studyProfile ? '100%' : '40%')};
+  width: 100%;
   height: 12rem;
-  padding: ${(props: ImgUrl) => (props.studyProfile ? 'none' : '30%')};
-  background-color: ${(props: ImgUrl) =>
-    props.studyProfile ? 'none' : '#e0e0e0'};
+  padding: none;
   border-radius: 15px;
+`;
+
+export const DefaultProfile = styled.div`
+  width: 100%;
+  height: 100%;
+  background-color: #e0e0e0;
+  border-radius: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  img {
+    width: 4rem;
+  }
 `;
 
 export const StudyName = styled.div`
@@ -153,6 +164,10 @@ export const Period = styled.p`
   padding: 0 2rem;
   width: fit-content;
   height: auto;
+  @media ${({ theme }) => theme.tablet} {
+    width: 100%;
+    margin: 0.5rem 0;
+  }
 `;
 
 export const Stacks = styled.ul`

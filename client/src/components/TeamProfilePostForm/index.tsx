@@ -16,7 +16,7 @@ import {
   RightContainer,
   ContentWrapper,
   ProfileImage,
-  StyeldTextArea,
+  TextArea,
   TextCount,
   ButtonWrapper,
   Button,
@@ -59,7 +59,7 @@ function TeamProfilePostForm(): JSX.Element {
     [introduce],
   );
 
-  const CreateTeamProfile = useCallback(
+  const createTeamProfile = useCallback(
     (event) => {
       event.preventDefault();
 
@@ -75,24 +75,24 @@ function TeamProfilePostForm(): JSX.Element {
         formData.append('title', title);
         formData.append('content', introduce);
         formData.append('stack', stacksToString);
-        dispatch({
+        return dispatch({
           type: TEAM_PROFILE_REGISTER_REQUEST,
           data: formData,
-          userId,
-        });
-      } else {
-        // 프로필 사진을 업로드 하는 경우
-        profile?.append('user', userId);
-        profile?.append('title', title);
-        profile?.append('content', introduce);
-        profile?.append('stack', stacksToString);
-        dispatch({
-          type: TEAM_PROFILE_REGISTER_REQUEST,
-          data: profile,
           userId,
           history,
         });
       }
+      // 프로필 사진을 업로드 하는 경우
+      profile?.append('user', userId);
+      profile?.append('title', title);
+      profile?.append('content', introduce);
+      profile?.append('stack', stacksToString);
+      return dispatch({
+        type: TEAM_PROFILE_REGISTER_REQUEST,
+        data: profile,
+        userId,
+        history,
+      });
     },
     [profile, title, introduce, stacks, userId],
   );
@@ -173,7 +173,7 @@ function TeamProfilePostForm(): JSX.Element {
           </TitleWrapper>
         </LeftContainer>
         <RightContainer>
-          <StyeldTextArea
+          <TextArea
             placeholder='스터디 소개를 작성해 주세요.'
             cols={30}
             rows={10}
@@ -213,7 +213,7 @@ function TeamProfilePostForm(): JSX.Element {
         </RightContainer>
       </BlockWrapper>
       <ButtonWrapper>
-        <Button type='submit' onClick={CreateTeamProfile}>
+        <Button type='submit' onClick={createTeamProfile}>
           생성하기
         </Button>
       </ButtonWrapper>

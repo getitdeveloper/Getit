@@ -124,12 +124,13 @@ export const ContentWrapper = styled.div`
   display: flex;
 `;
 
-export const StyeldTextArea = styled.textarea`
+export const TextArea = styled.textarea`
   width: 100%;
   border-radius: 12px;
   padding: 1rem;
   font-size: 1.5rem;
   border: 1px solid #bcbcbc;
+  resize: none;
 `;
 
 export const TextCount = styled.p`

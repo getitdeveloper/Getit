@@ -28,6 +28,7 @@ import {
   LikeIcon,
   HorizontalLine,
   StudyProfile,
+  DefaultProfile,
 } from './styles';
 
 function RecruitPostDetail(): JSX.Element {
@@ -74,11 +75,13 @@ function RecruitPostDetail(): JSX.Element {
         <LeftContainer>
           {/* 팀 프로필 이미지 */}
           <ImageContainer>
-            <StudyProfile
-              src={studyProfile || UserImg}
-              alt='study profile'
-              studyProfile={studyProfile}
-            />
+            {studyProfile ? (
+              <StudyProfile src={studyProfile} alt='study profile' />
+            ) : (
+              <DefaultProfile>
+                <img src={UserImg} alt='untitled profile' />
+              </DefaultProfile>
+            )}
           </ImageContainer>
 
           {/* 스터디명 */}
