@@ -168,6 +168,7 @@ export const TextArea = styled.textarea`
   padding: 1rem;
   font-size: 1.5rem;
   border: 1px solid #bcbcbc;
+  resize: none;
 `;
 
 export const TextCount = styled.p`

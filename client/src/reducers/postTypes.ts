@@ -23,7 +23,6 @@ import {
 export interface InitialState {
   commonPost: IPostItem | null;
   likeCounts: { counts: number } | null;
-  // TODO 수정하기
   recruitPost: IRecruitPost | null;
   commonPostRequest: boolean;
   commonPostSuccess: boolean;

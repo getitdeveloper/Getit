@@ -54,10 +54,11 @@ export const RecruitCondition = styled.ul`
   opacity: 0.35;
 `;
 
-export const Content = styled.div`
+export const Content = styled.p`
   height: 50%;
   margin-top: 1rem;
   font-size: 1.5rem;
+  word-break: break-all;
 `;
 
 export const ContentDetail = styled.div`

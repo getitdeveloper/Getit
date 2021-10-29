@@ -8,6 +8,7 @@ import {
 } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector, RootStateOrAny } from 'react-redux';
+import moment from 'moment';
 import SelectImg from '@assets/images/Select.svg';
 import RadioButton from '@components/RadioButton';
 import Participants from '@components/ParticipantsList/index';
@@ -179,6 +180,7 @@ function RecruitPostForm(): JSX.Element {
 
   const handleSubmit = useCallback(() => {
     // 필수 입력 내역 미입력 체크
+
     if (
       userId === undefined ||
       selectTeamProfileId === null ||
@@ -187,11 +189,28 @@ function RecruitPostForm(): JSX.Element {
       (recruitDeveloper.checked === true && recruitDeveloper.count === 0) ||
       (recruitDesigner.checked === true && recruitDesigner.count === 0) ||
       (recruitPm.checked === true && recruitPm.count === 0) ||
+      Number.isNaN(Number(recruitDeveloper.count)) ||
+      Number.isNaN(Number(recruitDesigner.count)) ||
+      Number.isNaN(Number(recruitPm.count)) ||
       startDate === '' ||
       endDate === '' ||
       stacks === []
     ) {
       return alert('모든 항목을 작성해 주세요.');
+    }
+
+    // 모집기간 endDate가 startDate 보다 빠른 경우
+    const isafter = moment(startDate).isAfter(moment(endDate));
+    if (isafter) {
+      return alert('모집 기간을 제대로 설정해주세요.');
+    }
+
+    // 모집 시작 날이 현재보다 과거인 경우
+    const isBefore = moment(startDate).isBefore(
+      moment(Date.now()).add(-1, 'days'),
+    );
+    if (isBefore) {
+      return alert('모집 기간 시작일을 현재보다 과거로 설정할 수 없습니다.');
     }
 
     dispatch({
@@ -216,6 +235,7 @@ function RecruitPostForm(): JSX.Element {
     recruitDeveloper,
     recruitDesigner,
     recruitPm,
+    title,
     recruitContent,
     startDate,
     endDate,
@@ -231,7 +251,7 @@ function RecruitPostForm(): JSX.Element {
       <BlockWrapper>
         <LeftContainer>
           <TitleWrapper>
-            <div>팀프로필</div>
+            <div>팀 프로필</div>
             <div>(필수)</div>
           </TitleWrapper>
         </LeftContainer>
@@ -298,9 +318,10 @@ function RecruitPostForm(): JSX.Element {
           <TitleInput
             placeholder='제목을 작성해주세요.'
             value={title}
-            maxLength={500}
+            maxLength={100}
             onChange={handleTitle}
           />
+          <TextCount>{title.length}/ 100</TextCount>
         </RightContainer>
       </BlockWrapper>
       <BlockWrapper>

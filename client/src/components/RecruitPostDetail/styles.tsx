@@ -92,7 +92,7 @@ export const StudyProfile = styled.img`
   max-width: 100%;
   max-height: 100%;
   width: ${(props: ImgUrl) => (props.studyProfile ? '100%' : '40%')};
-  height: auto;
+  height: 12rem;
   padding: ${(props: ImgUrl) => (props.studyProfile ? 'none' : '30%')};
   background-color: ${(props: ImgUrl) =>
     props.studyProfile ? 'none' : '#e0e0e0'};
@@ -173,8 +173,4 @@ export const Stacks = styled.ul`
     width: fit-content;
     height: 44px;
   }
-`;
-
-export const JoinMember = styled.p`
-  ${TextMinxin}
 `;

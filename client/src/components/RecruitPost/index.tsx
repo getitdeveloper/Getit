@@ -82,11 +82,9 @@ function RecruitPost(): JSX.Element {
 
                   {/* 내용 */}
                   <Content>
-                    <p>
-                      {post.content.length >= 80
-                        ? `${post.content.substring(0, 80)}...`
-                        : post.content}
-                    </p>
+                    {post.content.length >= 80
+                      ? `${post.content.substring(0, 80)}...`
+                      : post.content}
                   </Content>
                 </StyledLink>
                 {/* 게시일, 좋아요, 댓글 */}

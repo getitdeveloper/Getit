@@ -1,6 +1,5 @@
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import { RECRUIT_POST_REQUEST } from '@reducers/actions';
-import { useEffect } from 'react';
 import { useDispatch, useSelector, RootStateOrAny } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import LoadingSpinner from '@components/LoadingSpinner';
@@ -8,6 +7,7 @@ import { IPostId } from '@types';
 import UserImg from '@assets/images/user.svg';
 import { ContentContainer } from '@assets/styles/page';
 import MemberType from '@components/RecruitMembers/index';
+import ParticipantsList from '@components/ParticipantsList/index';
 
 import {
   Container,
@@ -22,7 +22,6 @@ import {
   Period,
   Label,
   Stacks,
-  JoinMember,
   IconWrapper,
   IconContainer,
   MailIcon,
@@ -38,14 +37,6 @@ function RecruitPostDetail(): JSX.Element {
     (state: RootStateOrAny) => state.post.recruitPost,
   );
 
-  const startDate = useSelector(
-    (state: RootStateOrAny) => state.post.recruitPost?.start_date,
-  );
-
-  const endDate = useSelector(
-    (state: RootStateOrAny) => state.post.recruitPost?.end_date,
-  );
-
   const worker = useSelector((state: RootStateOrAny) => {
     const developer = state.post.recruitPost?.developer;
     const designer = state.post.recruitPost?.designer;
@@ -57,11 +48,12 @@ function RecruitPostDetail(): JSX.Element {
     };
   });
 
-  const stacks = useSelector(
-    (state: RootStateOrAny) => state.post.recruitPost?.stack,
-  );
   const studyProfile = useSelector(
     (state: RootStateOrAny) => state.post.recruitPost?.study?.image,
+  );
+
+  const participants = useSelector(
+    (state: RootStateOrAny) => state.post.recruitPost?.study?.members,
   );
 
   useEffect(() => {
@@ -141,19 +133,19 @@ function RecruitPostDetail(): JSX.Element {
             <br />
 
             <Label>모집 기간</Label>
-            <Period>{`${startDate} ~ ${endDate}`}</Period>
+            <Period>{`${recruitPostDetail.start_date} ~ ${recruitPostDetail.end_date}`}</Period>
             <br />
 
             <Label>기술 스택</Label>
             <Stacks>
-              {stacks.map((value: string) => {
+              {recruitPostDetail.stack.map((value: string) => {
                 return <li key={value}>{value}</li>;
               })}
             </Stacks>
             <br />
 
             <Label>참여중인 Get Iter</Label>
-            <JoinMember>현재 참여중인 Get Iter가 없습니다.</JoinMember>
+            <ParticipantsList participants={participants} />
             <br />
           </ContentWrapper>
         </RightContainer>
