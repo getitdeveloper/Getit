@@ -26,31 +26,25 @@ export const PageWrapper = styled.div`
 `;
 
 export const PageTitle = styled.h1`
-  width: 78%;
-  padding-top: 3.5rem;
-  padding-bottom: 1rem;
-  font-size: 1.2rem;
-  text-align: left;
+  width: 100%;
+  padding: 3.5rem 3rem 1rem 3rem;
+  font-size: 1.6rem;
   color: ${(props) => props.theme.colors.blackText};
-  @media ${(props) => props.theme.tablet} {
-    display: none;
-  }
 `;
 
-export const BlockWrapper = styled.div`
+export const ContentContainer = styled.div`
+  max-width: 128rem;
   width: 100%;
-  height: auto;
+  margin: 0 auto;
   background-color: #ffffff;
-  border-radius: 0.8rem;
+  height: auto;
+  padding: 3rem 2rem;
+  border-radius: 10px;
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
-  padding: ${(props: Size) => (props.padding ? props.padding : '4.5rem')};
   margin-bottom: 4.5rem;
   margin-top: 1rem;
 
-  @media ${(props) => props.theme.tablet} {
-    box-shadow: 0 0 0 rgba(0, 0, 0, 0);
-    margin: 0;
-    border-radius: 0;
-    padding-top: 2.5rem;
+  @media ${({ theme }) => theme.tablet} {
+    padding: 3rem 0;
   }
 `;

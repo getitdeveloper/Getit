@@ -5,9 +5,9 @@ import { useHistory, useLocation } from 'react-router-dom';
 
 import SearchIcon from '@material-ui/icons/Search';
 import { SEARCH_POST_LIST_REQUEST } from '@reducers/actions';
-import { SearchBarWrapper, SearchIconWrapper } from './styles';
+import { SearchBarForm, SearchIconWrapper } from './styles';
 
-function SearchBar(): JSX.Element {
+function SearchBar({ maxWidth }: { maxWidth: string }): JSX.Element {
   const dispatch = useDispatch();
   const history = useHistory();
   const { pathname } = useLocation();
@@ -49,20 +49,18 @@ function SearchBar(): JSX.Element {
   );
 
   return (
-    <SearchBarWrapper>
-      <form onSubmit={handleSubmit}>
-        <SearchIconWrapper>
-          <SearchIcon fontSize='large' />
-        </SearchIconWrapper>
-        <input
-          type='text'
-          placeholder='검색어를 입력하세요.'
-          value={search}
-          onChange={handleSearch}
-          ref={inputRef}
-        />
-      </form>
-    </SearchBarWrapper>
+    <SearchBarForm onSubmit={handleSubmit} maxWidth={maxWidth}>
+      <SearchIconWrapper>
+        <SearchIcon fontSize='large' />
+      </SearchIconWrapper>
+      <input
+        type='text'
+        placeholder='검색어를 입력하세요.'
+        value={search}
+        onChange={handleSearch}
+        ref={inputRef}
+      />
+    </SearchBarForm>
   );
 }
 

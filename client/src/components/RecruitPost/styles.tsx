@@ -36,19 +36,14 @@ export const GridWrapper = styled.div`
   }
 `;
 
-export const MemberTypeWrapper = styled.ul`
-  display: flex;
-  list-style: none;
-  padding: 0;
-  margin: 0;
-`;
-
 export const Title = styled.div`
   padding-top: 1.4rem;
 
   h1 {
     font-size: 2rem;
     color: ${({ theme }) => theme.colors.blackText};
+    text-overflow: ellipsis;
+    overflow: hidden;
   }
 `;
 
@@ -59,30 +54,27 @@ export const RecruitCondition = styled.ul`
   opacity: 0.35;
 `;
 
-export const Content = styled.div`
+export const Content = styled.p`
   height: 50%;
   margin-top: 1rem;
   font-size: 1.5rem;
+  word-break: break-all;
 `;
 
 export const ContentDetail = styled.div`
+  display: flex;
   position: absolute;
+  opacity: 0.55;
+  font-size: 1.4rem;
   right: 1rem;
   bottom: 0;
   padding: 2rem;
-  height: auto;
   opacity: 0.55;
 
-  li {
-    list-style: none;
-    font-size: 1.5rem;
-    display: inline-block;
-
-    padding-right: 0.5rem;
-
-    span {
-      padding-right: 0.5rem;
-    }
+  div {
+    padding: 0 0.5rem;
+    display: flex;
+    justify-content: center;
   }
 `;
 
@@ -92,13 +84,10 @@ export const StyledLink = styled(Link)`
 `;
 
 export const LikeIcon = styled(FavoriteBorderIcon)`
+  margin: 0 0.4rem;
   vertical-align: middle;
 `;
 export const CommentIcon = styled(ChatBubbleOutlineIcon)`
+  margin: 0 0.4rem;
   vertical-align: middle;
-`;
-
-export const PagingWrapper = styled.div`
-  display: flex;
-  justify-content: center;
 `;

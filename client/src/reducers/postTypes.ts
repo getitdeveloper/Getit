@@ -12,12 +12,17 @@ import {
   RECRUIT_POST_REQUEST,
   RECRUIT_POST_SUCCESS,
   RECRUIT_POST_FAILURE,
+  TEAM_PROFILE_REGISTER_REQUEST,
+  TEAM_PROFILE_REGISTER_SUCCESS,
+  TEAM_PROFILE_REGISTER_FAILURE,
+  RECRUIT_POSTING_FAILURE,
+  RECRUIT_POSTING_SUCCESS,
+  RECRUIT_POSTING_REQUEST,
 } from './actions';
 
 export interface InitialState {
   commonPost: IPostItem | null;
   likeCounts: { counts: number } | null;
-  // TODO 수정하기
   recruitPost: IRecruitPost | null;
   commonPostRequest: boolean;
   commonPostSuccess: boolean;
@@ -31,6 +36,12 @@ export interface InitialState {
   recruitPostRequest: boolean;
   recruitPostSuccess: boolean;
   recruitPostFailure: string | null;
+  recruitPostingRequest: boolean;
+  recruitPostingSuccess: boolean;
+  recruitPostingFailure: string | null;
+  teamProfileRegisterRequest: boolean;
+  teamProfileRegisterSuccess: boolean;
+  teamProfileRegisterFailure: string | null;
 }
 
 // 자유/질문게시판 글 가져오기
@@ -95,6 +106,32 @@ export interface RecruitPostDetailFailure {
   error: string;
 }
 
+export interface TeamProfileRegisterRequest {
+  type: typeof TEAM_PROFILE_REGISTER_REQUEST;
+}
+
+export interface TeamProfileRegisterSuccess {
+  type: typeof TEAM_PROFILE_REGISTER_SUCCESS;
+}
+
+export interface TeamProfileRegisterFailure {
+  type: typeof TEAM_PROFILE_REGISTER_FAILURE;
+  error: string;
+}
+
+export interface RecruitPostingRequest {
+  type: typeof RECRUIT_POSTING_REQUEST;
+}
+
+export interface RecruitPostingSuccess {
+  type: typeof RECRUIT_POSTING_SUCCESS;
+}
+
+export interface RecruitPostingFailure {
+  type: typeof RECRUIT_POSTING_FAILURE;
+  error: string;
+}
+
 export type PostActions =
   | CommonPostRequest
   | CommonPostSuccess
@@ -107,4 +144,10 @@ export type PostActions =
   | CommonPostLikeFailure
   | RecruitPostDetailRequest
   | RecruitPostDetailSuccess
-  | RecruitPostDetailFailure;
+  | RecruitPostDetailFailure
+  | TeamProfileRegisterRequest
+  | TeamProfileRegisterSuccess
+  | TeamProfileRegisterFailure
+  | RecruitPostingRequest
+  | RecruitPostingSuccess
+  | RecruitPostingFailure;

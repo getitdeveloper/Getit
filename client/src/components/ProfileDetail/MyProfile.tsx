@@ -1,6 +1,5 @@
-import * as React from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
-import { useState, useEffect } from 'react';
 import {
   USER_PROFILE_EDIT_REQUEST,
   PORTFOLIO_LIST_REQUEST,
@@ -9,22 +8,24 @@ import UserImg from '@assets/images/user.svg';
 import { HorizontalLine } from '@assets/styles/commons';
 import StackInput from '@components/StackInput';
 import LoadingSpinner from '@components/LoadingSpinner';
+import Portfoilo from '@components/Portfolio';
+import Project from '@components/Project';
 import {
   MainProfile,
+  ProfileWrapper,
+  ButtonWrapper,
   ProfileImage,
+  PersonalInfo,
   PersonalInfoWrapper,
   ProfileRight,
   IntroWrapper,
   SubTitleWrapper,
-  useStyles,
-  PersonalInfo,
   SubmitButton,
+  BoundaryText,
 } from './styles';
-import Portfoilo from '../Portfolio';
-import Project from '../Project';
+import { IUpdatedProfileInfo } from './types';
 
-function MyProfile() {
-  const classes = useStyles();
+function MyProfile(): JSX.Element {
   const profileInfo = useSelector(
     (state: RootStateOrAny) => state.user.profileInfo,
   );
@@ -47,8 +48,12 @@ function MyProfile() {
     });
   }, []);
 
-  const onChange = (e: any) => {
-    const { name, value } = e.target;
+  const onChange = (
+    event:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLTextAreaElement>,
+  ) => {
+    const { name, value } = event.target;
     switch (name) {
       case 'nickname':
         setNickname(value);
@@ -67,7 +72,7 @@ function MyProfile() {
     }
   };
 
-  const onSubmit = () => {
+  const onSubmit = useCallback(() => {
     if (
       intro === '' ||
       editedNickname === '' ||
@@ -76,7 +81,7 @@ function MyProfile() {
     ) {
       return alert('닉네임, 이메일, 직업, 자기소개 부분은 빈칸일 수 없습니다!');
     }
-    const updatedProfileInfo: any = {
+    const updatedProfileInfo: IUpdatedProfileInfo = {
       user: profileInfo.user,
       user_pk: profileInfo.user_pk,
       nickname: editedNickname,
@@ -88,7 +93,6 @@ function MyProfile() {
       stack: editedStacks,
     };
 
-    console.log(updatedProfileInfo);
     dispatch({
       type: USER_PROFILE_EDIT_REQUEST,
       data: {
@@ -96,7 +100,14 @@ function MyProfile() {
         user_pk: String(profileInfo.user_pk),
       },
     });
-  };
+  }, [
+    intro,
+    editedNickname,
+    editedEmail,
+    editedJob,
+    editedStacks,
+    profileInfo,
+  ]);
 
   if (!portfolioList) {
     return <LoadingSpinner />;
@@ -105,72 +116,64 @@ function MyProfile() {
   return (
     <ProfileRight>
       <MainProfile>
-        <ProfileImage src={UserImg} alt='profileImage' />
-        {/* {profileDummyData.img ? (
-            <ProfileImage src={profileDummyData.img} alt='profileImage' />
-          ) : (
-            
-          )} */}
-        <div>
-          <PersonalInfoWrapper>
-            닉네임{' '}
-            <PersonalInfo
-              name='nickname'
-              value={editedNickname}
-              onChange={onChange}
-            />
-          </PersonalInfoWrapper>
-          <PersonalInfoWrapper>
-            이메일{' '}
-            <PersonalInfo
-              name='email'
-              value={editedEmail}
-              onChange={onChange}
-            />
-          </PersonalInfoWrapper>
-          <PersonalInfoWrapper>
-            {' '}
-            직업{' '}
-            <PersonalInfo
-              name='job'
-              value={editedJob}
-              onChange={onChange}
-            />{' '}
-          </PersonalInfoWrapper>
-        </div>
+        <ProfileWrapper>
+          <ProfileImage src={UserImg} alt='profileImage' />
+          <ButtonWrapper>
+            <button type='submit'>수정</button>
+            <button type='submit'>삭제</button>
+          </ButtonWrapper>
+        </ProfileWrapper>
+        <PersonalInfoWrapper>
+          <PersonalInfo>
+            <div>
+              <label htmlFor='nickname'>닉네임</label>
+              <input
+                id='nickname'
+                name='nickname'
+                value={editedNickname}
+                onChange={onChange}
+              />
+            </div>
+            <div>
+              <label htmlFor='nickname'>이메일</label>
+              <input name='email' value={editedEmail} onChange={onChange} />
+            </div>
+            <div>
+              <label htmlFor='nickname'>직업</label>
+              <input name='job' value={editedJob} onChange={onChange} />
+            </div>
+          </PersonalInfo>
+        </PersonalInfoWrapper>
       </MainProfile>
 
-      <IntroWrapper name='intro' value={intro} onChange={onChange} />
-
+      <div>
+        <IntroWrapper name='intro' value={intro} onChange={onChange} />
+      </div>
       <SubTitleWrapper>
         <HorizontalLine width='40%' />
-        <p>기술스택</p>
+        <BoundaryText>기술스택</BoundaryText>
         <HorizontalLine width='40%' />
       </SubTitleWrapper>
 
-      <StackInput
-        initialStacks={editedStacks}
-        setInitialStacks={setStacks}
-        placeHolder=''
-      />
+      <StackInput initialStacks={editedStacks} setInitialStacks={setStacks} />
 
       <SubTitleWrapper>
         <HorizontalLine width='40%' />
-        <p>포트폴리오</p>
+        <BoundaryText>포트폴리오</BoundaryText>
         <HorizontalLine width='40%' />
       </SubTitleWrapper>
       {portfolioList && <Portfoilo portfolioList={portfolioList} />}
 
       <SubTitleWrapper>
         <HorizontalLine width='40%' />
-        <p>프로젝트 현황</p>
+        <BoundaryText>프로젝트 현황</BoundaryText>
         <HorizontalLine width='40%' />
       </SubTitleWrapper>
       <Project />
 
       <SubTitleWrapper>
         <HorizontalLine width='40%' />
-        <p>완료된 프로젝트</p>
+        <BoundaryText>완료된 프로젝트</BoundaryText>
         <HorizontalLine width='40%' />
       </SubTitleWrapper>
       <Project finished />

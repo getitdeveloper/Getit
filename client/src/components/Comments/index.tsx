@@ -6,7 +6,7 @@ import {
   COMMENT_LIST_REQUEST,
 } from '@reducers/actions';
 import { IComment } from '@types';
-import { BlockWrapper } from '@assets/styles/page';
+import { ContentContainer } from '@assets/styles/page';
 import UserImg from '@assets/images/user.svg';
 import LoadingSpinner from '@components/LoadingSpinner';
 import {
@@ -24,15 +24,16 @@ import {
   CreatedTime,
 } from './styles';
 
-function Comments(props: any) {
-  const { boardId } = props;
+function Comments({ boardId }: { boardId: string }): JSX.Element {
   const dispatch = useDispatch();
   const [newContent, setNewContent] = React.useState('');
+
   const user = useSelector((state: RootStateOrAny) => state.user);
   const userId = user.profileInfo?.user_pk;
   const commentList = useSelector(
     (state: RootStateOrAny) => state.commentList.commentList,
   );
+
   const [clicked, setClicked] = React.useState(1);
 
   React.useEffect(() => {
@@ -44,12 +45,15 @@ function Comments(props: any) {
     });
   }, [clicked]);
 
-  const onChange = (e: any) => {
-    const { value } = e.target;
-    setNewContent(value);
-  };
+  const onChange = React.useCallback(
+    (e: any) => {
+      const { value } = e.target;
+      setNewContent(value);
+    },
+    [newContent],
+  );
 
-  const onSubmit = () => {
+  const onSubmit = React.useCallback(() => {
     if (!userId) {
       return alert('로그인 한 후에 이용가능하십니다!');
     }
@@ -62,29 +66,26 @@ function Comments(props: any) {
       },
     };
     setNewContent('');
-    try {
-      dispatch({
-        type: COMMENT_REGISTER_REQUEST,
-        data: commentData,
-      });
-    } catch (error) {
-      console.log(error);
-    }
+
+    dispatch({
+      type: COMMENT_REGISTER_REQUEST,
+      data: commentData,
+    });
+
     setClicked(clicked * -1);
-  };
+  }, [userId, boardId, newContent]);
 
   if (!commentList) {
     return <LoadingSpinner />;
   }
 
   return (
-    <BlockWrapper>
+    <ContentContainer>
       <CommentForm>
         <WriterImage src={UserImg} alt='profile' />
         <CommentInput
           name='content'
           type='text'
-          width='100%'
           value={newContent}
           onChange={onChange}
         />
@@ -94,7 +95,7 @@ function Comments(props: any) {
       </CommentForm>
 
       {commentList.length === 0 ? (
-        <NoComments>등록된 댓글이 없습니다!</NoComments>
+        <NoComments>등록된 댓글이 없습니다.</NoComments>
       ) : (
         <CommentWrapper>
           {commentList.map((contents: IComment) => (
@@ -108,8 +109,6 @@ function Comments(props: any) {
                   <CreatedTime>
                     {moment(`${contents.create_at}`).fromNow()}
                   </CreatedTime>
-
-                  {/* <p>{contents.create_at}</p> */}
                 </CommentDetail>
                 <CommentContent>{contents.content}</CommentContent>
               </CommentDetailWrapper>
@@ -117,7 +116,7 @@ function Comments(props: any) {
           ))}
         </CommentWrapper>
       )}
-    </BlockWrapper>
+    </ContentContainer>
   );
 }
 

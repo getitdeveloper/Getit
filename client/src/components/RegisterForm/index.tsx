@@ -4,6 +4,7 @@ import { useSelector, RootStateOrAny, useDispatch } from 'react-redux';
 import { useHistory, Link } from 'react-router-dom';
 import LogoImg from '@assets/images/Logo.svg';
 import SelectImg from '@assets/images/Select.svg';
+import StacksInput from '@components/StackInput/index';
 import { IRegisterData } from './types';
 import {
   RegisterWrapper,
@@ -61,7 +62,7 @@ function RegisterForm(): JSX.Element {
   const [emailValidationError, setEmailValidationError] = useState(false);
   const [introduce, setIntroduce] = useState('');
   const [introduceError, setIntroduceError] = useState(false);
-  const [stacks, setStacks] = useState('');
+  const [stacks, setStacks] = useState<Array<string>>([]);
   const [stacksError, setStacksError] = useState(false);
 
   useEffect(() => {
@@ -82,6 +83,12 @@ function RegisterForm(): JSX.Element {
       return alert('이미 사용 중인 닉네임입니다.');
     }
   }, [nickDoubleCheck, message]);
+
+  useEffect(() => {
+    if (stacks.length > 0) {
+      setStacksError(false);
+    }
+  }, [stacks]);
 
   // 회원가입 폼 제출 시 입력값 체크
   const handleSubmit = useCallback(
@@ -144,17 +151,6 @@ function RegisterForm(): JSX.Element {
         return alert('모든 항목을 작성해 주세요.');
       }
 
-      // 쉼표로 기술 구분
-      const stacksSplitList = stacks.split(',');
-      // 문자열 앞 뒤 white space(공백) 제거
-      const removeWhiteSpaceList = stacksSplitList.map((stack) =>
-        stack.replaceAll(/^\s+|\s+$/gm, ''),
-      );
-      // 쉼표만 나열한 경우 stack 목록에 미포함하도록 제거
-      const resultStackList = removeWhiteSpaceList.filter(
-        (stack) => stack.length >= 1,
-      );
-
       const data: IRegisterData = {
         user: userId,
         user_pk: userId,
@@ -163,12 +159,13 @@ function RegisterForm(): JSX.Element {
         level,
         email,
         info: introduce,
-        stack: resultStackList,
+        stack: stacks,
       };
 
-      // console.log(data);
+      console.log(data);
 
       // 회원 가입 요청
+
       dispatch({
         type: USER_PROFILE_REGISTER_REQUEST,
         data,
@@ -256,13 +253,6 @@ function RegisterForm(): JSX.Element {
       setIntroduceError(false);
     },
     [introduce, introduceError],
-  );
-  const handleChangeStacks = useCallback(
-    (event) => {
-      setStacks(event.target.value);
-      setStacksError(false);
-    },
-    [stacks, stacksError],
   );
 
   const handleSpacebar = useCallback((event) => {
@@ -439,15 +429,13 @@ function RegisterForm(): JSX.Element {
         <DivideSection>
           <label htmlFor='user-stacks'>
             <StyledLabel>사용 가능한 기술 스택(필수)</StyledLabel>
-            <div>
-              <StyldTextarea
-                name='user-stacks'
-                placeholder='기술 스택을 작성해주세요. 쉼표로 구분해서 작성해주세요.'
-                required
-                onChange={handleChangeStacks}
-                maxLength={500}
-              />
-            </div>
+            <StacksInput
+              // name='user-stacks'
+              initialStacks={stacks}
+              setInitialStacks={setStacks}
+              placeHolder='사용 가능한 기술 스택을 입력하세요.'
+              heigth='11rem'
+            />
           </label>
           {stacksError && (
             <ErrorMessageTextarea>

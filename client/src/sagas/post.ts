@@ -1,4 +1,5 @@
 import axios from 'axios';
+
 import { all, call, fork, put, takeLatest } from '@redux-saga/core/effects';
 import {
   COMMON_POST_SUCCESS,
@@ -13,8 +14,19 @@ import {
   RECRUIT_POST_REQUEST,
   RECRUIT_POST_SUCCESS,
   RECRUIT_POST_FAILURE,
+  RECRUIT_POSTING_REQUEST,
+  RECRUIT_POSTING_SUCCESS,
+  RECRUIT_POSTING_FAILURE,
+  TEAM_PROFILE_REGISTER_REQUEST,
+  TEAM_PROFILE_REGISTER_SUCCESS,
+  TEAM_PROFILE_REGISTER_FAILURE,
 } from '../reducers/actions';
-import { PostData } from './postTypes';
+import {
+  PostData,
+  TeamProfileData,
+  TeamProfileApiData,
+  PostingData,
+} from './postTypes';
 
 // 자유/질문 게시글 받아오기
 const requestCommonPost = (id: string) => {
@@ -85,7 +97,7 @@ function* requestCommonPostLikeSaga(action: any): any {
   }
 }
 
-// 모집 게시판 게시글 상세내용
+// 모집 게시판 게시글 상세내용 가져오기
 const requestRecruitPost = (data: string) => {
   return axios.get(`/api/recruitmentboard/${data}`);
 };
@@ -108,6 +120,60 @@ function* requestRecruitPostSaga(action: { type: string; data: string }): any {
   }
 }
 
+// 스터디 모집 게시글 등록
+const requestRecruitPosting = (data: PostingData) => {
+  return axios.post(`/api/recruitmentboard/`, data);
+};
+
+function* requestRecruitPostingSaga(action: {
+  type: string;
+  data: PostingData;
+  history: any;
+}): any {
+  try {
+    const response = yield call(requestRecruitPosting, action.data);
+
+    yield put({
+      type: RECRUIT_POSTING_SUCCESS,
+      data: response.data,
+    });
+    alert('스터디 모집 게시글 작성 완료');
+    action.history.push('/');
+  } catch (error) {
+    yield put({
+      type: RECRUIT_POSTING_FAILURE,
+      error,
+    });
+    alert('스터디 모집 게시글 작성 오류. 잠시 후 다시 시도해 주세요.');
+  }
+}
+
+// 팀 프로필 생성
+const requestTeamProfilePostRegister = (data: TeamProfileApiData) => {
+  return axios.post(`/api/${data.userId}/teamprofile/`, data.formData);
+};
+
+function* requestTeamProfilePostRegisterSaga(action: TeamProfileData): any {
+  try {
+    const response = yield call(requestTeamProfilePostRegister, {
+      formData: action.data,
+      userId: action.userId,
+    });
+    yield put({
+      type: TEAM_PROFILE_REGISTER_SUCCESS,
+      data: response.data,
+    });
+    alert('팀 프로필 생성 완료');
+    action.history.push('/myprofile');
+  } catch (error) {
+    yield put({
+      type: TEAM_PROFILE_REGISTER_FAILURE,
+      error,
+    });
+    alert('팀 프로필 생성 오류. 잠시 후 다시 시도해 주세요.');
+  }
+}
+
 function* watchRequestCommonPost() {
   yield takeLatest(COMMON_POST_REQUEST, requestCommonPostSaga);
 }
@@ -124,12 +190,25 @@ function* watchRequestRecruitPost() {
   yield takeLatest(RECRUIT_POST_REQUEST, requestRecruitPostSaga);
 }
 
+function* watchRequestRecruitPosting() {
+  yield takeLatest(RECRUIT_POSTING_REQUEST, requestRecruitPostingSaga);
+}
+
+function* watchRequestTeamProfilePostRegister() {
+  yield takeLatest(
+    TEAM_PROFILE_REGISTER_REQUEST,
+    requestTeamProfilePostRegisterSaga,
+  );
+}
+
 function* postSaga() {
   yield all([
     fork(watchRequestCommonPost),
     fork(watchRequestCommonPostRegister),
     fork(watchRequestCommonPostLike),
     fork(watchRequestRecruitPost),
+    fork(watchRequestRecruitPosting),
+    fork(watchRequestTeamProfilePostRegister),
   ]);
 }
 

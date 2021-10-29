@@ -114,6 +114,10 @@ export interface IRecruitPost {
     image: string | null;
     name: string;
     user: number;
+    members: Array<{
+      member: string;
+      nickname: string;
+    }>;
   };
   title: string;
   user: IUser;

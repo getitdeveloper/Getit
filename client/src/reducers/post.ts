@@ -13,6 +13,12 @@ import {
   RECRUIT_POST_REQUEST,
   RECRUIT_POST_SUCCESS,
   RECRUIT_POST_FAILURE,
+  TEAM_PROFILE_REGISTER_REQUEST,
+  TEAM_PROFILE_REGISTER_SUCCESS,
+  TEAM_PROFILE_REGISTER_FAILURE,
+  RECRUIT_POSTING_REQUEST,
+  RECRUIT_POSTING_SUCCESS,
+  RECRUIT_POSTING_FAILURE,
 } from './actions';
 
 // 초기 상태
@@ -32,6 +38,12 @@ const initialState: InitialState = {
   recruitPostRequest: false,
   recruitPostSuccess: false,
   recruitPostFailure: null,
+  recruitPostingRequest: false,
+  recruitPostingSuccess: false,
+  recruitPostingFailure: null,
+  teamProfileRegisterRequest: false,
+  teamProfileRegisterSuccess: false,
+  teamProfileRegisterFailure: null,
 };
 
 const reducer = (state = initialState, action: PostActions): InitialState =>
@@ -102,7 +114,36 @@ const reducer = (state = initialState, action: PostActions): InitialState =>
         draft.recruitPostSuccess = false;
         draft.recruitPostFailure = action.error;
         break;
-
+      case RECRUIT_POSTING_REQUEST:
+        draft.recruitPostingRequest = true;
+        draft.recruitPostingSuccess = false;
+        draft.recruitPostingFailure = null;
+        break;
+      case RECRUIT_POSTING_SUCCESS:
+        draft.recruitPostingRequest = false;
+        draft.recruitPostingSuccess = true;
+        draft.recruitPostingFailure = null;
+        break;
+      case RECRUIT_POSTING_FAILURE:
+        draft.recruitPostingRequest = false;
+        draft.recruitPostingSuccess = false;
+        draft.recruitPostingFailure = action.error;
+        break;
+      case TEAM_PROFILE_REGISTER_REQUEST:
+        draft.teamProfileRegisterRequest = true;
+        draft.teamProfileRegisterSuccess = false;
+        draft.teamProfileRegisterFailure = null;
+        break;
+      case TEAM_PROFILE_REGISTER_SUCCESS:
+        draft.teamProfileRegisterRequest = false;
+        draft.teamProfileRegisterSuccess = true;
+        draft.teamProfileRegisterFailure = null;
+        break;
+      case TEAM_PROFILE_REGISTER_FAILURE:
+        draft.teamProfileRegisterRequest = false;
+        draft.teamProfileRegisterSuccess = false;
+        draft.teamProfileRegisterFailure = action.error;
+        break;
       default:
         return state;
     }

@@ -8,8 +8,8 @@ import { RECRUIT_POST_LIST_REQUEST } from '@reducers/actions';
 import LoadingSpinner from '@components/LoadingSpinner';
 import Paging from '@components/Paging';
 import { IRecruitPost } from '@types';
+import { PageBackground } from '@assets/styles/page';
 import {
-  MemberTypeWrapper,
   Title,
   RecruitCondition,
   Content,
@@ -19,7 +19,6 @@ import {
   Post,
   LikeIcon,
   CommentIcon,
-  PagingWrapper,
 } from './styles';
 
 function RecruitPost(): JSX.Element {
@@ -45,7 +44,7 @@ function RecruitPost(): JSX.Element {
   }
 
   return (
-    <div>
+    <PageBackground>
       <GridWrapper>
         <Grid container spacing={3}>
           {recruitPostList.map((post: IRecruitPost) => (
@@ -53,19 +52,20 @@ function RecruitPost(): JSX.Element {
               <Post>
                 <StyledLink to={`/recruitBoard/${post.id}`}>
                   {/* 구인 종류 */}
-                  <MemberTypeWrapper>
-                    {post.worker.map((member: string) => {
-                      return (
-                        <li key={member}>
-                          <MemberType member={member} />
-                        </li>
-                      );
-                    })}
-                  </MemberTypeWrapper>
+
+                  <MemberType
+                    developer={post?.developer}
+                    designer={post?.designer}
+                    pm={post?.pm}
+                  />
 
                   {/* 제목 */}
                   <Title key={post.title}>
-                    <h1>{post.title}</h1>
+                    <h1>
+                      {post.title.length >= 20
+                        ? `${post.title.substring(0, 20)}...`
+                        : post.title}
+                    </h1>
                   </Title>
 
                   {/* 인원 및 기간 */}
@@ -82,28 +82,24 @@ function RecruitPost(): JSX.Element {
 
                   {/* 내용 */}
                   <Content>
-                    <p>{`${post.content.substring(0, 80)}...`}</p>
+                    {post.content.length >= 80
+                      ? `${post.content.substring(0, 80)}...`
+                      : post.content}
                   </Content>
                 </StyledLink>
                 {/* 게시일, 좋아요, 댓글 */}
                 <ContentDetail>
-                  <ul>
-                    <li>{moment(post.end_date).format('YYYY.MM.DD')}</li>
-                    <li>
-                      <span>
-                        <LikeIcon />
-                      </span>
-                      <span>{post.likes}</span>
-                    </li>
-                    <li>
-                      <StyledLink to={`/recruitBoard/${post.id}`}>
-                        <span>
-                          <CommentIcon />
-                        </span>
-                        <span>{post.comments}</span>
-                      </StyledLink>
-                    </li>
-                  </ul>
+                  <div>{moment(post.end_date).format('YYYY.MM.DD')}</div>
+                  <div>
+                    <LikeIcon />
+                    {post.likes}
+                  </div>
+                  <div>
+                    <StyledLink to={`/recruitBoard/${post.id}`}>
+                      <CommentIcon />
+                      {post.comments}
+                    </StyledLink>
+                  </div>
                 </ContentDetail>
               </Post>
             </Grid>
@@ -111,14 +107,12 @@ function RecruitPost(): JSX.Element {
         </Grid>
       </GridWrapper>
 
-      {/* <PagingWrapper> */}
       <Paging
         activePage={page}
         totalPage={recruitPostTotalCount}
         setPage={setPage}
       />
-      {/* </PagingWrapper> */}
-    </div>
+    </PageBackground>
   );
 }
 

@@ -115,12 +115,18 @@ export const LoginButton = styled.button`
 // Navigation Bar Styles
 export const Nav = styled.ul`
   display: flex;
-  flex-direction: row;
   margin: 0 auto;
+  align-items: center;
 
+  /* searchBar */
+  li:nth-child(1) {
+    width: 36.75rem;
+  }
+  /* searchBar를 제외한 나머지 메뉴 */
   li {
     font-size: 1.6rem;
     padding: 0 0.8rem;
+    margin: 0 1rem;
   }
 
   @media ${({ theme }) => theme.tablet} {

@@ -5,20 +5,36 @@ import AddIcon from '@material-ui/icons/Add';
 export const RecruitPostFormWrapper = styled.div`
   background-color: #ffffff;
   padding: 3rem 5rem;
+  border-radius: 10px;
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+
+  @media ${({ theme }) => theme.tablet} {
+    padding: 1rem;
+  }
 `;
 
 export const StyledLink = styled(Link)`
   text-decoration: none;
   color: ${({ theme }) => theme.colors.main};
-  width: 20%;
-  display: flex;
+  width: fit-content;
+  display: inline-flex;
   align-items: center;
   font-size: 1.2rem;
+
+  @media ${({ theme }) => theme.tablet} {
+    div & :nth-child(2) {
+      display: none;
+    }
+  }
 `;
 
 export const BlockWrapper = styled.div`
   display: flex;
   margin: 3rem 0;
+
+  @media ${({ theme }) => theme.tablet} {
+    flex-direction: column;
+  }
 `;
 
 export const LeftContainer = styled.div`
@@ -26,29 +42,55 @@ export const LeftContainer = styled.div`
   font-size: 1.5rem;
   font-weight: 500;
   font-stretch: normal;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  @media ${({ theme }) => theme.tablet} {
+    width: 100%;
+    display: initial;
+    flex-direction: initial;
+    align-items: initial;
+    justify-content: initial;
+    margin-left: 0.5rem;
+  }
 `;
 
 export const RightContainer = styled.div`
   width: 80%;
+  margin: 1rem 0;
 
-  ul {
-    display: flex;
+  @media ${({ theme }) => theme.tablet} {
+    width: 100%;
   }
 `;
 
 export const Period = styled.div`
-  display: flex;
+  display: inline-flex;
   div & :nth-child(2) {
     font-size: 1.6rem;
     margin: 0 2rem;
-    display: flex;
+    display: inline-flex;
     align-items: center;
+  }
+
+  @media ${({ theme }) => theme.tablet} {
+    width: 100%;
   }
 `;
 
 export const SelectWrapper = styled.div`
   width: 35%;
   margin-right: 1rem;
+
+  @media ${({ theme }) => theme.tablet} {
+    width: 95%;
+  }
+
+  /* @media ${({ theme }) => theme.mobile} {
+    width: 90%;
+  } */
 `;
 
 export const SelectImgWrapper = styled.div`
@@ -56,7 +98,7 @@ export const SelectImgWrapper = styled.div`
   position: relative;
   img {
     position: absolute;
-    right: 0.5rem;
+    right: 0.1rem;
     top: 0.5rem;
     background-color: #ffffff;
     padding: 1.4rem;
@@ -81,18 +123,23 @@ export const AddProjectIcon = styled(AddIcon)`
   color: #ffffff;
   border-radius: 50%;
   margin-right: 1rem;
+  @media ${({ theme }) => theme.tablet} {
+    margin-right: 0rem;
+    && {
+      font-size: 2rem;
+    }
+  }
 `;
 
 export const ContentWrapper = styled.div`
   display: flex;
 `;
 
-// TODO 공통으로 빼기?
 export const Stacks = styled.ul`
   display: flex;
   min-height: 5rem;
   list-style: none;
-  /* margin-bottom: 1.4rem; */
+  flex-wrap: wrap;
 
   li {
     background-color: #f5f5f5;
@@ -100,11 +147,19 @@ export const Stacks = styled.ul`
     display: flex;
     align-items: center;
     padding: 0 1.5rem;
-    margin-right: 1rem;
+    margin: 1rem;
     border-radius: 12px;
     width: fit-content;
     height: 44px;
   }
+`;
+
+export const TitleInput = styled.input`
+  width: 100%;
+  border-radius: 12px;
+  padding: 1rem;
+  font-size: 1.5rem;
+  border: 1px solid #bcbcbc;
 `;
 
 export const TextArea = styled.textarea`
@@ -112,6 +167,14 @@ export const TextArea = styled.textarea`
   border-radius: 12px;
   padding: 1rem;
   font-size: 1.5rem;
+  border: 1px solid #bcbcbc;
+  resize: none;
+`;
+
+export const TextCount = styled.p`
+  font-size: 1.4rem;
+  padding-right: 1rem;
+  float: right;
 `;
 
 export const DatePicker = styled.input`
@@ -122,6 +185,13 @@ export const DatePicker = styled.input`
   border: solid 1px #bcbcbc;
   text-align: center;
   font-size: 1.6rem;
+  @media ${({ theme }) => theme.tablet} {
+    width: 100%;
+  }
+`;
+
+export const RecruitMemberWrapper = styled.ul`
+  display: inline-flex;
 `;
 
 export const SelectItem = styled.div`
@@ -131,9 +201,9 @@ export const SelectItem = styled.div`
   font-size: 1.5rem;
 
   input {
-    margin: 1rem;
+    margin: 1rem 1rem 1rem 0.4rem;
     appearance: none;
-    border: 3px double gray;
+    border: 0.2rem solid gray;
     width: 1.5rem;
     height: 1.5rem;
     border-radius: 50%;
@@ -149,7 +219,7 @@ export const CountMember = styled.div`
   font-size: 1.5rem;
 
   input {
-    width: 70%;
+    width: 75%;
     margin-right: 0.5rem;
     height: 4rem;
     border-radius: 12px;
@@ -170,4 +240,14 @@ export const Button = styled.button`
   background-color: ${({ theme }) => theme.colors.main};
   border-style: none;
   color: #ffffff;
+`;
+
+export const TitleWrapper = styled.div`
+  text-align: center;
+  @media ${({ theme }) => theme.tablet} {
+    display: flex;
+    div {
+      margin-right: 0.5rem;
+    }
+  }
 `;

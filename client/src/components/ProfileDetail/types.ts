@@ -24,3 +24,20 @@ export const navItem = [
     id: 5,
   },
 ];
+
+export interface INavItem {
+  menu: string;
+  id: number;
+}
+
+export interface IUpdatedProfileInfo {
+  email: string;
+  git: string | null;
+  info: string;
+  job: string;
+  level: string | null;
+  nickname: string;
+  stack: Array<string>;
+  user: number;
+  user_pk: number;
+}

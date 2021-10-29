@@ -130,9 +130,9 @@ function* requestUserLogInSaga(action: any) {
 
     console.log('로그인 요청 응답 성공 ===>', response.data);
 
-    //! 로컬 테스트용
-    // const accessToken = response.data.access_token;
-    // axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
+    // TODO 로컬 테스트용 auth 권한 설정
+    const accessToken = response.data.access_token;
+    axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
 
     yield put({
       type: USER_LOGIN_SUCCESS,

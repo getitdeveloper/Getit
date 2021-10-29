@@ -1,24 +1,20 @@
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import { RECRUIT_POST_REQUEST } from '@reducers/actions';
-import { useEffect } from 'react';
 import { useDispatch, useSelector, RootStateOrAny } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import LoadingSpinner from '@components/LoadingSpinner';
 import { IPostId } from '@types';
 import UserImg from '@assets/images/user.svg';
+import { ContentContainer } from '@assets/styles/page';
 import MemberType from '@components/RecruitMembers/index';
+import ParticipantsList from '@components/ParticipantsList/index';
 
 import {
-  RecruitPostDetailWrapper,
-  ContainerWrapper,
   Container,
   LeftContainer,
   RightContainer,
-  ImageBackground,
-  ImageWrapper,
   ImageContainer,
   StudyName,
-  MemberTypeWrapper,
   ContentWrapper,
   TitleText,
   ContentText,
@@ -26,12 +22,13 @@ import {
   Period,
   Label,
   Stacks,
-  JoinMember,
   IconWrapper,
   IconContainer,
   MailIcon,
   LikeIcon,
   HorizontalLine,
+  StudyProfile,
+  DefaultProfile,
 } from './styles';
 
 function RecruitPostDetail(): JSX.Element {
@@ -41,30 +38,23 @@ function RecruitPostDetail(): JSX.Element {
     (state: RootStateOrAny) => state.post.recruitPost,
   );
 
-  const worker = useSelector(
-    (state: RootStateOrAny) => state.post.recruitPost?.worker,
+  const worker = useSelector((state: RootStateOrAny) => {
+    const developer = state.post.recruitPost?.developer;
+    const designer = state.post.recruitPost?.designer;
+    const pm = state.post.recruitPost?.pm;
+    return {
+      developer,
+      designer,
+      pm,
+    };
+  });
+
+  const studyProfile = useSelector(
+    (state: RootStateOrAny) => state.post.recruitPost?.study?.image,
   );
 
-  const startDate = useSelector(
-    (state: RootStateOrAny) => state.post.recruitPost?.start_date,
-  );
-
-  const endDate = useSelector(
-    (state: RootStateOrAny) => state.post.recruitPost?.end_date,
-  );
-
-  const developer = useSelector(
-    (state: RootStateOrAny) => state.post.recruitPost?.developer,
-  );
-
-  const designer = useSelector(
-    (state: RootStateOrAny) => state.post.recruitPost?.designer,
-  );
-
-  const pm = useSelector((state: RootStateOrAny) => state.post.recruitPost?.pm);
-
-  const stacks = useSelector(
-    (state: RootStateOrAny) => state.post.recruitPost?.stack,
+  const participants = useSelector(
+    (state: RootStateOrAny) => state.post.recruitPost?.study?.members,
   );
 
   useEffect(() => {
@@ -79,94 +69,91 @@ function RecruitPostDetail(): JSX.Element {
   }
 
   return (
-    <RecruitPostDetailWrapper>
-      <ContainerWrapper>
-        <Container>
-          {/* 왼쪽 컨테이너 */}
-          <LeftContainer>
-            {/* 팀 프로필 이미지 */}
-            <ImageWrapper>
-              <ImageBackground>
-                <ImageContainer>
-                  <img src={UserImg} alt='study profile' />
-                </ImageContainer>
-              </ImageBackground>
-            </ImageWrapper>
+    <ContentContainer>
+      <Container>
+        {/* 왼쪽 컨테이너 */}
+        <LeftContainer>
+          {/* 팀 프로필 이미지 */}
+          <ImageContainer>
+            {studyProfile ? (
+              <StudyProfile src={studyProfile} alt='study profile' />
+            ) : (
+              <DefaultProfile>
+                <img src={UserImg} alt='untitled profile' />
+              </DefaultProfile>
+            )}
+          </ImageContainer>
 
-            {/* 스터디명 */}
-            <StudyName>스터디명</StudyName>
-            <MemberTypeWrapper>
-              <ul>
-                {worker.map((member: string) => {
-                  return (
-                    <li key={member}>
-                      <MemberType member={member} />
-                    </li>
-                  );
-                })}
-              </ul>
-            </MemberTypeWrapper>
-            {/* 쪽지, 좋아요 아이콘 */}
-            <IconWrapper>
-              <IconContainer>
-                <MailIcon />
-              </IconContainer>
-              <IconContainer>
-                <LikeIcon />
-              </IconContainer>
-            </IconWrapper>
-            {/* 수평 구분선 */}
-            <HorizontalLine />
-          </LeftContainer>
+          {/* 스터디명 */}
+          <StudyName>스터디명</StudyName>
 
-          {/* 오른쪽 컨테이너 */}
-          <RightContainer>
-            <ContentWrapper>
-              <Label>제목</Label>
-              <TitleText>{recruitPostDetail.title}</TitleText>
-              <br />
+          <MemberType
+            developer={worker?.developer}
+            designer={worker?.designer}
+            pm={worker?.pm}
+            position='center'
+          />
 
-              <Label>내용</Label>
-              <ContentText>{recruitPostDetail.content}</ContentText>
-              <br />
+          {/* 쪽지, 좋아요 아이콘 */}
+          <IconWrapper>
+            <IconContainer>
+              <MailIcon />
+            </IconContainer>
+            <IconContainer>
+              <LikeIcon />
+            </IconContainer>
+          </IconWrapper>
+          {/* 수평 구분선 */}
+          <HorizontalLine />
+        </LeftContainer>
 
-              <Label>모집 인원</Label>
-              <RecruitMember>
-                <li>
-                  <div>개발자</div>
-                  <div>{developer}명</div>
-                </li>
-                <li>
-                  <div>디자이너</div>
-                  <div>{designer}명</div>
-                </li>
-                <li>
-                  <div>기획자</div>
-                  <div>{pm}명</div>
-                </li>
-              </RecruitMember>
-              <br />
+        {/* 오른쪽 컨테이너 */}
+        <RightContainer>
+          <ContentWrapper>
+            <Label>제목</Label>
+            <TitleText>{recruitPostDetail.title}</TitleText>
+            <br />
 
-              <Label>모집 기간</Label>
-              <Period>{`${startDate} ~ ${endDate}`}</Period>
-              <br />
+            <Label>내용</Label>
+            <ContentText>{recruitPostDetail.content}</ContentText>
+            <br />
 
-              <Label>기술 스택</Label>
-              <Stacks>
-                {stacks.map((value: string) => {
-                  return <li key={value}>{value}</li>;
-                })}
-              </Stacks>
-              <br />
+            <Label>모집 인원</Label>
+            <RecruitMember>
+              <li>
+                <div>개발자</div>
+                <div>{worker.developer}명</div>
+              </li>
+              <li>
+                <div>디자이너</div>
+                <div>{worker.designer}명</div>
+              </li>
+              <li>
+                <div>기획자</div>
+                <div>{worker.pm}명</div>
+              </li>
+            </RecruitMember>
+            <br />
 
-              <Label>참여중인 Get Iter</Label>
-              <JoinMember>현재 참여중인 Get Iter가 없습니다.</JoinMember>
-              <br />
-            </ContentWrapper>
-          </RightContainer>
-        </Container>
-      </ContainerWrapper>
-    </RecruitPostDetailWrapper>
+            <Label>모집 기간</Label>
+            <Period>{`${recruitPostDetail.start_date} ~ ${recruitPostDetail.end_date}`}</Period>
+            <br />
+
+            <Label>기술 스택</Label>
+            <Stacks>
+              {recruitPostDetail.stack.map((value: string) => {
+                return <li key={value}>{value}</li>;
+              })}
+            </Stacks>
+            <br />
+
+            <Label>참여중인 Get Iter</Label>
+            <ParticipantsList participants={participants} />
+            <br />
+          </ContentWrapper>
+        </RightContainer>
+      </Container>
+    </ContentContainer>
   );
 }
 

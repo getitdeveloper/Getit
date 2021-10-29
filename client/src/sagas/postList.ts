@@ -16,6 +16,9 @@ import {
   RECRUIT_POST_LIST_REQUEST,
   RECRUIT_POST_LIST_SUCCESS,
   RECRUIT_POST_LIST_FAILURE,
+  TEAM_PROFILE_LIST_REQUEST,
+  TEAM_PROFILE_LIST_SUCCESS,
+  TEAM_PROFILE_LIST_FAILURE,
 } from '../reducers/actions';
 import { BoardData } from './postListTypes';
 
@@ -150,6 +153,31 @@ function* requestRecruitPostListSaga(action: {
   }
 }
 
+// 팀 프로필 목록
+const requestTeamProfileList = (data: { userId: number }) => {
+  return axios.get(`/api/${data.userId}/teamprofile`);
+};
+
+function* requestTeamProfileListSaga(action: {
+  type: string;
+  data: { userId: number };
+}): any {
+  try {
+    const response = yield call(requestTeamProfileList, action.data);
+    console.log('팀 프로필 목록 응답 ===>', response);
+
+    yield put({
+      type: TEAM_PROFILE_LIST_SUCCESS,
+      data: response.data,
+    });
+  } catch (error) {
+    yield put({
+      type: TEAM_PROFILE_LIST_FAILURE,
+      error,
+    });
+  }
+}
+
 function* watchRequestCommonPostList() {
   yield takeLatest(COMMON_POST_LIST_REQUEST, requestCommonPostListSaga);
 }
@@ -170,6 +198,10 @@ function* watchRequestRecruitPostList() {
   yield takeLatest(RECRUIT_POST_LIST_REQUEST, requestRecruitPostListSaga);
 }
 
+function* watchRequestTeamProfileList() {
+  yield takeLatest(TEAM_PROFILE_LIST_REQUEST, requestTeamProfileListSaga);
+}
+
 function* postListSaga() {
   yield all([
     fork(watchRequestCommonPostList),
@@ -177,6 +209,7 @@ function* postListSaga() {
     fork(watchRequestSearchPostList),
     fork(watchRequestLikedPostList),
     fork(watchRequestRecruitPostList),
+    fork(watchRequestTeamProfileList),
   ]);
 }
 

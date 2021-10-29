@@ -1,7 +1,18 @@
 import styled, { css } from 'styled-components';
 
+interface Position {
+  position: string | undefined;
+}
+
 export const MemberTypeWrapper = styled.div`
   display: flex;
+  justify-content: ${(props: Position) =>
+    props.position ? props.position : 'initial'};
+  flex-wrap: wrap;
+`;
+
+export const Job = styled.div`
+  margin: 0.3rem 0;
 `;
 
 const JobMixin = css`
@@ -28,3 +39,5 @@ export const ProjectManager = styled.div`
   background: ${(props) => props.theme.colors.ProjectManager};
   ${JobMixin}
 `;
+
+// export const JobWrapper = styled.span``

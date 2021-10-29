@@ -26,7 +26,7 @@ export const PostInfoButton = styled.button`
   align-items: flex-start;
   border: 0;
   background-color: transparent;
-  &: hover {
+  &:hover {
     cursor: pointer;
   }
 
