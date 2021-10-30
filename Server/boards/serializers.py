@@ -73,7 +73,7 @@ class CommonBoardSerializer(serializers.ModelSerializer):
         else:
             return False
 
-class MemberSerializer(serializers.ModelSerializer):
+class MemberBoardSerializer(serializers.ModelSerializer):
     nickname = serializers.SerializerMethodField()
     class Meta:
         model = Member
@@ -94,7 +94,7 @@ class RecruitmentBoardSerializer(ModelSerializer):
         read_only=True
     )
     stack = TagSerializer(read_only=True, many=True)
-    members = MemberSerializer(read_only=True, many=True)
+    members = MemberBoardSerializer(read_only=True, many=True)
     is_like = SerializerMethodField()
     class Meta:
         model = RecruitmentBoard

@@ -6,6 +6,7 @@ from portfolios.models import Portfolio
 from tags.models import Tag
 from .models import Profile, TeamProfile
 from members.models import Member
+from members.serializers import MemberSerializer
 
 
 class TagSerializer(serializers.ModelSerializer):
@@ -32,15 +33,7 @@ class ProfileSerializer(ModelSerializer):
         )
 
 
-class MemberSerializer(serializers.ModelSerializer):
-    nickname = serializers.SerializerMethodField()
-    class Meta:
-        model = Member
-        fields = ('member','nickname')
-    def get_nickname(self,obj):
-        profile = Profile.objects.get(id=obj.member)
-        nickname = profile.nickname
-        return nickname
+
 
 class TeamProfileSerializer(serializers.ModelSerializer):
     stack = TagSerializer(read_only=True, many=True)
