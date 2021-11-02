@@ -1,7 +1,10 @@
-import { TEAM_PROFILE_LIST_REQUEST } from '@reducers/actions';
+import {
+  TEAM_PROFILE_LIST_REQUEST,
+  TEAM_PROFILE_REMOVE_REQUEST,
+} from '@reducers/actions';
 import React, { useCallback, useEffect, useState } from 'react';
+import { useHistory, Link } from 'react-router-dom';
 import { useSelector, useDispatch, RootStateOrAny } from 'react-redux';
-import { Link } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import moment from 'moment';
 import {
@@ -19,6 +22,7 @@ import {
 
 function TeamProfile(): JSX.Element {
   const dispatch = useDispatch();
+  const history = useHistory();
   const userId = useSelector(
     (state: RootStateOrAny) => state.user.profileInfo?.user,
   );
@@ -36,7 +40,16 @@ function TeamProfile(): JSX.Element {
   }, []);
 
   const handleRemove = useCallback((event) => {
-    console.log(event.currentTarget.name);
+    if (window.confirm('정말로 삭제하시겠습니까?')) {
+      return dispatch({
+        type: TEAM_PROFILE_REMOVE_REQUEST,
+        data: {
+          userId,
+          postId: event.currentTarget.name,
+        },
+        history,
+      });
+    }
   }, []);
   return (
     <>

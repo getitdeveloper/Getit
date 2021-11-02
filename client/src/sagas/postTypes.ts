@@ -29,3 +29,17 @@ export interface TeamProfileApiData {
   formData: FormData;
   userId: number;
 }
+
+export interface ITeamProfileRemove {
+  type: string;
+  data: {
+    userId: number;
+    postId: string;
+  };
+  history: any;
+}
+
+export interface ITeamProfileRemoveApiData {
+  userId: number;
+  postId: string;
+}

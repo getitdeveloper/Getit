@@ -18,6 +18,9 @@ import {
   RECRUIT_POSTING_FAILURE,
   RECRUIT_POSTING_SUCCESS,
   RECRUIT_POSTING_REQUEST,
+  TEAM_PROFILE_REMOVE_REQUEST,
+  TEAM_PROFILE_REMOVE_SUCCESS,
+  TEAM_PROFILE_REMOVE_FAILURE,
 } from './actions';
 
 export interface InitialState {
@@ -42,6 +45,9 @@ export interface InitialState {
   teamProfileRegisterRequest: boolean;
   teamProfileRegisterSuccess: boolean;
   teamProfileRegisterFailure: string | null;
+  teamProfileRemoveRequest: boolean;
+  teamProfileRemoveSuccess: boolean;
+  teamProfileRemoveFailure: string | null;
 }
 
 // 자유/질문게시판 글 가져오기
@@ -132,6 +138,19 @@ export interface RecruitPostingFailure {
   error: string;
 }
 
+export interface TeamProfileRemoveRequest {
+  type: typeof TEAM_PROFILE_REMOVE_REQUEST;
+}
+
+export interface TeamProfileRemoveSuccess {
+  type: typeof TEAM_PROFILE_REMOVE_SUCCESS;
+}
+
+export interface TeamProfileRemoveFailure {
+  type: typeof TEAM_PROFILE_REMOVE_FAILURE;
+  error: string;
+}
+
 export type PostActions =
   | CommonPostRequest
   | CommonPostSuccess
@@ -150,4 +169,7 @@ export type PostActions =
   | TeamProfileRegisterFailure
   | RecruitPostingRequest
   | RecruitPostingSuccess
-  | RecruitPostingFailure;
+  | RecruitPostingFailure
+  | TeamProfileRemoveRequest
+  | TeamProfileRemoveSuccess
+  | TeamProfileRemoveFailure;

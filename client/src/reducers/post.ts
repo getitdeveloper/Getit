@@ -19,6 +19,9 @@ import {
   RECRUIT_POSTING_REQUEST,
   RECRUIT_POSTING_SUCCESS,
   RECRUIT_POSTING_FAILURE,
+  TEAM_PROFILE_REMOVE_REQUEST,
+  TEAM_PROFILE_REMOVE_SUCCESS,
+  TEAM_PROFILE_REMOVE_FAILURE,
 } from './actions';
 
 // 초기 상태
@@ -44,6 +47,9 @@ const initialState: InitialState = {
   teamProfileRegisterRequest: false,
   teamProfileRegisterSuccess: false,
   teamProfileRegisterFailure: null,
+  teamProfileRemoveRequest: false,
+  teamProfileRemoveSuccess: false,
+  teamProfileRemoveFailure: null,
 };
 
 const reducer = (state = initialState, action: PostActions): InitialState =>
@@ -140,6 +146,21 @@ const reducer = (state = initialState, action: PostActions): InitialState =>
         draft.teamProfileRegisterFailure = null;
         break;
       case TEAM_PROFILE_REGISTER_FAILURE:
+        draft.teamProfileRegisterRequest = false;
+        draft.teamProfileRegisterSuccess = false;
+        draft.teamProfileRegisterFailure = action.error;
+        break;
+      case TEAM_PROFILE_REMOVE_REQUEST:
+        draft.teamProfileRegisterRequest = true;
+        draft.teamProfileRegisterSuccess = false;
+        draft.teamProfileRegisterFailure = null;
+        break;
+      case TEAM_PROFILE_REMOVE_SUCCESS:
+        draft.teamProfileRegisterRequest = false;
+        draft.teamProfileRegisterSuccess = true;
+        draft.teamProfileRegisterFailure = null;
+        break;
+      case TEAM_PROFILE_REMOVE_FAILURE:
         draft.teamProfileRegisterRequest = false;
         draft.teamProfileRegisterSuccess = false;
         draft.teamProfileRegisterFailure = action.error;

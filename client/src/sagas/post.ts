@@ -20,12 +20,17 @@ import {
   TEAM_PROFILE_REGISTER_REQUEST,
   TEAM_PROFILE_REGISTER_SUCCESS,
   TEAM_PROFILE_REGISTER_FAILURE,
+  TEAM_PROFILE_REMOVE_REQUEST,
+  TEAM_PROFILE_REMOVE_SUCCESS,
+  TEAM_PROFILE_REMOVE_FAILURE,
 } from '../reducers/actions';
 import {
   PostData,
   TeamProfileData,
   TeamProfileApiData,
   PostingData,
+  ITeamProfileRemove,
+  ITeamProfileRemoveApiData,
 } from './postTypes';
 
 // 자유/질문 게시글 받아오기
@@ -174,6 +179,29 @@ function* requestTeamProfilePostRegisterSaga(action: TeamProfileData): any {
   }
 }
 
+// 팀 프로필 삭제
+const requestTeamProfilePostRemove = (data: ITeamProfileRemoveApiData) => {
+  return axios.delete(`/api/${data.userId}/teamprofile/${data.postId}`);
+};
+
+function* requestTeamProfilePostRemoveSaga(action: ITeamProfileRemove): any {
+  try {
+    const response = yield call(requestTeamProfilePostRemove, action.data);
+    yield put({
+      type: TEAM_PROFILE_REMOVE_SUCCESS,
+      data: response.data,
+    });
+    alert('팀 프로필 삭제 완료');
+    action.history.push('/myprofile');
+  } catch (error) {
+    yield put({
+      type: TEAM_PROFILE_REMOVE_FAILURE,
+      error,
+    });
+    alert('팀 프로필 삭제 오류. 잠시 후 다시 시도해 주세요.');
+  }
+}
+
 function* watchRequestCommonPost() {
   yield takeLatest(COMMON_POST_REQUEST, requestCommonPostSaga);
 }
@@ -201,6 +229,13 @@ function* watchRequestTeamProfilePostRegister() {
   );
 }
 
+function* watchRequestTeamProfilePostRemove() {
+  yield takeLatest(
+    TEAM_PROFILE_REMOVE_REQUEST,
+    requestTeamProfilePostRemoveSaga,
+  );
+}
+
 function* postSaga() {
   yield all([
     fork(watchRequestCommonPost),
@@ -209,6 +244,7 @@ function* postSaga() {
     fork(watchRequestRecruitPost),
     fork(watchRequestRecruitPosting),
     fork(watchRequestTeamProfilePostRegister),
+    fork(watchRequestTeamProfilePostRemove),
   ]);
 }
 
