@@ -1,4 +1,6 @@
 import styled from 'styled-components';
+import CancelIcon from '@material-ui/icons/Cancel';
+import PersonIcon from '@material-ui/icons/Person';
 
 export const Container = styled.div`
   display: flex;
@@ -185,6 +187,86 @@ export const SubmitButton = styled.button`
   border-radius: 0.8rem;
   color: white;
   cursor: pointer;
+`;
+
+// Team Profile
+export const TeamProfileWrapper = styled.div`
+  margin: 0.5rem 2rem;
+  padding: 2rem 1rem;
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+  border-radius: 15px;
+  position: relative;
+`;
+
+export const TeamProfileTitle = styled.div`
+  font-size: 2rem;
+  font-weight: 500;
+  margin: 0.2rem 2rem;
+`;
+export const TeamProfileContent = styled.div`
+  font-size: 1.5rem;
+  color: #868686;
+  margin: 1.5rem 2rem;
+`;
+export const TeamProfileInfo = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-right: 2rem;
+  font-size: 1.5rem;
+`;
+
+export const TeamProfileCreated = styled.div`
+  color: #868686;
+  margin: 0 0.5rem;
+`;
+export const TeamProfileMember = styled.div`
+  display: flex;
+  align-items: center;
+  color: #868686;
+  margin: 0 0.5rem;
+`;
+
+export const RemoveButton = styled.button`
+  border-style: none;
+  background-color: transparent;
+  position: absolute;
+  right: 3rem;
+`;
+
+export const RemoveIcon = styled(CancelIcon)`
+  && {
+    font-size: 2rem;
+  }
+  color: #868686;
+`;
+
+export const MemberIcon = styled(PersonIcon)`
+  && {
+    font-size: 2rem;
+  }
+`;
+
+export const TeamProfileCreateButton = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin: 2rem 0;
+
+  button {
+    background-color: ${({ theme }) => theme.colors.main};
+    font-size: 1.4rem;
+    border-radius: 6px;
+    border-width: 2px;
+    border-color: #efefef;
+    border-style: solid;
+    padding: 1.2rem 2rem;
+    margin: 1rem 0rem;
+    cursor: pointer;
+    width: 17rem;
+    height: 4.6rem;
+    color: #ffffff;
+  }
 `;
 
 // MyComments styles
