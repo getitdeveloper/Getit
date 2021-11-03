@@ -1,14 +1,14 @@
-import {
-  TEAM_PROFILE_LIST_REQUEST,
-  TEAM_PROFILE_REMOVE_REQUEST,
-} from '@reducers/actions';
-import React, { useCallback, useEffect, useState } from 'react';
-import { useHistory, Link } from 'react-router-dom';
+import React, { useCallback, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch, RootStateOrAny } from 'react-redux';
 import Grid from '@material-ui/core/Grid';
 import moment from 'moment';
 import {
-  TeamProfileCreateButton,
+  TEAM_PROFILE_LIST_REQUEST,
+  TEAM_PROFILE_REMOVE_REQUEST,
+} from '@reducers/actions';
+import {
+  TeamProfileCreateButtonWrapper,
   TeamProfileWrapper,
   TeamProfileTitle,
   TeamProfileContent,
@@ -18,6 +18,7 @@ import {
   MemberIcon,
   RemoveButton,
   RemoveIcon,
+  Notification,
 } from './styles';
 
 function TeamProfile(): JSX.Element {
@@ -30,6 +31,10 @@ function TeamProfile(): JSX.Element {
     (state: RootStateOrAny) => state.postList?.teamProfileList,
   );
 
+  const removeStatus = useSelector(
+    (state: RootStateOrAny) => state.post?.teamProfileRemoveSuccess,
+  );
+
   useEffect(() => {
     dispatch({
       type: TEAM_PROFILE_LIST_REQUEST,
@@ -37,29 +42,39 @@ function TeamProfile(): JSX.Element {
         userId,
       },
     });
-  }, []);
+  }, [removeStatus]);
 
   const handleRemove = useCallback((event) => {
     if (window.confirm('정말로 삭제하시겠습니까?')) {
-      return dispatch({
+      dispatch({
         type: TEAM_PROFILE_REMOVE_REQUEST,
         data: {
           userId,
-          postId: event.currentTarget.name,
+          postId: event.currentTarget.id,
         },
-        history,
       });
     }
   }, []);
+
+  const handleCreateTeamProfile = useCallback(() => {
+    if (teamProfileList.length >= 8) {
+      return alert('팀 프로필은 최대 8개까지 생성 가능합니다.');
+    }
+    history.push('/myprofile/teamprofile/form');
+  }, [teamProfileList]);
+
   return (
     <>
+      {teamProfileList?.length < 1 && (
+        <Notification>팀 프로필을 생성해주세요.</Notification>
+      )}
       <Grid container spacing={1}>
         {teamProfileList?.map((profile: any, index: number) => (
           <Grid item xs={12} sm={6} key={`${profile.title}-${index}`}>
             <TeamProfileWrapper>
               {/* 팀프로필 삭제 버튼 */}
               <RemoveButton
-                name={profile.id}
+                id={profile.id}
                 type='button'
                 onClick={handleRemove}
               >
@@ -67,7 +82,6 @@ function TeamProfile(): JSX.Element {
               </RemoveButton>
 
               {/* 팀프로필 제목 */}
-
               <TeamProfileTitle>
                 {profile.title.length >= 10
                   ? `${profile.title.substring(0, 10)}...`
@@ -98,11 +112,11 @@ function TeamProfile(): JSX.Element {
         ))}
       </Grid>
 
-      <TeamProfileCreateButton>
-        <Link to='/myprofile/teamprofile/form'>
-          <button type='button'>팀 프로필 생성하기</button>
-        </Link>
-      </TeamProfileCreateButton>
+      <TeamProfileCreateButtonWrapper>
+        <button type='button' onClick={handleCreateTeamProfile}>
+          팀 프로필 생성하기
+        </button>
+      </TeamProfileCreateButtonWrapper>
     </>
   );
 }

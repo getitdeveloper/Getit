@@ -151,19 +151,19 @@ const reducer = (state = initialState, action: PostActions): InitialState =>
         draft.teamProfileRegisterFailure = action.error;
         break;
       case TEAM_PROFILE_REMOVE_REQUEST:
-        draft.teamProfileRegisterRequest = true;
-        draft.teamProfileRegisterSuccess = false;
-        draft.teamProfileRegisterFailure = null;
+        draft.teamProfileRemoveRequest = true;
+        draft.teamProfileRemoveSuccess = false;
+        draft.teamProfileRemoveFailure = null;
         break;
       case TEAM_PROFILE_REMOVE_SUCCESS:
-        draft.teamProfileRegisterRequest = false;
-        draft.teamProfileRegisterSuccess = true;
-        draft.teamProfileRegisterFailure = null;
+        draft.teamProfileRemoveRequest = false;
+        draft.teamProfileRemoveSuccess = true;
+        draft.teamProfileRemoveFailure = null;
         break;
       case TEAM_PROFILE_REMOVE_FAILURE:
-        draft.teamProfileRegisterRequest = false;
-        draft.teamProfileRegisterSuccess = false;
-        draft.teamProfileRegisterFailure = action.error;
+        draft.teamProfileRemoveRequest = false;
+        draft.teamProfileRemoveSuccess = false;
+        draft.teamProfileRemoveFailure = action.error;
         break;
       default:
         return state;

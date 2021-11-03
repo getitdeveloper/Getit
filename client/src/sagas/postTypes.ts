@@ -1,11 +1,11 @@
-export interface PostData {
+export interface IPostData {
   title: string;
   category: string;
   content: string;
   user: number;
 }
 
-export interface PostingData {
+export interface IPostingData {
   user: number;
   study: number;
   title: string;
@@ -18,14 +18,14 @@ export interface PostingData {
   stack: Array<string>;
 }
 
-export interface TeamProfileData {
+export interface ITeamProfileData {
   type: string;
   data: FormData;
   userId: number;
   history: any;
 }
 
-export interface TeamProfileApiData {
+export interface ITeamProfileApiData {
   formData: FormData;
   userId: number;
 }

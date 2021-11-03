@@ -25,10 +25,10 @@ import {
   TEAM_PROFILE_REMOVE_FAILURE,
 } from '../reducers/actions';
 import {
-  PostData,
-  TeamProfileData,
-  TeamProfileApiData,
-  PostingData,
+  IPostData,
+  ITeamProfileData,
+  ITeamProfileApiData,
+  IPostingData,
   ITeamProfileRemove,
   ITeamProfileRemoveApiData,
 } from './postTypes';
@@ -57,7 +57,7 @@ function* requestCommonPostSaga(action: any): any {
 }
 
 // 자유/질문 게시글 작성하기
-const requestCommonPostRegister = (data: PostData) => {
+const requestCommonPostRegister = (data: IPostData) => {
   return axios.post(`/api/board/`, data);
 };
 
@@ -126,13 +126,13 @@ function* requestRecruitPostSaga(action: { type: string; data: string }): any {
 }
 
 // 스터디 모집 게시글 등록
-const requestRecruitPosting = (data: PostingData) => {
+const requestRecruitPosting = (data: IPostingData) => {
   return axios.post(`/api/recruitmentboard/`, data);
 };
 
 function* requestRecruitPostingSaga(action: {
   type: string;
-  data: PostingData;
+  data: IPostingData;
   history: any;
 }): any {
   try {
@@ -154,11 +154,11 @@ function* requestRecruitPostingSaga(action: {
 }
 
 // 팀 프로필 생성
-const requestTeamProfilePostRegister = (data: TeamProfileApiData) => {
+const requestTeamProfilePostRegister = (data: ITeamProfileApiData) => {
   return axios.post(`/api/${data.userId}/teamprofile/`, data.formData);
 };
 
-function* requestTeamProfilePostRegisterSaga(action: TeamProfileData): any {
+function* requestTeamProfilePostRegisterSaga(action: ITeamProfileData): any {
   try {
     const response = yield call(requestTeamProfilePostRegister, {
       formData: action.data,
@@ -192,7 +192,6 @@ function* requestTeamProfilePostRemoveSaga(action: ITeamProfileRemove): any {
       data: response.data,
     });
     alert('팀 프로필 삭제 완료');
-    action.history.push('/myprofile');
   } catch (error) {
     yield put({
       type: TEAM_PROFILE_REMOVE_FAILURE,

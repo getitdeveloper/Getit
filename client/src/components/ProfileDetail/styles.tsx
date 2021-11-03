@@ -4,6 +4,7 @@ import PersonIcon from '@material-ui/icons/Person';
 
 export const Container = styled.div`
   display: flex;
+  min-height: 98rem;
 
   @media ${({ theme }) => theme.tablet} {
     flex-direction: column;
@@ -231,7 +232,10 @@ export const RemoveButton = styled.button`
   border-style: none;
   background-color: transparent;
   position: absolute;
-  right: 3rem;
+  right: 0;
+  top: 0;
+  cursor: pointer;
+  padding: 1.5rem;
 `;
 
 export const RemoveIcon = styled(CancelIcon)`
@@ -247,26 +251,30 @@ export const MemberIcon = styled(PersonIcon)`
   }
 `;
 
-export const TeamProfileCreateButton = styled.div`
+export const TeamProfileCreateButtonWrapper = styled.div`
   display: flex;
   justify-content: center;
-  width: 100%;
-  margin: 2rem 0;
+  margin: 3rem 0;
 
   button {
     background-color: ${({ theme }) => theme.colors.main};
-    font-size: 1.4rem;
-    border-radius: 6px;
-    border-width: 2px;
-    border-color: #efefef;
-    border-style: solid;
-    padding: 1.2rem 2rem;
-    margin: 1rem 0rem;
-    cursor: pointer;
-    width: 17rem;
     height: 4.6rem;
     color: #ffffff;
+    text-decoration: none;
+    cursor: pointer;
+    width: 17rem;
+    font-size: 1.4rem;
+    border-radius: 6px;
+    border-color: transparent;
+    padding: 1.2rem 2rem;
   }
+`;
+
+export const Notification = styled.div`
+  display: flex;
+  justify-content: center;
+  font-size: 1.6rem;
+  margin: 6rem 0;
 `;
 
 // MyComments styles

@@ -150,6 +150,7 @@ export const Button = styled.button`
   background-color: ${({ theme }) => theme.colors.main};
   border-style: none;
   color: #ffffff;
+  cursor: pointer;
 `;
 
 export const StyledInput = styled.input`
