@@ -30,16 +30,15 @@ export interface ITeamProfileApiData {
   userId: number;
 }
 
-export interface ITeamProfileRemove {
+export interface ITeamProfileIdData {
   type: string;
   data: {
     userId: number;
     postId: string;
   };
-  history: any;
 }
 
-export interface ITeamProfileRemoveApiData {
+export interface ITeamProfileIdApiData {
   userId: number;
   postId: string;
 }

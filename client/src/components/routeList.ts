@@ -15,6 +15,7 @@ import SearchResultPage from '@pages/SearchResultPage';
 import NotFoundPage from '@pages/NotFoundPage';
 import RecruitBoardDetailPage from '@pages/RecruitBoardDetailPage';
 import TeamProfileFormPage from '@pages/TeamProfileFormPage';
+import TeamProfileDetailPage from '@pages/TeamProfileDetailPage';
 
 interface RouteList {
   path: string;
@@ -33,6 +34,10 @@ export const routeList: Array<RouteList> = [
   {
     path: '/myprofile/teamprofile/form',
     page: TeamProfileFormPage,
+  },
+  {
+    path: '/myprofile/teamprofile/:postId',
+    page: TeamProfileDetailPage,
   },
   {
     path: '/register',

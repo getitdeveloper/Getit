@@ -22,6 +22,9 @@ import {
   TEAM_PROFILE_REMOVE_REQUEST,
   TEAM_PROFILE_REMOVE_SUCCESS,
   TEAM_PROFILE_REMOVE_FAILURE,
+  TEAM_PROFILE_POST_DETAIL_REQUEST,
+  TEAM_PROFILE_POST_DETAIL_SUCCESS,
+  TEAM_PROFILE_POST_DETAIL_FAILURE,
 } from './actions';
 
 // 초기 상태
@@ -29,6 +32,7 @@ const initialState: InitialState = {
   commonPost: null,
   likeCounts: null,
   recruitPost: null,
+  teamProfilePostDetail: null,
   commonPostRequest: false,
   commonPostSuccess: false,
   commonPostFailure: null,
@@ -50,6 +54,9 @@ const initialState: InitialState = {
   teamProfileRemoveRequest: false,
   teamProfileRemoveSuccess: false,
   teamProfileRemoveFailure: null,
+  teamProfilePostDetailRequest: false,
+  teamProfilePostDetailSuccess: false,
+  teamProfilePostDetailFailure: null,
 };
 
 const reducer = (state = initialState, action: PostActions): InitialState =>
@@ -164,6 +171,22 @@ const reducer = (state = initialState, action: PostActions): InitialState =>
         draft.teamProfileRemoveRequest = false;
         draft.teamProfileRemoveSuccess = false;
         draft.teamProfileRemoveFailure = action.error;
+        break;
+      case TEAM_PROFILE_POST_DETAIL_REQUEST:
+        draft.teamProfilePostDetailRequest = true;
+        draft.teamProfilePostDetailSuccess = false;
+        draft.teamProfilePostDetailFailure = null;
+        break;
+      case TEAM_PROFILE_POST_DETAIL_SUCCESS:
+        draft.teamProfilePostDetailRequest = false;
+        draft.teamProfilePostDetailSuccess = true;
+        draft.teamProfilePostDetailFailure = null;
+        draft.teamProfilePostDetail = action.data;
+        break;
+      case TEAM_PROFILE_POST_DETAIL_FAILURE:
+        draft.teamProfilePostDetailRequest = false;
+        draft.teamProfilePostDetailSuccess = false;
+        draft.teamProfilePostDetailFailure = action.error;
         break;
       default:
         return state;

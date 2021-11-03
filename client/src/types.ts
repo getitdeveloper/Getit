@@ -124,6 +124,18 @@ export interface IRecruitPost {
   worker: string[];
 }
 
+export interface ITeamProfilePostDetail {
+  id: number;
+  user: number;
+  title: string;
+  content: string;
+  status: boolean;
+  image: string;
+  stack: Array<string>;
+  created_at: string;
+  members: Array<{ member: string; nickname: string }>;
+}
+
 export interface IPostId {
   postId: string;
 }

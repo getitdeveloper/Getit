@@ -19,6 +19,7 @@ import {
   RemoveButton,
   RemoveIcon,
   Notification,
+  StyledLink,
 } from './styles';
 
 function TeamProfile(): JSX.Element {
@@ -81,19 +82,24 @@ function TeamProfile(): JSX.Element {
                 <RemoveIcon />
               </RemoveButton>
 
-              {/* 팀프로필 제목 */}
-              <TeamProfileTitle>
-                {profile.title.length >= 10
-                  ? `${profile.title.substring(0, 10)}...`
-                  : profile.title}
-              </TeamProfileTitle>
+              <StyledLink
+                to={`/myprofile/teamprofile/${profile.id}`}
+                key={`${profile.id}`}
+              >
+                {/* 팀프로필 제목 */}
+                <TeamProfileTitle>
+                  {profile.title.length >= 10
+                    ? `${profile.title.substring(0, 10)}...`
+                    : profile.title}
+                </TeamProfileTitle>
 
-              {/* 팀프로필 내용 */}
-              <TeamProfileContent>
-                {profile.content.length >= 10
-                  ? `${profile.content.substring(0, 10)}...`
-                  : profile.content}
-              </TeamProfileContent>
+                {/* 팀프로필 내용 */}
+                <TeamProfileContent>
+                  {profile.content.length >= 10
+                    ? `${profile.content.substring(0, 10)}...`
+                    : profile.content}
+                </TeamProfileContent>
+              </StyledLink>
 
               {/* 팀프로필 기타 정보 */}
               <TeamProfileInfo>

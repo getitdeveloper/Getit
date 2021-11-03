@@ -23,14 +23,17 @@ import {
   TEAM_PROFILE_REMOVE_REQUEST,
   TEAM_PROFILE_REMOVE_SUCCESS,
   TEAM_PROFILE_REMOVE_FAILURE,
+  TEAM_PROFILE_POST_DETAIL_REQUEST,
+  TEAM_PROFILE_POST_DETAIL_SUCCESS,
+  TEAM_PROFILE_POST_DETAIL_FAILURE,
 } from '../reducers/actions';
 import {
   IPostData,
   ITeamProfileData,
   ITeamProfileApiData,
   IPostingData,
-  ITeamProfileRemove,
-  ITeamProfileRemoveApiData,
+  ITeamProfileIdData,
+  ITeamProfileIdApiData,
 } from './postTypes';
 
 // 자유/질문 게시글 받아오기
@@ -180,11 +183,11 @@ function* requestTeamProfilePostRegisterSaga(action: ITeamProfileData): any {
 }
 
 // 팀 프로필 삭제
-const requestTeamProfilePostRemove = (data: ITeamProfileRemoveApiData) => {
+const requestTeamProfilePostRemove = (data: ITeamProfileIdApiData) => {
   return axios.delete(`/api/${data.userId}/teamprofile/${data.postId}`);
 };
 
-function* requestTeamProfilePostRemoveSaga(action: ITeamProfileRemove): any {
+function* requestTeamProfilePostRemoveSaga(action: ITeamProfileIdData): any {
   try {
     const response = yield call(requestTeamProfilePostRemove, action.data);
     yield put({
@@ -198,6 +201,29 @@ function* requestTeamProfilePostRemoveSaga(action: ITeamProfileRemove): any {
       error,
     });
     alert('팀 프로필 삭제 오류. 잠시 후 다시 시도해 주세요.');
+  }
+}
+
+// 팀 프로필 상세내용
+const requestTeamProfilePostDetail = (data: ITeamProfileIdApiData) => {
+  return axios.get(`/api/${data.userId}/teamprofile/${data.postId}`);
+};
+
+function* requestTeamProfilePostDetailSaga(action: ITeamProfileIdData): any {
+  try {
+    const response = yield call(requestTeamProfilePostDetail, action.data);
+    yield put({
+      type: TEAM_PROFILE_POST_DETAIL_SUCCESS,
+      data: response.data,
+    });
+  } catch (error) {
+    yield put({
+      type: TEAM_PROFILE_POST_DETAIL_FAILURE,
+      error,
+    });
+    alert(
+      '팀 프로필을 불러오는데 문제가 발생했습니다. 잠시 후 다시 시도해 주세요.',
+    );
   }
 }
 
@@ -235,6 +261,13 @@ function* watchRequestTeamProfilePostRemove() {
   );
 }
 
+function* watchRequestTeamProfilePostDetail() {
+  yield takeLatest(
+    TEAM_PROFILE_POST_DETAIL_REQUEST,
+    requestTeamProfilePostDetailSaga,
+  );
+}
+
 function* postSaga() {
   yield all([
     fork(watchRequestCommonPost),
@@ -244,6 +277,7 @@ function* postSaga() {
     fork(watchRequestRecruitPosting),
     fork(watchRequestTeamProfilePostRegister),
     fork(watchRequestTeamProfilePostRemove),
+    fork(watchRequestTeamProfilePostDetail),
   ]);
 }
 

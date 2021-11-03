@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import CancelIcon from '@material-ui/icons/Cancel';
 import PersonIcon from '@material-ui/icons/Person';
 
@@ -203,6 +204,7 @@ export const TeamProfileTitle = styled.div`
   font-size: 2rem;
   font-weight: 500;
   margin: 0.2rem 2rem;
+  color: #000000;
 `;
 export const TeamProfileContent = styled.div`
   font-size: 1.5rem;
@@ -345,4 +347,8 @@ export const Button = styled.button`
 export const BoundaryText = styled.p`
   font-size: 1.4rem;
   line-height: 0.2rem;
+`;
+
+export const StyledLink = styled(Link)`
+  text-decoration: none;
 `;
