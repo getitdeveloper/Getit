@@ -37,7 +37,7 @@ class PortfolioListAPIView(GenericAPIView):
                 }
         """
         posts = Portfolio.objects.filter(user=user_id)
-        serializer = PortfolioSerializer(posts, many=True)
+        serializer = PortfolioSerializer(posts, many=True, context={'request': request})
         return Response(serializer.data)
 
     def post(self, request, user_id):
@@ -86,7 +86,7 @@ class PortfolioDetailAPIView(GenericAPIView):
                 }
         """
         portfolio = self.get_object(pk, user_id)
-        serializer = PortfolioSerializer(portfolio)
+        serializer = PortfolioSerializer(portfolio, context={'request': request})
         return Response(serializer.data)
 
     def put(self, request, pk, user_id):

@@ -1,4 +1,5 @@
 import json
+import os
 
 import requests
 from django.http.response import JsonResponse
@@ -10,6 +11,7 @@ from drf_yasg.utils import swagger_auto_schema
 from rest_framework.generics import GenericAPIView
 from rest_framework.mixins import ListModelMixin
 from rest_framework.parsers import MultiPartParser
+from apis.settings import BASE_DIR
 
 from likes.models import CommonBoardLike
 from tags.models import Tag
