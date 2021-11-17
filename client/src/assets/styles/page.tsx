@@ -37,6 +37,7 @@ export const ContentContainer = styled.div`
   width: 100%;
   margin: 0 auto;
   background-color: #ffffff;
+  min-height: 100rem;
   height: auto;
   padding: 3rem 2rem;
   border-radius: 10px;
@@ -46,5 +47,8 @@ export const ContentContainer = styled.div`
 
   @media ${({ theme }) => theme.tablet} {
     padding: 3rem 0;
+    min-height: initial;
+    height: 100vh - 6.19rem;
+    box-shadow: none;
   }
 `;

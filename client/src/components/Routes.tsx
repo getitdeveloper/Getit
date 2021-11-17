@@ -1,38 +1,20 @@
 import * as React from 'react';
 import { useEffect } from 'react';
 import { Switch, Route, useLocation, useHistory } from 'react-router-dom';
-import { useSelector, RootStateOrAny, useDispatch } from 'react-redux';
-import axios from 'axios';
+import { useSelector, RootStateOrAny } from 'react-redux';
 import Header from '@components/Header/index';
 import { routeList } from '@components/routeList';
-import { USER_PROFILE_REQUEST } from '@reducers/actions';
+import auth from '@auth/UserAuthentication/index';
 
 function Routes(): JSX.Element {
-  const dispatch = useDispatch();
   const history = useHistory();
   const { pathname } = useLocation();
-
   const message = useSelector((state: RootStateOrAny) => state.user.id.message);
 
   useEffect(() => {
     if (message === 'register') {
       return history.push('/register');
     }
-  }, [message]);
-
-  useEffect(() => {
-    axios
-      .get('/api/auth/')
-      .then((response) => {
-        console.log('서버와 쿠키 공유 상태 ===> ', response);
-        dispatch({
-          type: USER_PROFILE_REQUEST,
-          data: {
-            user_pk: response.data.user_pk,
-          },
-        });
-      })
-      .catch((error) => console.log('서버와 쿠키 공유 상태 ===>', error));
   }, [message]);
 
   return (
@@ -54,7 +36,7 @@ function Routes(): JSX.Element {
             key={route.path}
             exact
             path={route.path}
-            component={route.page}
+            component={auth(route.page, route.auth)}
           />
         ))}
       </Switch>

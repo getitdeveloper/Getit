@@ -1,6 +1,5 @@
-import * as React from 'react';
-import { useCallback } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useCallback } from 'react';
+import { useHistory, useLocation } from 'react-router-dom';
 import { Nickname } from './types';
 import {
   UserInfoWrapper,
@@ -10,14 +9,25 @@ import {
 
 function UserInfoButtons({ nickname }: Nickname): JSX.Element {
   const history = useHistory();
+  const location = useLocation();
+  const pathname = location.pathname;
 
   const handleRouting = useCallback(() => {
     return history.push('/myprofile');
   }, []);
 
+  const checkPath = ['recruitBoard', 'questionBoard', 'freeBoard', 'myprofile'];
+
+  const checkAvailability = (arr: string[], path: string) => {
+    return arr.some((arrVal) => {
+      return path.includes(arrVal);
+    });
+  };
+
   return (
     <UserInfoWrapper>
-      <p>{nickname} 님</p>
+      {/* 특정 페이지에서 닉네임 출력 제한 */}
+      {checkAvailability(checkPath, pathname) ? null : <p>{nickname} 님</p>}
       <button type='button' onClick={handleRouting}>
         <StyledPersonIcon fontSize='large' />
       </button>

@@ -1,7 +1,11 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+import CancelIcon from '@material-ui/icons/Cancel';
+import PersonIcon from '@material-ui/icons/Person';
 
 export const Container = styled.div`
   display: flex;
+  min-height: 98rem;
 
   @media ${({ theme }) => theme.tablet} {
     flex-direction: column;
@@ -187,6 +191,94 @@ export const SubmitButton = styled.button`
   cursor: pointer;
 `;
 
+// Team Profile
+export const TeamProfileWrapper = styled.div`
+  margin: 0.5rem 2rem;
+  padding: 2rem 1rem;
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+  border-radius: 15px;
+  position: relative;
+`;
+
+export const TeamProfileTitle = styled.div`
+  font-size: 2rem;
+  font-weight: 500;
+  margin: 0.2rem 2rem;
+  color: #000000;
+`;
+export const TeamProfileContent = styled.div`
+  font-size: 1.5rem;
+  color: #868686;
+  margin: 1.5rem 2rem;
+`;
+export const TeamProfileInfo = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-right: 2rem;
+  font-size: 1.5rem;
+`;
+
+export const TeamProfileCreated = styled.div`
+  color: #868686;
+  margin: 0 0.5rem;
+`;
+export const TeamProfileMember = styled.div`
+  display: flex;
+  align-items: center;
+  color: #868686;
+  margin: 0 0.5rem;
+`;
+
+export const RemoveButton = styled.button`
+  border-style: none;
+  background-color: transparent;
+  position: absolute;
+  right: 0;
+  top: 0;
+  cursor: pointer;
+  padding: 1.5rem;
+`;
+
+export const RemoveIcon = styled(CancelIcon)`
+  && {
+    font-size: 2rem;
+  }
+  color: #868686;
+`;
+
+export const MemberIcon = styled(PersonIcon)`
+  && {
+    font-size: 2rem;
+  }
+`;
+
+export const TeamProfileCreateButtonWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  margin: 3rem 0;
+
+  button {
+    background-color: ${({ theme }) => theme.colors.main};
+    height: 4.6rem;
+    color: #ffffff;
+    text-decoration: none;
+    cursor: pointer;
+    width: 17rem;
+    font-size: 1.4rem;
+    border-radius: 6px;
+    border-color: transparent;
+    padding: 1.2rem 2rem;
+  }
+`;
+
+export const Notification = styled.div`
+  display: flex;
+  justify-content: center;
+  font-size: 1.6rem;
+  margin: 6rem 0;
+`;
+
 // MyComments styles
 export const CommentWrapper = styled.div`
   margin-bottom: 1.5rem;
@@ -255,4 +347,8 @@ export const Button = styled.button`
 export const BoundaryText = styled.p`
   font-size: 1.4rem;
   line-height: 0.2rem;
+`;
+
+export const StyledLink = styled(Link)`
+  text-decoration: none;
 `;
