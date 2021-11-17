@@ -1,4 +1,4 @@
-import { IPostItem, IRecruitPost } from '../types';
+import { IPostItem, IRecruitPost, ITeamProfilePostDetail } from '../types';
 import {
   COMMON_POST_REQUEST,
   COMMON_POST_SUCCESS,
@@ -18,12 +18,19 @@ import {
   RECRUIT_POSTING_FAILURE,
   RECRUIT_POSTING_SUCCESS,
   RECRUIT_POSTING_REQUEST,
+  TEAM_PROFILE_REMOVE_REQUEST,
+  TEAM_PROFILE_REMOVE_SUCCESS,
+  TEAM_PROFILE_REMOVE_FAILURE,
+  TEAM_PROFILE_POST_DETAIL_REQUEST,
+  TEAM_PROFILE_POST_DETAIL_SUCCESS,
+  TEAM_PROFILE_POST_DETAIL_FAILURE,
 } from './actions';
 
 export interface InitialState {
   commonPost: IPostItem | null;
   likeCounts: { counts: number } | null;
   recruitPost: IRecruitPost | null;
+  teamProfilePostDetail: ITeamProfilePostDetail | null;
   commonPostRequest: boolean;
   commonPostSuccess: boolean;
   commonPostFailure: string | null;
@@ -42,6 +49,12 @@ export interface InitialState {
   teamProfileRegisterRequest: boolean;
   teamProfileRegisterSuccess: boolean;
   teamProfileRegisterFailure: string | null;
+  teamProfileRemoveRequest: boolean;
+  teamProfileRemoveSuccess: boolean;
+  teamProfileRemoveFailure: string | null;
+  teamProfilePostDetailRequest: boolean;
+  teamProfilePostDetailSuccess: boolean;
+  teamProfilePostDetailFailure: string | null;
 }
 
 // 자유/질문게시판 글 가져오기
@@ -132,6 +145,33 @@ export interface RecruitPostingFailure {
   error: string;
 }
 
+export interface TeamProfileRemoveRequest {
+  type: typeof TEAM_PROFILE_REMOVE_REQUEST;
+}
+
+export interface TeamProfileRemoveSuccess {
+  type: typeof TEAM_PROFILE_REMOVE_SUCCESS;
+}
+
+export interface TeamProfileRemoveFailure {
+  type: typeof TEAM_PROFILE_REMOVE_FAILURE;
+  error: string;
+}
+
+export interface TeamProfilePostDetailRequest {
+  type: typeof TEAM_PROFILE_POST_DETAIL_REQUEST;
+}
+
+export interface TeamProfilePostDetailSuccess {
+  type: typeof TEAM_PROFILE_POST_DETAIL_SUCCESS;
+  data: ITeamProfilePostDetail;
+}
+
+export interface TeamProfilePostDetailFailure {
+  type: typeof TEAM_PROFILE_POST_DETAIL_FAILURE;
+  error: string;
+}
+
 export type PostActions =
   | CommonPostRequest
   | CommonPostSuccess
@@ -150,4 +190,10 @@ export type PostActions =
   | TeamProfileRegisterFailure
   | RecruitPostingRequest
   | RecruitPostingSuccess
-  | RecruitPostingFailure;
+  | RecruitPostingFailure
+  | TeamProfileRemoveRequest
+  | TeamProfileRemoveSuccess
+  | TeamProfileRemoveFailure
+  | TeamProfilePostDetailRequest
+  | TeamProfilePostDetailSuccess
+  | TeamProfilePostDetailFailure;
