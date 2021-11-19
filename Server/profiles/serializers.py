@@ -10,11 +10,14 @@ from members.serializers import MemberSerializer
 
 
 class TagSerializer(serializers.ModelSerializer):
+
     def to_representation(self, value):
         return value.name
+    
     class Meta:
         model = Tag
         fields = ('name',)
+
 class ProfileSerializer(ModelSerializer):
     stack = TagSerializer(read_only=True, many=True)
     class Meta:
@@ -31,8 +34,6 @@ class ProfileSerializer(ModelSerializer):
             'git',
             'stack',
         )
-
-
 
 
 class TeamProfileSerializer(serializers.ModelSerializer):

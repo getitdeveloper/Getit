@@ -48,12 +48,10 @@ class CommonBoardSerializer(serializers.ModelSerializer):
         source='commonlikes.count',
         read_only=True
     )
-
     comments = serializers.IntegerField(
         source='commoncomments.count',
         read_only=True
     )
-
     # like_user = CommonLikeSerializer(read_only=True, many=True)
     is_like = SerializerMethodField()
 
@@ -75,9 +73,11 @@ class CommonBoardSerializer(serializers.ModelSerializer):
 
 class MemberBoardSerializer(serializers.ModelSerializer):
     nickname = serializers.SerializerMethodField()
+
     class Meta:
         model = Member
         fields = ('member','nickname')
+        
     def get_nickname(self,obj):
         profile = Profile.objects.get(id=obj.study.member)
         nickname = profile.nickname

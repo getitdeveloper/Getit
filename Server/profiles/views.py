@@ -77,7 +77,7 @@ class ProfileDetail(GenericAPIView):
                 }
         """
         profile = self.get_object(user_pk)
-        serializer = ProfileSerializer(profile)
+        serializer = ProfileSerializer(profile, context={'request': request})
         return Response(serializer.data)
 
     def post(self, request, user_pk):
@@ -181,7 +181,7 @@ class TeamProfileCreate(GenericAPIView):
             }]
         """
         profiles = TeamProfile.objects.filter(user=user_pk)
-        serializer = TeamProfileSerializer(profiles, many=True)
+        serializer = TeamProfileSerializer(profiles, many=True, context={'request': request})
         return Response(serializer.data)
 
     def post(self, request, user_pk, format=None):
@@ -249,7 +249,7 @@ class TeamProfileDetail(GenericAPIView):
                     }
                 """
         profile = self.get_object(user_id, id)
-        serializer = TeamProfileSerializer(profile)
+        serializer = TeamProfileSerializer(profile, context={'request': request})
         return Response(serializer.data)
 
     def put(self, request, user_id, id):

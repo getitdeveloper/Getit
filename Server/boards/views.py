@@ -1,4 +1,5 @@
 import json
+import os
 
 import requests
 from django.http.response import JsonResponse
@@ -10,6 +11,7 @@ from drf_yasg.utils import swagger_auto_schema
 from rest_framework.generics import GenericAPIView
 from rest_framework.mixins import ListModelMixin
 from rest_framework.parsers import MultiPartParser
+from apis.settings import BASE_DIR
 
 from likes.models import CommonBoardLike
 from tags.models import Tag
@@ -292,6 +294,57 @@ class RecruitmentBoardPostListAPIView(GenericAPIView):
                 board.stack.add(_name)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class RecruitmentBoardDeveloperFilterView(GenericAPIView):
+    serializer_class = RecruitmentBoardSerializer
+    permission_classes = [RecruitmentIsOwnerOrReadOnly]
+    pagination_class = BoardPageNumberPagination
+    ordering_fields = ['create_at']
+    filter_backends = [SearchFilter]
+    search_fields = ['content','title',]
+
+    # parser_classes = (MultiPartParser,)
+
+    def get(self, request):
+        posts = RecruitmentBoard.objects.filter(developer__gt=0)
+        paginator = BoardPageNumberPagination()
+        result_page = paginator.paginate_queryset(posts, request)
+        serializer = RecruitmentBoardSerializer(result_page, many=True, context={'request': request})
+        return paginator.get_paginated_response(serializer.data)
+
+class RecruitmentBoardDesignerFilterView(GenericAPIView):
+    serializer_class = RecruitmentBoardSerializer
+    permission_classes = [RecruitmentIsOwnerOrReadOnly]
+    pagination_class = BoardPageNumberPagination
+    ordering_fields = ['create_at']
+    filter_backends = [SearchFilter]
+    search_fields = ['content','title',]
+
+    # parser_classes = (MultiPartParser,)
+
+    def get(self, request):
+        posts = RecruitmentBoard.objects.filter(designer__gt=0)
+        paginator = BoardPageNumberPagination()
+        result_page = paginator.paginate_queryset(posts, request)
+        serializer = RecruitmentBoardSerializer(result_page, many=True, context={'request': request})
+        return paginator.get_paginated_response(serializer.data)
+
+class RecruitmentBoardPmFilterView(GenericAPIView):
+    serializer_class = RecruitmentBoardSerializer
+    permission_classes = [RecruitmentIsOwnerOrReadOnly]
+    pagination_class = BoardPageNumberPagination
+    ordering_fields = ['create_at']
+    filter_backends = [SearchFilter]
+    search_fields = ['content','title',]
+
+    # parser_classes = (MultiPartParser,)
+
+    def get(self, request):
+        posts = RecruitmentBoard.objects.filter(pm__gt=0)
+        paginator = BoardPageNumberPagination()
+        result_page = paginator.paginate_queryset(posts, request)
+        serializer = RecruitmentBoardSerializer(result_page, many=True, context={'request': request})
+        return paginator.get_paginated_response(serializer.data)
 
 
 class RecruitmentBoardPostDetailAPIView(GenericAPIView):

@@ -163,6 +163,17 @@ DATABASES = {
      }
 }
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'get_it',
+#         'USER': 'root',
+#         'PASSWORD': '7401',
+#         'HOST': 'localhost',
+#         'PORT': '3306',
+#     }
+# }
+
 # DATABASES = MY_DATABASES
 
 # # Password validation
