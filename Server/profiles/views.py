@@ -11,7 +11,6 @@ from rest_framework.decorators import api_view, renderer_classes
 
 from portfolios.models import Portfolio
 from rest_framework.renderers import JSONRenderer
-from .forms import BoardForm
 from .permissions import IsOwnerOrReadOnly
 from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
