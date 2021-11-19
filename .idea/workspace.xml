@@ -4,8 +4,6 @@
     <list default="true" id="14847226-151c-4591-a157-0243461eac9c" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/apis/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/Server/apis/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/profiles/forms.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/profiles/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/Server/profiles/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

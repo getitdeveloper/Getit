@@ -156,25 +156,23 @@ WSGI_APPLICATION = 'apis.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-DATABASES = {
-     'default': {
-         'ENGINE': 'django.db.backends.sqlite3',
-         'NAME': BASE_DIR / 'db.sqlite3',
-     }
-}
-
-# DATABASES = {
+#DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'get_it',
-#         'USER': 'root',
-#         'PASSWORD': '7401',
-#         'HOST': 'localhost',
-#         'PORT': '3306',
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
-# }
+#}
 
-# DATABASES = MY_DATABASES
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'getit',
+        'USER': 'getit',
+        'PASSWORD': '1234',
+        'HOST': 'mariadb',
+        'PORT': '3306',
+    }
+}
 
 # # Password validation
 # # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
