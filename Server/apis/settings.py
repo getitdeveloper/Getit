@@ -60,6 +60,7 @@ PROJECT_APPS = [
     'likes',
     'members',
     'chats',
+    'alarm',
 ]
 
 THIRD_PARTY_APPS = [
@@ -79,6 +80,8 @@ THIRD_PARTY_APPS = [
     'dj_rest_auth.registration',
 
     'drf_yasg',
+
+    'web-push',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + THIRD_PARTY_APPS
