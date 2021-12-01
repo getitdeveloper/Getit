@@ -244,6 +244,7 @@ class kakao_callback(APIView):
             data = {'access_token': access_token, 'code': code}
             accept = requests.post(
                 f"http://127.0.0.1/api/token_accept/kakao/", data=data)
+
             accept_status = accept.status_code
             if accept_status != 200:
                 return JsonResponse({'err_msg': 'failed to signin'}, status=accept_status)
@@ -281,6 +282,7 @@ class kakao_callback(APIView):
                            domain='getit.best', samesite=None)
             return res
 
+@method_decorator(csrf_exempt, name='dispatch')
 class KakaoLogin(SocialLoginView):
     adapter_class = KakaoOAuth2Adapter
     client_class = OAuth2Client
