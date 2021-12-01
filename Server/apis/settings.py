@@ -81,7 +81,6 @@ THIRD_PARTY_APPS = [
 
     'drf_yasg',
 
-    'web-push',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + THIRD_PARTY_APPS
