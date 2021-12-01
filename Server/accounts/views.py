@@ -242,13 +242,16 @@ class kakao_callback(APIView):
             if user is None:
                 raise Exception
             data = {'access_token': access_token, 'code': code}
+            print('accept문제전')
             accept = requests.post(
                 f"http://127.0.0.1/api/token_accept/kakao/", data=data)
+            print('accept문제')
 
             accept_status = accept.status_code
             if accept_status != 200:
                 return JsonResponse({'err_msg': 'failed to signin'}, status=accept_status)
             accept_json = accept.json()
+            print(accept_json)
             upk = accept_json.get('user')
             upk = upk['pk']
             profile = Profile.objects.get(user=upk)
@@ -265,12 +268,17 @@ class kakao_callback(APIView):
         except:
             # 기존에 가입된 유저가 없으면 새로 가입
             data = {'access_token': access_token, 'code': code}
+            print('accept문제전')
+
             accept = requests.post(
                 f"http://127.0.0.1/api/token_accept/kakao/", data=data)
+            print('accept문제')
+
             accept_status = accept.status_code
             if accept_status != 200:
                 return JsonResponse({'err_msg': 'failed to signup'}, status=accept_status)
             accept_json = accept.json()
+            print(accept_json)
             upk = accept_json.get('user')
             upk = upk['pk']
             access_token = accept_json['access_token']
