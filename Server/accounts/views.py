@@ -220,17 +220,21 @@ class kakao_callback(APIView):
         """
         token_req = requests.get(f"https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id={API_KEY}&redirect_uri={REDIRECT_URI}&code={code}", headers={'Accept': 'application/json'})
         token_req_json = token_req.json()
-
+        print('여기가 문제?')
         error = token_req_json.get("error")
         if error is not None:
             raise JSONDecodeError(error)
+        print('여긴가')
         access_token = token_req_json.get('access_token')
+        print('여기다')
         """
         Email Request
         """
         user_req = requests.get(f"https://kapi.kakao.com/v2/user/me", headers={"Authorization": f"Bearer {access_token}"})
+        print('여기가 문제인가?')
         user_json = user_req.json()
         error = user_json.get("error")
+        print('여기입니다')
         if error is not None:
             raise JSONDecodeError(error)
         user_id = user_json.get("id")
