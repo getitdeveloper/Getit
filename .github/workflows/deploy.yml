@@ -4,9 +4,7 @@ on:
   push:
     branches:
       - client
-  pull_request:
-    branches:
-      - client
+
 jobs:
   build:
     runs-on: ubuntu-18.04
