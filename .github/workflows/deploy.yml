@@ -1,8 +1,12 @@
 name: Client Deploy
+# 타겟 브랜치를 설정한다.
 on:
   push:
     branches:
-      - client # 타겟 브랜치를 설정한다.
+      - client
+  pull_request:
+    branches:
+      - client
 jobs:
   build:
     runs-on: ubuntu-18.04
