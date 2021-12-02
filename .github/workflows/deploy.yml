@@ -1,8 +1,10 @@
 name: Client Deploy
+# 타겟 브랜치를 설정한다.
 on:
   push:
     branches:
-      - client # 타겟 브랜치를 설정한다.
+      - client
+
 jobs:
   build:
     runs-on: ubuntu-18.04
@@ -22,14 +24,15 @@ jobs:
 
       # Github Repository Secrets를 통해 환경 변수 파일을 생성한다.
       - name: Generate Environment Variables File for Production
+        working-directory: ./client
         run: |
-          echo "REACT_APP_PROD_SERVER_BASE_URL=$REACT_APP_PROD_SERVER_BASE_URL" >> .env.production
-          echo "REACT_APP_PROD_GOOGLE_CLIENT_ID=$REACT_APP_PROD_GOOGLE_CLIENT_ID" >> .env.production
-          echo "REACT_APP_PROD_KAKAO_API_KEY=$REACT_APP_PROD_KAKAO_API_KEY" >> .env.production
-          echo "REACT_APP_PROD_KAKAO_REDIRECT_URI=$REACT_APP_PROD_KAKAO_REDIRECT_URI" >> .env.production
-          echo "REACT_APP_PROD_GITHUB_CLIENT_ID=$REACT_APP_PROD_GITHUB_CLIENT_ID" >> .env.production
-          echo "REACT_APP_PROD_GITHUB_CLIENT_SECRET=$REACT_APP_PROD_GITHUB_CLIENT_SECRET" >> .env.production
-          echo "REACT_APP_PROD_GITHUB_AUTHORIZATION_CALLBACK_URL=$REACT_APP_PROD_GITHUB_AUTHORIZATION_CALLBACK_URL" >> .env.production
+          echo "REACT_APP_PROD_SERVER_BASE_URL=$REACT_APP_PROD_SERVER_BASE_URL" >> .env
+          echo "REACT_APP_PROD_GOOGLE_CLIENT_ID=$REACT_APP_PROD_GOOGLE_CLIENT_ID" >> .env
+          echo "REACT_APP_PROD_KAKAO_API_KEY=$REACT_APP_PROD_KAKAO_API_KEY" >> .env
+          echo "REACT_APP_PROD_KAKAO_REDIRECT_URI=$REACT_APP_PROD_KAKAO_REDIRECT_URI" >> .env
+          echo "REACT_APP_PROD_GITHUB_CLIENT_ID=$REACT_APP_PROD_GITHUB_CLIENT_ID" >> .env
+          echo "REACT_APP_PROD_GITHUB_CLIENT_SECRET=$REACT_APP_PROD_GITHUB_CLIENT_SECRET" >> .env
+          echo "REACT_APP_PROD_GITHUB_AUTHORIZATION_CALLBACK_URL=$REACT_APP_PROD_GITHUB_AUTHORIZATION_CALLBACK_URL" >> .env
         env:
           REACT_APP_PROD_SERVER_BASE_URL: ${{ secrets.REACT_APP_PROD_SERVER_BASE_URL }}
           REACT_APP_PROD_GOOGLE_CLIENT_ID: ${{ secrets.REACT_APP_PROD_GOOGLE_CLIENT_ID }}
