@@ -265,18 +265,6 @@ function RecruitPostForm(): JSX.Element {
     if (isBefore) {
       return alert('모집 기간 시작일을 현재보다 과거로 설정할 수 없습니다.');
     }
-    console.log('=====>', {
-      user: userId,
-      study: Number(selectTeamProfileId),
-      title,
-      content: recruitContent,
-      developer: recruitList[0].count,
-      designer: recruitList[1].count,
-      pm: recruitList[2].count,
-      start_date: startDate,
-      end_date: endDate,
-      stack: stacks,
-    });
 
     dispatch({
       type: RECRUIT_POSTING_REQUEST,
@@ -416,7 +404,6 @@ function RecruitPostForm(): JSX.Element {
         <RightContainer>
           <RecruitMemberWrapper>
             {/* 라디오 버튼 목록 */}
-            {/* TODO 수정하기!!!!!!!!!!!!!!!!!!!! */}
             <RadioButton
               item={recruitList}
               onClick={handleRecruitStatus}
