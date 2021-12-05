@@ -49,7 +49,13 @@ function index(): JSX.Element {
         <Participants>
           <h3>Designer</h3>
           <div>
-            <a href='http://localhost:3000'>정유미</a>
+            <a
+              href='https://instagram.com/youme1802'
+              target='_blank'
+              rel='noreferrer noopener'
+            >
+              정유미
+            </a>
           </div>
         </Participants>
       </Container>
