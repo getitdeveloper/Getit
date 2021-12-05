@@ -2,22 +2,20 @@ import * as React from 'react';
 import { useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 import { RootStateOrAny, useSelector } from 'react-redux';
-import Button from '@material-ui/core/Button';
 import NewFamousSortButton from '@components/SortButton/NewFamous';
 import Recruiting from '@components/SortButton/Recruiting';
 import JobTypeSortButton from '@components/SortButton/JobType';
 import { IBoardType } from './types';
 import {
-  useStyles,
   PostSubHeaderWrapper,
   RightContainer,
   WritePostText,
   WritePostIcon,
+  WriteButton,
   LeftContainer,
 } from './styles';
 
 function PostSubHeader({ boardType }: IBoardType): JSX.Element {
-  const classes = useStyles();
   const history = useHistory();
 
   const userId = useSelector(
@@ -56,14 +54,10 @@ function PostSubHeader({ boardType }: IBoardType): JSX.Element {
         {/* 모집 진행중, 모집마감 정렬 버튼. 모집 게시판에서만 보인다. */}
         {boardType === 'Recruit' && <Recruiting />}
         {/* 게시글 작성 버튼 */}
-        <Button
-          className={classes.writePostButton}
-          variant='contained'
-          onClick={handlePostType}
-        >
+        <WriteButton type='button' onClick={handlePostType}>
           <WritePostText>게시글 작성</WritePostText>
           <WritePostIcon />
-        </Button>
+        </WriteButton>
       </RightContainer>
     </PostSubHeaderWrapper>
   );

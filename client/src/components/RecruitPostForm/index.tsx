@@ -1,5 +1,4 @@
-import * as React from 'react';
-import {
+import React, {
   useCallback,
   useState,
   useEffect,
@@ -10,7 +9,7 @@ import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector, RootStateOrAny } from 'react-redux';
 import moment from 'moment';
 import SelectImg from '@assets/images/Select.svg';
-import RadioButton from '@components/RadioButton';
+import RadioButton from '@components/RadioButton/index';
 import Participants from '@components/ParticipantsList/index';
 import {
   RECRUIT_POSTING_REQUEST,
@@ -38,13 +37,6 @@ import {
   TitleWrapper,
   TitleInput,
 } from './styles';
-import CountMemberInput from './CountMember';
-
-const recruitList = [
-  { text: '개발자', value: 'developer', checked: false, count: 0 },
-  { text: '디자이너', value: 'designer', checked: false, count: 0 },
-  { text: '기획자', value: 'pm', checked: false, count: 0 },
-];
 
 function RecruitPostForm(): JSX.Element {
   const dispatch = useDispatch();
@@ -56,9 +48,11 @@ function RecruitPostForm(): JSX.Element {
     (state: RootStateOrAny) => state.postList.teamProfileList,
   );
 
-  const [recruitDeveloper, setRecruitDeveloper] = useState(recruitList[0]);
-  const [recruitDesigner, setRecruitDesigner] = useState(recruitList[1]);
-  const [recruitPm, setRecruitPm] = useState(recruitList[2]);
+  const [recruitList, setRecruitList] = useState([
+    { text: '개발자', value: 'developer', checked: false, count: 0 },
+    { text: '디자이너', value: 'designer', checked: false, count: 0 },
+    { text: '기획자', value: 'pm', checked: false, count: 0 },
+  ]);
   const [recruitContent, setRecruitContent] = useState('');
   const [selectTeamProfileId, setSelectTeamProfileId] = useState(null);
   const [stacks, setStacks] = useState([]);
@@ -108,60 +102,90 @@ function RecruitPostForm(): JSX.Element {
     event.target.type = 'text';
   }, []);
 
-  // 라디오버튼 선택
-  const handleRecuitDeveloper = useCallback(() => {
-    setRecruitDeveloper({
-      ...recruitDeveloper,
-      checked: !recruitDeveloper.checked,
-      count: 0,
-    });
-  }, [recruitDeveloper]);
-
-  const handleRecuitDesigner = useCallback(() => {
-    setRecruitDesigner({
-      ...recruitDesigner,
-      checked: !recruitDesigner.checked,
-      count: 0,
-    });
-  }, [recruitDesigner]);
-
-  const handleRecuitPm = useCallback(() => {
-    setRecruitPm({
-      ...recruitPm,
-      checked: !recruitPm.checked,
-      count: 0,
-    });
-  }, [recruitPm]);
-
-  // 인원수 입력
-  const handleRecuitDeveloperNum = useCallback(
+  const handleRecruitStatus = useCallback(
     (event) => {
-      setRecruitDeveloper({
-        ...recruitDeveloper,
-        count: parseInt(event.target.value, 10),
-      });
+      const { name } = event.target;
+      switch (name) {
+        case 'developer': {
+          setRecruitList([
+            {
+              text: '개발자',
+              value: 'developer',
+              checked: !recruitList[0].checked,
+              count: 0,
+            },
+            recruitList[1],
+            recruitList[2],
+          ]);
+          break;
+        }
+        case 'designer': {
+          setRecruitList([
+            recruitList[0],
+            {
+              text: '디자이너',
+              value: 'designer',
+              checked: !recruitList[1].checked,
+              count: 0,
+            },
+            recruitList[2],
+          ]);
+          break;
+        }
+        case 'pm': {
+          setRecruitList([
+            recruitList[0],
+            recruitList[1],
+            {
+              text: '기획자',
+              value: 'pm',
+              checked: !recruitList[2].checked,
+              count: 0,
+            },
+          ]);
+          break;
+        }
+        default:
+          console.log('empty select');
+      }
     },
-    [recruitDeveloper],
+    [recruitList],
   );
 
-  const handleRecuitDesignerNum = useCallback(
-    (event) => {
-      setRecruitDesigner({
-        ...recruitDesigner,
-        count: parseInt(event.target.value, 10),
-      });
+  const handleRecruitCount = useCallback(
+    (event: ChangeEvent<HTMLInputElement>) => {
+      const { name, value } = event.target;
+      const recruitMemberCount = parseInt(value, 10);
+      switch (name) {
+        case 'developer': {
+          setRecruitList([
+            Object.assign(recruitList[0], { count: recruitMemberCount }),
+            recruitList[1],
+            recruitList[2],
+          ]);
+          break;
+        }
+        case 'designer': {
+          setRecruitList([
+            recruitList[0],
+            Object.assign(recruitList[1], { count: recruitMemberCount }),
+            recruitList[2],
+          ]);
+          break;
+        }
+        case 'pm': {
+          setRecruitList([
+            recruitList[0],
+            recruitList[1],
+            Object.assign(recruitList[2], { count: recruitMemberCount }),
+          ]);
+          break;
+        }
+        default:
+          console.log('empty select');
+      }
     },
-    [recruitDesigner],
-  );
-
-  const handleRecuitPmNum = useCallback(
-    (event) => {
-      setRecruitPm({
-        ...recruitPm,
-        count: parseInt(event.target.value, 10),
-      });
-    },
-    [recruitPm],
+    [recruitList],
   );
 
   const handleTitle = useCallback(
@@ -179,24 +203,53 @@ function RecruitPostForm(): JSX.Element {
   );
 
   const handleSubmit = useCallback(() => {
-    // 필수 입력 내역 미입력 체크
+    // 폼 제출 목록 체크
+
+    if (userId === undefined) {
+      return alert('로그인이 필요합니다.');
+    }
+
+    if (selectTeamProfileId === null) {
+      return alert(
+        '팀 프로필을 선택해주세요. 생성하신 팀 프로필이 없다면 생성해주세요.',
+      );
+    }
 
     if (
-      userId === undefined ||
-      selectTeamProfileId === null ||
       title === '' ||
       recruitContent === '' ||
-      (recruitDeveloper.checked === true && recruitDeveloper.count === 0) ||
-      (recruitDesigner.checked === true && recruitDesigner.count === 0) ||
-      (recruitPm.checked === true && recruitPm.count === 0) ||
-      Number.isNaN(Number(recruitDeveloper.count)) ||
-      Number.isNaN(Number(recruitDesigner.count)) ||
-      Number.isNaN(Number(recruitPm.count)) ||
       startDate === '' ||
       endDate === '' ||
       stacks === []
     ) {
       return alert('모든 항목을 작성해 주세요.');
+    }
+    // 모집 직종 선택 후 인원수 미입력 체크
+    if (
+      (recruitList[0].checked === true && recruitList[0].count === 0) ||
+      (recruitList[1].checked === true && recruitList[1].count === 0) ||
+      (recruitList[2].checked === true && recruitList[2].count === 0) ||
+      Number.isNaN(Number(recruitList[0].count)) ||
+      Number.isNaN(Number(recruitList[1].count)) ||
+      Number.isNaN(Number(recruitList[2].count))
+    ) {
+      return alert('선택하신 직업별 모집인원은 1명 이상이어야 합니다.');
+    }
+
+    if (
+      recruitList[0].checked === false &&
+      recruitList[1].checked === false &&
+      recruitList[2].checked === false
+    ) {
+      return alert('모집인원을 설정해주세요.');
+    }
+
+    // 모집 인원 체크
+    if (
+      recruitList[0].count + recruitList[1].count + recruitList[2].count <
+      1
+    ) {
+      return alert('모집인원은 최소 1명 이상이어야 합니다.');
     }
 
     // 모집기간 endDate가 startDate 보다 빠른 경우
@@ -220,9 +273,9 @@ function RecruitPostForm(): JSX.Element {
         study: Number(selectTeamProfileId),
         title,
         content: recruitContent,
-        developer: recruitDeveloper.count,
-        designer: recruitDesigner.count,
-        pm: recruitPm.count,
+        developer: recruitList[0].count,
+        designer: recruitList[1].count,
+        pm: recruitList[2].count,
         start_date: startDate,
         end_date: endDate,
         stack: stacks,
@@ -232,9 +285,7 @@ function RecruitPostForm(): JSX.Element {
   }, [
     userId,
     selectTeamProfileId,
-    recruitDeveloper,
-    recruitDesigner,
-    recruitPm,
+    recruitList,
     title,
     recruitContent,
     startDate,
@@ -353,30 +404,11 @@ function RecruitPostForm(): JSX.Element {
         <RightContainer>
           <RecruitMemberWrapper>
             {/* 라디오 버튼 목록 */}
-            <li>
-              <RadioButton
-                item={recruitDeveloper}
-                onClick={handleRecuitDeveloper}
-              />
-              <CountMemberInput
-                item={recruitDeveloper}
-                onChange={handleRecuitDeveloperNum}
-              />
-            </li>
-            <li>
-              <RadioButton
-                item={recruitDesigner}
-                onClick={handleRecuitDesigner}
-              />
-              <CountMemberInput
-                item={recruitDesigner}
-                onChange={handleRecuitDesignerNum}
-              />
-            </li>
-            <li>
-              <RadioButton item={recruitPm} onClick={handleRecuitPm} />
-              <CountMemberInput item={recruitPm} onChange={handleRecuitPmNum} />
-            </li>
+            <RadioButton
+              item={recruitList}
+              onClick={handleRecruitStatus}
+              onChange={handleRecruitCount}
+            />
           </RecruitMemberWrapper>
         </RightContainer>
       </BlockWrapper>

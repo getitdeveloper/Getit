@@ -1,24 +1,24 @@
 import styled from 'styled-components';
-import { makeStyles } from '@material-ui/core/styles';
 import CreateIcon from '@material-ui/icons/Create';
 
-export const useStyles = makeStyles((theme) => {
-  return {
-    writePostButton: {
-      marginLeft: '0.5rem',
-      borderRadius: '25px',
-      backgroundColor: '#4dd290',
-      fontSize: '1.5rem',
-      color: '#FFFFFF',
-      '&:hover': {
-        backgroundColor: '#4dd290',
-      },
-    },
-    radioButton: {
-      padding: '1rem',
-    },
-  };
-});
+export const WriteButton = styled.button`
+  display: flex;
+  background-color: ${({ theme }) => theme.colors.main};
+  color: #ffffff;
+  border-radius: 25px;
+  border-style: none;
+  padding: 1rem 1.5rem;
+  margin-left: 0.5rem;
+  font-weight: bold;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  @media ${({ theme }) => theme.mobile} {
+    margin-right: 0.5rem;
+  }
+`;
 
 export const PostSubHeaderWrapper = styled.div`
   display: flex;
@@ -53,6 +53,6 @@ export const WritePostText = styled.span`
 `;
 
 export const WritePostIcon = styled(CreateIcon)`
-  margin: 0;
+  margin: 0 0 0 0.3rem;
   padding: 0;
 `;

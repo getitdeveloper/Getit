@@ -1,11 +1,11 @@
-import { ChangeEventHandler } from 'react';
+import { ChangeEventHandler, ChangeEvent } from 'react';
 
 export interface ICountInput {
   item: {
     text: string;
     value: string;
     checked: boolean;
-    count: number | string;
+    count?: number | undefined;
   };
-  onChange: ChangeEventHandler<HTMLInputElement>;
+  onChange: ((event: ChangeEvent<HTMLInputElement>) => void) | undefined;
 }
