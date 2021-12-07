@@ -66,6 +66,9 @@ class CommonBoardListAPIView(GenericAPIView):
                         "stack": [
                             "python",
                             "java"
+                        ],
+                        "worker": [
+                            "기획자"
                         ]
                     },
         """
@@ -104,6 +107,7 @@ class CommonBoardListAPIView(GenericAPIView):
                     "image":null,
                     "user":1,
                     "stack":["python", "java"],
+                    "worker":["기획자","디자이너"]
                 }
         """
         serializer = CommonBoardSerializer(data=request.data, context={'request': request})
@@ -159,7 +163,8 @@ class CommonBoardDetailAPIView(GenericAPIView):
                 "likes":0,
                 "comments":0,
                 "is_like":false,
-                "stack":["python","java"]
+                "stack":["python","java"],
+                "worker":["기획자"]
                 }
         """
         post = self.get_object(pk)
@@ -177,7 +182,8 @@ class CommonBoardDetailAPIView(GenericAPIView):
                     "content":"asdasdasdasd",
                     "image":null,
                     "user":3,
-                    "stack":["python", "java"]
+                    "stack":["python", "java"],
+                    "worker":["기획자"]
                 }
         """
         post = self.get_object(pk)
