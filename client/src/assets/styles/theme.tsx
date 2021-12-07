@@ -13,6 +13,7 @@ const colors = {
   ProjectManager: '#fc9557',
   whiteText: '#ffffff',
   blackText: '#000000',
+  iconBaseColor: '#868686',
 };
 
 const theme = {

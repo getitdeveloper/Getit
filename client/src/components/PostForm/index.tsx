@@ -1,5 +1,4 @@
-import * as React from 'react';
-import { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { useSelector, RootStateOrAny, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { COMMON_POST_REGISTER_REQUEST } from '@reducers/actions';
@@ -60,12 +59,12 @@ function PostForm(): JSX.Element {
     }
   };
 
-  const onSubmit = () => {
+  const onSubmit = useCallback(() => {
     if (postTitle === '' || text === '') {
-      return alert('제목과 내용은 필수로 입력하셔야 합니다!');
+      return alert('제목과 내용을 입력해주세요.');
     }
     if (workers.length === 0) {
-      return alert('적어도 하나의 관련 직무를 선택해주세요!');
+      return alert('작성하시는 글과 연관된 직무를 선택해주세요.');
     }
     const postData = {
       title: postTitle,
@@ -76,16 +75,13 @@ function PostForm(): JSX.Element {
       worker: workers,
     };
     console.log(postData);
-    try {
-      dispatch({
-        type: COMMON_POST_REGISTER_REQUEST,
-        data: postData,
-      });
-      history.push(`/${boardType}Board`);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+
+    dispatch({
+      type: COMMON_POST_REGISTER_REQUEST,
+      data: postData,
+    });
+    history.push(`/${boardType}Board`);
+  }, [postTitle, text, workers, boardType, userId, stacks]);
 
   return (
     <ContentContainer>

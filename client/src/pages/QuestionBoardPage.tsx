@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import PostItem from '@components/PostItem';
 import PostSubHeader from '@components/PostSubHeader';
@@ -17,33 +17,35 @@ function QuestionBardPage(): JSX.Element {
   const boardList = useSelector(
     (state: RootStateOrAny) => state.postList.commonPostList,
   );
-  const [page, setPage] = React.useState(1);
+  const [page, setPage] = useState(1);
 
-  React.useEffect(() => {
+  useEffect(() => {
     dispatch({
       type: COMMON_POST_LIST_REQUEST,
       data: {
-        page: String(page),
+        page,
         category: 'question',
       },
     });
   }, [page]);
 
-  console.log('page number: ', page);
   if (!boardList) {
     return <LoadingSpinner />;
   }
+
   return (
     <PageBackground>
       <PostSubHeader boardType='Question' />
       <PageWrapper>
         {boardList ? (
           <ContentContainer>
-            {boardList.results.map((content: IPost) => (
+            {boardList.results.map((content: IPost, index: number) => (
               <PostItem
                 key={content.id}
                 content={content}
                 boardType='question'
+                index={index}
+                length={boardList.results.length}
               />
             ))}
           </ContentContainer>
