@@ -58,7 +58,7 @@ class google_callback(APIView):
             # 기존에 Google로 가입된 유저
             data = {'access_token': access_token}
             accept = requests.post(
-                f"http://127.0.0.1:8000/api/token_accept/google/", data=data)
+                f"http://127.0.0.1/api/token_accept/google/", data=data)
             accept_status = accept.status_code
             if accept_status != 200:
                 return JsonResponse({'err_msg': 'failed to signin'}, status=accept_status)
@@ -81,7 +81,7 @@ class google_callback(APIView):
         except:
             data = {'access_token': access_token}
             accept = requests.post(
-                f"http://127.0.0.1:8000/api/token_accept/google/", data=data)
+                f"http://127.0.0.1/api/token_accept/google/", data=data)
             accept_status = accept.status_code
             if accept_status != 200:
                 return JsonResponse({'err_msg': 'failed to signup'}, status=accept_status)
@@ -116,6 +116,7 @@ class github_callback(APIView):
             }
         """
         requestData = json.loads(request.body)
+        print(requestData)
         client_id = requestData['client_id']
         client_secret = requestData['client_secret']
         code = requestData['code']
@@ -152,7 +153,7 @@ class github_callback(APIView):
             # 기존에 github로 가입된 유저
             data = {'access_token': access_token, 'code': code}
             accept = requests.post(
-                f"http://127.0.0.1:8000/api/token_accept/github/", data=data)
+                f"http://127.0.0.1/api/token_accept/github/", data=data)
             accept_status = accept.status_code
 
             if accept_status != 200:
@@ -175,7 +176,7 @@ class github_callback(APIView):
             # 기존에 가입된 유저가 없으면 새로 가입
             data = {'access_token': access_token, 'code': code}
             accept = requests.post(
-                f"http://127.0.0.1:8000/api/token_accept/github/", data=data)
+                f"http://127.0.0.1/api/token_accept/github/", data=data)
             accept_status = accept.status_code
             if accept_status != 200:
                 return JsonResponse({'err_msg': 'failed to signup'}, status=accept_status)
@@ -204,7 +205,7 @@ class kakao_callback(APIView):
             카카오 로그인(POST)
 
             ---
-            requestData{
+            {
                 "code" : "123213123123",
                 "API_KEY": "123123123",
                 "REDIRECT_URI": "test.com"
@@ -220,17 +221,22 @@ class kakao_callback(APIView):
         """
         token_req = requests.get(f"https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id={API_KEY}&redirect_uri={REDIRECT_URI}&code={code}", headers={'Accept': 'application/json'})
         token_req_json = token_req.json()
-
+        print(token_req_json)
+        print('여기가 문제?')
         error = token_req_json.get("error")
         if error is not None:
             raise JSONDecodeError(error)
+        print('여긴가')
         access_token = token_req_json.get('access_token')
+        print('여기다')
         """
         Email Request
         """
         user_req = requests.get(f"https://kapi.kakao.com/v2/user/me", headers={"Authorization": f"Bearer {access_token}"})
+        print('여기가 문제인가?')
         user_json = user_req.json()
         error = user_json.get("error")
+        print('여기입니다')
         if error is not None:
             raise JSONDecodeError(error)
         user_id = user_json.get("id")
@@ -242,12 +248,16 @@ class kakao_callback(APIView):
             if user is None:
                 raise Exception
             data = {'access_token': access_token, 'code': code}
+            print('accept문제전')
             accept = requests.post(
-                f"http://127.0.0.1:8000/api/token_accept/kakao/", data=data)
+                f"http://127.0.0.1/api/token_accept/kakao/", data=data)
+            print('accept문제')
+
             accept_status = accept.status_code
             if accept_status != 200:
                 return JsonResponse({'err_msg': 'failed to signin'}, status=accept_status)
             accept_json = accept.json()
+            print(accept_json)
             upk = accept_json.get('user')
             upk = upk['pk']
             profile = Profile.objects.get(user=upk)
@@ -264,12 +274,17 @@ class kakao_callback(APIView):
         except:
             # 기존에 가입된 유저가 없으면 새로 가입
             data = {'access_token': access_token, 'code': code}
+            print('accept문제전')
+
             accept = requests.post(
-                f"http://127.0.0.1:8000/api/token_accept/kakao/", data=data)
+                f"http://127.0.0.1/api/token_accept/kakao/", data=data)
+            print('accept문제')
+
             accept_status = accept.status_code
             if accept_status != 200:
                 return JsonResponse({'err_msg': 'failed to signup'}, status=accept_status)
             accept_json = accept.json()
+            print(accept_json)
             upk = accept_json.get('user')
             upk = upk['pk']
             access_token = accept_json['access_token']
@@ -281,9 +296,10 @@ class kakao_callback(APIView):
                            domain='getit.best', samesite=None)
             return res
 
+@method_decorator(csrf_exempt, name='dispatch')
 class KakaoLogin(SocialLoginView):
     adapter_class = KakaoOAuth2Adapter
-    client_class = OAuth2Client
+
 
 @method_decorator(csrf_exempt, name='dispatch')
 def duplicate_check(request):
