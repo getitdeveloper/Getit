@@ -19,7 +19,7 @@ from .permissions import IsOwnerOrReadOnly, RecruitmentIsOwnerOrReadOnly
 from .serializers import RecruitmentBoardSerializer, CommonBoardSerializer
 from rest_framework.response import Response
 from rest_framework import status
-from .models import CommonBoard, RecruitmentBoard
+from .models import CommonBoard, RecruitmentBoard, Worker
 from django.shortcuts import get_object_or_404
 from rest_framework.views import APIView
 from .pagenation import BoardPageNumberPagination, WholeBoardCommonPageNumberPagination, WholeBoardRecruitmentPageNumberPagination
@@ -110,12 +110,17 @@ class CommonBoardListAPIView(GenericAPIView):
         if serializer.is_valid():
             serializer.save()
             board = CommonBoard.objects.get(id=serializer.data['id'])
-
+            workers = request.data['worker']
             names = request.data['stack']
             for name in names:
                 if not name:
                     continue
                 _name, _ = Tag.objects.get_or_create(name=name)
+                for worker in workers:
+                    if not worker:
+                        continue
+                    _worker, _ = Worker.objects.get_or_create(worker=worker)
+                    board.worker.add(_worker)
                 board.stack.add(_name)
             return JsonResponse(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -180,12 +185,17 @@ class CommonBoardDetailAPIView(GenericAPIView):
         if serializer.is_valid():
             serializer.save()
             names = request.data['stack']
+            workers = request.data['worker']
             post.stack.clear()
             for name in names:
                 if not name:
                     continue
                 _name, _ = Tag.objects.get_or_create(name=name)
-
+            for worker in workers:
+                if not worker:
+                    continue
+                _worker, _ = Worker.objects.get_or_create(worker=worker)
+                post.worker.add(_worker)
                 post.stack.add(_name)
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

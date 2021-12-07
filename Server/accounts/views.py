@@ -116,6 +116,7 @@ class github_callback(APIView):
             }
         """
         requestData = json.loads(request.body)
+        print(requestData)
         client_id = requestData['client_id']
         client_secret = requestData['client_secret']
         code = requestData['code']
@@ -204,7 +205,7 @@ class kakao_callback(APIView):
             카카오 로그인(POST)
 
             ---
-            requestData{
+            {
                 "code" : "123213123123",
                 "API_KEY": "123123123",
                 "REDIRECT_URI": "test.com"
@@ -220,6 +221,7 @@ class kakao_callback(APIView):
         """
         token_req = requests.get(f"https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id={API_KEY}&redirect_uri={REDIRECT_URI}&code={code}", headers={'Accept': 'application/json'})
         token_req_json = token_req.json()
+        print(token_req_json)
         print('여기가 문제?')
         error = token_req_json.get("error")
         if error is not None:
@@ -297,7 +299,7 @@ class kakao_callback(APIView):
 @method_decorator(csrf_exempt, name='dispatch')
 class KakaoLogin(SocialLoginView):
     adapter_class = KakaoOAuth2Adapter
-    client_class = OAuth2Client
+
 
 @method_decorator(csrf_exempt, name='dispatch')
 def duplicate_check(request):
