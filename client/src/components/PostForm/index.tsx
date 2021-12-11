@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, ChangeEvent } from 'react';
 import { useSelector, RootStateOrAny, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { COMMON_POST_REGISTER_REQUEST } from '@reducers/actions';
@@ -16,8 +16,6 @@ import {
 } from './styles';
 
 function PostForm(): JSX.Element {
-  const initialStack: string[] = [];
-  const initialWorker: string[] = [];
   const history = useHistory();
   const dispatch = useDispatch();
   const boardType = history.location.state;
@@ -28,13 +26,18 @@ function PostForm(): JSX.Element {
   const [text, setText] = useState('');
   const [hidden, setHidden] = useState(false);
   const [currentTab, setCurrentTab] = useState('edit');
-  const [stacks, setStacks] = useState(initialStack);
-  const [workers, setWorkers] = useState(initialWorker);
+  const [stacks, setStacks] = useState<Array<string>>([]);
+  const [workers, setWorkers] = useState<Array<string>>([]);
 
-  const onChange = (e: any) => {
+  const onChange = (
+    e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>,
+  ) => {
     const { name, value } = e.target;
     switch (name) {
       case 'postTitle':
+        if (value.length >= 100) {
+          return alert('제목은 100자까지 가능합니다.');
+        }
         setTitle(value);
         break;
       case 'text':
@@ -45,10 +48,14 @@ function PostForm(): JSX.Element {
     }
   };
 
-  const onHidden = (status: boolean, e: any) => {
-    setCurrentTab(e.target.id);
-    setHidden(status);
-  };
+  const onHidden = useCallback(
+    (status: boolean, e: any) => {
+      const { id } = e.target;
+      setCurrentTab(id);
+      setHidden(status);
+    },
+    [currentTab, hidden],
+  );
 
   const onHandleWorker = (e: any) => {
     const { value } = e.target;
