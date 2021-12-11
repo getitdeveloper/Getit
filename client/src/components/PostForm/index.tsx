@@ -194,7 +194,7 @@ function PostForm(): JSX.Element {
         <TextForm
           name='text'
           onChange={onChange}
-          placeholder='질문 내용을 작성해주세요.'
+          placeholder='질문 내용을 작성해주세요. (코드 Markdown 사용 가능)'
           required
           value={text}
           hidden={hidden}
