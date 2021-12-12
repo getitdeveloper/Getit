@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect, useState, useCallback, ChangeEvent } from 'react';
 import { RootStateOrAny, useSelector, useDispatch } from 'react-redux';
 import moment from 'moment';
 import {
@@ -10,7 +10,6 @@ import { ContentContainer } from '@assets/styles/page';
 import UserImg from '@assets/images/user.svg';
 import LoadingSpinner from '@components/LoadingSpinner';
 import {
-  CommentWrapper,
   CommentInput,
   Comment,
   SubmitButton,
@@ -20,47 +19,58 @@ import {
   CommentDetail,
   CommentForm,
   NoComments,
-  CommentDetailWrapper,
+  WriterInfo,
+  CommentWriterImage,
+  MobileWriterImage,
   CreatedTime,
 } from './styles';
+import { IComments } from './types';
 
-function Comments({ boardId }: { boardId: string }): JSX.Element {
+function Comments({ boardId }: IComments): JSX.Element {
   const dispatch = useDispatch();
-  const [newContent, setNewContent] = React.useState('');
+  const userId = useSelector(
+    (state: RootStateOrAny) => state.user.profileInfo?.user_pk,
+  );
+  const submitStatus = useSelector(
+    (state: RootStateOrAny) => state.comment.commentRegisterSuccess,
+  );
 
-  const user = useSelector((state: RootStateOrAny) => state.user);
-  const userId = user.profileInfo?.user_pk;
   const commentList = useSelector(
     (state: RootStateOrAny) => state.commentList.commentList,
   );
 
-  const [clicked, setClicked] = React.useState(1);
+  const [newContent, setNewContent] = useState('');
+  const [clicked, setClicked] = useState(1);
 
-  React.useEffect(() => {
+  useEffect(() => {
     dispatch({
       type: COMMENT_LIST_REQUEST,
       data: {
         board: boardId,
       },
     });
-  }, [clicked]);
+  }, [clicked, submitStatus]);
 
-  const onChange = React.useCallback(
-    (e: any) => {
+  const onChange = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
       const { value } = e.target;
       setNewContent(value);
     },
     [newContent],
   );
 
-  const onSubmit = React.useCallback(() => {
+  const onSubmit = useCallback(() => {
     if (!userId) {
-      return alert('로그인 한 후에 이용가능하십니다!');
+      return alert('로그인이 필요합니다. 로그인 후 이용해 주세요.');
+    }
+
+    if (newContent.length > 100) {
+      return alert('댓글은 100자까지 작성 가능합니다.');
     }
     const commentData = {
       board: boardId,
       comment: {
-        user: Number(userId),
+        user: userId,
         commonpost: boardId,
         content: newContent,
       },
@@ -97,24 +107,28 @@ function Comments({ boardId }: { boardId: string }): JSX.Element {
       {commentList.length === 0 ? (
         <NoComments>등록된 댓글이 없습니다.</NoComments>
       ) : (
-        <CommentWrapper>
+        <>
           {commentList.map((contents: IComment) => (
             <Comment key={contents.create_at}>
-              <WriterImage src={UserImg} alt='profile' />
-              <CommentDetailWrapper>
-                <CommentDetail>
+              {/* 이미지 */}
+              <CommentWriterImage src={UserImg} alt='profile' />
+              <CommentDetail>
+                {/* 닉네임 / 작성 시간 */}
+                <WriterInfo>
+                  <MobileWriterImage src={UserImg} alt='profile' />
                   <WriterNickName>
                     {contents.user.profile.nickname}
                   </WriterNickName>
                   <CreatedTime>
                     {moment(`${contents.create_at}`).fromNow()}
                   </CreatedTime>
-                </CommentDetail>
+                </WriterInfo>
+                {/* 댓글 내용 */}
                 <CommentContent>{contents.content}</CommentContent>
-              </CommentDetailWrapper>
+              </CommentDetail>
             </Comment>
           ))}
-        </CommentWrapper>
+        </>
       )}
     </ContentContainer>
   );
