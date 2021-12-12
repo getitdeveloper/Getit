@@ -1,7 +1,9 @@
-import * as React from 'react';
-import ReactMarkdown from 'react-markdown';
+import React from 'react';
+// import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { IMarkdownRenderer } from './types';
+import { StyledReactMarkdown } from './styles';
 
 function CodeBlock({ inline, className, children }: any) {
   const value = children;
@@ -15,18 +17,20 @@ function CodeBlock({ inline, className, children }: any) {
   );
 }
 
-function MarkdownRenderer(props: any) {
-  const { text, open } = props;
+function MarkdownRenderer({
+  text,
+  open,
+}: IMarkdownRenderer): JSX.Element | null {
   if (open) {
     return (
-      <ReactMarkdown
+      <StyledReactMarkdown
         components={{
           code: CodeBlock,
         }}
         remarkPlugins={[remarkGfm]}
       >
         {text}
-      </ReactMarkdown>
+      </StyledReactMarkdown>
     );
   }
   return null;

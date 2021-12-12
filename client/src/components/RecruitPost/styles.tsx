@@ -14,11 +14,6 @@ export const Post = styled(Paper)`
     height: 30rem;
     border-radius: 25px;
   }
-  @media ${({ theme }) => theme.mobile} {
-    && {
-      width: 90%;
-    }
-  }
 `;
 
 export const GridWrapper = styled.div`

@@ -1,9 +1,10 @@
 import styled from 'styled-components';
 
 export const Content = styled.div`
-  height: 30rem;
-  padding: 2rem;
-  @media ${(props) => props.theme.tablet} {
+  min-height: 30rem;
+  padding: 2rem 1rem;
+  font-size: 1.5rem;
+  @media ${({ theme }) => theme.tablet} {
     padding: 2rem 0rem;
   }
 `;

@@ -16,3 +16,7 @@ export const StyledRadioInput = styled.input`
 export const StyledLabel = styled.label`
   font-size: 1.5rem;
 `;
+
+export const RadioButtonWrapper = styled.div`
+  display: flex;
+`;

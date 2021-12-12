@@ -1,5 +1,4 @@
-import * as React from 'react';
-import { useState, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import { useMediaQuery } from 'react-responsive';
 import Popover from '@material-ui/core/Popover';
 import Typography from '@material-ui/core/Typography';
@@ -7,57 +6,79 @@ import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import RadioButton from '@components/RadioButton';
 import { SortButton, useStyles } from './styles';
 
-const filterList = [
-  { text: '개발자', value: 'developer', checked: true },
-  { text: '디자이너', value: 'designer', checked: true },
-  { text: '기획자', value: 'pm', checked: true },
-];
-
 export default function JobType(): JSX.Element {
   const classes = useStyles();
-  const [filterDeveloper, setFilterDeveloper] = useState(filterList[0]);
-  const [filterDesigner, setFilterDesigner] = useState(filterList[1]);
-  const [filterPm, setFilterPm] = useState(filterList[2]);
-  const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
-    null,
+  const [filterList, setFilterList] = useState([
+    { text: '개발자', value: 'developer', checked: true },
+    { text: '디자이너', value: 'designer', checked: true },
+    { text: '기획자', value: 'pm', checked: true },
+  ]);
+  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
+
+  const handleClick = useCallback(
+    (event: React.MouseEvent<HTMLButtonElement>) => {
+      setAnchorEl(event.currentTarget);
+    },
+    [anchorEl],
   );
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     setAnchorEl(null);
-  };
+  }, [anchorEl]);
 
   const open = Boolean(anchorEl);
   const id = open ? 'simple-popover' : undefined;
 
   // 라디오버튼 선택
-  const handleRecuitDeveloper = useCallback(() => {
-    setFilterDeveloper({
-      ...filterDeveloper,
-      checked: !filterDeveloper.checked,
-    });
-  }, [filterDeveloper]);
-
-  const handleRecuitDesigner = useCallback(() => {
-    setFilterDesigner({
-      ...filterDesigner,
-      checked: !filterDesigner.checked,
-    });
-  }, [filterDesigner]);
-
-  const handleRecuitPm = useCallback(() => {
-    setFilterPm({
-      ...filterPm,
-      checked: !filterPm.checked,
-    });
-  }, [filterPm]);
+  const handleJobSort = useCallback(
+    (event: any) => {
+      const { name } = event.target;
+      switch (name) {
+        case 'developer': {
+          setFilterList([
+            {
+              text: '개발자',
+              value: 'developer',
+              checked: !filterList[0].checked,
+            },
+            filterList[1],
+            filterList[2],
+          ]);
+          break;
+        }
+        case 'designer': {
+          setFilterList([
+            filterList[0],
+            {
+              text: '디자이너',
+              value: 'designer',
+              checked: !filterList[1].checked,
+            },
+            filterList[2],
+          ]);
+          break;
+        }
+        case 'pm': {
+          setFilterList([
+            filterList[0],
+            filterList[1],
+            { text: '기획자', value: 'pm', checked: !filterList[2].checked },
+          ]);
+          break;
+        }
+        default:
+          console.log('empty select');
+      }
+    },
+    [filterList],
+  );
 
   const tabletSize = useMediaQuery({
     query: '(max-width: 960px)',
   });
+
+  // TODO 백엔드 api 만들어지면 selectTab 값에 따른 요청
+  // console.log(filterDeveloper, filterDesigner, filterPm);
 
   return (
     <>
@@ -84,28 +105,12 @@ export default function JobType(): JSX.Element {
             }}
           >
             <Typography className={classes.radioButton}>
-              <RadioButton
-                item={filterDeveloper}
-                onClick={handleRecuitDeveloper}
-              />
-            </Typography>
-            <Typography className={classes.radioButton}>
-              <RadioButton
-                item={filterDesigner}
-                onClick={handleRecuitDesigner}
-              />
-            </Typography>
-            <Typography className={classes.radioButton}>
-              <RadioButton item={filterPm} onClick={handleRecuitPm} />
+              <RadioButton item={filterList} onClick={handleJobSort} />
             </Typography>
           </Popover>
         </div>
       ) : (
-        <div>
-          <RadioButton item={filterDeveloper} onClick={handleRecuitDeveloper} />
-          <RadioButton item={filterDesigner} onClick={handleRecuitDesigner} />
-          <RadioButton item={filterPm} onClick={handleRecuitPm} />
-        </div>
+        <RadioButton item={filterList} onClick={handleJobSort} />
       )}
     </>
   );

@@ -1,21 +1,28 @@
 import styled from 'styled-components';
+import DateRangeIcon from '@material-ui/icons/DateRange';
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
 
 export const PostWrapper = styled.div`
-  width: 100%;
-  height: 10%;
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
-  margin-top: 3.5rem;
+  margin-top: 2.5rem;
   margin-bottom: 1.5rem;
-  padding: 0rem 1.5rem;
-  @media ${(props) => props.theme.tablet} {
-    flex-direction: column;
+  padding: 0rem 0.5rem;
+
+  @media ${({ theme }) => theme.tablet} {
+    padding: 0 0;
   }
 `;
 
-export const TagWrapper = styled.div`
-  display: flex;
+export const LeftContainer = styled.div`
+  width: 70%;
+
+  /* 모바일에서 보여지는 글자 수가 적어 너비 넓힘 */
+  @media ${({ theme }) => theme.mobile} {
+    width: 90%;
+  }
 `;
 
 export const PostInfoButton = styled.button`
@@ -24,37 +31,54 @@ export const PostInfoButton = styled.button`
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  border: 0;
+  border-style: none;
   background-color: transparent;
   &:hover {
     cursor: pointer;
-  }
-
-  @media ${(props) => props.theme.tablet} {
-    width: 100%;
-    padding: 0;
   }
 `;
 
 export const PostTitle = styled.h1`
   width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   margin-top: 1rem;
+  margin-left: 0.5rem;
   margin-bottom: 1.2rem;
   text-align: left;
-  font-size: 1.2rem;
+  font-size: 1.6rem;
+  @media ${({ theme }) => theme.tablet} {
+    margin-left: 0.2rem;
+  }
 `;
 
-export const WriterButton = styled.button`
-  width: 15%;
-  height: 100%;
+export const RightContainer = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: flex-end;
+
+  /* 닉네임 위치 조정 */
+  @media ${({ theme }) => theme.mobile} {
+    position: relative;
+  }
+`;
+
+export const WriterInfo = styled.button`
+  display: flex;
   align-items: center;
-  border: 0;
+  flex-direction: column;
+  border-style: none;
   background-color: transparent;
-  @media ${(props) => props.theme.tablet} {
-    display: none;
+  @media ${({ theme }) => theme.tablet} {
+    flex-direction: row;
+  }
+  @media ${({ theme }) => theme.mobile} {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    /* 상황에따라 사이즈 조절 필요 */
+    width: 12rem;
   }
 `;
 
@@ -64,8 +88,8 @@ export const WriterImage = styled.img`
   background-color: #dcdcdc;
   padding: 1rem;
   border-radius: 50%;
-  @media ${(props) => props.theme.tablet} {
-    width: 1.5rem;
+  @media ${({ theme }) => theme.tablet} {
+    width: 2rem;
     padding: 0.4rem;
     margin-right: 0.4rem;
     margin-bottom: 0rem;
@@ -73,50 +97,35 @@ export const WriterImage = styled.img`
 `;
 
 export const WriterName = styled.p`
-  width: 100%;
-  font-size: 1rem;
-  text-align: center;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  @media ${(props) => props.theme.tablet} {
-    font-size: 0.8rem;
-    text-align: left;
-  }
+  font-size: 1.3rem;
 `;
 
 export const DetailWrapper = styled.div`
   width: 100%;
-  display: flex;
-  align-items: flex-start;
-  align-items: center;
-  font-size: 1rem;
-
-  @media ${(props) => props.theme.tablet} {
-    width: 100%;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 0.8rem;
-  }
 `;
 export const PostDetailWrapper = styled.div`
   display: flex;
-  flex-direction: row;
   align-items: center;
 `;
-export const MobileWriterDetailWrapper = styled.div`
-  display: none;
-  @media ${(props) => props.theme.tablet} {
-    display: flex;
-    align-items: center;
-    height: 100%;
-    width: 20%;
-  }
-`;
-export const DetailInfo = styled.span`
-  color: #868686;
-  margin-left: 0.8rem;
-  margin-right: 2rem;
+
+export const DetailInfo = styled.div`
+  color: ${({ theme }) => theme.colors.iconBaseColor};
+  margin-left: 0.4rem;
+  margin-right: 1rem;
   display: flex;
   align-items: center;
+  font-size: 1.4rem;
+`;
+
+export const StyledDateRangeIcon = styled(DateRangeIcon)`
+  color: ${({ theme }) => theme.colors.iconBaseColor};
+`;
+export const StyledFavoriteBorderIcon = styled(FavoriteBorderIcon)`
+  color: ${({ theme }) => theme.colors.iconBaseColor};
+`;
+export const StyledFavoriteIcon = styled(FavoriteIcon)`
+  color: ${({ theme }) => theme.colors.iconBaseColor};
+`;
+export const StyledChatBubbleOutlineIcon = styled(ChatBubbleOutlineIcon)`
+  color: ${({ theme }) => theme.colors.iconBaseColor};
 `;

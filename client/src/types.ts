@@ -59,13 +59,20 @@ export interface IPost {
   title: string;
   category: string;
   content: string;
-  image?: string;
-  create_at?: string;
-  user: number;
-  likes?: number;
-  comments?: number;
+  image: string | null;
+  is_like: boolean;
+  create_at: string;
+  user: {
+    id: number;
+    profile: {
+      nickname: string;
+      image: string | null;
+    };
+  };
+  likes: number;
+  comments: number;
   worker: Array<string>;
-  stack: Array<string>;
+  stack: Array<string> | [];
 }
 
 export interface ICommentList {
