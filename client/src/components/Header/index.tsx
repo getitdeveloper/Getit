@@ -1,6 +1,5 @@
-import * as React from 'react';
-import { useCallback, useState, useEffect } from 'react';
-import { RootStateOrAny, useSelector, useDispatch } from 'react-redux';
+import React, { useCallback, useState } from 'react';
+import { RootStateOrAny, useSelector } from 'react-redux';
 import { useLocation, Link } from 'react-router-dom';
 import SearchBar from '@components/SearchBar/SearchBar';
 import LoginDialog from '@components/LoginDialog/LoginDialog';
@@ -14,14 +13,11 @@ import {
   RightHeaderWrapper,
   Logo,
 } from './styles';
-import { USER_PROFILE_REQUEST } from '../../reducers/actions';
+
 import ToggleMenu from './ToggleMenu';
 
 function Header(): JSX.Element {
-  const dispatch = useDispatch();
   const { pathname } = useLocation();
-
-  const userId = useSelector((state: RootStateOrAny) => state.user.id.user_pk);
   const profileInfo = useSelector(
     (state: RootStateOrAny) => state.user.profileInfo,
   );
@@ -35,15 +31,6 @@ function Header(): JSX.Element {
   const handleClose = useCallback(() => {
     setOpen(false);
   }, [open]);
-
-  useEffect(() => {
-    dispatch({
-      type: USER_PROFILE_REQUEST,
-      data: {
-        user_pk: userId,
-      },
-    });
-  }, [userId]);
 
   // 회원가입 페이지인 경우 header 감추기
   if (pathname === '/register') {
