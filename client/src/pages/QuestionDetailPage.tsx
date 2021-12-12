@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import { PageWrapper, PageTitle, PageBackground } from '@assets/styles/page';
@@ -7,6 +7,7 @@ import PostDetail from '@components/PostDetail';
 import Comments from '@components/Comments';
 import LoadingSpinner from '@components/LoadingSpinner';
 import { IPostId } from '@types';
+import Footer from '@components/Footer/index';
 
 function QuestionDetailPage(): JSX.Element {
   const dispatch = useDispatch();
@@ -15,7 +16,7 @@ function QuestionDetailPage(): JSX.Element {
     (state: RootStateOrAny) => state.post.commonPost,
   );
 
-  React.useEffect(() => {
+  useEffect(() => {
     dispatch({
       type: COMMON_POST_REQUEST,
       data: {
@@ -34,6 +35,7 @@ function QuestionDetailPage(): JSX.Element {
         <PostDetail post={questionPost} />
         <Comments boardId={postId} />
       </PageWrapper>
+      <Footer />
     </PageBackground>
   );
 }

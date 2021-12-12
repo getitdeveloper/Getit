@@ -52,7 +52,7 @@ function LikedPosts(): JSX.Element {
   return (
     <ProfileRight>
       <NavBar selectTab={selectTab} setSelectTab={setSelectTab} />
-      {likedPosts.results.map((content: ILikedPost) => (
+      {likedPosts.results.map((content: any) => (
         <PostWrapper
           key={content.commonpost.id}
           onClick={() =>
