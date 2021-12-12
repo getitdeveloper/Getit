@@ -7,6 +7,7 @@ import PostDetail from '@components/PostDetail';
 import Comments from '@components/Comments';
 import LoadingSpinner from '@components/LoadingSpinner';
 import { IPostId } from '@types';
+import Footer from '@components/Footer/index';
 
 function QuestionDetailPage(): JSX.Element {
   const dispatch = useDispatch();
@@ -34,6 +35,7 @@ function QuestionDetailPage(): JSX.Element {
         <PostDetail post={questionPost} />
         <Comments boardId={postId} />
       </PageWrapper>
+      <Footer />
     </PageBackground>
   );
 }
