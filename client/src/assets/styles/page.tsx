@@ -15,10 +15,9 @@ export const PageWrapper = styled.div`
   margin: 0 auto;
   min-height: 100vh;
   padding: 1rem 1rem;
-  background-color: ${(props) => props.theme.colors.background};
+  background-color: ${({ theme }) => theme.colors.background};
 
   @media ${({ theme }) => theme.tablet} {
-    background-color: #ffffff;
     padding: 0;
   }
 `;
