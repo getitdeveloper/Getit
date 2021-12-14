@@ -130,9 +130,11 @@ function* requestUserLogInSaga(action: any) {
 
     console.log('로그인 요청 응답 성공 ===>', response.data);
 
-    // TODO 로컬 테스트용 auth 권한 설정
-    const accessToken = response.data.access_token;
-    axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
+    // 로컬 테스트용 auth 권한 설정
+    if (process.env.NODE_ENV === 'development') {
+      const accessToken = response.data.access_token;
+      axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
+    }
 
     yield put({
       type: USER_LOGIN_SUCCESS,
@@ -140,6 +142,7 @@ function* requestUserLogInSaga(action: any) {
     });
   } catch (error) {
     console.error(error);
+    alert('로그인에 실패했습니다. 잠시 후 다시 이용해 주세요.');
     yield put({
       type: USER_LOGIN_FAILURE,
       error,
