@@ -1,11 +1,24 @@
 import styled from 'styled-components';
+import CircularProgress from '@material-ui/core/CircularProgress';
+
+export const CircularProgressWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+`;
+
+export const StyledCircularProgress = styled(CircularProgress)`
+  && {
+    color: ${({ theme }) => theme.colors.main};
+  }
+`;
 
 export const MessageWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   padding: 3rem;
+  height: 100vh;
 `;
 
 export const MessageImage = styled.img`
