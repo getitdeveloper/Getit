@@ -1,5 +1,4 @@
-import * as React from 'react';
-import { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { useSelector, RootStateOrAny, useDispatch } from 'react-redux';
 import { useHistory, Link } from 'react-router-dom';
 import LogoImg from '@assets/images/Logo.svg';
@@ -84,6 +83,7 @@ function RegisterForm(): JSX.Element {
     }
   }, [nickDoubleCheck, message]);
 
+  // 사용가능한 기술 스택 입력시 에러 메세지 제거
   useEffect(() => {
     if (stacks.length > 0) {
       setStacksError(false);
@@ -267,6 +267,7 @@ function RegisterForm(): JSX.Element {
     if (nickname.length < 6 || nickname.length > 10) {
       return setNicknameError(true);
     }
+    // 이미 중복 체크 했지만 클릭하는경우 알림 표시
     if (nickDoubleCheck === 'pass') {
       return alert('사용 가능한 닉네임 입니다.');
     }
