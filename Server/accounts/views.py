@@ -212,6 +212,7 @@ class kakao_callback(APIView):
             }
         """
         requestData = json.loads(request.body)
+        print(requestData)
         code = requestData['code']
         API_KEY = requestData['API_KEY']
         REDIRECT_URI = requestData['REDIRECT_URI']
@@ -250,7 +251,7 @@ class kakao_callback(APIView):
             data = {'access_token': access_token, 'code': code}
             print('accept문제전')
             accept = requests.post(
-                f"http://127.0.0.1/api/token_accept/kakao/", data=data)
+                f"http://127.0.0.1:8000/api/token_accept/kakao/", data=data)
             print('accept문제')
 
             accept_status = accept.status_code
@@ -277,7 +278,7 @@ class kakao_callback(APIView):
             print('accept문제전')
 
             accept = requests.post(
-                f"http://127.0.0.1/api/token_accept/kakao/", data=data)
+                f"http://127.0.0.1:8000/api/token_accept/kakao/", data=data)
             print('accept문제')
 
             accept_status = accept.status_code
