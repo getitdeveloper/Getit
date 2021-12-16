@@ -85,3 +85,4 @@ Dockerfile
 nginx.conf
 static
 gunicorn.sock
+logs
