@@ -83,3 +83,5 @@ leeceo97.pem
 .env
 Dockerfile
 nginx.conf
+static
+gunicorn.sock
