@@ -86,3 +86,4 @@ nginx.conf
 static
 gunicorn.sock
 logs
+mysite.log
