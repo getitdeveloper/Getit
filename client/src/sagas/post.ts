@@ -61,10 +61,16 @@ function* requestCommonPostSaga(action: any): any {
 
 // 자유/질문 게시글 작성하기
 const requestCommonPostRegister = (data: IPostData) => {
+  console.log('@@@@', data);
   return axios.post(`/api/board/`, data);
 };
 
-function* requestCommonPostRegisterSaga(action: any): any {
+function* requestCommonPostRegisterSaga(action: {
+  type: string;
+  data: IPostData;
+  history: any;
+  boardType: string;
+}): any {
   try {
     const response = yield call(requestCommonPostRegister, action.data);
     console.log('자유/질문 게시글 작성 후 정보 응답 ===>', response);
@@ -73,12 +79,15 @@ function* requestCommonPostRegisterSaga(action: any): any {
       type: COMMON_POST_REGISTER_SUCCESS,
       data: response.data,
     });
+    alert('게시글 작성 완료');
+    action.history.push(`/${action.boardType}Board`);
   } catch (error) {
     console.error(error);
     yield put({
       type: COMMON_POST_REGISTER_FAILURE,
       error,
     });
+    alert('문제가 발생했습니다. 잠시 후 다시 시도해 주세요.');
   }
 }
 

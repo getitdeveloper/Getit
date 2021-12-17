@@ -152,8 +152,9 @@ function PostForm(): JSX.Element {
     dispatch({
       type: COMMON_POST_REGISTER_REQUEST,
       data: postData,
+      history,
+      boardType,
     });
-    history.push(`/${boardType}Board`);
   }, [postTitle, text, workers, boardType, userId, stacks]);
 
   return (
