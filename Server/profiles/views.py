@@ -60,21 +60,18 @@ class ProfileDetail(GenericAPIView):
 
             ---
                 {
-                    "user":1,
-                    "user_pk":1,
-                    "nickname":"edcedcd1027",
-                    "job":"개발자",
-                    "level":"코린이",
-                    "image": null,
-                    "email":"edcedc1027@gmail.com",
-                    "info":"저는 이형준입니다. 백엔드 개발자가 될껍니다.",
-                    "git":"leeceo97",
-                    "stack":[
-                        "django",
-                        "drf",
-                        "mysql"
-                    ]
-                }
+                "user":2,
+                "user_pk":2,
+                "nickname":"edcedc1027",
+                "job":"개발자",
+                "level":"코린이",
+                "image":null,
+                "email":"edcedc1027@gmail.com",
+                "info":"저는 이형준입니다. 백엔드 개발자가 될껍니다.",
+                "git":"leeceo97",
+                "stack":["django","drf","mysql","postgre","docker","k8s","aws","gcp","nginx"],
+                "teamprofiles":[{"id":1,"title":"장고22","status":false},{"id":2,"title":"장고22","status":false},{"id":3,"title":"장고22","status":false}],
+                "portfolios":[{"id":1,"title":"geit"},{"id":2,"title":"geit"},{"id":3,"title":"geit"},{"id":4,"title":"geit"},{"id":5,"title":"geit"},{"id":6,"title":"geit"},{"id":7,"title":"geit"},{"id":8,"title":"geit"}]}
         """
         profile = self.get_object(user_pk)
         serializer = ProfileSerializer(profile, context={'request': request})
@@ -154,7 +151,6 @@ class ProfileDetail(GenericAPIView):
 class TeamProfileCreate(GenericAPIView):
 
     serializer_class = TeamProfileSerializer
-    parser_classes = [MultiPartParser]
 
     def get_object(self, user_pk):
         return get_object_or_404(TeamProfile, user_id=user_pk)
@@ -207,8 +203,7 @@ class TeamProfileCreate(GenericAPIView):
             profile = TeamProfile.objects.get(id=serializer.data['id'])
             members = request.data['user']
             names = request.data['stack']
-            names_split = names.split(',')
-            for name in names_split:
+            for name in names:
                 if not name:
                     continue
                 _name, _ = Tag.objects.get_or_create(name=name)

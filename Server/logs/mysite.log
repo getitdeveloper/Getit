@@ -1,0 +1,71 @@
+2021-12-16 14:51:41,446 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2021-12-16 14:59:26,104 [INFO] django.utils.autoreload: C:\Users\hp\Desktop\Getit\Server\profiles\serializers.py changed, reloading.
+2021-12-16 14:59:27,815 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2021-12-16 15:01:19,768 [INFO] django.utils.autoreload: C:\Users\hp\Desktop\Getit\Server\profiles\serializers.py changed, reloading.
+2021-12-16 15:01:22,338 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2021-12-16 15:01:32,282 [INFO] django.utils.autoreload: C:\Users\hp\Desktop\Getit\Server\profiles\serializers.py changed, reloading.
+2021-12-16 15:01:34,413 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2021-12-16 15:02:30,297 [INFO] django.utils.autoreload: C:\Users\hp\Desktop\Getit\Server\profiles\serializers.py changed, reloading.
+2021-12-16 15:02:32,677 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2021-12-16 15:04:45,954 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2021-12-16 15:05:39,565 [WARNING] django.request: Not Found: /accounts/google/store
+2021-12-16 15:05:51,297 [ERROR] accounts.views: {'code': 'RGMAQS4DjDc2A8zxFrAIp14Lqya9bjQ1dypwTvfyRxp3Gpc9vQ4HKvprq9ZMNBv0xvnE-go9dJcAAAF9wdjL4Q', 'API_KEY': 'd7ba1ff0a7da9a1e381715afd527a541', 'REDIRECT_URI': 'http://localhost:3000/callback/kakao'}
+2021-12-16 15:05:51,298 [ERROR] accounts.views: {'code': 'RGMAQS4DjDc2A8zxFrAIp14Lqya9bjQ1dypwTvfyRxp3Gpc9vQ4HKvprq9ZMNBv0xvnE-go9dJcAAAF9wdjL4Q', 'API_KEY': 'd7ba1ff0a7da9a1e381715afd527a541', 'REDIRECT_URI': 'http://localhost:3000/callback/kakao'}
+2021-12-16 15:05:51,643 [ERROR] accounts.views: UqE-m4slcSH1zPsvxJ33Cmb4jjX7gdQs7ewENAo9dRsAAAF9wdjReg
+2021-12-16 15:05:51,646 [ERROR] accounts.views: hF-P4-VPp1sOPIFyzPkT8MiBsRhQxtZvr_qCvAo9c04AAAF9wdjRew
+2021-12-16 15:05:51,866 [ERROR] accounts.views: {'id': 2014686751, 'connected_at': '2021-12-01T04:38:59Z', 'kakao_account': {'has_email': True, 'email_needs_agreement': False, 'is_email_valid': True, 'is_email_verified': True, 'email': 'edcedc127@naver.com'}}
+2021-12-16 15:05:51,871 [ERROR] accounts.views: 이형준
+2021-12-16 15:05:51,875 [ERROR] accounts.views: {'id': 2014686751, 'connected_at': '2021-12-01T04:38:59Z', 'kakao_account': {'has_email': True, 'email_needs_agreement': False, 'is_email_valid': True, 'is_email_verified': True, 'email': 'edcedc127@naver.com'}}
+2021-12-16 15:05:51,880 [ERROR] accounts.views: 이형준
+2021-12-16 15:05:52,556 [ERROR] accounts.views: <Response [200]>
+2021-12-16 15:05:52,561 [ERROR] accounts.views: <Response [200]>
+2021-12-16 15:05:52,562 [ERROR] accounts.views: {'access_token': 'UqE-m4slcSH1zPsvxJ33Cmb4jjX7gdQs7ewENAo9dRsAAAF9wdjReg', 'code': 'RGMAQS4DjDc2A8zxFrAIp14Lqya9bjQ1dypwTvfyRxp3Gpc9vQ4HKvprq9ZMNBv0xvnE-go9dJcAAAF9wdjL4Q'}
+2021-12-16 15:05:52,563 [ERROR] accounts.views: {'access_token': 'hF-P4-VPp1sOPIFyzPkT8MiBsRhQxtZvr_qCvAo9c04AAAF9wdjRew', 'code': 'RGMAQS4DjDc2A8zxFrAIp14Lqya9bjQ1dypwTvfyRxp3Gpc9vQ4HKvprq9ZMNBv0xvnE-go9dJcAAAF9wdjL4Q'}
+2021-12-16 15:05:53,174 [ERROR] accounts.views: {'access_token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjM5ODkzOTUzLCJqdGkiOiJjMGE5MDEzYmYwZDY0ZWZkOTI1NTQ2YWI4OTk5M2E4MyIsInVzZXJfaWQiOjJ9.orT5HSSRebJ_6PyqdzBFjPS1dJBi5f31zi9LywYIPMs', 'refresh_token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTY0MDg0NDM1MywianRpIjoiODQ2Y2UxMzNiNGZkNDRjNzllZjNkYmRlZGZhYjMzNWEiLCJ1c2VyX2lkIjoyfQ.QqX9qTZdbC1m7j__xQCoKqN5vFYkX6GET1kmD5TDDyI', 'user': {'pk': 2, 'username': 'edcedc127', 'email': 'edcedc127@naver.com', 'first_name': '', 'last_name': ''}}
+2021-12-16 15:05:53,188 [ERROR] accounts.views: {'access_token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjM5ODkzOTUzLCJqdGkiOiJmOGRjNjM4NjI2ZTA0NmZhODQ2NDY1YmRjNWQ4MTI0NyIsInVzZXJfaWQiOjJ9.vj9EcSLdTfP2nbN_CUlo1yBqV9Ipo359LDb0h6QkpOQ', 'refresh_token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTY0MDg0NDM1MywianRpIjoiNjE5NDAxZWE3OTRiNDQ2YWI2Y2I3N2E0MzE4YzJjZjciLCJ1c2VyX2lkIjoyfQ.OIGxM4Tu6PaL0YXi_hIqo8bwhiiFO4rQ0D9Kd3eBi7E', 'user': {'pk': 2, 'username': 'edcedc127', 'email': 'edcedc127@naver.com', 'first_name': '', 'last_name': ''}}
+2021-12-16 15:09:01,721 [WARNING] django.request: Unsupported Media Type: /api/2/teamprofile/
+2021-12-16 15:09:37,868 [WARNING] django.request: Not Found: /api/2/teamprofile/1/
+2021-12-16 15:09:40,833 [WARNING] django.request: Not Found: /api/2/teamprofile/2/
+2021-12-16 15:09:42,084 [WARNING] django.request: Not Found: /api/2/teamprofile/2/
+2021-12-16 15:09:50,444 [WARNING] django.request: Not Found: /static/admin/css/base.css
+2021-12-16 15:09:50,447 [WARNING] django.request: Not Found: /static/admin/css/nav_sidebar.css
+2021-12-16 15:09:50,451 [WARNING] django.request: Not Found: /static/admin/css/login.css
+2021-12-16 15:09:50,454 [WARNING] django.request: Not Found: /static/admin/css/responsive.css
+2021-12-16 15:09:50,495 [WARNING] django.request: Not Found: /static/admin/js/nav_sidebar.js
+2021-12-16 15:09:50,798 [WARNING] django.request: Not Found: /favicon.ico
+2021-12-16 15:09:57,739 [WARNING] django.request: Not Found: /static/admin/css/base.css
+2021-12-16 15:09:57,742 [WARNING] django.request: Not Found: /static/admin/css/nav_sidebar.css
+2021-12-16 15:09:57,750 [WARNING] django.request: Not Found: /static/admin/css/login.css
+2021-12-16 15:09:57,754 [WARNING] django.request: Not Found: /static/admin/css/responsive.css
+2021-12-16 15:09:57,757 [WARNING] django.request: Not Found: /static/admin/js/nav_sidebar.js
+2021-12-16 15:13:23,409 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2021-12-16 15:13:28,032 [WARNING] django.request: Unsupported Media Type: /api/2/teamprofile/
+2021-12-16 15:14:03,373 [INFO] django.utils.autoreload: C:\Users\hp\Desktop\Getit\Server\profiles\views.py changed, reloading.
+2021-12-16 15:14:05,140 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2021-12-16 15:14:09,188 [ERROR] django.request: Internal Server Error: /api/2/teamprofile/
+Traceback (most recent call last):
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\core\handlers\exception.py", line 47, in inner
+    response = get_response(request)
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\core\handlers\base.py", line 179, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\views\decorators\csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\views\generic\base.py", line 70, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\utils\decorators.py", line 43, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\views\decorators\csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python39\lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python39\lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python39\lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python39\lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "C:\Users\hp\Desktop\Getit\Server\profiles\views.py", line 209, in post
+    names_split = names.split(',')
+AttributeError: 'list' object has no attribute 'split'
+2021-12-16 15:14:38,165 [INFO] django.utils.autoreload: C:\Users\hp\Desktop\Getit\Server\apis\settings.py changed, reloading.
+2021-12-16 18:41:48,259 [INFO] django.utils.autoreload: Watching for file changes with StatReloader

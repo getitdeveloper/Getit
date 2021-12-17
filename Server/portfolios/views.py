@@ -52,8 +52,7 @@ class PortfolioListAPIView(GenericAPIView):
                     "image": "",
                     "link": "abcdefg.com"
                 }
-                --> 현재 image필드 지원 안합니다. null값으로 보내주세요.
-                S3 구축후 이미지 필드 지원하겠습니다.
+
         """
         serializer = PortfolioSerializer(data=request.data)
         if serializer.is_valid():

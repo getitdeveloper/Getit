@@ -6,7 +6,7 @@ from profiles.models import Profile
 from rest_framework import serializers
 
 from profiles.serializers import ProfileSerializer, TagSerializer, TeamProfileSerializer
-from .models import RecruitmentBoard, CommonBoard
+from .models import RecruitmentBoard, CommonBoard, Worker
 from accounts.models import User
 from rest_framework.serializers import ModelSerializer
 
@@ -15,6 +15,15 @@ from rest_framework.serializers import ModelSerializer
 # 좋아요
 from members.models import Member
 
+
+class WorkerSerializer(serializers.ModelSerializer):
+
+    def to_representation(self, value):
+        return value.worker
+
+    class Meta:
+        model = Worker
+        fields = ('worker',)
 
 class CommonLikeSerializer(ModelSerializer):
     class Meta:
@@ -54,10 +63,10 @@ class CommonBoardSerializer(serializers.ModelSerializer):
     )
     # like_user = CommonLikeSerializer(read_only=True, many=True)
     is_like = SerializerMethodField()
-
+    worker = WorkerSerializer(read_only=True, many=True)
     class Meta:
         model = CommonBoard
-        fields = ('id', 'title', 'category', 'content', 'image', 'create_at', 'user', 'likes', 'comments', 'is_like', 'stack',)
+        fields = ('id', 'title', 'category', 'content', 'image', 'create_at', 'user', 'likes', 'comments', 'is_like', 'stack','worker')
 
     def to_representation(self, instance):
         self.fields['user'] = UserProfileSerializer(read_only=True)
