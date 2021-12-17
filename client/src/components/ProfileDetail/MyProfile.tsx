@@ -173,7 +173,7 @@ function MyProfile(): JSX.Element {
 
       <SubTitleWrapper>
         <HorizontalLine width='40%' />
-        <BoundaryText>완료된 프로젝트</BoundaryText>
+        <BoundaryText>완료 프로젝트</BoundaryText>
         <HorizontalLine width='40%' />
       </SubTitleWrapper>
       <Project finished />

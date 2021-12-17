@@ -171,11 +171,9 @@ export const IntroWrapper = styled.textarea`
 `;
 
 export const SubTitleWrapper = styled.div`
-  height: auto;
-  weight: 100%;
   display: flex;
   justify-content: space-between;
-  algin-items: center;
+  align-items: center;
   margin: 2.5rem 0rem;
 `;
 
@@ -346,7 +344,11 @@ export const Button = styled.button`
 
 export const BoundaryText = styled.p`
   font-size: 1.4rem;
-  line-height: 0.2rem;
+
+  @media ${({ theme }) => theme.mobile} {
+    width: 50%;
+    text-align: center;
+  }
 `;
 
 export const StyledLink = styled(Link)`
