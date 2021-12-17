@@ -5,8 +5,8 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
 
 export const PostWrapper = styled.div`
+  width: 100%;
   display: flex;
-  justify-content: space-between;
   margin-top: 2.5rem;
   margin-bottom: 1.5rem;
   padding: 0rem 0.5rem;
@@ -17,11 +17,11 @@ export const PostWrapper = styled.div`
 `;
 
 export const LeftContainer = styled.div`
-  width: 70%;
+  width: 85%;
 
   /* 모바일에서 보여지는 글자 수가 적어 너비 넓힘 */
-  @media ${({ theme }) => theme.mobile} {
-    width: 90%;
+  @media ${({ theme }) => theme.tablet} {
+    width: 100%;
   }
 `;
 
@@ -55,30 +55,27 @@ export const PostTitle = styled.h1`
 
 export const RightContainer = styled.div`
   display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
+  justify-content: center;
+  width: 15%;
 
-  /* 닉네임 위치 조정 */
-  @media ${({ theme }) => theme.mobile} {
-    position: relative;
+  @media ${({ theme }) => theme.tablet} {
+    display: none;
   }
 `;
 
 export const WriterInfo = styled.button`
-  display: flex;
-  align-items: center;
-  flex-direction: column;
   border-style: none;
   background-color: transparent;
+`;
+
+export const WriterInfoMobile = styled.button`
+  display: none;
   @media ${({ theme }) => theme.tablet} {
-    flex-direction: row;
-  }
-  @media ${({ theme }) => theme.mobile} {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    /* 상황에따라 사이즈 조절 필요 */
-    width: 12rem;
+    border-style: none;
+    background-color: transparent;
+    display: initial;
+    display: flex;
+    align-items: center;
   }
 `;
 
