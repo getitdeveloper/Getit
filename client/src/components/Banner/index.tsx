@@ -19,7 +19,8 @@ function Banner(): JSX.Element {
           커뮤니티 플랫폼
         </MainText>
         <SubText>
-          당신이 부러워하는 유니콘 스타트업도 사실 작은 모임에서 시작됐다.
+          당신이 부러워하는 유니콘 스타트업도 <br />
+          작은 모임에서 시작됐다.
         </SubText>
       </TextWrapper>
       <ImgContainer>
