@@ -11,6 +11,7 @@ import { IPostId } from '@types';
 import { IPostItem } from './types';
 import {
   WriterInfo,
+  WriterInfoMobile,
   PostWrapper,
   PostInfoButton,
   PostTitle,
@@ -141,6 +142,11 @@ function PostItem({
 
               <StyledChatBubbleOutlineIcon />
               <DetailInfo>{content.comments}</DetailInfo>
+              {/* 테블릿 이하 버전에서만 렌더링 */}
+              <WriterInfoMobile onClick={onHandleWirterProfile}>
+                <WriterImage src={UserImg} alt='writer-profile' />
+                <WriterName>{content.user?.profile.nickname}</WriterName>
+              </WriterInfoMobile>
             </PostDetailWrapper>
           </DetailWrapper>
         </LeftContainer>

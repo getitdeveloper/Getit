@@ -12,7 +12,7 @@ import Paging from '@components/Paging';
 import LoadingSpinner from '@components/LoadingSpinner';
 import { IPost } from '@types';
 
-function QuestionBardPage(): JSX.Element {
+function QuestionBoardPage(): JSX.Element {
   const dispatch = useDispatch();
   const boardList = useSelector(
     (state: RootStateOrAny) => state.postList.commonPostList,
@@ -29,17 +29,13 @@ function QuestionBardPage(): JSX.Element {
     });
   }, [page]);
 
-  if (!boardList) {
-    return <LoadingSpinner />;
-  }
-
   return (
     <PageBackground>
       <PostSubHeader boardType='Question' />
       <PageWrapper>
         {boardList ? (
           <ContentContainer>
-            {boardList.results.map((content: IPost, index: number) => (
+            {boardList?.results.map((content: IPost, index: number) => (
               <PostItem
                 key={content.id}
                 content={content}
@@ -49,10 +45,12 @@ function QuestionBardPage(): JSX.Element {
               />
             ))}
           </ContentContainer>
-        ) : null}
+        ) : (
+          <LoadingSpinner />
+        )}
         <Paging
           activePage={page}
-          totalPage={boardList.count}
+          totalPage={boardList?.count}
           setPage={setPage}
         />
       </PageWrapper>
@@ -60,4 +58,4 @@ function QuestionBardPage(): JSX.Element {
   );
 }
 
-export default QuestionBardPage;
+export default QuestionBoardPage;

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect, useState } from 'react';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import PostItem from '@components/PostItem';
 import PostSubHeader from '@components/PostSubHeader';
@@ -17,9 +17,9 @@ function FreeBoardPage(): JSX.Element {
   const boardList = useSelector(
     (state: RootStateOrAny) => state.postList.commonPostList,
   );
-  const [page, setPage] = React.useState(1);
+  const [page, setPage] = useState(1);
 
-  React.useEffect(() => {
+  useEffect(() => {
     dispatch({
       type: COMMON_POST_LIST_REQUEST,
       data: {
@@ -29,23 +29,22 @@ function FreeBoardPage(): JSX.Element {
     });
   }, [page]);
 
-  console.log('page number: ', page);
-  if (!boardList) {
-    return <LoadingSpinner />;
-  }
-
   return (
     <PageBackground>
       <PostSubHeader boardType='Free' />
       <PageWrapper>
-        <ContentContainer>
-          {boardList.results.map((content: IPost) => (
-            <PostItem key={content.id} content={content} boardType='free' />
-          ))}
-        </ContentContainer>
+        {boardList ? (
+          <ContentContainer>
+            {boardList?.results.map((content: IPost) => (
+              <PostItem key={content.id} content={content} boardType='free' />
+            ))}
+          </ContentContainer>
+        ) : (
+          <LoadingSpinner />
+        )}
         <Paging
           activePage={page}
-          totalPage={boardList.count}
+          totalPage={boardList?.count}
           setPage={setPage}
         />
       </PageWrapper>

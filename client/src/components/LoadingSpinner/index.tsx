@@ -1,15 +1,20 @@
-import * as React from 'react';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import React, { useEffect, useState } from 'react';
 import BannerImg from '@assets/images/Banner.svg';
-import { MessageWrapper, MessageImage, Message } from './styles';
+import {
+  StyledCircularProgress,
+  CircularProgressWrapper,
+  MessageWrapper,
+  MessageImage,
+  Message,
+} from './styles';
 
 function LoadingSpinner(): JSX.Element {
-  const [loadFail, setLoadFail] = React.useState(false);
+  const [loadFail, setLoadFail] = useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const timer = setTimeout(() => {
       setLoadFail(true);
-    }, 5000);
+    }, 2000);
     return () => clearTimeout(timer);
   }, []);
 
@@ -25,7 +30,11 @@ function LoadingSpinner(): JSX.Element {
       </MessageWrapper>
     );
   }
-  return <CircularProgress />;
+  return (
+    <CircularProgressWrapper>
+      <StyledCircularProgress />
+    </CircularProgressWrapper>
+  );
 }
 
 export default LoadingSpinner;

@@ -42,7 +42,7 @@ function GithubCallback(): null {
     } else {
       alert('문제가 발생했습니다. 잠시후 다시 시도해 주세요.');
     }
-  }, [dispatch, history]);
+  }, []);
 
   return null;
 }

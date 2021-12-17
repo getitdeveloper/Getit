@@ -7,6 +7,7 @@ interface Size {
 
 export const PageBackground = styled.div`
   background-color: ${({ theme }) => theme.colors.background};
+  min-height: 100vh;
 `;
 
 export const PageWrapper = styled.div`

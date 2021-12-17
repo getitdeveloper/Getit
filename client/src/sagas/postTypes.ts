@@ -3,6 +3,8 @@ export interface IPostData {
   category: string;
   content: string;
   user: number;
+  stack: Array<string>;
+  worker: Array<string>;
 }
 
 export interface IPostingData {
