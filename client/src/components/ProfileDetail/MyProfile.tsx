@@ -7,6 +7,7 @@ import StackInput from '@components/StackInput';
 import LoadingSpinner from '@components/LoadingSpinner';
 import Portfoilo from '@components/Portfolio';
 import Project from '@components/Project';
+import { IUpdatedProfileInfo } from '@types';
 import {
   MainProfile,
   ProfileWrapper,
@@ -20,7 +21,6 @@ import {
   SubmitButton,
   BoundaryText,
 } from './styles';
-import { IUpdatedProfileInfo } from './types';
 
 function MyProfile(): JSX.Element {
   const profileInfo = useSelector(

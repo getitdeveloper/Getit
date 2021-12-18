@@ -32,7 +32,7 @@ function getOrderedComments(comments: any) {
   return Array.from(created);
 }
 
-function MyComments() {
+function MyComments(): JSX.Element {
   const history = useHistory();
   const user = useSelector((state: RootStateOrAny) => state.user);
   const userId = user.profileInfo?.user_pk;

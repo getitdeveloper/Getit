@@ -8,9 +8,14 @@ export interface ResponseFreePost {
   data: IPost;
 }
 
-export interface BoardData {
+export interface ICommonPostListData {
   page: number;
   category: string;
+}
+
+export interface ICommonPostList {
+  type: string;
+  data: ICommonPostListData;
 }
 
 export interface IMyPostListData {
@@ -30,7 +35,20 @@ export interface ILikedPostListData {
   page: string;
 }
 
-export interface ILikedPostListAction {
+export interface ILikedPostList {
   type: string;
   data: ILikedPostListData;
+}
+
+export interface ITeamProfileListData {
+  userId: number;
+}
+export interface ITeamProfileList {
+  type: string;
+  data: ITeamProfileListData;
+}
+
+export interface IRecruitPostList {
+  type: string;
+  data: number;
 }

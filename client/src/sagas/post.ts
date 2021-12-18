@@ -1,5 +1,4 @@
 import axios from 'axios';
-
 import { all, call, fork, put, takeLatest } from '@redux-saga/core/effects';
 import {
   COMMON_POST_SUCCESS,
@@ -28,12 +27,17 @@ import {
   TEAM_PROFILE_POST_DETAIL_FAILURE,
 } from '../reducers/actions';
 import {
-  IPostData,
+  ICommonPostData,
+  ICommonPost,
   ITeamProfileData,
   ITeamProfileApiData,
-  IPostingData,
+  IRecruitPostingData,
+  IRecruitPosting,
   ITeamProfileIdData,
   ITeamProfileIdApiData,
+  ICommonLikePost,
+  ICommonLikePostData,
+  IRecruitPost,
 } from './postTypes';
 
 // 자유/질문 게시글 받아오기
@@ -44,37 +48,30 @@ const requestCommonPost = (id: string) => {
 function* requestCommonPostSaga(action: any): any {
   try {
     const response = yield call(requestCommonPost, action.data.id);
-    console.log('자유/질문 게시글 정보 응답 ===>', response);
-
+    // console.log('자유/질문 게시글 정보 응답 ===>', response);
     yield put({
       type: COMMON_POST_SUCCESS,
       data: response.data,
     });
   } catch (error) {
-    console.error(error);
+    // console.error(error);
     yield put({
       type: COMMON_POST_FAILURE,
       error,
     });
+    return alert('문제가 발생했습니다. 잠시 후 다시 시도해 주세요.');
   }
 }
 
 // 자유/질문 게시글 작성하기
-const requestCommonPostRegister = (data: IPostData) => {
-  console.log('@@@@', data);
+const requestCommonPostRegister = (data: ICommonPostData) => {
   return axios.post(`/api/board/`, data);
 };
 
-function* requestCommonPostRegisterSaga(action: {
-  type: string;
-  data: IPostData;
-  history: any;
-  boardType: string;
-}): any {
+function* requestCommonPostRegisterSaga(action: ICommonPost): any {
   try {
     const response = yield call(requestCommonPostRegister, action.data);
-    console.log('자유/질문 게시글 작성 후 정보 응답 ===>', response);
-
+    // console.log('자유/질문 게시글 작성 후 정보 응답 ===>', response);
     yield put({
       type: COMMON_POST_REGISTER_SUCCESS,
       data: response.data,
@@ -82,35 +79,35 @@ function* requestCommonPostRegisterSaga(action: {
     alert('게시글 작성 완료');
     action.history.push(`/${action.boardType}Board`);
   } catch (error) {
-    console.error(error);
+    // console.error(error);
     yield put({
       type: COMMON_POST_REGISTER_FAILURE,
       error,
     });
-    alert('문제가 발생했습니다. 잠시 후 다시 시도해 주세요.');
+    return alert('문제가 발생했습니다. 잠시 후 다시 시도해 주세요.');
   }
 }
 
 // 자유/질문 게시글 좋아요 누르기
-const requestCommonPostLike = (data: any) => {
-  return axios.post(`/api/${data.board}/commonlikes/`, data.likes);
+const requestCommonPostLike = ({ board, likes }: ICommonLikePostData) => {
+  return axios.post(`/api/${board}/commonlikes/`, likes);
 };
 
-function* requestCommonPostLikeSaga(action: any): any {
+function* requestCommonPostLikeSaga(action: ICommonLikePost): any {
   try {
     const response = yield call(requestCommonPostLike, action.data);
-    console.log('자유/질문 게시글 좋아요 생성 후 정보 응답 ===>', response);
-
+    // console.log('자유/질문 게시글 좋아요 생성 후 정보 응답 ===>', response);
     yield put({
       type: COMMON_POST_LIKE_SUCCESS,
       data: response.data,
     });
   } catch (error) {
-    console.error(error);
+    // console.error(error);
     yield put({
       type: COMMON_POST_LIKE_FAILURE,
       error,
     });
+    return alert('문제가 발생했습니다. 잠시 후 다시 시도해 주세요.');
   }
 }
 
@@ -119,34 +116,30 @@ const requestRecruitPost = (data: string) => {
   return axios.get(`/api/recruitmentboard/${data}`);
 };
 
-function* requestRecruitPostSaga(action: { type: string; data: string }): any {
+function* requestRecruitPostSaga(action: IRecruitPost): any {
   try {
     const response = yield call(requestRecruitPost, action.data);
-    console.log('모집 게시판 게시글 상세내용 응답 ===>', response);
-
+    // console.log('모집 게시판 게시글 상세내용 응답 ===>', response);
     yield put({
       type: RECRUIT_POST_SUCCESS,
       data: response.data,
     });
   } catch (error) {
-    console.error('모집 게시판 게시글 상세내용 응답 ===>', error);
+    // console.error('모집 게시판 게시글 상세내용 응답 ===>', error);
     yield put({
       type: RECRUIT_POST_FAILURE,
       error,
     });
+    return alert('문제가 발생했습니다. 잠시 후 다시 시도해 주세요.');
   }
 }
 
 // 스터디 모집 게시글 등록
-const requestRecruitPosting = (data: IPostingData) => {
+const requestRecruitPosting = (data: IRecruitPostingData) => {
   return axios.post(`/api/recruitmentboard/`, data);
 };
 
-function* requestRecruitPostingSaga(action: {
-  type: string;
-  data: IPostingData;
-  history: any;
-}): any {
+function* requestRecruitPostingSaga(action: IRecruitPosting): any {
   try {
     const response = yield call(requestRecruitPosting, action.data);
 
@@ -161,7 +154,7 @@ function* requestRecruitPostingSaga(action: {
       type: RECRUIT_POSTING_FAILURE,
       error,
     });
-    alert('스터디 모집 게시글 작성 오류. 잠시 후 다시 시도해 주세요.');
+    return alert('문제가 발생했습니다. 잠시 후 다시 시도해 주세요.');
   }
 }
 
@@ -187,7 +180,7 @@ function* requestTeamProfilePostRegisterSaga(action: ITeamProfileData): any {
       type: TEAM_PROFILE_REGISTER_FAILURE,
       error,
     });
-    alert('팀 프로필 생성 오류. 잠시 후 다시 시도해 주세요.');
+    return alert('문제가 발생했습니다. 잠시 후 다시 시도해 주세요.');
   }
 }
 
@@ -209,7 +202,7 @@ function* requestTeamProfilePostRemoveSaga(action: ITeamProfileIdData): any {
       type: TEAM_PROFILE_REMOVE_FAILURE,
       error,
     });
-    alert('팀 프로필 삭제 오류. 잠시 후 다시 시도해 주세요.');
+    return alert('문제가 발생했습니다. 잠시 후 다시 시도해 주세요.');
   }
 }
 
@@ -230,9 +223,7 @@ function* requestTeamProfilePostDetailSaga(action: ITeamProfileIdData): any {
       type: TEAM_PROFILE_POST_DETAIL_FAILURE,
       error,
     });
-    alert(
-      '팀 프로필을 불러오는데 문제가 발생했습니다. 잠시 후 다시 시도해 주세요.',
-    );
+    return alert('문제가 발생했습니다. 잠시 후 다시 시도해 주세요.');
   }
 }
 
@@ -277,7 +268,7 @@ function* watchRequestTeamProfilePostDetail() {
   );
 }
 
-function* postSaga() {
+function* postSaga(): Generator {
   yield all([
     fork(watchRequestCommonPost),
     fork(watchRequestCommonPostRegister),
