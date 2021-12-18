@@ -65,8 +65,7 @@ export const ProfileRight = styled.div`
   padding: 0rem 2.5rem;
 
   @media ${({ theme }) => theme.tablet} {
-    width: 100%;
-    padding: 1rem;
+    padding: 0rem 1rem;
   }
 `;
 

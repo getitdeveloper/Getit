@@ -1,9 +1,6 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
-import {
-  USER_PROFILE_EDIT_REQUEST,
-  PORTFOLIO_LIST_REQUEST,
-} from '@reducers/actions';
+import { USER_PROFILE_EDIT_REQUEST } from '@reducers/actions';
 import UserImg from '@assets/images/user.svg';
 import { HorizontalLine } from '@assets/styles/commons';
 import StackInput from '@components/StackInput';
@@ -29,8 +26,11 @@ function MyProfile(): JSX.Element {
   const profileInfo = useSelector(
     (state: RootStateOrAny) => state.user.profileInfo,
   );
-  const portfolioList = useSelector(
-    (state: RootStateOrAny) => state.user.portfolioList,
+  const portfolios = useSelector(
+    (state: RootStateOrAny) => state.user.profileInfo?.portfolios,
+  );
+  const teamprofiles = useSelector(
+    (state: RootStateOrAny) => state.user.profileInfo?.teamprofiles,
   );
   const dispatch = useDispatch();
   const [intro, setIntro] = useState(profileInfo.info);
@@ -38,15 +38,6 @@ function MyProfile(): JSX.Element {
   const [editedEmail, setEmail] = useState(profileInfo.email);
   const [editedJob, setJob] = useState(profileInfo.job);
   const [editedStacks, setStacks] = useState(profileInfo.stack);
-
-  useEffect(() => {
-    dispatch({
-      type: PORTFOLIO_LIST_REQUEST,
-      data: {
-        user_pk: profileInfo.user_pk,
-      },
-    });
-  }, []);
 
   const onChange = (
     event:
@@ -109,7 +100,7 @@ function MyProfile(): JSX.Element {
     profileInfo,
   ]);
 
-  if (!portfolioList) {
+  if (!portfolios) {
     return <LoadingSpinner />;
   }
 
@@ -162,21 +153,21 @@ function MyProfile(): JSX.Element {
         <BoundaryText>포트폴리오</BoundaryText>
         <HorizontalLine width='40%' />
       </SubTitleWrapper>
-      {portfolioList && <Portfoilo portfolioList={portfolioList} />}
+      {portfolios && <Portfoilo portfolioList={portfolios} />}
 
       <SubTitleWrapper>
         <HorizontalLine width='40%' />
         <BoundaryText>프로젝트 현황</BoundaryText>
         <HorizontalLine width='40%' />
       </SubTitleWrapper>
-      <Project />
+      <Project teamprofiles={teamprofiles} proceeding='proceeding' />
 
       <SubTitleWrapper>
         <HorizontalLine width='40%' />
         <BoundaryText>완료 프로젝트</BoundaryText>
         <HorizontalLine width='40%' />
       </SubTitleWrapper>
-      <Project finished />
+      <Project teamprofiles={teamprofiles} finished='finished' />
 
       <SubmitButton type='button' onClick={onSubmit}>
         저장하기
