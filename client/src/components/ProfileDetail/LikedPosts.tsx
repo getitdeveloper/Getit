@@ -1,5 +1,4 @@
-import * as React from 'react';
-import { useEffect, useState, useLayoutEffect } from 'react';
+import React, { useEffect, useState, useLayoutEffect } from 'react';
 import { useHistory } from 'react-router';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import { LIKED_POST_LIST_REQUEST } from '@reducers/actions';

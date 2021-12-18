@@ -5,7 +5,7 @@ import PersonIcon from '@material-ui/icons/Person';
 
 export const Container = styled.div`
   display: flex;
-  min-height: 98rem;
+  min-height: 100vh;
 
   @media ${({ theme }) => theme.tablet} {
     flex-direction: column;
@@ -66,6 +66,7 @@ export const ProfileRight = styled.div`
 
   @media ${({ theme }) => theme.tablet} {
     width: 100%;
+    padding: 1rem;
   }
 `;
 
@@ -298,6 +299,7 @@ export const CommentDate = styled.p`
   color: #818181;
   margin-bottom: 1.5rem;
   margin-left: 1rem;
+  font-size: 1.6rem;
 `;
 
 export const CommentInfo = styled.div`
@@ -305,6 +307,7 @@ export const CommentInfo = styled.div`
   display: flex;
   color: #818181;
   margin-bottom: 0.8rem;
+  font-size: 1.4rem;
 `;
 
 // MyPosts styles
@@ -353,4 +356,8 @@ export const BoundaryText = styled.p`
 
 export const StyledLink = styled(Link)`
   text-decoration: none;
+`;
+
+export const CommentText = styled.p`
+  font-size: 1.4rem;
 `;
