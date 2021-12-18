@@ -20,7 +20,13 @@ import {
   TEAM_PROFILE_LIST_SUCCESS,
   TEAM_PROFILE_LIST_FAILURE,
 } from '../reducers/actions';
-import { BoardData } from './postListTypes';
+import {
+  BoardData,
+  IMyPostListData,
+  IMyPostListAction,
+  ILikedPostListData,
+  ILikedPostListAction,
+} from './postListTypes';
 
 // 자유/질문 게시판 리스트 받아오기
 const requestCommonPostList = (data: BoardData) => {
@@ -46,15 +52,19 @@ function* requestCommonPostListSaga(action: any): any {
   }
 }
 
-// 내가 쓴 자유/질문 게시글 리스트 받아오기
-const requestMyPostList = (data: any) => {
-  // return axios.get(`/api/board?category=${data.category}&page=${data.page}`);
+// 내가 쓴 모집/자유/질문 게시글 리스트 받아오기
+const requestMyPostList = (data: IMyPostListData) => {
+  // 모집 게시글 요청
+  if (data.category === 'recruit') {
+    return axios.get(`/api/myrecruitmentboard/${data.user}/`);
+  }
+  // 자유/질문 게시글 요청
   return axios.get(
     `/api/mycommonboard/${data.user}?category=${data.category}&page=${data.page}`,
   );
 };
 
-function* requestMyPostListSaga(action: any): any {
+function* requestMyPostListSaga(action: IMyPostListAction): any {
   try {
     const response = yield call(requestMyPostList, action.data);
     console.log('내가 쓴 게시글 정보 응답 ===>', response);
@@ -73,14 +83,18 @@ function* requestMyPostListSaga(action: any): any {
 }
 
 // 좋아요 누른 게시글 리스트 받아오기
-const requestLikedPostList = (data: any) => {
-  // return axios.get(`/api/board?category=${data.category}&page=${data.page}`);
+const requestLikedPostList = (data: ILikedPostListData) => {
+  // 모집게시판 좋아요 누른 게시글 리스트 받아오기
+  if (data.category === 'recruit') {
+    return axios.get(`/api/recruitlikepost/${data.user}/`);
+  }
+  // 질문/자유 게시판 좋아요 누른 게시글 리스트 받아오기
   return axios.get(
     `/api/commonlikepost/${data.user}/?category=${data.category}&page=${data.page}`,
   );
 };
 
-function* requestLikedPostListSaga(action: any): any {
+function* requestLikedPostListSaga(action: ILikedPostListAction): any {
   try {
     const response = yield call(requestLikedPostList, action.data);
     console.log('좋아요 누른 글 정보 응답 ===>', response);

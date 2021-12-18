@@ -16,16 +16,17 @@ const CategoryType: any = {
   2: 'free',
 };
 
-function MyPosts() {
+function MyPosts(): JSX.Element {
   const history = useHistory();
-  const user = useSelector((state: RootStateOrAny) => state.user);
-  const userId = user.profileInfo?.user_pk;
+  const userId = useSelector(
+    (state: RootStateOrAny) => state.user.profileInfo?.user_pk,
+  );
   const myPosts = useSelector(
     (state: RootStateOrAny) => state.postList.myPostList,
   );
   const dispatch = useDispatch();
   const [page, setPage] = useState(1);
-  const [selectTab, setSelectTab] = useState(1);
+  const [selectTab, setSelectTab] = useState(0);
   const [currentCategory, setCurrentCategory] = useState('question');
   const onHandlePost = (postId: number, category: string) =>
     history.push(`/${category}Board/${postId}`);
@@ -35,14 +36,27 @@ function MyPosts() {
   }, [selectTab]);
 
   useEffect(() => {
-    dispatch({
-      type: MY_POST_LIST_REQUEST,
-      data: {
-        user: userId,
-        category: currentCategory,
-        page: String(page),
-      },
-    });
+    // 질문/자유 게시글 목록 요청
+    if (selectTab === 1 || selectTab === 2) {
+      dispatch({
+        type: MY_POST_LIST_REQUEST,
+        data: {
+          user: userId,
+          category: currentCategory,
+          page: String(page),
+        },
+      });
+    } else {
+      // 모집 게시글 목록 요청
+      dispatch({
+        type: MY_POST_LIST_REQUEST,
+        data: {
+          user: userId,
+          category: currentCategory,
+          page: String(page),
+        },
+      });
+    }
   }, [currentCategory, page]);
 
   if (!myPosts) {
