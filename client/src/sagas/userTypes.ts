@@ -1,3 +1,4 @@
+import { RouteComponentProps } from 'react-router-dom';
 import { IPortfolio, IProfileInfo } from '../types';
 
 export interface ResponseUserInfo {
@@ -88,4 +89,9 @@ export interface IUserProfileRegisterResponse {
     git?: string;
     stack: Array<string>; // string[]
   };
+}
+
+export interface IUserLogout {
+  type: string;
+  history: RouteComponentProps['history'];
 }
