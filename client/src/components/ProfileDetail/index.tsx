@@ -35,8 +35,8 @@ function ProfileDetail(): JSX.Element {
     if (content === 5) {
       dispatch({
         type: USER_LOGOUT_REQUEST,
+        history,
       });
-      return history.push('/');
     }
     setSelectMenu(content);
   };
