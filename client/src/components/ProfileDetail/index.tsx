@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { ContentContainer } from '@assets/styles/page';
 import { useDispatch } from 'react-redux';
 import { USER_LOGOUT_REQUEST } from '@reducers/actions';
+import Footer from '@components/Footer/index';
 import {
   ProfileMenuOption,
   ProfileSelectedMenu,
@@ -41,33 +42,38 @@ function ProfileDetail(): JSX.Element {
     setSelectMenu(content);
   };
   return (
-    <ContentContainer>
-      <Container>
-        <LeftContainer>
-          {navItem.map((content, index) =>
-            selectMenu === index ? (
-              // 선택된 메뉴 색상 변경 및 유지
-              <ProfileSelectedMenu key={content}>{content}</ProfileSelectedMenu>
-            ) : (
-              <ProfileMenuOption
-                key={content}
-                onClick={() => handleNavigation(index)}
-              >
-                {content}
-              </ProfileMenuOption>
-            ),
-          )}
-        </LeftContainer>
+    <>
+      <ContentContainer>
+        <Container>
+          <LeftContainer>
+            {navItem.map((content, index) =>
+              selectMenu === index ? (
+                // 선택된 메뉴 색상 변경 및 유지
+                <ProfileSelectedMenu key={content}>
+                  {content}
+                </ProfileSelectedMenu>
+              ) : (
+                <ProfileMenuOption
+                  key={content}
+                  onClick={() => handleNavigation(index)}
+                >
+                  {content}
+                </ProfileMenuOption>
+              ),
+            )}
+          </LeftContainer>
 
-        <RightContainer>
-          {selectMenu === 0 && <MyProfile />}
-          {selectMenu === 1 && <TeamProfile />}
-          {selectMenu === 2 && <LikedPosts />}
-          {selectMenu === 3 && <MyPosts />}
-          {selectMenu === 4 && <MyComments />}
-        </RightContainer>
-      </Container>
-    </ContentContainer>
+          <RightContainer>
+            {selectMenu === 0 && <MyProfile />}
+            {selectMenu === 1 && <TeamProfile />}
+            {selectMenu === 2 && <LikedPosts />}
+            {selectMenu === 3 && <MyPosts />}
+            {selectMenu === 4 && <MyComments />}
+          </RightContainer>
+        </Container>
+      </ContentContainer>
+      <Footer />
+    </>
   );
 }
 

@@ -1,5 +1,4 @@
-import * as React from 'react';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
 import moment from 'moment';
 import 'moment/locale/ko';
@@ -15,6 +14,7 @@ import {
   CommentDetailWrapper,
   CommentDate,
   CommentInfo,
+  CommentText,
 } from './styles';
 
 function getOrderedComments(comments: any) {
@@ -84,7 +84,7 @@ function MyComments() {
                   ))}
                   <p> / {content.commonpost.title}</p>
                 </CommentInfo>
-                <p>{content.content}</p>
+                <CommentText>{content.content}</CommentText>
               </CommentDetailWrapper>
 
               <IconButton

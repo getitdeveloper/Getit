@@ -1,58 +1,70 @@
-import * as React from 'react';
-import { ProjectContent } from './styles';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { ProjectWrapper, ProjectContent, None } from './styles';
+import { IProject } from './types';
 
-const finishedProject = [
-  {
-    title: '프로젝트 101',
-  },
-  {
-    title: '프로젝트 레드벨벳',
-  },
-  {
-    title: '프로젝트 샤이니',
-  },
-];
-const currentProject = [
-  {
-    title: '프로젝트 트와이스',
-  },
-  {
-    title: '프로젝트 세븐틴',
-  },
-  {
-    title: '프로젝트 에스파',
-  },
-];
-
-interface StatusProps {
-  finished?: boolean;
-}
-
-const defaultProps: StatusProps = {
-  finished: false,
-};
-
-function Project({ finished }: StatusProps): JSX.Element {
-  if (finished) {
+function Project({
+  teamprofiles,
+  proceeding,
+  finished,
+}: IProject): JSX.Element {
+  // 프로젝트 현황(진행중인 프로젝트)
+  if (proceeding) {
+    // 프로젝트 상태가 false가 하나라도 있는지 없는지 체크해서 화면 렌더링 결정
+    const found = teamprofiles.find((profile) => profile.status === false);
     return (
-      <div>
-        {finishedProject?.map((content) => (
-          <ProjectContent key={content.title} color='#b9b9b9'>
-            {content.title}
-          </ProjectContent>
-        ))}
-      </div>
+      <>
+        {found ? (
+          <ProjectWrapper>
+            {teamprofiles.map(
+              (profile) =>
+                profile.status === false && (
+                  <Link
+                    key={profile.title}
+                    to={`/myprofile/teamprofile/${profile.id}`}
+                  >
+                    <ProjectContent>{profile.title}</ProjectContent>
+                  </Link>
+                ),
+            )}
+          </ProjectWrapper>
+        ) : (
+          <None>진행중인 프로젝트가 없습니다.</None>
+        )}
+      </>
     );
   }
-
-  return (
-    <div>
-      {currentProject?.map((content) => (
-        <ProjectContent key={content.title}>{content.title}</ProjectContent>
-      ))}
-    </div>
-  );
+  // 프로젝트 현황(완료된 프로젝트)
+  if (finished) {
+    // 프로젝트 상태가 true가 하나라도 있는지 없는지 체크해서 화면 렌더링 결정
+    const found = teamprofiles.find((profile) => profile.status === true);
+    return (
+      <>
+        {found ? (
+          <ProjectWrapper>
+            {teamprofiles.map(
+              (profile) =>
+                profile.status === true && (
+                  <Link
+                    key={profile.title}
+                    to={`/myprofile/teamprofile/${profile.id}`}
+                  >
+                    <ProjectContent>{profile.title}</ProjectContent>
+                  </Link>
+                ),
+            )}
+          </ProjectWrapper>
+        ) : (
+          <None>완료된 프로젝트가 없습니다.</None>
+        )}
+      </>
+    );
+  }
+  return <div />;
 }
 
-Project.defaultProps = defaultProps;
+Project.defaultProps = {
+  proceeding: '',
+  finished: '',
+};
 export default Project;
