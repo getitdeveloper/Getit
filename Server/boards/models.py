@@ -13,6 +13,7 @@ class CommonBoard(models.Model):
     create_at = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey('accounts.User', on_delete=models.SET_NULL, null=True)
     stack = models.ManyToManyField('tags.Tag')
+    worker = models.ManyToManyField('boards.Worker')
 
     class Meta:
         ordering = ['-create_at']
@@ -35,3 +36,14 @@ class RecruitmentBoard(models.Model):
 
     class Meta:
         ordering = ['-create_at']
+
+class Worker(models.Model):
+    CHOICES_WORKER = (
+        ('기획자','기획자'),
+        ('개발자','개발자'),
+        ('디자이너','디자이너'),
+    )
+    worker = models.CharField(choices=CHOICES_WORKER,max_length=20)
+
+    def __str__(self):
+        self.worker

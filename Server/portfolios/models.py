@@ -11,4 +11,4 @@ class Portfolio(models.Model):
     image = models.ImageField(upload_to='portfolio', blank=True, null=True)
 
     def __str__(self):
-        return f"{self.title} {self.image}"
+        return self.title

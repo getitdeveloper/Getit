@@ -3,7 +3,7 @@
 ### ✏ Description
 
 - dj-rest-auth를 활용한 소셜로그인 구현(kakao, google, github) 
-- 
+- 팀/개인프로필, 게시글, 댓글, 포트폴리오 CRUD
 
 ### Model Composition
 
@@ -15,27 +15,36 @@ Accounts {
 Boards {
     Board
     title: string
-    contents:string(내용)
-    auther:foreignkey(User)
+    content:string(내용)
+    user:foreignkey(User)
     image: imagefield
     category:string(choices)
     created_at:datetime
-d
+    stack: manytomany
+    worker: manytomany
+
     RecruitmentBoard
+    user: foreignkey
     title: string
+    study:foreignkey(teamprofile)
+    developer: Integer
+    pm: Integer
+    deginer: Iteger
     contents:string(내용)
-    auther:foreignkey(User)
-    region:foreignKey(places)
+    start_date: Datetime
+    end_date: Datetime
     image: imagefield
-    id_admin: boolean(호스트-게스트분리)
+    status: Boolean
+    stack: manytomany
     created_at:datetime
 }
 
 Comments{
-    auther:foreignkey(User)
-    board: foreignkey(Board)
-    re_board: foreignkey(RecruitmentBoard)
-    contents: string
+    user:foreignkey(User)
+    commonpost: foreignkey(Board)
+
+    parent: foreignkey
+    content: string
     created_at:datetime
 }
 

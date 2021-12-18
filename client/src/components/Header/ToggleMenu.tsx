@@ -1,5 +1,5 @@
-import * as React from 'react';
-import { useState, useCallback, KeyboardEvent, MouseEvent } from 'react';
+import React, { useState, useCallback, KeyboardEvent, MouseEvent } from 'react';
+import { useHistory } from 'react-router-dom';
 import { useSelector, RootStateOrAny, useDispatch } from 'react-redux';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import Button from '@material-ui/core/Button';
@@ -50,6 +50,7 @@ const menuList = [
 
 export default function ToggleMenu(): JSX.Element {
   const dispatch = useDispatch();
+  const history = useHistory();
   const nickname = useSelector(
     (state: RootStateOrAny) => state.user.profileInfo?.nickname,
   );
@@ -59,6 +60,7 @@ export default function ToggleMenu(): JSX.Element {
   const handleLogOut = useCallback(() => {
     dispatch({
       type: USER_LOGOUT_REQUEST,
+      history,
     });
   }, []);
 

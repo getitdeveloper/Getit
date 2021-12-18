@@ -43,6 +43,7 @@ import {
   IUserProfileEdit,
   IUserProfileEditData,
   IUserProfileData,
+  IUserLogout,
 } from './userTypes';
 
 // 사용자 프로필 정보 요청
@@ -165,15 +166,14 @@ const requestUserLogOut = () => {
   return axios.get('/api/logout/');
 };
 
-function* requestUserLogOutSaga(): any {
+function* requestUserLogOutSaga(action: IUserLogout): any {
   try {
     const response = yield call(requestUserLogOut);
     // console.log('로그아웃 요청 응답 ===>', response);
-
     yield put({
       type: USER_LOGOUT_SUCCESS,
-      // data: response.data,
     });
+    action.history.push('/');
   } catch (error) {
     // console.log('로그아웃 요청 에러 ===>', error);
     yield put({
