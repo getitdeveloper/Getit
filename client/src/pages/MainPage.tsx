@@ -5,7 +5,7 @@ import NavBar from '@components/NavBar/index';
 import FreeBoardPage from '@pages/FreeBoardPage';
 import QuestionBoardPage from '@pages/QuestionBoardPage';
 import RecruitBoardPage from '@pages/RecruitBoardPage';
-import Footer from '@components/Footer/index';
+// import Footer from '@components/Footer/index';
 import { USER_NICK_DOUBLECHECK_RESET } from '@reducers/actions';
 
 function MainPage(): JSX.Element {
@@ -29,7 +29,7 @@ function MainPage(): JSX.Element {
       {selectTab === 0 && <RecruitBoardPage />}
       {selectTab === 1 && <QuestionBoardPage />}
       {selectTab === 2 && <FreeBoardPage />}
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 }

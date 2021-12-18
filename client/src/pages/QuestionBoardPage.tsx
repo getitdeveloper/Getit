@@ -11,6 +11,7 @@ import { COMMON_POST_LIST_REQUEST } from '@reducers/actions';
 import Paging from '@components/Paging';
 import LoadingSpinner from '@components/LoadingSpinner';
 import { IPost } from '@types';
+import Footer from '@components/Footer/index';
 
 function QuestionBoardPage(): JSX.Element {
   const dispatch = useDispatch();
@@ -54,6 +55,7 @@ function QuestionBoardPage(): JSX.Element {
           setPage={setPage}
         />
       </PageWrapper>
+      <Footer />
     </PageBackground>
   );
 }

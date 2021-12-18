@@ -11,6 +11,7 @@ import {
 import Paging from '@components/Paging';
 import LoadingSpinner from '@components/LoadingSpinner';
 import { IPost } from '@types';
+import Footer from '@components/Footer/index';
 
 function FreeBoardPage(): JSX.Element {
   const dispatch = useDispatch();
@@ -48,6 +49,7 @@ function FreeBoardPage(): JSX.Element {
           setPage={setPage}
         />
       </PageWrapper>
+      <Footer />
     </PageBackground>
   );
 }

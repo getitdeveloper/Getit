@@ -5,6 +5,7 @@ import TeamProfileDetail from '@components/TeamProfileDetail/index';
 import { TEAM_PROFILE_POST_DETAIL_REQUEST } from '@reducers/actions';
 import { PageWrapper, PageTitle, PageBackground } from '@assets/styles/page';
 import { IPostId } from '@types';
+import Footer from '@components/Footer/index';
 
 function TeamProfileDetailPage(): JSX.Element {
   const dispatch = useDispatch();
@@ -30,6 +31,7 @@ function TeamProfileDetailPage(): JSX.Element {
         <PageTitle>팀 프로필</PageTitle>
         <TeamProfileDetail data={teamProfilePostDetail} />
       </PageWrapper>
+      <Footer />
     </PageBackground>
   );
 }
