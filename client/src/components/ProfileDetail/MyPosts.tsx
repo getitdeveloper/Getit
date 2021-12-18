@@ -57,7 +57,7 @@ function MyPosts(): JSX.Element {
         },
       });
     }
-  }, [currentCategory, page]);
+  }, [currentCategory, page, selectTab]);
 
   if (!myPosts) {
     return <LoadingSpinner />;

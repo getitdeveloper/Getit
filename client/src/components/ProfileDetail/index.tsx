@@ -3,7 +3,6 @@ import { useHistory } from 'react-router-dom';
 import { ContentContainer } from '@assets/styles/page';
 import { useDispatch } from 'react-redux';
 import { USER_LOGOUT_REQUEST } from '@reducers/actions';
-import Footer from '@components/Footer/index';
 import {
   ProfileMenuOption,
   ProfileSelectedMenu,
@@ -15,7 +14,6 @@ import MyProfile from './MyProfile';
 import MyComments from './MyComments';
 import MyPosts from './MyPosts';
 import LikedPosts from './LikedPosts';
-
 import TeamProfile from './TeamProfile';
 
 const navItem = [
@@ -72,7 +70,6 @@ function ProfileDetail(): JSX.Element {
           </RightContainer>
         </Container>
       </ContentContainer>
-      <Footer />
     </>
   );
 }

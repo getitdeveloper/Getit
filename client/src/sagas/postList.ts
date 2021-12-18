@@ -21,34 +21,38 @@ import {
   TEAM_PROFILE_LIST_FAILURE,
 } from '../reducers/actions';
 import {
-  BoardData,
+  ICommonPostListData,
+  ICommonPostList,
   IMyPostListData,
   IMyPostListAction,
   ILikedPostListData,
-  ILikedPostListAction,
+  ILikedPostList,
+  ITeamProfileListData,
+  ITeamProfileList,
+  IRecruitPostList,
 } from './postListTypes';
 
 // 자유/질문 게시판 리스트 받아오기
-const requestCommonPostList = (data: BoardData) => {
-  // return axios.get(`/api/board?category=${data.category}`);
-  return axios.get(`/api/board?category=${data.category}&page=${data.page}`);
+const requestCommonPostList = ({ page, category }: ICommonPostListData) => {
+  return axios.get(`/api/board?category=${category}&page=${page}`);
 };
 
-function* requestCommonPostListSaga(action: any): any {
+function* requestCommonPostListSaga(action: ICommonPostList): any {
   try {
     const response = yield call(requestCommonPostList, action.data);
-    console.log('자유/질문 게시글 정보 응답 ===>', response);
+    // console.log('자유/질문 게시글 정보 응답 ===>', response);
 
     yield put({
       type: COMMON_POST_LIST_SUCCESS,
       data: response.data,
     });
   } catch (error) {
-    console.error(error);
+    // console.error(error);
     yield put({
       type: COMMON_POST_LIST_FAILURE,
       error,
     });
+    return alert('문제가 발생했습니다. 잠시 후 다시 시도해 주세요.');
   }
 }
 
@@ -67,18 +71,18 @@ const requestMyPostList = (data: IMyPostListData) => {
 function* requestMyPostListSaga(action: IMyPostListAction): any {
   try {
     const response = yield call(requestMyPostList, action.data);
-    console.log('내가 쓴 게시글 정보 응답 ===>', response);
-
+    // console.log('내가 쓴 게시글 정보 응답 ===>', response);
     yield put({
       type: MY_POST_LIST_SUCCESS,
       data: response.data,
     });
   } catch (error) {
-    console.error(error);
+    // console.error(error);
     yield put({
       type: MY_POST_LIST_FAILURE,
       error,
     });
+    return alert('문제가 발생했습니다. 잠시 후 다시 시도해 주세요.');
   }
 }
 
@@ -94,21 +98,21 @@ const requestLikedPostList = (data: ILikedPostListData) => {
   );
 };
 
-function* requestLikedPostListSaga(action: ILikedPostListAction): any {
+function* requestLikedPostListSaga(action: ILikedPostList): any {
   try {
     const response = yield call(requestLikedPostList, action.data);
-    console.log('좋아요 누른 글 정보 응답 ===>', response);
-
+    // console.log('좋아요 누른 글 정보 응답 ===>', response);
     yield put({
       type: LIKED_POST_LIST_SUCCESS,
       data: response.data,
     });
   } catch (error) {
-    console.error(error);
+    // console.error(error);
     yield put({
       type: LIKED_POST_LIST_FAILURE,
       error,
     });
+    return alert('문제가 발생했습니다. 잠시 후 다시 시도해 주세요.');
   }
 }
 
@@ -123,18 +127,18 @@ function* requestSearchPostListSaga(action: {
 }): any {
   try {
     const response = yield call(requestSearchPostList, action.data);
-    console.log('게시글 전체 검색 응답 ===>', response);
-
+    // console.log('게시글 전체 검색 응답 ===>', response);
     yield put({
       type: SEARCH_POST_LIST_SUCCESS,
       data: response.data,
     });
   } catch (error) {
-    console.error(error);
+    // console.error(error);
     yield put({
       type: SEARCH_POST_LIST_FAILURE,
       error,
     });
+    return alert('문제가 발생했습니다. 잠시 후 다시 시도해 주세요.');
   }
 }
 
@@ -146,40 +150,33 @@ const requestRecruitPostList = (data: number) => {
   return axios.get(`/api/recruitmentboard/?page=${data}`);
 };
 
-function* requestRecruitPostListSaga(action: {
-  type: string;
-  data: number;
-}): any {
+function* requestRecruitPostListSaga(action: IRecruitPostList): any {
   try {
     const response = yield call(requestRecruitPostList, action.data);
-    console.log('모집 게시판 게시글 목록 응답 ===>', response);
-
+    // console.log('모집 게시판 게시글 목록 응답 ===>', response);
     yield put({
       type: RECRUIT_POST_LIST_SUCCESS,
       data: response.data,
     });
   } catch (error) {
-    console.error('모집 게시판 게시글 목록 응답 ===>', error);
+    // console.error('모집 게시판 게시글 목록 응답 ===>', error);
     yield put({
       type: RECRUIT_POST_LIST_FAILURE,
       error,
     });
+    return alert('문제가 발생했습니다. 잠시 후 다시 시도해 주세요.');
   }
 }
 
 // 팀 프로필 목록
-const requestTeamProfileList = (data: { userId: number }) => {
-  return axios.get(`/api/${data.userId}/teamprofile`);
+const requestTeamProfileList = ({ userId }: ITeamProfileListData) => {
+  return axios.get(`/api/${userId}/teamprofile`);
 };
 
-function* requestTeamProfileListSaga(action: {
-  type: string;
-  data: { userId: number };
-}): any {
+function* requestTeamProfileListSaga(action: ITeamProfileList): any {
   try {
     const response = yield call(requestTeamProfileList, action.data);
-    console.log('팀 프로필 목록 응답 ===>', response);
-
+    // console.log('팀 프로필 목록 응답 ===>', response);
     yield put({
       type: TEAM_PROFILE_LIST_SUCCESS,
       data: response.data,
@@ -189,6 +186,7 @@ function* requestTeamProfileListSaga(action: {
       type: TEAM_PROFILE_LIST_FAILURE,
       error,
     });
+    return alert('문제가 발생했습니다. 잠시 후 다시 시도해 주세요.');
   }
 }
 
@@ -216,7 +214,7 @@ function* watchRequestTeamProfileList() {
   yield takeLatest(TEAM_PROFILE_LIST_REQUEST, requestTeamProfileListSaga);
 }
 
-function* postListSaga() {
+function* postListSaga(): Generator {
   yield all([
     fork(watchRequestCommonPostList),
     fork(watchRequestMyPostList),

@@ -8,13 +8,11 @@ import rootSaga from '../sagas/index';
 // saga 미들웨어 생성
 const sagaMiddleware = createSagaMiddleware();
 
-// TODO 아래 주석된 값으로 치환하기
-// const enhancer =
-//   process.env.NODE_ENV === 'production'
-//     ? applyMiddleware(sagaMiddleware)
-//     : composeWithDevTools(applyMiddleware(sagaMiddleware));
-
-const enhancer = composeWithDevTools(applyMiddleware(sagaMiddleware));
+// 개발 모드에서만 devtools 활성화
+const enhancer =
+  process.env.NODE_ENV === 'production'
+    ? applyMiddleware(sagaMiddleware)
+    : composeWithDevTools(applyMiddleware(sagaMiddleware));
 
 const store = createStore(reducer, enhancer);
 

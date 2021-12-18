@@ -1,7 +1,8 @@
-import * as React from 'react';
+import React from 'react';
 import PostSubHeader from '@components/PostSubHeader';
 import RecruitPost from '@components/RecruitPost/index';
 import { PageBackground, PageWrapper } from '@assets/styles/page';
+import Footer from '@components/Footer/index';
 
 function RecruitBoardPage(): JSX.Element {
   return (
@@ -10,6 +11,7 @@ function RecruitBoardPage(): JSX.Element {
       <PageWrapper>
         <RecruitPost />
       </PageWrapper>
+      <Footer />
     </PageBackground>
   );
 }

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { useEffect } from 'react';
 import { useSelector, RootStateOrAny } from 'react-redux';
+import Footer from '@components/Footer/index';
 
 function SearchResultPage(): JSX.Element {
   const searchResult = useSelector(
@@ -24,6 +25,7 @@ function SearchResultPage(): JSX.Element {
         <li>1</li>
         <li>2</li>
       </ul>
+      <Footer />
     </div>
   );
 }

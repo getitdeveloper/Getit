@@ -51,6 +51,7 @@ export const ContentContainer = styled.div`
     min-height: initial;
     height: 100vh - 6.19rem;
     box-shadow: none;
+    margin-bottom: 0rem;
   }
   @media ${({ theme }) => theme.mobile} {
     width: 98%;
