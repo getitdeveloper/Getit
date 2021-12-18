@@ -46,7 +46,7 @@ function PostItem({
 
   useEffect(() => {
     const workerObj = new Map();
-    content.worker.map((job: string) => {
+    content.worker?.map((job: string) => {
       switch (job) {
         case '개발자':
           workerObj.set('developer', 1);
