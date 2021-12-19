@@ -47,13 +47,14 @@ export const ContentContainer = styled.div`
   margin-top: 1rem;
 
   @media ${({ theme }) => theme.tablet} {
-    padding: 3rem 0;
+    /* padding: 3rem 0; */
     min-height: initial;
     height: 100vh - 6.19rem;
-    box-shadow: none;
+    /* box-shadow: none; */
     margin-bottom: 0rem;
   }
   @media ${({ theme }) => theme.mobile} {
-    width: 98%;
+    padding: 3rem 0;
+    width: 100%;
   }
 `;

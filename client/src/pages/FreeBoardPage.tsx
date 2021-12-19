@@ -36,8 +36,14 @@ function FreeBoardPage(): JSX.Element {
       <PageWrapper>
         {boardList ? (
           <ContentContainer>
-            {boardList?.results.map((content: IPost) => (
-              <PostItem key={content.id} content={content} boardType='free' />
+            {boardList?.results.map((content: IPost, index: number) => (
+              <PostItem
+                key={content.id}
+                content={content}
+                boardType='free'
+                index={index}
+                length={boardList.results.length}
+              />
             ))}
           </ContentContainer>
         ) : (

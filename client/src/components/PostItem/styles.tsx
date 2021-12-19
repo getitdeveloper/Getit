@@ -12,7 +12,7 @@ export const PostWrapper = styled.div`
   padding: 0rem 0.5rem;
 
   @media ${({ theme }) => theme.tablet} {
-    padding: 0 0;
+    padding: 0rem 1.5rem;
   }
 `;
 

@@ -4,9 +4,9 @@ export const Content = styled.div`
   min-height: 30rem;
   padding: 2rem 1rem;
   font-size: 1.5rem;
-  @media ${({ theme }) => theme.tablet} {
-    padding: 2rem 0rem;
-  }
+  /* @media ${({ theme }) => theme.tablet} {
+    padding: 2rem 1rem;
+  } */
 `;
 
 export const StacksWrapper = styled.div`
