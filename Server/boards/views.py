@@ -2,8 +2,10 @@ import json
 import os
 
 import requests
+from django.db.models import Q
 from django.http.response import JsonResponse
 from django.utils.translation import get_supported_language_variant
+from django_filters.rest_framework import DjangoFilterBackend
 
 from drf_yasg import openapi
 from rest_framework.filters import SearchFilter
@@ -120,12 +122,13 @@ class CommonBoardListAPIView(GenericAPIView):
                 if not name:
                     continue
                 _name, _ = Tag.objects.get_or_create(name=name)
-                for worker in workers:
-                    if not worker:
-                        continue
-                    _worker, _ = Worker.objects.get_or_create(worker=worker)
-                    board.worker.add(_worker)
                 board.stack.add(_name)
+            for worker in workers:
+                if not worker:
+                    continue
+                _worker, _ = Worker.objects.get_or_create(worker=worker)
+                board.worker.add(_worker)
+
             return JsonResponse(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -311,56 +314,7 @@ class RecruitmentBoardPostListAPIView(GenericAPIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class RecruitmentBoardDeveloperFilterView(GenericAPIView):
-    serializer_class = RecruitmentBoardSerializer
-    permission_classes = [RecruitmentIsOwnerOrReadOnly]
-    pagination_class = BoardPageNumberPagination
-    ordering_fields = ['create_at']
-    filter_backends = [SearchFilter]
-    search_fields = ['content','title',]
 
-    # parser_classes = (MultiPartParser,)
-
-    def get(self, request):
-        posts = RecruitmentBoard.objects.filter(developer__gt=0)
-        paginator = BoardPageNumberPagination()
-        result_page = paginator.paginate_queryset(posts, request)
-        serializer = RecruitmentBoardSerializer(result_page, many=True, context={'request': request})
-        return paginator.get_paginated_response(serializer.data)
-
-class RecruitmentBoardDesignerFilterView(GenericAPIView):
-    serializer_class = RecruitmentBoardSerializer
-    permission_classes = [RecruitmentIsOwnerOrReadOnly]
-    pagination_class = BoardPageNumberPagination
-    ordering_fields = ['create_at']
-    filter_backends = [SearchFilter]
-    search_fields = ['content','title',]
-
-    # parser_classes = (MultiPartParser,)
-
-    def get(self, request):
-        posts = RecruitmentBoard.objects.filter(designer__gt=0)
-        paginator = BoardPageNumberPagination()
-        result_page = paginator.paginate_queryset(posts, request)
-        serializer = RecruitmentBoardSerializer(result_page, many=True, context={'request': request})
-        return paginator.get_paginated_response(serializer.data)
-
-class RecruitmentBoardPmFilterView(GenericAPIView):
-    serializer_class = RecruitmentBoardSerializer
-    permission_classes = [RecruitmentIsOwnerOrReadOnly]
-    pagination_class = BoardPageNumberPagination
-    ordering_fields = ['create_at']
-    filter_backends = [SearchFilter]
-    search_fields = ['content','title',]
-
-    # parser_classes = (MultiPartParser,)
-
-    def get(self, request):
-        posts = RecruitmentBoard.objects.filter(pm__gt=0)
-        paginator = BoardPageNumberPagination()
-        result_page = paginator.paginate_queryset(posts, request)
-        serializer = RecruitmentBoardSerializer(result_page, many=True, context={'request': request})
-        return paginator.get_paginated_response(serializer.data)
 
 
 class RecruitmentBoardPostDetailAPIView(GenericAPIView):
@@ -468,159 +422,30 @@ class RecruitmentBoardPostDetailAPIView(GenericAPIView):
 
 class WholePostSearch(GenericAPIView):
 
-    filter_backends = [SearchFilter]
+    filter_backends = [DjangoFilterBackend,]
     search_fields = ['content', 'title',]
 
     def get(self, request):
         """
-            전체 게시글 list (GET) --> 검색필터 적용
+            검색 필터링 (GET)
 
             ---
-                127.0.0.1:8000/api/board?category=free(question)&search=python
 
-                {
-                    "freeboard": [
-                    {
-                        "id": 13,
-                        "title": "test2",
-                        "category": "free",
-                        "content": "test1",
-                        "image": null,
-                        "create_at": "2021-09-12T16:44:50.233830+09:00",
-                        "user": {
-                            "id": 2,
-                            "profile": {
-                                "nickname": null,
-                                "image": "/media/profile/Untitled.jpeg"
-                            }
-                        },
-                        "likes": 0,
-                        "comments": 0
-                    },
-                    {
-                        "id": 12,
-                        "title": "test2",
-                        "category": "free",
-                        "content": "test1",
-                        "image": null,
-                        "create_at": "2021-09-12T16:44:49.672820+09:00",
-                        "user": {
-                            "id": 2,
-                            "profile": {
-                                "nickname": null,
-                                "image": "/media/profile/Untitled.jpeg"
-                            }
-                        },
-                        "likes": 0,
-                        "comments": 0
-                    }
-                ],
-                "questionboard": [
-                    {
-                        "id": 22,
-                        "title": "test1",
-                        "category": "question",
-                        "content": "test2",
-                        "image": null,
-                        "create_at": "2021-09-12T16:45:12.362742+09:00",
-                        "user": {
-                            "id": 2,
-                            "profile": {
-                                "nickname": null,
-                                "image": "/media/profile/Untitled.jpeg"
-                            }
-                        },
-                        "likes": 0,
-                        "comments": 0
-                    },
-                    {
-                        "id": 21,
-                        "title": "test1",
-                        "category": "question",
-                        "content": "test2",
-                        "image": null,
-                        "create_at": "2021-09-12T16:45:11.873442+09:00",
-                        "user": {
-                            "id": 2,
-                            "profile": {
-                                "nickname": null,
-                                "image": "/media/profile/Untitled.jpeg"
-                            }
-                        },
-                        "likes": 0,
-                        "comments": 0
-                    }
-                ],
-                "recruitboard": [
-                    {
-                        "id": 1,
-                        "user": 2,
-                        "title": "test1",
-                        "study": {
-                            "id": 1,
-                            "user": 2,
-                            "name": "test",
-                            "content": "test",
-                            "status": true,
-                            "member": [
-                                2
-                            ],
-                            "image": null,
-                            "stack": [
-                                "python"
-                            ],
-                            "created_at": "2021-09-12T11:06:40.929959+09:00"
-                        },
-                        "developer": 2,
-                        "designer": 0,
-                        "pm": 0,
-                        "content": "test1",
-                        "start_date": "2021-09-12",
-                        "end_date": "2021-09-13",
-                        "status": true
-                    },
-                    {
-                        "id": 2,
-                        "user": 2,
-                        "title": "test2",
-                        "study": {
-                            "id": 1,
-                            "user": 2,
-                            "name": "test",
-                            "content": "test",
-                            "status": true,
-                            "member": [
-                                2
-                            ],
-                            "image": null,
-                            "stack": [
-                                "python"
-                            ],
-                            "created_at": "2021-09-12T11:06:40.929959+09:00"
-                        },
-                        "developer": 2,
-                        "designer": 0,
-                        "pm": 0,
-                        "content": "test2",
-                        "start_date": "2021-09-12",
-                        "end_date": "2021-09-13",
-                        "status": true
-                    }
-                ]
-            }
+
         """
+        search = request.GET.get('search')
         common_paginator = WholeBoardCommonPageNumberPagination()
         recruit_paginator = WholeBoardRecruitmentPageNumberPagination()
-        free_posts = CommonBoard.objects.filter(category="free")
-        free_posts = self.filter_queryset(free_posts)
+        free_posts = CommonBoard.objects.filter(Q(title__icontains = search) |
+      Q(content__icontains = search),category='free')
         free_posts = common_paginator.paginate_queryset(free_posts, request)
         free_serializer = CommonBoardSerializer(free_posts, many=True)
-        question_posts = CommonBoard.objects.filter(category="question")
-        question_posts = self.filter_queryset(question_posts)
+        question_posts = CommonBoard.objects.filter(Q(title__icontains = search) |
+      Q(content__icontains = search),category='question')
         question_posts = common_paginator.paginate_queryset(question_posts, request)
         question_serializer = CommonBoardSerializer(question_posts, many=True)
-        recruit_posts = RecruitmentBoard.objects.all()
-        recruit_posts = self.filter_queryset(recruit_posts)
+        recruit_posts = RecruitmentBoard.objects.filter(Q(title__icontains = search) |
+      Q(content__icontains = search))
         recruit_posts = recruit_paginator.paginate_queryset(recruit_posts, request)
         recruit_serializer = RecruitmentBoardSerializer(recruit_posts, many=True)
         return JsonResponse({
@@ -776,8 +601,197 @@ class RecruitmentBoardPostMyListAPIView(GenericAPIView):
                     }
                 ]
         """
+
         posts = RecruitmentBoard.objects.filter(user=request.user.id)
         paginator = BoardPageNumberPagination()
         result_page = paginator.paginate_queryset(posts, request)
         serializer = RecruitmentBoardSerializer(result_page, many=True, context={'request': request})
         return paginator.get_paginated_response(serializer.data)
+
+class WorkerFilterView(GenericAPIView):
+
+    def get(self, request):
+        """
+            게시글 필터링 (GET)
+
+            ---
+
+
+        """
+        pm = request.GET.get('pm')
+        developer = request.GET.get('developer')
+        designer = request.GET.get('designer')
+        category = request.GET.get('category')
+        if category == 'free':
+            if pm == 'true':
+                if developer == 'true':
+                    if designer == 'true':
+                        posts = CommonBoard.objects.filter(Q(worker = 1) | Q(worker = 2) | Q(worker = 3), category='free').distinct()
+                        paginator = BoardPageNumberPagination()
+                        result_page = paginator.paginate_queryset(posts, request)
+                        serializer = CommonBoardSerializer(result_page, many=True, context={'request': request})
+
+                        return paginator.get_paginated_response(serializer.data)
+                    else:
+                        posts = CommonBoard.objects.filter(Q(worker = 1) | Q(worker = 2), category='free').distinct()
+                        paginator = BoardPageNumberPagination()
+                        result_page = paginator.paginate_queryset(posts, request)
+                        serializer = CommonBoardSerializer(result_page, many=True, context={'request': request})
+
+                        return paginator.get_paginated_response(serializer.data)
+                else:
+                    if designer == 'true':
+                        posts = CommonBoard.objects.filter(Q(worker = 3) | Q(worker = 2), category='free').distinct()
+                        paginator = BoardPageNumberPagination()
+                        result_page = paginator.paginate_queryset(posts, request)
+                        serializer = CommonBoardSerializer(result_page, many=True, context={'request': request})
+
+                        return paginator.get_paginated_response(serializer.data)
+                    else:
+                        posts = CommonBoard.objects.filter(worker=2, category='free').distinct()
+                        paginator = BoardPageNumberPagination()
+                        result_page = paginator.paginate_queryset(posts, request)
+                        serializer = CommonBoardSerializer(result_page, many=True, context={'request': request})
+
+                        return paginator.get_paginated_response(serializer.data)
+            elif designer == 'true':
+                if developer == 'true':
+                    posts = CommonBoard.objects.filter(Q(worker = 1) | Q(worker = 3), category='free').distinct()
+                    paginator = BoardPageNumberPagination()
+                    result_page = paginator.paginate_queryset(posts, request)
+                    serializer = CommonBoardSerializer(result_page, many=True, context={'request': request})
+
+                    return paginator.get_paginated_response(serializer.data)
+                else:
+                    posts = CommonBoard.objects.filter(worker=3, category='free').distinct()
+                    paginator = BoardPageNumberPagination()
+                    result_page = paginator.paginate_queryset(posts, request)
+                    serializer = CommonBoardSerializer(result_page, many=True, context={'request': request})
+
+                    return paginator.get_paginated_response(serializer.data)
+            elif pm == 'false' and designer == 'false' and developer == 'false':
+                res = {
+                    'count': 0,
+                    'next':None,
+                    'previous':None,
+                    'results': [],
+                }
+                return JsonResponse(res)
+            else:
+                posts = CommonBoard.objects.filter(worker=1, category='free').distinct()
+                paginator = BoardPageNumberPagination()
+                result_page = paginator.paginate_queryset(posts, request)
+                serializer = CommonBoardSerializer(result_page, many=True, context={'request': request})
+
+                return paginator.get_paginated_response(serializer.data)
+        elif category=='question':
+            if pm == 'true':
+                if developer == 'true':
+                    if designer == 'true':
+                        posts = CommonBoard.objects.filter(worker__in=[1, 2, 3], category='question').distinct()
+                        paginator = BoardPageNumberPagination()
+                        result_page = paginator.paginate_queryset(posts, request)
+                        serializer = CommonBoardSerializer(result_page, many=True, context={'request': request})
+
+                    else:
+                        posts = CommonBoard.objects.filter(worker__in=[1, 2], category='question').distinct()
+                        paginator = BoardPageNumberPagination()
+                        result_page = paginator.paginate_queryset(posts, request)
+                        serializer = CommonBoardSerializer(result_page, many=True, context={'request': request})
+
+                else:
+                    if designer == 'true':
+                        posts = CommonBoard.objects.filter(worker__in=[2,3], category='question').distinct()
+                        paginator = BoardPageNumberPagination()
+                        result_page = paginator.paginate_queryset(posts, request)
+                        serializer = CommonBoardSerializer(result_page, many=True, context={'request': request})
+
+                    else:
+                        posts = CommonBoard.objects.filter(worker=2, category='question').distinct()
+                        paginator = BoardPageNumberPagination()
+                        result_page = paginator.paginate_queryset(posts, request)
+                        serializer = CommonBoardSerializer(result_page, many=True, context={'request': request})
+
+            elif designer == 'true':
+                if developer == 'true':
+                    posts = CommonBoard.objects.filter(worker__in=[1,3], category='question').distinct()
+                    paginator = BoardPageNumberPagination()
+                    result_page = paginator.paginate_queryset(posts, request)
+                    serializer = CommonBoardSerializer(result_page, many=True, context={'request': request})
+
+                else:
+                    posts = CommonBoard.objects.filter(worker=3, category='question').distinct()
+                    paginator = BoardPageNumberPagination()
+                    result_page = paginator.paginate_queryset(posts, request)
+                    serializer = CommonBoardSerializer(result_page, many=True, context={'request': request})
+
+            elif pm == 'false' and designer=='false' and developer=='false':
+                res= {
+                    'count': 0,
+                    'next':None,
+                    'previous':None,
+                    'results': [],
+                }
+                return JsonResponse(res)
+            else:
+                posts = CommonBoard.objects.filter(worker=1, category='question').distinct()
+                paginator = BoardPageNumberPagination()
+                result_page = paginator.paginate_queryset(posts, request)
+                serializer = CommonBoardSerializer(result_page, many=True, context={'request': request})
+            return paginator.get_paginated_response(serializer.data)
+
+        else:
+            if pm == 'true':
+                if developer == 'true':
+                    if designer == 'true':
+                        posts = RecruitmentBoard.objects.filter(~Q(pm = 0) | ~Q(designer = 0) | ~Q(developer = 0)).distinct()
+                        paginator = BoardPageNumberPagination()
+                        result_page = paginator.paginate_queryset(posts, request)
+                        serializer = RecruitmentBoardSerializer(result_page, many=True, context={'request': request})
+
+                    else:
+                        posts = RecruitmentBoard.objects.filter(~Q(pm = 0) | ~Q(developer = 0)).distinct()
+                        paginator = BoardPageNumberPagination()
+                        result_page = paginator.paginate_queryset(posts, request)
+                        serializer = RecruitmentBoardSerializer(result_page, many=True, context={'request': request})
+
+                else:
+                    if designer == 'true':
+                        posts = RecruitmentBoard.objects.filter(~Q(pm = 0) | ~Q(designer = 0)).distinct()
+                        paginator = BoardPageNumberPagination()
+                        result_page = paginator.paginate_queryset(posts, request)
+                        serializer = RecruitmentBoardSerializer(result_page, many=True, context={'request': request})
+
+                    else:
+                        posts = RecruitmentBoard.objects.filter(~Q(pm = 0)).distinct()
+                        paginator = BoardPageNumberPagination()
+                        result_page = paginator.paginate_queryset(posts, request)
+                        serializer = RecruitmentBoardSerializer(result_page, many=True, context={'request': request})
+
+            elif designer == 'true':
+                if developer == 'true':
+                    posts = RecruitmentBoard.objects.filter(~Q(designer = 0) | ~Q(developer = 0)).distinct()
+                    paginator = BoardPageNumberPagination()
+                    result_page = paginator.paginate_queryset(posts, request)
+                    serializer = RecruitmentBoardSerializer(result_page, many=True, context={'request': request})
+
+                else:
+                    posts = RecruitmentBoard.objects.filter(~Q(designer = 0)).distinct()
+                    paginator = BoardPageNumberPagination()
+                    result_page = paginator.paginate_queryset(posts, request)
+                    serializer = RecruitmentBoardSerializer(result_page, many=True, context={'request': request})
+
+            elif pm == 'false' and designer=='false' and developer=='false':
+                res= {
+                    'count': 0,
+                    'next':None,
+                    'previous':None,
+                    'results': [],
+                }
+                return JsonResponse(res)
+            else:
+                posts = RecruitmentBoard.objects.filter(~Q(developer = 0)).distinct()
+                paginator = BoardPageNumberPagination()
+                result_page = paginator.paginate_queryset(posts, request)
+                serializer = RecruitmentBoardSerializer(result_page, many=True, context={'request': request})
+            return paginator.get_paginated_response(serializer.data)

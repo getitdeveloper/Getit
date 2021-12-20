@@ -73,10 +73,14 @@ class CommonBoardSerializer(serializers.ModelSerializer):
         return super().to_representation(instance)
 
     def get_is_like(self, obj):
-        user = self.context.get('request').user.id
-        like = CommonBoardLike.objects.filter(commonpost=obj.id, user=user)
-        if like.exists():
-            return True
+        user = obj.user.id
+        if user:
+
+            like = CommonBoardLike.objects.filter(commonpost=obj.id, user=user)
+            if like.exists():
+                return True
+            else:
+                return False
         else:
             return False
 
@@ -117,7 +121,7 @@ class RecruitmentBoardSerializer(ModelSerializer):
         return super().to_representation(instance)
 
     def get_is_like(self, obj):
-        user = self.context.get('request').user.id
+        user = obj.user.id
         like = RecruitBoardLike.objects.filter(recruitpost=obj.id, user=user)
         if like.exists():
             return True

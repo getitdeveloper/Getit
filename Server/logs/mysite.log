@@ -69,3 +69,21 @@ Traceback (most recent call last):
 AttributeError: 'list' object has no attribute 'split'
 2021-12-16 15:14:38,165 [INFO] django.utils.autoreload: C:\Users\hp\Desktop\Getit\Server\apis\settings.py changed, reloading.
 2021-12-16 18:41:48,259 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2021-12-19 16:46:31,205 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2021-12-19 17:05:41,056 [WARNING] django.request: Unauthorized: /api/login/google/
+2021-12-19 17:06:57,862 [WARNING] django.request: Unauthorized: /api/login/google/
+2021-12-19 17:07:19,669 [WARNING] django.request: Bad Request: /api/login/google/
+2021-12-19 17:09:36,138 [INFO] django.utils.autoreload: C:\Users\hp\Desktop\Getit\Server\accounts\views.py changed, reloading.
+2021-12-19 17:09:40,128 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2021-12-19 17:09:45,304 [WARNING] django.request: Bad Request: /api/login/google/
+2021-12-19 17:10:56,642 [WARNING] django.request: Bad Request: /api/login/google/
+2021-12-19 17:20:15,086 [WARNING] django.request: Method Not Allowed: /api/wholepost/
+2021-12-19 17:21:15,969 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2021-12-19 17:21:17,474 [WARNING] django.request: Not Found: /static/admin/css/base.css
+2021-12-19 17:21:17,475 [WARNING] django.request: Not Found: /static/admin/css/nav_sidebar.css
+2021-12-19 17:21:17,479 [WARNING] django.request: Not Found: /static/admin/css/login.css
+2021-12-19 17:21:17,543 [WARNING] django.request: Not Found: /static/admin/css/responsive.css
+2021-12-19 17:21:17,549 [WARNING] django.request: Not Found: /static/admin/js/nav_sidebar.js
+2021-12-19 17:21:17,928 [WARNING] django.request: Not Found: /favicon.ico
+2021-12-19 17:21:38,293 [INFO] django.utils.autoreload: C:\Users\hp\Desktop\Getit\Server\apis\settings.py changed, reloading.
+2021-12-21 02:11:13,905 [INFO] django.utils.autoreload: Watching for file changes with StatReloader

@@ -41,7 +41,6 @@ class ProfileSerializer(serializers.ModelSerializer):
     teamprofiles = SerializerMethodField()
     portfolios = SerializerMethodField()
 
-
     class Meta:
         model = Profile
         fields = (
