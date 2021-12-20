@@ -205,8 +205,8 @@ function RecruitPostForm(): JSX.Element {
   const handleSubmit = useCallback(() => {
     // 폼 제출 목록 체크
 
-    if (userId === undefined) {
-      return alert('로그인이 필요합니다.');
+    if (!userId) {
+      return alert('로그인이 필요합니다. 로그인 후 이용해 주세요.');
     }
 
     if (selectTeamProfileId === null) {

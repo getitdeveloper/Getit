@@ -5,7 +5,7 @@ import { RootStateOrAny, useSelector } from 'react-redux';
 import NewFamousSortButton from '@components/SortButton/NewFamous';
 import Recruiting from '@components/SortButton/Recruiting';
 import JobTypeSortButton from '@components/SortButton/JobType';
-import { IBoardType } from './types';
+import { IBoardType } from '@types';
 import {
   PostSubHeaderWrapper,
   RightContainer,
@@ -23,29 +23,23 @@ function PostSubHeader({ boardType }: IBoardType): JSX.Element {
   );
 
   const handlePostType = useCallback(() => {
-    // TODO 서버 정상 가동시 handlePostType 주석 제거하기
-    // if (userId) {
-    console.log('current board', boardType);
     switch (boardType) {
-      case 'Question':
+      case 'question':
         return history.push('/questionBoard/form', 'question');
-      case 'Free':
+      case 'free':
         return history.push('/freeBoard/form', 'free');
-      case 'Recruit':
+      case 'recruit':
         return history.push('/recruitBoard/form', 'recruit');
       default:
         break;
     }
-    // } else {
-    //   alert('로그인이 필요합니다. 먼저 로그인해주세요!');
-    // }
   }, [userId, boardType]);
 
   return (
     <PostSubHeaderWrapper>
       <LeftContainer>
         {/* 직업 필터 버튼 */}
-        <JobTypeSortButton />
+        <JobTypeSortButton boardType={boardType} />
       </LeftContainer>
 
       <RightContainer>

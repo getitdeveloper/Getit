@@ -1,12 +1,16 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useLayoutEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { useMediaQuery } from 'react-responsive';
 import Popover from '@material-ui/core/Popover';
 import Typography from '@material-ui/core/Typography';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import RadioButton from '@components/RadioButton';
+import { FILTER_STATUS_RESET, FILTER_STATUS_UPDATE } from '@reducers/actions';
+import { IBoardType } from '@types';
 import { SortButton, useStyles } from './styles';
 
-export default function JobType(): JSX.Element {
+export default function JobType({ boardType }: IBoardType): JSX.Element {
+  const dispatch = useDispatch();
   const classes = useStyles();
   const [filterList, setFilterList] = useState([
     { text: '개발자', value: 'developer', checked: true },
@@ -29,13 +33,31 @@ export default function JobType(): JSX.Element {
   const open = Boolean(anchorEl);
   const id = open ? 'simple-popover' : undefined;
 
+  useLayoutEffect(() => {
+    dispatch({
+      type: FILTER_STATUS_RESET,
+    });
+  }, [boardType]);
+
+  const handleFilterPostList = (
+    filtered: Array<{ text: string; value: string; checked: boolean }>,
+  ) => {
+    dispatch({
+      type: FILTER_STATUS_UPDATE,
+      data: {
+        filtered,
+      },
+    });
+  };
+
   // 라디오버튼 선택
   const handleJobSort = useCallback(
     (event: any) => {
       const { name } = event.target;
+      let filtered;
       switch (name) {
         case 'developer': {
-          setFilterList([
+          filtered = [
             {
               text: '개발자',
               value: 'developer',
@@ -43,11 +65,13 @@ export default function JobType(): JSX.Element {
             },
             filterList[1],
             filterList[2],
-          ]);
+          ];
+          setFilterList(filtered);
+          handleFilterPostList(filtered);
           break;
         }
         case 'designer': {
-          setFilterList([
+          filtered = [
             filterList[0],
             {
               text: '디자이너',
@@ -55,15 +79,19 @@ export default function JobType(): JSX.Element {
               checked: !filterList[1].checked,
             },
             filterList[2],
-          ]);
+          ];
+          setFilterList(filtered);
+          handleFilterPostList(filtered);
           break;
         }
         case 'pm': {
-          setFilterList([
+          filtered = [
             filterList[0],
             filterList[1],
             { text: '기획자', value: 'pm', checked: !filterList[2].checked },
-          ]);
+          ];
+          setFilterList(filtered);
+          handleFilterPostList(filtered);
           break;
         }
         default:
@@ -76,9 +104,6 @@ export default function JobType(): JSX.Element {
   const tabletSize = useMediaQuery({
     query: '(max-width: 960px)',
   });
-
-  // TODO 백엔드 api 만들어지면 selectTab 값에 따른 요청
-  // console.log(filterDeveloper, filterDesigner, filterPm);
 
   return (
     <>

@@ -1,13 +1,12 @@
-import * as React from 'react';
-import { useCallback, useState, useRef, useEffect } from 'react';
+import React, { useCallback, useState, useRef, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
-
 import SearchIcon from '@material-ui/icons/Search';
 import { SEARCH_POST_LIST_REQUEST } from '@reducers/actions';
 import { SearchBarForm, SearchIconWrapper } from './styles';
+import { ISearchBar } from './types';
 
-function SearchBar({ maxWidth }: { maxWidth: string }): JSX.Element {
+function SearchBar({ maxWidth }: ISearchBar): JSX.Element {
   const dispatch = useDispatch();
   const history = useHistory();
   const { pathname } = useLocation();
@@ -33,18 +32,16 @@ function SearchBar({ maxWidth }: { maxWidth: string }): JSX.Element {
   const handleSubmit = useCallback(
     (event) => {
       event.preventDefault();
-      dispatch({
-        type: SEARCH_POST_LIST_REQUEST,
-        data: search,
-      });
-
       if (search === '') {
         return alert('검색어를 입력하세요.');
       }
+      dispatch({
+        type: SEARCH_POST_LIST_REQUEST,
+        data: search,
+        history,
+      });
       inputRef.current?.blur();
-      return history.push('/searchResult');
     },
-
     [search],
   );
 
