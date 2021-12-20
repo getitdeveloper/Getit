@@ -63,7 +63,7 @@ function* watchRequestMyCommentList() {
   yield takeLatest(MY_COMMENT_LIST_REQUEST, requestMyCommentListSaga);
 }
 
-function* commentListSaga() {
+function* commentListSaga(): Generator {
   yield all([fork(watchRequestCommentList), fork(watchRequestMyCommentList)]);
 }
 

@@ -38,77 +38,88 @@ import {
   IUserNickname,
   IUserProfileRegisterResponse,
   IUserProfileRegisterRequest,
+  IUserProfileRegisterData,
+  IUserProfile,
+  IUserProfileEdit,
+  IUserProfileEditData,
   IUserProfileData,
+  IUserLogout,
 } from './userTypes';
 
 // 사용자 프로필 정보 요청
-const requestUserProfile = (user_pk: string) => {
+const requestUserProfile = ({ user_pk }: IUserProfileData) => {
   return axios.get(`/api/profile/${user_pk}/`);
 };
 
-function* requestUserProfileSaga(action: any): any {
+function* requestUserProfileSaga(action: IUserProfile): any {
   try {
-    const response = yield call(requestUserProfile, action.data.user_pk);
-    console.log('프로필 정보 응답 ===>', response);
+    const response = yield call(requestUserProfile, action.data);
+    // console.log('프로필 정보 응답 ===>', response);
 
     yield put({
       type: USER_PROFILE_SUCCESS,
       data: response.data,
     });
   } catch (error) {
-    console.error(error);
+    // console.error(error);
     yield put({
       type: USER_PROFILE_FAILURE,
       error,
     });
+    // return alert('문제가 발생했습니다. 잠시 후 다시 시도해 주세요.');
   }
 }
 
 // 사용자 프로필 수정
-const requestUserProfileEdit = (data: any) => {
-  return axios.put(`/api/profile/${data.user_pk}/`, data.updatedProfile);
+const requestUserProfileEdit = ({
+  updatedProfile,
+  user_pk,
+}: IUserProfileEditData) => {
+  return axios.put(`/api/profile/${user_pk}/`, updatedProfile);
 };
 
-function* requestUserProfileEditSaga(action: any): any {
+function* requestUserProfileEditSaga(action: IUserProfileEdit): any {
   try {
     const response = yield call(requestUserProfileEdit, action.data);
-    console.log('프로필 정보 수정 후 응답 ===>', response);
+    // console.log('프로필 정보 수정 후 응답 ===>', response);
 
     yield put({
       type: USER_PROFILE_EDIT_SUCCESS,
       data: response.data,
     });
+    alert('프로필 정보가 수정되었습니다.');
   } catch (error) {
-    console.error(error);
+    // console.error(error);
     yield put({
       type: USER_PROFILE_EDIT_FAILURE,
       error,
     });
+    return alert('문제가 발생했습니다. 잠시 후 다시 시도해 주세요.');
   }
 }
 
 // 로그인 요청
 // 구글 테스트 로그인
 const requestGoogleLogIn = (accessData: GoogleAccessData) => {
-  console.log('데이터 전송 ===> ', accessData);
+  // console.log('데이터 전송 ===> ', accessData);
   return axios.post('/api/login/google/', accessData);
 };
 
 // 카카오 테스트 로그인
 const requestKakaoLogIn = (accessData: KakaoAccessData) => {
-  console.log('데이터 전송 ===> ', accessData);
+  // console.log('데이터 전송 ===> ', accessData);
   return axios.post('/api/login/kakao/', accessData);
 };
 
 // 깃허브 테스트 로그인
 const requestGithubLogIn = (accessData: GithubAccessData) => {
-  console.log('데이터 전송 ===> ', accessData);
+  // console.log('데이터 전송 ===> ', accessData);
   return axios.post('/api/login/github/', accessData);
 };
 
 function* requestUserLogInSaga(action: any) {
   try {
-    console.log('saga action ===> ', action.data);
+    // console.log('saga action ===> ', action);
 
     const loginSocialType = action.data.social;
 
@@ -128,7 +139,7 @@ function* requestUserLogInSaga(action: any) {
         return null;
     }
 
-    console.log('로그인 요청 응답 성공 ===>', response.data);
+    // console.log('로그인 요청 응답 성공 ===>', response.data);
 
     // 로컬 테스트용 auth 권한 설정
     if (process.env.NODE_ENV === 'development') {
@@ -141,12 +152,12 @@ function* requestUserLogInSaga(action: any) {
       data: response.data,
     });
   } catch (error) {
-    console.error(error);
-    alert('로그인에 실패했습니다. 잠시 후 다시 이용해 주세요.');
+    // console.error(error);
     yield put({
       type: USER_LOGIN_FAILURE,
       error,
     });
+    return alert('문제가 발생했습니다. 잠시 후 다시 시도해 주세요.');
   }
 }
 
@@ -155,27 +166,26 @@ const requestUserLogOut = () => {
   return axios.get('/api/logout/');
 };
 
-function* requestUserLogOutSaga(): any {
+function* requestUserLogOutSaga(action: IUserLogout): any {
   try {
     const response = yield call(requestUserLogOut);
-    console.log('로그아웃 요청 응답 ===>', response);
-
+    // console.log('로그아웃 요청 응답 ===>', response);
     yield put({
       type: USER_LOGOUT_SUCCESS,
-      // data: response.data,
     });
+    action.history.push('/');
   } catch (error) {
-    console.log('로그아웃 요청 에러 ===>', error);
+    // console.log('로그아웃 요청 에러 ===>', error);
     yield put({
       type: USER_LOGOUT_FAILURE,
       error,
     });
+    return alert('문제가 발생했습니다. 잠시 후 다시 시도해 주세요.');
   }
 }
 
 // 회원가입 페이지 닉네임 중복 체크
 const requestUserNickDoubleCheck = (data: IUserNickname) => {
-  console.log('닉네임 중복 확인 ===>', data);
   return axios.post('/api/duplicate_check/', data);
 };
 
@@ -187,8 +197,7 @@ function* requestUserNickDoubleCheckSaga(
       requestUserNickDoubleCheck,
       action.data,
     );
-    console.log('닉네임 중복 확인 응답 결과 ===>', response);
-
+    // console.log('닉네임 중복 확인 응답 결과 ===>', response);
     yield put({
       type: USER_NICK_DOUBLECHECK_SUCCESS,
       data: response.data,
@@ -199,25 +208,22 @@ function* requestUserNickDoubleCheckSaga(
       type: USER_NICK_DOUBLECHECK_FAILURE,
       error,
     });
+    return alert('문제가 발생했습니다. 잠시 후 다시 시도해 주세요.');
   }
 }
 
 // 회원가입 회원 프로필 정보 저장
-const requestUserProfileRegister = (data: IUserProfileData) => {
-  console.log('프로필 정보 확인 data ===>', data);
+const requestUserProfileRegister = (data: IUserProfileRegisterData) => {
   return axios.post(`/api/profile/${data.user_pk}/`, data);
 };
 
 function* requestUserProfileRegisterSaga(action: IUserProfileRegisterRequest) {
-  console.log('프로필 정보 확인 action ===>', action);
-
   try {
     const response: IUserProfileRegisterResponse = yield call(
       requestUserProfileRegister,
       action.data,
     );
-    console.log('프로필 저장 응답 결과 ===>', response);
-
+    // console.log('프로필 저장 응답 결과 ===>', response);
     yield put({
       type: USER_PROFILE_REGISTER_SUCCESS,
       data: response.data,
@@ -253,18 +259,19 @@ const requestPortfolioList = (user_pk: number) => {
 function* requestPortfolioListSaga(action: any): any {
   try {
     const response = yield call(requestPortfolioList, action.data.user_pk);
-    console.log('포트폴리오 리스트 요청 응답 ===>', response);
+    // console.log('포트폴리오 리스트 요청 응답 ===>', response);
 
     yield put({
       type: PORTFOLIO_LIST_SUCCESS,
       data: response.data,
     });
   } catch (error) {
-    console.log('포트폴리오 리스트 요청 에러 ===>', error);
+    // console.log('포트폴리오 리스트 요청 에러 ===>', error);
     yield put({
       type: PORTFOLIO_LIST_FAILURE,
       error,
     });
+    return alert('문제가 발생했습니다. 잠시 후 다시 시도해 주세요.');
   }
 }
 
@@ -276,18 +283,18 @@ const requestPortfolioRegister = (data: any) => {
 function* requestPortfolioRegisterSaga(action: any): any {
   try {
     const response = yield call(requestPortfolioRegister, action.data);
-    console.log('포트폴리오 생성 후 요청 응답 ===>', response);
-
+    // console.log('포트폴리오 생성 후 요청 응답 ===>', response);
     yield put({
       type: PORTFOLIO_REGISTER_SUCCESS,
       data: response.data,
     });
   } catch (error) {
-    console.log('포트폴리오 생성 요청 에러 ===>', error);
+    // console.log('포트폴리오 생성 요청 에러 ===>', error);
     yield put({
       type: PORTFOLIO_REGISTER_FAILURE,
       error,
     });
+    return alert('문제가 발생했습니다. 잠시 후 다시 시도해 주세요.');
   }
 }
 
@@ -329,7 +336,7 @@ function* watchRequestPortfolioRegister() {
   yield takeLatest(PORTFOLIO_REGISTER_REQUEST, requestPortfolioRegisterSaga);
 }
 
-function* userSaga() {
+function* userSaga(): Generator {
   yield all([
     fork(watchRequestUserLogIn),
     fork(watchRequestUserLogOut),

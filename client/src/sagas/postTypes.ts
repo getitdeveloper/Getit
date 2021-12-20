@@ -1,4 +1,6 @@
-export interface IPostData {
+import { RouteComponentProps } from 'react-router-dom';
+
+export interface ICommonPostData {
   title: string;
   category: string;
   content: string;
@@ -7,7 +9,26 @@ export interface IPostData {
   worker: Array<string>;
 }
 
-export interface IPostingData {
+export interface ICommonPost {
+  type: string;
+  data: ICommonPostData;
+  history: RouteComponentProps['history'];
+  boardType: string;
+}
+
+export interface ICommonLikePostData {
+  board: number;
+  likes: {
+    commonpost: number;
+    user: number;
+  };
+}
+export interface ICommonLikePost {
+  type: string;
+  data: ICommonLikePostData;
+}
+
+export interface IRecruitPostingData {
   user: number;
   study: number;
   title: string;
@@ -20,11 +41,17 @@ export interface IPostingData {
   stack: Array<string>;
 }
 
+export interface IRecruitPosting {
+  type: string;
+  data: IRecruitPostingData;
+  history: RouteComponentProps['history'];
+}
+
 export interface ITeamProfileData {
   type: string;
   data: FormData;
   userId: number;
-  history: any;
+  history: RouteComponentProps['history'];
 }
 
 export interface ITeamProfileApiData {
@@ -43,4 +70,9 @@ export interface ITeamProfileIdData {
 export interface ITeamProfileIdApiData {
   userId: number;
   postId: string;
+}
+
+export interface IRecruitPost {
+  type: string;
+  data: string;
 }

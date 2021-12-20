@@ -1,3 +1,5 @@
+import { IUpdatedProfileInfo } from '@types';
+import { RouteComponentProps } from 'react-router-dom';
 import { IPortfolio, IProfileInfo } from '../types';
 
 export interface ResponseUserInfo {
@@ -48,7 +50,7 @@ export interface IUserNickDoubleCheckResponse {
   data: { duplicate: string };
 }
 
-export interface IUserProfileData {
+export interface IUserProfileRegisterData {
   user: number;
   user_pk: number;
   nickname: string;
@@ -88,4 +90,29 @@ export interface IUserProfileRegisterResponse {
     git?: string;
     stack: Array<string>; // string[]
   };
+}
+
+
+export interface IUserProfileData {
+  user_pk: number;
+}
+
+export interface IUserProfile {
+  type: string;
+  data: IUserProfileData;
+}
+
+export interface IUserProfileEditData {
+  updatedProfile: IUpdatedProfileInfo;
+  user_pk: string;
+}
+
+export interface IUserProfileEdit {
+  type: string;
+  data: IUserProfileEditData;
+}
+
+export interface IUserLogout {
+  type: string;
+  history: RouteComponentProps['history'];
 }

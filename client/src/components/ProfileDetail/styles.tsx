@@ -5,7 +5,7 @@ import PersonIcon from '@material-ui/icons/Person';
 
 export const Container = styled.div`
   display: flex;
-  min-height: 98rem;
+  min-height: 100vh;
 
   @media ${({ theme }) => theme.tablet} {
     flex-direction: column;
@@ -65,7 +65,7 @@ export const ProfileRight = styled.div`
   padding: 0rem 2.5rem;
 
   @media ${({ theme }) => theme.tablet} {
-    width: 100%;
+    padding: 0rem 1rem;
   }
 `;
 
@@ -171,11 +171,9 @@ export const IntroWrapper = styled.textarea`
 `;
 
 export const SubTitleWrapper = styled.div`
-  height: auto;
-  weight: 100%;
   display: flex;
   justify-content: space-between;
-  algin-items: center;
+  align-items: center;
   margin: 2.5rem 0rem;
 `;
 
@@ -300,6 +298,7 @@ export const CommentDate = styled.p`
   color: #818181;
   margin-bottom: 1.5rem;
   margin-left: 1rem;
+  font-size: 1.6rem;
 `;
 
 export const CommentInfo = styled.div`
@@ -307,6 +306,7 @@ export const CommentInfo = styled.div`
   display: flex;
   color: #818181;
   margin-bottom: 0.8rem;
+  font-size: 1.4rem;
 `;
 
 // MyPosts styles
@@ -346,9 +346,17 @@ export const Button = styled.button`
 
 export const BoundaryText = styled.p`
   font-size: 1.4rem;
-  line-height: 0.2rem;
+
+  @media ${({ theme }) => theme.mobile} {
+    width: 50%;
+    text-align: center;
+  }
 `;
 
 export const StyledLink = styled(Link)`
   text-decoration: none;
+`;
+
+export const CommentText = styled.p`
+  font-size: 1.4rem;
 `;

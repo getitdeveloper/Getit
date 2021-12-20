@@ -19,10 +19,13 @@ import {
   TEAM_PROFILE_LIST_REQUEST,
   TEAM_PROFILE_LIST_SUCCESS,
   TEAM_PROFILE_LIST_FAILURE,
+  FILTER_STATUS_RESET,
+  FILTER_STATUS_UPDATE,
 } from './actions';
 
 // 초기 상태
 const initialState: InitialState = {
+  filterStatus: null,
   commonPostList: null,
   myPostList: null,
   likedPostList: null,
@@ -52,6 +55,12 @@ const initialState: InitialState = {
 const reducer = (state = initialState, action: PostListActions): InitialState =>
   produce(state, (draft) => {
     switch (action.type) {
+      case FILTER_STATUS_RESET:
+        draft.filterStatus = null;
+        break;
+      case FILTER_STATUS_UPDATE:
+        draft.filterStatus = action.data.filtered;
+        break;
       case COMMON_POST_LIST_REQUEST:
         draft.commonPostListRequest = true;
         draft.commonPostListSuccess = false;

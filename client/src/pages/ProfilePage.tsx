@@ -4,6 +4,7 @@ import { RootStateOrAny, useSelector } from 'react-redux';
 import { PageBackground, PageWrapper } from '@assets/styles/page';
 import ProfileDetail from '@components/ProfileDetail';
 import LoadingSpinner from '@components/LoadingSpinner';
+import Footer from '@components/Footer/index';
 
 function ProfilePage(): JSX.Element {
   const userId = useSelector(
@@ -25,6 +26,7 @@ function ProfilePage(): JSX.Element {
       <PageWrapper>
         <ProfileDetail />
       </PageWrapper>
+      <Footer />
     </PageBackground>
   );
 }

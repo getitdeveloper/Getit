@@ -33,7 +33,7 @@ function* watchRequestCommentRegister() {
   yield takeLatest(COMMENT_REGISTER_REQUEST, requestCommentRegisterSaga);
 }
 
-function* commentSaga() {
+function* commentSaga(): Generator {
   yield all([fork(watchRequestCommentRegister)]);
 }
 

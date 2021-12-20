@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { useMediaQuery } from 'react-responsive';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory, useParams, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector, RootStateOrAny } from 'react-redux';
 import moment from 'moment';
 import { HorizontalLine, IconButton } from '@assets/styles/commons';
@@ -36,6 +36,7 @@ function PostItem({
 }: IPostItem): JSX.Element {
   const history = useHistory();
   const { postId }: IPostId = useParams();
+  const { pathname } = useLocation();
   const dispatch = useDispatch();
   const user = useSelector((state: RootStateOrAny) => state.user);
   const userId = user.profileInfo?.user_pk;
@@ -45,7 +46,7 @@ function PostItem({
 
   useEffect(() => {
     const workerObj = new Map();
-    content.worker.map((job: string) => {
+    content.worker?.map((job: string) => {
       switch (job) {
         case '개발자':
           workerObj.set('developer', 1);
@@ -157,8 +158,10 @@ function PostItem({
           </WriterInfo>
         </RightContainer>
       </PostWrapper>
-      {/* 페이지의 마지막 게시글 / 페이지에 게시글이 하나인 경우 구분선 X */}
-      {index === length - 1 ? null : <HorizontalLine width='100%' />}
+      {/* 페이지의 마지막 게시글 또는 페이지에 게시글이 하나인 경우 구분선 X, 내 프로필 페이지에서는 구분선 X */}
+      {index === length - 1 || pathname === '/myprofile' ? null : (
+        <HorizontalLine width='100%' />
+      )}
     </div>
   );
 }
