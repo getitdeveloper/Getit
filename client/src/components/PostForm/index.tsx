@@ -38,28 +38,29 @@ function PostForm(): JSX.Element {
     { text: '기획자', value: '기획자', checked: false },
   ]);
 
-  const onChange = (
-    e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>,
-  ) => {
-    const { name, value } = e.target;
-    switch (name) {
-      case 'postTitle':
-        if (value.length >= 100) {
-          return alert('제목은 100자까지 가능합니다.');
-        }
-        setTitle(value);
-        break;
-      case 'text':
-        setText(value);
-        break;
-      default:
-        break;
-    }
-  };
+  const onChange = useCallback(
+    (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => {
+      const { name, value } = e.target;
+      switch (name) {
+        case 'postTitle':
+          if (value.length >= 100) {
+            return alert('제목은 100자까지 가능합니다.');
+          }
+          setTitle(value);
+          break;
+        case 'text':
+          setText(value);
+          break;
+        default:
+          break;
+      }
+    },
+    [postTitle, text],
+  );
 
   const onHidden = useCallback(
-    (status: boolean, e: any) => {
-      const { id } = e.target;
+    (status: boolean, e: MouseEvent<HTMLButtonElement>) => {
+      const { id } = e.target as HTMLButtonElement;
       setCurrentTab(id);
       setHidden(status);
     },

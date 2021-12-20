@@ -7,14 +7,21 @@ interface Size {
 
 export const PageBackground = styled.div`
   background-color: ${({ theme }) => theme.colors.background};
-  min-height: 100vh;
+  /* min-height: 100vh; */
 `;
+
+interface IPageWrapper {
+  pathname?: string;
+}
 
 export const PageWrapper = styled.div`
   max-width: 1280px;
   width: 100%;
   margin: 0 auto;
-  min-height: 100vh;
+  /* min-height: 100vh; */
+  min-height: ${({ pathname }: IPageWrapper) => {
+    return pathname === '/searchResult' ? 'auto' : '100vh';
+  }};
   padding: 1rem 1rem;
   background-color: ${({ theme }) => theme.colors.background};
 

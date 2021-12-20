@@ -1,12 +1,7 @@
-import * as React from 'react';
-import { useEffect, useState } from 'react';
-import { useSelector, RootStateOrAny, useDispatch } from 'react-redux';
+import React from 'react';
 import moment from 'moment';
 import Grid from '@material-ui/core/Grid';
 import MemberType from '@components/RecruitMembers/index';
-import { RECRUIT_POST_LIST_REQUEST } from '@reducers/actions';
-import LoadingSpinner from '@components/LoadingSpinner';
-import Paging from '@components/Paging';
 import { IRecruitPost } from '@types';
 import { PageBackground } from '@assets/styles/page';
 import {
@@ -21,33 +16,16 @@ import {
   CommentIcon,
 } from './styles';
 
-function RecruitPost(): JSX.Element {
-  const dispatch = useDispatch();
-  const recruitPostList = useSelector(
-    (state: RootStateOrAny) => state.postList.recruitPostList?.results,
-  );
-  const recruitPostTotalCount = useSelector(
-    (state: RootStateOrAny) => state.postList.recruitPostList?.count,
-  );
-
-  const [page, setPage] = useState(1);
-
-  useEffect(() => {
-    dispatch({
-      type: RECRUIT_POST_LIST_REQUEST,
-      data: page,
-    });
-  }, [page]);
-
-  if (!recruitPostList) {
-    return <LoadingSpinner />;
-  }
-
+function RecruitPost({
+  postList,
+}: {
+  postList: Array<IRecruitPost>;
+}): JSX.Element {
   return (
     <PageBackground>
       <GridWrapper>
         <Grid container spacing={3}>
-          {recruitPostList.map((post: IRecruitPost) => (
+          {postList.map((post: IRecruitPost) => (
             <Grid item xs={12} sm={6} md={4} lg={4} xl={4} key={post.id}>
               <Post>
                 <StyledLink to={`/recruitBoard/${post.id}`}>
@@ -75,8 +53,7 @@ function RecruitPost(): JSX.Element {
                       {`${post.developer + post.designer + post.pm} 명`}
                     </li>
                     <li>
-                      모집 기간:{' '}
-                      {moment(post.end_date).format('YY년 MM월 DD일')}
+                      모집 기간: {moment(post.end_date).format('YY/MM/DD')} 종료
                     </li>
                   </RecruitCondition>
 
@@ -106,12 +83,6 @@ function RecruitPost(): JSX.Element {
           ))}
         </Grid>
       </GridWrapper>
-
-      <Paging
-        activePage={page}
-        totalPage={recruitPostTotalCount}
-        setPage={setPage}
-      />
     </PageBackground>
   );
 }
