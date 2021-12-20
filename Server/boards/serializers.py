@@ -10,8 +10,6 @@ from .models import RecruitmentBoard, CommonBoard, Worker
 from accounts.models import User
 from rest_framework.serializers import ModelSerializer
 
-
-
 # 좋아요
 from members.models import Member
 
@@ -25,10 +23,12 @@ class WorkerSerializer(serializers.ModelSerializer):
         model = Worker
         fields = ('worker',)
 
+
 class CommonLikeSerializer(ModelSerializer):
     class Meta:
         model = CommonBoardLike
         fields = ('commonpost', 'user',)
+
 
 class RecruitLikeSerializer(ModelSerializer):
     class Meta:
@@ -51,6 +51,7 @@ class UserProfileSerializer(ModelSerializer):
         model = User
         fields = ('id', 'profile',)
 
+
 class CommonBoardSerializer(serializers.ModelSerializer):
     stack = TagSerializer(read_only=True, many=True)
     likes = serializers.IntegerField(
@@ -64,33 +65,42 @@ class CommonBoardSerializer(serializers.ModelSerializer):
     # like_user = CommonLikeSerializer(read_only=True, many=True)
     is_like = SerializerMethodField()
     worker = WorkerSerializer(read_only=True, many=True)
+
     class Meta:
         model = CommonBoard
-        fields = ('id', 'title', 'category', 'content', 'image', 'create_at', 'user', 'likes', 'comments', 'is_like', 'stack','worker')
+        fields = (
+        'id', 'title', 'category', 'content', 'image', 'create_at', 'user', 'likes', 'comments', 'is_like', 'stack',
+        'worker')
 
     def to_representation(self, instance):
         self.fields['user'] = UserProfileSerializer(read_only=True)
         return super().to_representation(instance)
 
     def get_is_like(self, obj):
-        user = self.context.get('request').user.id
-        like = CommonBoardLike.objects.filter(commonpost=obj.id, user=user)
-        if like.exists():
-            return True
+        user = obj.user.id
+        if user:
+
+            like = CommonBoardLike.objects.filter(commonpost=obj.id, user=user)
+            if like.exists():
+                return True
+            else:
+                return False
         else:
             return False
+
 
 class MemberBoardSerializer(serializers.ModelSerializer):
     nickname = serializers.SerializerMethodField()
 
     class Meta:
         model = Member
-        fields = ('member','nickname')
-        
-    def get_nickname(self,obj):
+        fields = ('member', 'nickname')
+
+    def get_nickname(self, obj):
         profile = Profile.objects.get(id=obj.study.member)
         nickname = profile.nickname
         return nickname
+
 
 class RecruitmentBoardSerializer(ModelSerializer):
     likes = serializers.IntegerField(
@@ -105,11 +115,12 @@ class RecruitmentBoardSerializer(ModelSerializer):
     stack = TagSerializer(read_only=True, many=True)
     members = MemberBoardSerializer(read_only=True, many=True)
     is_like = SerializerMethodField()
+
     class Meta:
         model = RecruitmentBoard
         fields = (
-        'id', 'title', 'developer', 'designer', 'pm', 'content','stack', 'start_date', 'end_date', 'status',
-        'create_at','user','image','study', 'comments', 'likes', 'is_like','members')
+            'id', 'title', 'developer', 'designer', 'pm', 'content', 'stack', 'start_date', 'end_date', 'status',
+            'create_at', 'user', 'image', 'study', 'comments', 'likes', 'is_like', 'members')
 
     def to_representation(self, instance):
         self.fields['user'] = UserProfileSerializer(read_only=True)
@@ -117,7 +128,7 @@ class RecruitmentBoardSerializer(ModelSerializer):
         return super().to_representation(instance)
 
     def get_is_like(self, obj):
-        user = self.context.get('request').user.id
+        user = obj.user.id
         like = RecruitBoardLike.objects.filter(recruitpost=obj.id, user=user)
         if like.exists():
             return True
