@@ -4,6 +4,7 @@
 
 - dj-rest-auth를 활용한 소셜로그인 구현(kakao, google, github) 
 - 팀/개인프로필, 게시글, 댓글, 포트폴리오 CRUD
+- 검색/ 필터 기능 구현
 
 ### Model Composition
 
