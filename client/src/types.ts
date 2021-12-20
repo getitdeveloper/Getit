@@ -91,10 +91,9 @@ export interface IComment {
   create_at: string;
 }
 
-// 수정하기TODO
-// export interface ISearchPost {
-
-// }
+export interface IBoardType {
+  boardType: string;
+}
 
 export interface LoginProps {
   onClose: () => void;

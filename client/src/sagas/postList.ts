@@ -29,11 +29,22 @@ import {
   ILikedPostList,
   ITeamProfileListData,
   ITeamProfileList,
+  IRecruitPostListData,
   IRecruitPostList,
+  ISearchPostList,
 } from './postListTypes';
 
 // 자유/질문 게시판 리스트 받아오기
-const requestCommonPostList = ({ page, category }: ICommonPostListData) => {
+const requestCommonPostList = ({
+  page,
+  category,
+  filterStatus,
+}: ICommonPostListData) => {
+  if (filterStatus) {
+    return axios.get(
+      `/api/commonworkerfilter?category=${category}&developer=${filterStatus[0].checked}&designer=${filterStatus[1].checked}&pm=${filterStatus[2].checked}&page=${page}`,
+    );
+  }
   return axios.get(`/api/board?category=${category}&page=${page}`);
 };
 
@@ -118,13 +129,13 @@ function* requestLikedPostListSaga(action: ILikedPostList): any {
 
 // 게시글 검색
 const requestSearchPostList = (data: string) => {
-  return axios.get(`/api/wholepost/?search=${data}`);
+  // 한글 인코딩
+  const encodeData = encodeURIComponent(data);
+  // 뒤에 더보기 하려면 &page=2
+  return axios.get(`/api/wholepost?search=${encodeData}`);
 };
 
-function* requestSearchPostListSaga(action: {
-  type: string;
-  data: string;
-}): any {
+function* requestSearchPostListSaga(action: ISearchPostList): any {
   try {
     const response = yield call(requestSearchPostList, action.data);
     // console.log('게시글 전체 검색 응답 ===>', response);
@@ -132,6 +143,7 @@ function* requestSearchPostListSaga(action: {
       type: SEARCH_POST_LIST_SUCCESS,
       data: response.data,
     });
+    return action.history.push('/searchResult');
   } catch (error) {
     // console.error(error);
     yield put({
@@ -143,16 +155,22 @@ function* requestSearchPostListSaga(action: {
 }
 
 // 모집 게시판 게시글 리스트
-const requestRecruitPostList = (data: number) => {
-  if (data === 1) {
-    return axios.get(`/api/recruitmentboard/`);
+const requestRecruitPostList = ({
+  page,
+  filterStatus,
+}: IRecruitPostListData) => {
+  if (filterStatus) {
+    return axios.get(
+      `/api/commonworkerfilter?category=recruit&developer=${filterStatus[0].checked}&designer=${filterStatus[1].checked}&pm=${filterStatus[2].checked}&page=${page}`,
+    );
   }
-  return axios.get(`/api/recruitmentboard/?page=${data}`);
+  return axios.get(`/api/recruitmentboard/?page=${page}`);
 };
 
 function* requestRecruitPostListSaga(action: IRecruitPostList): any {
   try {
     const response = yield call(requestRecruitPostList, action.data);
+
     // console.log('모집 게시판 게시글 목록 응답 ===>', response);
     yield put({
       type: RECRUIT_POST_LIST_SUCCESS,
@@ -182,11 +200,12 @@ function* requestTeamProfileListSaga(action: ITeamProfileList): any {
       data: response.data,
     });
   } catch (error) {
+    console.error('팀 프로필 목록 응답 ===>', error);
     yield put({
       type: TEAM_PROFILE_LIST_FAILURE,
       error,
     });
-    return alert('문제가 발생했습니다. 잠시 후 다시 시도해 주세요.');
+    // return alert('문제가 발생했습니다. 잠시 후 다시 시도해 주세요.');
   }
 }
 

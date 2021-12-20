@@ -1,3 +1,4 @@
+import { RouteComponentProps } from 'react-router-dom';
 import { IBoard, IPost } from '../types';
 
 export interface ResponseFreeBoard {
@@ -9,8 +10,9 @@ export interface ResponseFreePost {
 }
 
 export interface ICommonPostListData {
-  page: number;
+  page?: number;
   category: string;
+  filterStatus?: Array<{ text: string; value: string; checked: boolean }>;
 }
 
 export interface ICommonPostList {
@@ -48,7 +50,17 @@ export interface ITeamProfileList {
   data: ITeamProfileListData;
 }
 
+export interface IRecruitPostListData {
+  page?: number;
+  filterStatus?: Array<{ text: string; value: string; checked: boolean }>;
+}
 export interface IRecruitPostList {
   type: string;
-  data: number;
+  data: IRecruitPostListData;
+}
+
+export interface ISearchPostList {
+  type: string;
+  data: string;
+  history: RouteComponentProps['history'];
 }

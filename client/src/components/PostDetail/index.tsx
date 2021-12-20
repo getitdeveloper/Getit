@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { ContentContainer } from '@assets/styles/page';
 import PostItem from '@components/PostItem';
 import MarkdownRenderer from '@components/MarkdownRenderer';

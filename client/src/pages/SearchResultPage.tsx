@@ -1,32 +1,26 @@
-import * as React from 'react';
-import { useEffect } from 'react';
-import { useSelector, RootStateOrAny } from 'react-redux';
+import React from 'react';
+import { useLocation } from 'react-router-dom';
+import { PageBackground, PageWrapper, PageTitle } from '@assets/styles/page';
 import Footer from '@components/Footer/index';
+import RecruitBoardPage from '@pages/RecruitBoardPage';
+import QuestionBoardPage from '@pages/QuestionBoardPage';
+import FreeBoardPage from '@pages/FreeBoardPage';
 
 function SearchResultPage(): JSX.Element {
-  const searchResult = useSelector(
-    (state: RootStateOrAny) => state.postList.searchPostList,
-  );
+  const { pathname } = useLocation();
 
   return (
-    <div>
-      <div>모집 게시판</div>
-      <ul>
-        <li>1</li>
-        <li>2</li>
-      </ul>
-      <div>질문 게시판</div>
-      <ul>
-        <li>1</li>
-        <li>2</li>
-      </ul>
-      <div>자유 게시판</div>
-      <ul>
-        <li>1</li>
-        <li>2</li>
-      </ul>
+    <PageBackground>
+      <PageWrapper pathname={pathname}>
+        <PageTitle>스터디모집</PageTitle>
+        <RecruitBoardPage />
+        <PageTitle>질문게시판</PageTitle>
+        <QuestionBoardPage />
+        <PageTitle>자유게시판</PageTitle>
+        <FreeBoardPage />
+      </PageWrapper>
       <Footer />
-    </div>
+    </PageBackground>
   );
 }
 

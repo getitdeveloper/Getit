@@ -9,8 +9,7 @@ import {
 
 function UserInfoButtons({ nickname }: Nickname): JSX.Element {
   const history = useHistory();
-  const location = useLocation();
-  const pathname = location.pathname;
+  const { pathname } = useLocation();
 
   const handleRouting = useCallback(() => {
     return history.push('/myprofile');

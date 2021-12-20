@@ -18,16 +18,17 @@ import {
   TEAM_PROFILE_LIST_REQUEST,
   TEAM_PROFILE_LIST_SUCCESS,
   TEAM_PROFILE_LIST_FAILURE,
+  FILTER_STATUS_RESET,
+  FILTER_STATUS_UPDATE,
 } from './actions';
 
 export interface InitialState {
+  filterStatus: any | null;
   commonPostList: IBoard | null;
   myPostList: Array<IPostItem> | null;
   likedPostList: Array<ILikedPost> | null;
-  // TODO 수정하기
   searchPostList: any | null;
   recruitPostList: Array<IRecruitPost> | null;
-  // TODO 수정하기
   teamProfileList: any;
   commonPostListRequest: boolean;
   commonPostListSuccess: boolean;
@@ -47,6 +48,17 @@ export interface InitialState {
   teamProfileListRequest: boolean;
   teamProfileListSuccess: boolean;
   teamProfileListFailure: string | null;
+}
+// 글 목록 필터 초기화
+export interface FilterStatusReset {
+  type: typeof FILTER_STATUS_RESET;
+}
+
+// 글 목록 필터 업데이트
+export interface FilterStatusUpdate {
+  type: typeof FILTER_STATUS_UPDATE;
+  data: any;
+  // TODO 데이터 타입 정확하게 작성하기 !!!!!!!
 }
 
 // 자유/질문글 리스트 가져오기
@@ -141,6 +153,8 @@ export interface TeamProfileListFailure {
 }
 
 export type PostListActions =
+  | FilterStatusReset
+  | FilterStatusUpdate
   | CommonPostListRequest
   | CommonPostListSuccess
   | CommonPostListFailure
