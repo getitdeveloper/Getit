@@ -44,6 +44,3 @@ class Worker(models.Model):
         ('디자이너','디자이너'),
     )
     worker = models.CharField(choices=CHOICES_WORKER,max_length=20)
-
-    def __str__(self):
-        self.worker
