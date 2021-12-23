@@ -49,69 +49,86 @@ const menuList = [
   },
   { text: '알림', icon: <StyledNotificationsIcon />, route: '/' },
   { text: '쪽지', icon: <StyledChatBubbleIcon />, route: '/' },
-  { text: '로그인', icon: <StyledExitToAppIcon />, route: '/' },
 ];
 
 export default function ToggleMenu(): JSX.Element {
   const dispatch = useDispatch();
   const history = useHistory();
-  const nickname = useSelector(
-    (state: RootStateOrAny) => state.user.profileInfo?.nickname,
+  const userId = useSelector(
+    (state: RootStateOrAny) => state.user.profileInfo?.user_pk,
   );
 
   const [state, setState] = useState({ left: false });
 
-  const handleSelectMenu = useCallback((selectMenu) => {
-    switch (selectMenu) {
-      case '내 프로필':
-        dispatch({
-          type: MY_PROFILE_SELECT_MENU,
-          data: {
-            selected: 0,
-            toggle: true,
-          },
-        });
-        break;
-      case '팀 프로필':
-        dispatch({
-          type: MY_PROFILE_SELECT_MENU,
-          data: {
-            selected: 1,
-            toggle: true,
-          },
-        });
-        break;
-      case '관심있는 글':
-        dispatch({
-          type: MY_PROFILE_SELECT_MENU,
-          data: {
-            selected: 2,
-            toggle: true,
-          },
-        });
-        break;
-      case '내가 쓴 글':
-        dispatch({
-          type: MY_PROFILE_SELECT_MENU,
-          data: {
-            selected: 3,
-            toggle: true,
-          },
-        });
-        break;
-      case '내가 쓴 댓글':
-        dispatch({
-          type: MY_PROFILE_SELECT_MENU,
-          data: {
-            selected: 4,
-            toggle: true,
-          },
-        });
-        break;
-      default:
-        break;
-    }
-  }, []);
+  const handleSelectMenu = useCallback(
+    (selectMenu) => {
+      switch (selectMenu) {
+        case '내 프로필':
+          if (!userId) {
+            return alert('로그인 후 이용 가능합니다.');
+          }
+          dispatch({
+            type: MY_PROFILE_SELECT_MENU,
+            data: {
+              selected: 0,
+              toggle: true,
+            },
+          });
+          break;
+        case '팀 프로필':
+          if (!userId) {
+            return alert('로그인 후 이용 가능합니다.');
+          }
+          dispatch({
+            type: MY_PROFILE_SELECT_MENU,
+            data: {
+              selected: 1,
+              toggle: true,
+            },
+          });
+          break;
+        case '관심있는 글':
+          if (!userId) {
+            return alert('로그인 후 이용 가능합니다.');
+          }
+          dispatch({
+            type: MY_PROFILE_SELECT_MENU,
+            data: {
+              selected: 2,
+              toggle: true,
+            },
+          });
+          break;
+        case '내가 쓴 글':
+          if (!userId) {
+            return alert('로그인 후 이용 가능합니다.');
+          }
+          dispatch({
+            type: MY_PROFILE_SELECT_MENU,
+            data: {
+              selected: 3,
+              toggle: true,
+            },
+          });
+          break;
+        case '내가 쓴 댓글':
+          if (!userId) {
+            return alert('로그인 후 이용 가능합니다.');
+          }
+          dispatch({
+            type: MY_PROFILE_SELECT_MENU,
+            data: {
+              selected: 4,
+              toggle: true,
+            },
+          });
+          break;
+        default:
+          break;
+      }
+    },
+    [userId],
+  );
 
   const handleLogOut = useCallback(() => {
     dispatch({
@@ -145,44 +162,40 @@ export default function ToggleMenu(): JSX.Element {
         <ToggleMenuLogo src={LogoImg} alt='Getit Logo' />
 
         {/* 메뉴 목록 */}
-        {menuList.map((item, index) => (
-          <div key={item.text}>
-            {nickname && menuList.length - 1 === index ? (
-              // 메뉴 목록 중 로그인부분 로그인시 로그아웃으로 보여주기
-              <StyledLink key={item.text} to='/' onClick={handleLogOut}>
-                <ListItemWrapper key={item.text}>
-                  <ListItem button key={item.text} className={item.text}>
-                    <StyledListItemIcon>{item.icon}</StyledListItemIcon>
-                    <StyledListItemText disableTypography primary='로그아웃' />
-                  </ListItem>
-                  {/* 분리선 */}
-                  <DividerWrapper>
-                    {index === 2 || index === 5 ? <StyledDivider /> : null}
-                  </DividerWrapper>
-                </ListItemWrapper>
-              </StyledLink>
-            ) : (
-              // 메뉴 목록 중 로그인부분 미로그인시 로그인으로 보여주기
-              <StyledLink key={item.text} to={item.route}>
-                <ListItemWrapper key={item.text}>
-                  <ListItem
-                    button
-                    key={item.text}
-                    className={item.text}
-                    onClick={() => handleSelectMenu(item.text)}
-                  >
-                    <StyledListItemIcon>{item.icon}</StyledListItemIcon>
-                    <StyledListItemText disableTypography primary={item.text} />
-                  </ListItem>
-                  {/* 분리선 */}
-                  <DividerWrapper>
-                    {index === 2 || index === 5 ? <StyledDivider /> : null}
-                  </DividerWrapper>
-                </ListItemWrapper>
-              </StyledLink>
-            )}
-          </div>
-        ))}
+        <div>
+          {menuList.map((item, index) => (
+            <StyledLink key={item.text} to={item.route}>
+              <ListItemWrapper key={item.text}>
+                <ListItem
+                  button
+                  key={item.text}
+                  className={item.text}
+                  onClick={() => handleSelectMenu(item.text)}
+                >
+                  <StyledListItemIcon>{item.icon}</StyledListItemIcon>
+                  <StyledListItemText disableTypography primary={item.text} />
+                </ListItem>
+                {/* 분리선 */}
+                <DividerWrapper>
+                  {index === 2 || index === 5 ? <StyledDivider /> : null}
+                </DividerWrapper>
+              </ListItemWrapper>
+            </StyledLink>
+          ))}
+          {/* 로그인 한 경우에만 로그아웃 버튼이 메뉴에 출력된다. */}
+          {userId && (
+            <StyledLink to='/'>
+              <ListItemWrapper>
+                <ListItem button onClick={handleLogOut}>
+                  <StyledListItemIcon>
+                    <StyledExitToAppIcon />
+                  </StyledListItemIcon>
+                  <StyledListItemText disableTypography primary='로그아웃' />
+                </ListItem>
+              </ListItemWrapper>
+            </StyledLink>
+          )}
+        </div>
       </List>
     </MenuWrapper>
   );
