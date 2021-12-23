@@ -107,7 +107,7 @@ export interface IRecruitPost {
   developer: number;
   end_date: string;
   id: number;
-  is_like: boolean;
+  is_like: Array<{ user: number }>;
   likes: number;
   pm: number;
   stack: Array<string>;

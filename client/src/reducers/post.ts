@@ -1,5 +1,4 @@
 import produce from 'immer';
-import { InitialState, PostActions } from './postTypes';
 import {
   COMMON_POST_REQUEST,
   COMMON_POST_SUCCESS,
@@ -25,7 +24,11 @@ import {
   TEAM_PROFILE_POST_DETAIL_REQUEST,
   TEAM_PROFILE_POST_DETAIL_SUCCESS,
   TEAM_PROFILE_POST_DETAIL_FAILURE,
-} from './actions';
+  RECRUIT_POST_LIKE_REQUEST,
+  RECRUIT_POST_LIKE_SUCCESS,
+  RECRUIT_POST_LIKE_FAILURE,
+} from '@reducers/actions';
+import { InitialState, PostActions } from './postTypes';
 
 // 초기 상태
 const initialState: InitialState = {
@@ -42,6 +45,9 @@ const initialState: InitialState = {
   commonPostLikeRequest: false,
   commonPostLikeSuccess: false,
   commonPostLikeFailure: null,
+  recruitPostLikeRequest: false,
+  recruitPostLikeSuccess: false,
+  recruitPostLikeFailure: null,
   recruitPostRequest: false,
   recruitPostSuccess: false,
   recruitPostFailure: null,
@@ -94,7 +100,6 @@ const reducer = (state = initialState, action: PostActions): InitialState =>
         draft.commonPostRegisterSuccess = false;
         draft.commonPostRegisterFailure = action.error;
         break;
-
       case COMMON_POST_LIKE_REQUEST:
         draft.commonPostLikeRequest = true;
         draft.commonPostLikeSuccess = false;
@@ -110,6 +115,22 @@ const reducer = (state = initialState, action: PostActions): InitialState =>
         draft.commonPostLikeRequest = false;
         draft.commonPostLikeSuccess = false;
         draft.commonPostLikeFailure = action.error;
+        break;
+      case RECRUIT_POST_LIKE_REQUEST:
+        draft.recruitPostLikeRequest = true;
+        draft.recruitPostLikeSuccess = false;
+        draft.recruitPostLikeFailure = null;
+        break;
+      case RECRUIT_POST_LIKE_SUCCESS:
+        draft.recruitPostLikeRequest = false;
+        draft.recruitPostLikeSuccess = true;
+        draft.recruitPostLikeFailure = null;
+        draft.likeCounts = action.data;
+        break;
+      case RECRUIT_POST_LIKE_FAILURE:
+        draft.recruitPostLikeRequest = false;
+        draft.recruitPostLikeSuccess = false;
+        draft.recruitPostLikeFailure = action.error;
         break;
       case RECRUIT_POST_REQUEST:
         draft.recruitPostRequest = true;
