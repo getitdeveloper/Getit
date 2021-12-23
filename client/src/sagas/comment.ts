@@ -14,14 +14,14 @@ const requestCommentRegister = (data: any) => {
 function* requestCommentRegisterSaga(action: any): any {
   try {
     const response = yield call(requestCommentRegister, action.data);
-    console.log('댓글 작성후 정보 응답 ===>', response);
+    // console.log('댓글 작성후 정보 응답 ===>', response);
 
     yield put({
       type: COMMENT_REGISTER_SUCCESS,
       data: response.data,
     });
   } catch (error) {
-    console.error(error);
+    // console.error(error);
     yield put({
       type: COMMENT_REGISTER_FAILURE,
       error,

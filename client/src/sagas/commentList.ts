@@ -17,14 +17,14 @@ const requestCommentList = (data: any) => {
 function* requestCommentListSaga(action: any): any {
   try {
     const response = yield call(requestCommentList, action.data);
-    console.log('댓글 정보 응답 ===>', response);
+    // console.log('댓글 정보 응답 ===>', response);
 
     yield put({
       type: COMMENT_LIST_SUCCESS,
       data: response.data,
     });
   } catch (error) {
-    console.error(error);
+    // console.error(error);
     yield put({
       type: COMMENT_LIST_FAILURE,
       error,

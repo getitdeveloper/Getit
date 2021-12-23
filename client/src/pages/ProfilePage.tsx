@@ -17,6 +17,7 @@ function ProfilePage(): JSX.Element {
 
   if (!userId) {
     history.push('/');
+    alert('로그인 후 이용 가능합니다.');
   }
   if (!profileInfo) {
     return <LoadingSpinner />;
