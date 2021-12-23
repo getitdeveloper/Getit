@@ -31,7 +31,6 @@ import {
 
 export interface InitialState {
   commonPost: IPostItem | null;
-  likeCounts: { counts: number } | null;
   recruitPost: IRecruitPost | null;
   teamProfilePostDetail: ITeamProfilePostDetail | null;
   commonPostRequest: boolean;

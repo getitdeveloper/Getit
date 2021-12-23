@@ -33,7 +33,6 @@ import { InitialState, PostActions } from './postTypes';
 // 초기 상태
 const initialState: InitialState = {
   commonPost: null,
-  likeCounts: null,
   recruitPost: null,
   teamProfilePostDetail: null,
   commonPostRequest: false,
@@ -109,7 +108,6 @@ const reducer = (state = initialState, action: PostActions): InitialState =>
         draft.commonPostLikeRequest = false;
         draft.commonPostLikeSuccess = true;
         draft.commonPostLikeFailure = null;
-        draft.likeCounts = action.data;
         break;
       case COMMON_POST_LIKE_FAILURE:
         draft.commonPostLikeRequest = false;
@@ -125,7 +123,6 @@ const reducer = (state = initialState, action: PostActions): InitialState =>
         draft.recruitPostLikeRequest = false;
         draft.recruitPostLikeSuccess = true;
         draft.recruitPostLikeFailure = null;
-        draft.likeCounts = action.data;
         break;
       case RECRUIT_POST_LIKE_FAILURE:
         draft.recruitPostLikeRequest = false;

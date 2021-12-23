@@ -17,11 +17,8 @@ export interface ICommonPost {
 }
 
 export interface ICommonLikePostData {
-  board: number;
-  likes: {
-    commonpost: number;
-    user: number;
-  };
+  postId: number;
+  userId: number;
 }
 export interface ICommonLikePost {
   type: string;

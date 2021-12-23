@@ -1,5 +1,4 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { useMediaQuery } from 'react-responsive';
 import { useHistory, useParams, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector, RootStateOrAny } from 'react-redux';
 import moment from 'moment';
@@ -26,6 +25,9 @@ import {
   StyledFavoriteBorderIcon,
   StyledFavoriteIcon,
   StyledChatBubbleOutlineIcon,
+  LikesCount,
+  MobileDate,
+  Date,
 } from './styles';
 
 function PostItem({
@@ -38,10 +40,10 @@ function PostItem({
   const { postId }: IPostId = useParams();
   const { pathname } = useLocation();
   const dispatch = useDispatch();
-  const user = useSelector((state: RootStateOrAny) => state.user);
-  const userId = user.profileInfo?.user_pk;
-  const [likes, setLikes] = useState(content.likes);
-  const [likeStatus, setLikeStatus] = useState(content.is_like);
+  const userId = useSelector(
+    (state: RootStateOrAny) => state.user.profileInfo?.user_pk,
+  );
+
   const [worker, setWorker] = useState<Map<string, number>>();
 
   useEffect(() => {
@@ -71,40 +73,15 @@ function PostItem({
     if (!userId) {
       return alert('로그인이 필요합니다. 로그인 후 이용해 주세요.');
     }
-    if (likeStatus) {
-      setLikeStatus(false);
-      setLikes(likes - 1);
 
-      dispatch({
-        type: COMMON_POST_LIKE_REQUEST,
-        data: {
-          board: content.id,
-          likes: {
-            commonpost: content.id,
-            user: userId,
-          },
-        },
-      });
-    } else {
-      setLikeStatus(true);
-      setLikes(likes + 1);
-
-      dispatch({
-        type: COMMON_POST_LIKE_REQUEST,
-        data: {
-          board: content.id,
-          likes: {
-            commonpost: content.id,
-            user: userId,
-          },
-        },
-      });
-    }
-  }, [userId, likeStatus, likes, content]);
-
-  const tabletSize = useMediaQuery({
-    query: '(max-width: 600px)',
-  });
+    dispatch({
+      type: COMMON_POST_LIKE_REQUEST,
+      data: {
+        postId: content.id,
+        userId,
+      },
+    });
+  }, [userId, content]);
 
   return (
     <div>
@@ -128,18 +105,26 @@ function PostItem({
             <PostDetailWrapper>
               <DetailInfo>
                 <StyledDateRangeIcon />
-                {tabletSize ? (
-                  <p>{moment(content.create_at).format('YY/MM/DD')}</p>
-                ) : (
-                  <p>{moment(content.create_at).format('YYYY년 MM월 DD일')}</p>
-                )}
+                {/* 모바일 버전 날짜 표시 */}
+                <MobileDate>
+                  {moment(content.create_at).format('YY/MM/DD')}
+                </MobileDate>
+                {/* 테블릿, 테스크탑 버전 날짜 표시 */}
+                <Date>
+                  {moment(content.create_at).format('YYYY년 MM월 DD일')}
+                </Date>
               </DetailInfo>
 
-              <IconButton type='button' onClick={onHandleLike}>
-                {!likeStatus && <StyledFavoriteBorderIcon />}
-                {likeStatus && <StyledFavoriteIcon />}
-              </IconButton>
-              <DetailInfo>{likes}</DetailInfo>
+              <div>
+                <IconButton type='button' onClick={onHandleLike}>
+                  {content.is_like.find((like) => like.user === userId) ? (
+                    <StyledFavoriteIcon />
+                  ) : (
+                    <StyledFavoriteBorderIcon />
+                  )}
+                  <LikesCount>{content.is_like.length}</LikesCount>
+                </IconButton>
+              </div>
 
               <StyledChatBubbleOutlineIcon />
               <DetailInfo>{content.comments}</DetailInfo>
