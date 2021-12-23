@@ -28,6 +28,8 @@ from .pagenation import BoardPageNumberPagination, WholeBoardCommonPageNumberPag
 from rest_framework import viewsets
 
 
+
+
 class CommonBoardListAPIView(GenericAPIView):
     queryset = CommonBoard.objects.all()
     permission_classes = [IsOwnerOrReadOnly]

@@ -156,6 +156,31 @@ class CommonBoardLikePostAPIView(GenericAPIView):
             return paginator.get_paginated_response(serializer.data)
 
 
+class LikeCountPostAPIView(GenericAPIView):
+
+    def get(self, request):
+        """
+            질문/자유 게시판 좋아요 정렬 (GET)
+
+            ---
+
+        """
+
+        category = request.GET.get('category')
+        if category == 'free':
+            posts = CommonBoardLike.objects.filter(commonpost__category=category).order_by('commonpost__count')
+            paginator = LikePageNumberPagination()
+            result_page = paginator.paginate_queryset(posts, request)
+            serializer = CommonBoardLikePostSerializer(result_page, many=True, context={'request': request})
+            return paginator.get_paginated_response(serializer.data)
+        elif category == 'question':
+            posts = CommonBoardLike.objects.filter(commonpost__category=category).order_by('commonpost__count')
+            paginator = LikePageNumberPagination()
+            result_page = paginator.paginate_queryset(posts, request)
+            serializer = CommonBoardLikePostSerializer(result_page, many=True, context={'request': request})
+            return paginator.get_paginated_response(serializer.data)
+
+
 class RecruitmentBoardLikeAPIView(GenericAPIView):
     serializer_class = RecruitmentBoardSerializer
     permission_classes = [IsOwnerOrReadOnly]
@@ -301,3 +326,4 @@ class RecruitmentBoardLikePostAPIView(GenericAPIView):
         result_page = paginator.paginate_queryset(posts, request)
         serializer = RecruitBoardLikePostSerializer(result_page, many=True, context={'request': request})
         return paginator.get_paginated_response(serializer.data)
+
