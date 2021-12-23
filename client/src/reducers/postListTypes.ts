@@ -1,4 +1,4 @@
-import { IBoard, ILikedPost, IPostItem, IRecruitPost } from '../types';
+import { ICommonPostList, ILikedPost, IPostItem, IRecruitPost } from '@types';
 import {
   COMMON_POST_LIST_REQUEST,
   COMMON_POST_LIST_SUCCESS,
@@ -24,7 +24,7 @@ import {
 
 export interface InitialState {
   filterStatus: any | null;
-  commonPostList: IBoard | null;
+  commonPostList: ICommonPostList | null;
   myPostList: Array<IPostItem> | null;
   likedPostList: Array<ILikedPost> | null;
   searchPostList: any | null;
@@ -68,7 +68,7 @@ export interface CommonPostListRequest {
 
 export interface CommonPostListSuccess {
   type: typeof COMMON_POST_LIST_SUCCESS;
-  data: IBoard;
+  data: ICommonPostList;
 }
 
 export interface CommonPostListFailure {

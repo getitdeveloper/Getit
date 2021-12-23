@@ -22,7 +22,7 @@ import {
 } from '../reducers/actions';
 import {
   ICommonPostListData,
-  ICommonPostList,
+  ICommonPostListAction,
   IMyPostListData,
   IMyPostListAction,
   ILikedPostListData,
@@ -48,10 +48,10 @@ const requestCommonPostList = ({
   return axios.get(`/api/board?category=${category}&page=${page}`);
 };
 
-function* requestCommonPostListSaga(action: ICommonPostList): any {
+function* requestCommonPostListSaga(action: ICommonPostListAction): any {
   try {
     const response = yield call(requestCommonPostList, action.data);
-    // console.log('자유/질문 게시글 정보 응답 ===>', response);
+    console.log('자유/질문 게시글 정보 응답 ===>', response);
 
     yield put({
       type: COMMON_POST_LIST_SUCCESS,

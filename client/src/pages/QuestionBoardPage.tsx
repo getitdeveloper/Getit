@@ -1,4 +1,4 @@
-import React, { useState, useLayoutEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import PostItem from '@components/PostItem';
@@ -22,6 +22,9 @@ function QuestionBoardPage(): JSX.Element {
   const boardList = useSelector(
     (state: RootStateOrAny) => state.postList.commonPostList,
   );
+  const commonPostLikeStatus = useSelector(
+    (state: RootStateOrAny) => state.post.commonPostLikeSuccess,
+  );
   const filterStatus = useSelector(
     (state: RootStateOrAny) => state.postList.filterStatus,
   );
@@ -31,7 +34,7 @@ function QuestionBoardPage(): JSX.Element {
 
   const [page, setPage] = useState(1);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     dispatch({
       type: COMMON_POST_LIST_REQUEST,
       data: {
@@ -40,7 +43,7 @@ function QuestionBoardPage(): JSX.Element {
         filterStatus,
       },
     });
-  }, [page, filterStatus]);
+  }, [page, filterStatus, commonPostLikeStatus]);
 
   if (!boardList) {
     return <LoadingSpinner />;

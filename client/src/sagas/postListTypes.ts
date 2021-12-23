@@ -1,8 +1,8 @@
 import { RouteComponentProps } from 'react-router-dom';
-import { IBoard, IPost } from '../types';
+import { ICommonPostList, IPost } from '@types';
 
 export interface ResponseFreeBoard {
-  data: IBoard;
+  data: ICommonPostList;
 }
 
 export interface ResponseFreePost {
@@ -15,7 +15,7 @@ export interface ICommonPostListData {
   filterStatus?: Array<{ text: string; value: string; checked: boolean }>;
 }
 
-export interface ICommonPostList {
+export interface ICommonPostListAction {
   type: string;
   data: ICommonPostListData;
 }

@@ -114,6 +114,26 @@ export const DetailInfo = styled.div`
   font-size: 1.4rem;
 `;
 
+export const LikesCount = styled.div`
+  font-size: 1.4rem;
+  padding: 0 0.5rem;
+  color: ${({ theme }) => theme.colors.iconBaseColor};
+`;
+
+export const Date = styled.p`
+  font-size: 1.4rem;
+  @media ${({ theme }) => theme.mobile} {
+    display: none;
+  }
+`;
+
+export const MobileDate = styled.p`
+  display: none;
+  @media ${({ theme }) => theme.mobile} {
+    font-size: 1.4rem;
+  }
+`;
+
 export const StyledDateRangeIcon = styled(DateRangeIcon)`
   color: ${({ theme }) => theme.colors.iconBaseColor};
 `;

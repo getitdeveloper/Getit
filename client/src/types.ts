@@ -20,18 +20,33 @@ export interface IPortfolio {
   link: string;
 }
 
-export interface IBoard {
+export interface ICommonPostItem {
+  id: number;
+  title: string;
+  category: string;
+  content: string;
+  image: string | null;
+  create_at: string;
+  user: IUser;
+  likes: number;
+  comments: number;
+  is_like: Array<{ user: number }>;
+  worker: Array<string>;
+  stack: Array<string>;
+}
+
+export interface ICommonPostList {
   count: number;
   next: string;
-  previous: string;
-  results: IPostItem[];
+  previous: string | null;
+  results: Array<ICommonPostItem>;
 }
 
 export interface IUser {
   id: number;
   profile: {
     nickname: string;
-    image: string;
+    image: string | null;
   };
 }
 
@@ -60,7 +75,7 @@ export interface IPost {
   category: string;
   content: string;
   image: string | null;
-  is_like: boolean;
+  is_like: Array<{ user: number }>;
   create_at: string;
   user: {
     id: number;

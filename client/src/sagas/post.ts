@@ -93,15 +93,15 @@ function* requestCommonPostRegisterSaga(action: ICommonPost): any {
   }
 }
 
-// 자유/질문 게시글 좋아요 누르기
-const requestCommonPostLike = ({ board, likes }: ICommonLikePostData) => {
-  return axios.post(`/api/${board}/commonlikes/`, likes);
+// 자유/질문 게시판 게시글 좋아요
+const requestCommonPostLike = ({ postId, userId }: ICommonLikePostData) => {
+  return axios.post(`/api/${postId}/commonlikes/`, { user: userId });
 };
 
 function* requestCommonPostLikeSaga(action: ICommonLikePost): any {
   try {
     const response = yield call(requestCommonPostLike, action.data);
-    // console.log('자유/질문 게시글 좋아요 생성 후 정보 응답 ===>', response);
+    console.log('자유/질문 게시글 좋아요 정보 응답 ===>', response);
     yield put({
       type: COMMON_POST_LIKE_SUCCESS,
       data: response.data,
