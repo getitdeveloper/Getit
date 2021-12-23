@@ -22,6 +22,9 @@ function FreeBoardPage(): JSX.Element {
   const boardList = useSelector(
     (state: RootStateOrAny) => state.postList.commonPostList,
   );
+  const commonPostLikeStatus = useSelector(
+    (state: RootStateOrAny) => state.post.commonPostLikeSuccess,
+  );
   const filterStatus = useSelector(
     (state: RootStateOrAny) => state.postList.filterStatus,
   );
@@ -40,7 +43,7 @@ function FreeBoardPage(): JSX.Element {
         filterStatus,
       },
     });
-  }, [page, filterStatus]);
+  }, [page, filterStatus, commonPostLikeStatus]);
 
   if (!boardList) {
     return <LoadingSpinner />;
