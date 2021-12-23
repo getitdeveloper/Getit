@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useCallback } from 'react';
+import { useSelector, RootStateOrAny, useDispatch } from 'react-redux';
 import moment from 'moment';
 import Grid from '@material-ui/core/Grid';
 import MemberType from '@components/RecruitMembers/index';
 import { IRecruitPost } from '@types';
 import { PageBackground } from '@assets/styles/page';
+import { RECRUIT_POST_LIKE_REQUEST } from '@reducers/actions';
 import {
   Title,
   RecruitCondition,
@@ -13,7 +15,9 @@ import {
   GridWrapper,
   Post,
   LikeIcon,
+  LikedIcon,
   CommentIcon,
+  LikeButton,
 } from './styles';
 
 function RecruitPost({
@@ -21,6 +25,24 @@ function RecruitPost({
 }: {
   postList: Array<IRecruitPost>;
 }): JSX.Element {
+  const dispatch = useDispatch();
+  const userId = useSelector(
+    (state: RootStateOrAny) => state.user.profileInfo?.user_pk,
+  );
+
+  const likePost = useCallback(
+    (postId) => {
+      if (!userId) {
+        return alert('로그인 후 사용 가능합니다.');
+      }
+      dispatch({
+        type: RECRUIT_POST_LIKE_REQUEST,
+        data: { userId, postId },
+      });
+    },
+    [userId],
+  );
+
   return (
     <PageBackground>
       <GridWrapper>
@@ -68,8 +90,14 @@ function RecruitPost({
                 <ContentDetail>
                   <div>{moment(post.end_date).format('YYYY.MM.DD')}</div>
                   <div>
-                    <LikeIcon />
-                    {post.likes}
+                    <LikeButton type='button' onClick={() => likePost(post.id)}>
+                      {post.is_like.find((like) => like.user === userId) ? (
+                        <LikedIcon />
+                      ) : (
+                        <LikeIcon />
+                      )}
+                      {post.likes}
+                    </LikeButton>
                   </div>
                   <div>
                     <StyledLink to={`/recruitBoard/${post.id}`}>

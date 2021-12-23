@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { ContentContainer } from '@assets/styles/page';
-import { useDispatch } from 'react-redux';
-import { USER_LOGOUT_REQUEST } from '@reducers/actions';
+import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
+import { MY_PROFILE_SELECT_MENU, USER_LOGOUT_REQUEST } from '@reducers/actions';
 import {
   ProfileMenuOption,
   ProfileSelectedMenu,
@@ -28,24 +28,47 @@ const navItem = [
 function ProfileDetail(): JSX.Element {
   const dispatch = useDispatch();
   const history = useHistory();
-  const [selectMenu, setSelectMenu] = useState(0);
+  const selected = useSelector(
+    (state: RootStateOrAny) => state.profile.selectMenu.selected,
+  );
+  const toggle = useSelector(
+    (state: RootStateOrAny) => state.profile.selectMenu.toggle,
+  );
 
-  const handleNavigation = (content: number) => {
+  useEffect(() => {
+    // 모바일 토글 메뉴가 아닌 일반메뉴에서 오는경우 선택 메뉴 초기화
+    if (!toggle) {
+      dispatch({
+        type: MY_PROFILE_SELECT_MENU,
+        data: {
+          selected: 0,
+        },
+      });
+    }
+  }, []);
+
+  const handleNavigation = useCallback((content: number) => {
     if (content === 5) {
       dispatch({
         type: USER_LOGOUT_REQUEST,
         history,
       });
     }
-    setSelectMenu(content);
-  };
+    dispatch({
+      type: MY_PROFILE_SELECT_MENU,
+      data: {
+        selected: content,
+        toggle: false,
+      },
+    });
+  }, []);
   return (
     <>
       <ContentContainer>
         <Container>
           <LeftContainer>
             {navItem.map((content, index) =>
-              selectMenu === index ? (
+              selected === index ? (
                 // 선택된 메뉴 색상 변경 및 유지
                 <ProfileSelectedMenu key={content}>
                   {content}
@@ -62,11 +85,11 @@ function ProfileDetail(): JSX.Element {
           </LeftContainer>
 
           <RightContainer>
-            {selectMenu === 0 && <MyProfile />}
-            {selectMenu === 1 && <TeamProfile />}
-            {selectMenu === 2 && <LikedPosts />}
-            {selectMenu === 3 && <MyPosts />}
-            {selectMenu === 4 && <MyComments />}
+            {selected === 0 && <MyProfile />}
+            {selected === 1 && <TeamProfile />}
+            {selected === 2 && <LikedPosts />}
+            {selected === 3 && <MyPosts />}
+            {selected === 4 && <MyComments />}
           </RightContainer>
         </Container>
       </ContentContainer>

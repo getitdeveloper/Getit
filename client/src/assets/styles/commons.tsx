@@ -24,8 +24,7 @@ export const Stack = styled.span`
 
 export const IconButton = styled.button`
   background-color: transparent;
-  margin: 0;
-  padding: 0;
-  border: 0;
+  border-style: none;
+  display: flex;
   cursor: pointer;
 `;

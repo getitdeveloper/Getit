@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 import AddIcon from '@material-ui/icons/Add';
 
 export const RecruitPostFormWrapper = styled.div`
@@ -13,13 +12,14 @@ export const RecruitPostFormWrapper = styled.div`
   }
 `;
 
-export const StyledLink = styled(Link)`
+export const MyProfileRouting = styled.div`
   text-decoration: none;
   color: ${({ theme }) => theme.colors.main};
   width: fit-content;
   display: inline-flex;
   align-items: center;
   font-size: 1.2rem;
+  cursor: pointer;
 
   @media ${({ theme }) => theme.tablet} {
     div & :nth-child(2) {

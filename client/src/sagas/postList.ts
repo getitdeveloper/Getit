@@ -22,7 +22,7 @@ import {
 } from '../reducers/actions';
 import {
   ICommonPostListData,
-  ICommonPostList,
+  ICommonPostListAction,
   IMyPostListData,
   IMyPostListAction,
   ILikedPostListData,
@@ -48,10 +48,10 @@ const requestCommonPostList = ({
   return axios.get(`/api/board?category=${category}&page=${page}`);
 };
 
-function* requestCommonPostListSaga(action: ICommonPostList): any {
+function* requestCommonPostListSaga(action: ICommonPostListAction): any {
   try {
     const response = yield call(requestCommonPostList, action.data);
-    // console.log('자유/질문 게시글 정보 응답 ===>', response);
+    console.log('자유/질문 게시글 정보 응답 ===>', response);
 
     yield put({
       type: COMMON_POST_LIST_SUCCESS,
@@ -63,7 +63,7 @@ function* requestCommonPostListSaga(action: ICommonPostList): any {
       type: COMMON_POST_LIST_FAILURE,
       error,
     });
-    return alert('문제가 발생했습니다. 잠시 후 다시 시도해 주세요.');
+    // return alert('문제가 발생했습니다. 잠시 후 다시 시도해 주세요.');
   }
 }
 
@@ -93,7 +93,7 @@ function* requestMyPostListSaga(action: IMyPostListAction): any {
       type: MY_POST_LIST_FAILURE,
       error,
     });
-    return alert('문제가 발생했습니다. 잠시 후 다시 시도해 주세요.');
+    // return alert('문제가 발생했습니다. 잠시 후 다시 시도해 주세요.');
   }
 }
 
@@ -123,7 +123,7 @@ function* requestLikedPostListSaga(action: ILikedPostList): any {
       type: LIKED_POST_LIST_FAILURE,
       error,
     });
-    return alert('문제가 발생했습니다. 잠시 후 다시 시도해 주세요.');
+    // return alert('문제가 발생했습니다. 잠시 후 다시 시도해 주세요.');
   }
 }
 
@@ -150,7 +150,7 @@ function* requestSearchPostListSaga(action: ISearchPostList): any {
       type: SEARCH_POST_LIST_FAILURE,
       error,
     });
-    return alert('문제가 발생했습니다. 잠시 후 다시 시도해 주세요.');
+    // return alert('문제가 발생했습니다. 잠시 후 다시 시도해 주세요.');
   }
 }
 
@@ -182,7 +182,7 @@ function* requestRecruitPostListSaga(action: IRecruitPostList): any {
       type: RECRUIT_POST_LIST_FAILURE,
       error,
     });
-    return alert('문제가 발생했습니다. 잠시 후 다시 시도해 주세요.');
+    // return alert('문제가 발생했습니다. 잠시 후 다시 시도해 주세요.');
   }
 }
 
@@ -200,7 +200,7 @@ function* requestTeamProfileListSaga(action: ITeamProfileList): any {
       data: response.data,
     });
   } catch (error) {
-    console.error('팀 프로필 목록 응답 ===>', error);
+    // console.error('팀 프로필 목록 응답 ===>', error);
     yield put({
       type: TEAM_PROFILE_LIST_FAILURE,
       error,

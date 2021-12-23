@@ -26,6 +26,7 @@ import {
   PORTFOLIO_REGISTER_REQUEST,
   PORTFOLIO_REGISTER_SUCCESS,
   PORTFOLIO_REGISTER_FAILURE,
+  MY_PROFILE_SELECT_MENU,
 } from '../reducers/actions';
 import {
   ResponseUserProfile,
@@ -172,6 +173,12 @@ function* requestUserLogOutSaga(action: IUserLogout): any {
     // console.log('로그아웃 요청 응답 ===>', response);
     yield put({
       type: USER_LOGOUT_SUCCESS,
+    });
+    yield put({
+      type: MY_PROFILE_SELECT_MENU,
+      data: {
+        selected: 0,
+      },
     });
     action.history.push('/');
   } catch (error) {
