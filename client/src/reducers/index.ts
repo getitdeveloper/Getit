@@ -1,10 +1,11 @@
 import { combineReducers } from 'redux';
 
-import user from './user';
-import postList from './postList';
-import comment from './comment';
-import commentList from './commentList';
-import post from './post';
+import profile from '@reducers/profile';
+import user from '@reducers/user';
+import postList from '@reducers/postList';
+import comment from '@reducers/comment';
+import commentList from '@reducers/commentList';
+import post from '@reducers/post';
 
 const reducer = combineReducers({
   user,
@@ -12,8 +13,7 @@ const reducer = combineReducers({
   postList,
   comment,
   commentList,
+  profile,
 });
-
-// export type RootState = ReturnType<typeof reducer>;
 
 export default reducer;
