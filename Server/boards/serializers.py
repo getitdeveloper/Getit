@@ -27,13 +27,13 @@ class WorkerSerializer(serializers.ModelSerializer):
 class CommonLikeSerializer(ModelSerializer):
     class Meta:
         model = CommonBoardLike
-        fields = ('commonpost', 'user',)
+        fields = ('user',)
 
 
 class RecruitLikeSerializer(ModelSerializer):
     class Meta:
         model = RecruitBoardLike
-        fields = ('recruitpost', 'user',)
+        fields = ('user',)
 
 
 # 작성자 프로필(닉네임, 이미지)
@@ -77,16 +77,10 @@ class CommonBoardSerializer(serializers.ModelSerializer):
         return super().to_representation(instance)
 
     def get_is_like(self, obj):
-        user = obj.user.id
-        if user:
+        like = CommonBoardLike.objects.filter(commonpost=obj.id)
+        serializer = CommonLikeSerializer(like, many=True)
+        return serializer.data
 
-            like = CommonBoardLike.objects.filter(commonpost=obj.id, user=user)
-            if like.exists():
-                return True
-            else:
-                return False
-        else:
-            return False
 
 
 class MemberBoardSerializer(serializers.ModelSerializer):
@@ -128,9 +122,6 @@ class RecruitmentBoardSerializer(ModelSerializer):
         return super().to_representation(instance)
 
     def get_is_like(self, obj):
-        user = obj.user.id
-        like = RecruitBoardLike.objects.filter(recruitpost=obj.id, user=user)
-        if like.exists():
-            return True
-        else:
-            return False
+        like = RecruitBoardLike.objects.filter(recruitpost=obj.id)
+        serializer = RecruitLikeSerializer(like, many=True)
+        return serializer.data
