@@ -65,3 +65,12 @@ export const ContentContainer = styled.div`
     width: 100%;
   }
 `;
+
+export const SearResultPageBackground = styled.div`
+  background-color: ${({ theme }) => theme.colors.background};
+  min-height: 100vh;
+`;
+
+export const ContentWrapper = styled.div`
+  min-height: 40vh;
+`;
