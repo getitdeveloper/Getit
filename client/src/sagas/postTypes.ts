@@ -76,3 +76,12 @@ export interface IRecruitPost {
   type: string;
   data: string;
 }
+
+export interface IRecruitPostLikeData {
+  userId: number;
+  postId: number;
+}
+export interface IRecruitPostLike {
+  type: string;
+  data: IRecruitPostLikeData;
+}

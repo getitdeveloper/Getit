@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import Paper from '@material-ui/core/Paper';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+import FavoriteIcon from '@material-ui/icons/Favorite';
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
 import { Link } from 'react-router-dom';
 
@@ -82,7 +83,19 @@ export const LikeIcon = styled(FavoriteBorderIcon)`
   margin: 0 0.4rem;
   vertical-align: middle;
 `;
+export const LikedIcon = styled(FavoriteIcon)`
+  margin: 0 0.4rem;
+  vertical-align: middle;
+`;
+
 export const CommentIcon = styled(ChatBubbleOutlineIcon)`
   margin: 0 0.4rem;
   vertical-align: middle;
+`;
+
+export const LikeButton = styled.button`
+  border-style: none;
+  background-color: transparent;
+  cursor: pointer;
+  display: flex;
 `;

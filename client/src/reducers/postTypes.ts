@@ -24,6 +24,9 @@ import {
   TEAM_PROFILE_POST_DETAIL_REQUEST,
   TEAM_PROFILE_POST_DETAIL_SUCCESS,
   TEAM_PROFILE_POST_DETAIL_FAILURE,
+  RECRUIT_POST_LIKE_SUCCESS,
+  RECRUIT_POST_LIKE_FAILURE,
+  RECRUIT_POST_LIKE_REQUEST,
 } from './actions';
 
 export interface InitialState {
@@ -40,6 +43,9 @@ export interface InitialState {
   commonPostLikeRequest: boolean;
   commonPostLikeSuccess: boolean;
   commonPostLikeFailure: string | null;
+  recruitPostLikeRequest: boolean;
+  recruitPostLikeSuccess: boolean;
+  recruitPostLikeFailure: string | null;
   recruitPostRequest: boolean;
   recruitPostSuccess: boolean;
   recruitPostFailure: string | null;
@@ -87,7 +93,7 @@ export interface CommonPostRegisterFailure {
   error: string;
 }
 
-// 게시글에 좋아요 누르기
+// 자유/질문 게시판 게시글에 좋아요
 export interface CommonPostLikeRequest {
   type: typeof COMMON_POST_LIKE_REQUEST;
 }
@@ -101,6 +107,25 @@ export interface CommonPostLikeSuccess {
 
 export interface CommonPostLikeFailure {
   type: typeof COMMON_POST_LIKE_FAILURE;
+  error: string;
+}
+
+// 모집게시판 게시글 좋아요
+export interface IRecruitPostLikeRequest {
+  type: typeof RECRUIT_POST_LIKE_REQUEST;
+  data: {
+    userId: number;
+    postId: number;
+  };
+}
+
+export interface IRecruitPostLikeSuccess {
+  type: typeof RECRUIT_POST_LIKE_SUCCESS;
+  data: any;
+}
+
+export interface IRecruitPostLikeFailure {
+  type: typeof RECRUIT_POST_LIKE_FAILURE;
   error: string;
 }
 
@@ -182,6 +207,9 @@ export type PostActions =
   | CommonPostLikeRequest
   | CommonPostLikeSuccess
   | CommonPostLikeFailure
+  | IRecruitPostLikeRequest
+  | IRecruitPostLikeSuccess
+  | IRecruitPostLikeFailure
   | RecruitPostDetailRequest
   | RecruitPostDetailSuccess
   | RecruitPostDetailFailure

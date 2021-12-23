@@ -14,9 +14,14 @@ import MoreButton from '@components/MoreButton';
 function RecruitBoardPage(): JSX.Element {
   const dispatch = useDispatch();
   const { pathname } = useLocation();
+
   const recruitPostList = useSelector(
     (state: RootStateOrAny) => state.postList.recruitPostList?.results,
   );
+  const recruitPostLikeStatus = useSelector(
+    (state: RootStateOrAny) => state.post.recruitPostLikeSuccess,
+  );
+
   const recruitPostTotalCount = useSelector(
     (state: RootStateOrAny) => state.postList.recruitPostList?.count,
   );
@@ -37,7 +42,7 @@ function RecruitBoardPage(): JSX.Element {
         filterStatus,
       },
     });
-  }, [page, filterStatus]);
+  }, [page, filterStatus, recruitPostLikeStatus]);
 
   if (!recruitPostList) {
     return <LoadingSpinner />;
