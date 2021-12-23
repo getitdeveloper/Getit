@@ -1,5 +1,4 @@
-import * as React from 'react';
-import { useCallback, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSelector, RootStateOrAny, useDispatch } from 'react-redux';
 import UserImg from '@assets/images/user.svg';
@@ -39,7 +38,7 @@ function TeamProfilePostForm(): JSX.Element {
     (state: RootStateOrAny) => state.user.profileInfo?.user_pk,
   );
 
-  const [profile, setProfile] = useState<FormData>();
+  const [profile, setProfile] = useState<FormData | null>(null);
   const [preview, setPreview] = useState('');
   const [title, setTitle] = useState('');
   const [introduce, setIntroduce] = useState('');
@@ -47,7 +46,11 @@ function TeamProfilePostForm(): JSX.Element {
 
   const handleTitle = useCallback(
     (event) => {
-      setTitle(event.target.value);
+      const { value } = event.target;
+      if (value.length > 40) {
+        return alert('최대 40자 까지 가능합니다.');
+      }
+      setTitle(value);
     },
     [title],
   );
@@ -62,6 +65,10 @@ function TeamProfilePostForm(): JSX.Element {
   const createTeamProfile = useCallback(
     (event) => {
       event.preventDefault();
+
+      if (!userId) {
+        return alert('로그인 후 이용 가능합니다.');
+      }
 
       if (title === '' || introduce === '' || stacks.length === 0) {
         return alert('필수 항목을 작성해 주세요.');
@@ -97,22 +104,36 @@ function TeamProfilePostForm(): JSX.Element {
     [profile, title, introduce, stacks, userId],
   );
 
-  const handleProfileImage = useCallback((event) => {
-    const img = event.target.files[0];
-    const formData = new FormData();
-    formData.append('image', img);
-    setProfile(formData);
+  const handleProfileImage = useCallback(
+    (event) => {
+      const img = event.target.files[0];
 
-    const reader = new FileReader();
-    reader.readAsDataURL(img);
-
-    reader.onloadend = (finishedEvent: any) => {
-      // 미리보기
-      if (finishedEvent !== null) {
-        setPreview(finishedEvent.currentTarget.result);
+      const sizeInMB = (img?.size / (1024 * 1024)).toFixed(2);
+      if (Number(sizeInMB) > 20) {
+        return alert('20MB 이하의 사진만 가능합니다.');
       }
-    };
-  }, []);
+
+      const formData = new FormData();
+      formData.append('image', img);
+      setProfile(formData);
+
+      const reader = new FileReader();
+      reader.readAsDataURL(img);
+
+      reader.onloadend = (finishedEvent: any) => {
+        // 미리보기
+        if (finishedEvent !== null) {
+          setPreview(finishedEvent.currentTarget.result);
+        }
+      };
+    },
+    [profile],
+  );
+
+  const removeProfile = useCallback(() => {
+    setProfile(null);
+    setPreview('');
+  }, [profile, preview]);
 
   return (
     <TeamProfilePostFormWrapper encType='multipart/form-data'>
@@ -144,7 +165,9 @@ function TeamProfilePostForm(): JSX.Element {
                   onChange={handleProfileImage}
                 />
               </RegisterButton>
-              <CancelButton type='button'>삭제</CancelButton>
+              <CancelButton type='button' onClick={removeProfile}>
+                삭제
+              </CancelButton>
             </UploadButtonContainer>
           </ContentWrapper>
         </RightContainer>

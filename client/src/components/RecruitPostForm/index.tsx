@@ -17,7 +17,7 @@ import {
 } from '@reducers/actions';
 import {
   RecruitPostFormWrapper,
-  StyledLink,
+  MyProfileRouting,
   BlockWrapper,
   LeftContainer,
   RightContainer,
@@ -297,6 +297,13 @@ function RecruitPostForm(): JSX.Element {
     setSelectTeamProfileId(event.target.value);
   }, []);
 
+  const createTeamProfile = useCallback(() => {
+    if (!userId) {
+      return alert('로그인이 필요합니다. 로그인 후 이용해 주세요.');
+    }
+    return history.push('/myprofile');
+  }, [userId]);
+
   return (
     <RecruitPostFormWrapper>
       <BlockWrapper>
@@ -328,12 +335,12 @@ function RecruitPostForm(): JSX.Element {
                   ))}
               </FieldSelect>
             </SelectWrapper>
-            <StyledLink to='/'>
+            <MyProfileRouting onClick={createTeamProfile}>
               <div>
                 <AddProjectIcon />
               </div>
               <div>팀 프로필 생성</div>
-            </StyledLink>
+            </MyProfileRouting>
           </ContentWrapper>
         </RightContainer>
       </BlockWrapper>
