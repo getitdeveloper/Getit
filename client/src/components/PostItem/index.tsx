@@ -64,7 +64,7 @@ function PostItem({
       }
       return setWorker(workerObj);
     });
-  }, []);
+  }, [content]);
 
   const onHandleWirterProfile = () => console.log('글쓴이의 프로필로 이동');
   const onHandlePost = () => history.push(`/${boardType}Board/${content.id}`);
