@@ -3,6 +3,7 @@ import Paper from '@material-ui/core/Paper';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
+import PeopleAltIcon from '@material-ui/icons/PeopleAlt';
 import { Link } from 'react-router-dom';
 
 export const Post = styled(Paper)`
@@ -88,9 +89,12 @@ export const LikedIcon = styled(FavoriteIcon)`
   vertical-align: middle;
 `;
 
-export const CommentIcon = styled(ChatBubbleOutlineIcon)`
+export const MemberIcon = styled(PeopleAltIcon)`
   margin: 0 0.4rem;
   vertical-align: middle;
+  && {
+    font-size: 1.6rem;
+  }
 `;
 
 export const LikeButton = styled.button`

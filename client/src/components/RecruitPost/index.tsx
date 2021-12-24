@@ -16,7 +16,7 @@ import {
   Post,
   LikeIcon,
   LikedIcon,
-  CommentIcon,
+  MemberIcon,
   LikeButton,
 } from './styles';
 
@@ -101,8 +101,10 @@ function RecruitPost({
                   </div>
                   <div>
                     <StyledLink to={`/recruitBoard/${post.id}`}>
-                      <CommentIcon />
-                      {post.comments}
+                      <div>
+                        <MemberIcon />
+                        {post.study.members.length}
+                      </div>
                     </StyledLink>
                   </div>
                 </ContentDetail>
