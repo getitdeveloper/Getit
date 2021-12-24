@@ -67,6 +67,7 @@ export const Logo = styled.img.attrs({
 })`
   width: 12rem;
   margin-left: 2rem;
+  cursor: pointer;
   @media ${({ theme }) => theme.tablet} {
     width: 10rem;
     margin: 1.2rem;

@@ -148,3 +148,6 @@ export const TEAM_PROFILE_POST_DETAIL_FAILURE =
 
 // 프로필 메뉴 변경
 export const MY_PROFILE_SELECT_MENU = 'MY_PROFILE_SELECT_MENU';
+
+// 메인 페이지 선택 탭 변경
+export const SELECT_TAB = 'SELECT_TAB';

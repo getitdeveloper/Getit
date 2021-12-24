@@ -21,23 +21,24 @@ function LikedPosts(): JSX.Element {
   const userId = useSelector(
     (state: RootStateOrAny) => state.user.profileInfo?.user_pk,
   );
-
-  const [page, setPage] = useState(1);
-  const [selectTab, setSelectTab] = useState(0);
-  const [currentCategory, setCurrentCategory] = useState('recruit');
+  const selectedTab = useSelector(
+    (state: RootStateOrAny) => state.navbarTab.selectTab,
+  );
   const likedPosts = useSelector(
     (state: RootStateOrAny) => state.postList.likedPostList,
   );
+  const [page, setPage] = useState(1);
+  const [currentCategory, setCurrentCategory] = useState('recruit');
   const onHandlePost = (postId: number, category: string) =>
     history.push(`/${category}Board/${postId}`);
 
   useLayoutEffect(() => {
-    setCurrentCategory(CategoryType[selectTab]);
-  }, [selectTab]);
+    setCurrentCategory(CategoryType[selectedTab]);
+  }, [selectedTab]);
 
   useEffect(() => {
     // 질문/자유 게시글 목록 요청
-    if (selectTab === 1 || selectTab === 2) {
+    if (selectedTab === 1 || selectedTab === 2) {
       dispatch({
         type: LIKED_POST_LIST_REQUEST,
         data: {
@@ -57,7 +58,7 @@ function LikedPosts(): JSX.Element {
         },
       });
     }
-  }, [currentCategory, page, selectTab]);
+  }, [currentCategory, page, selectedTab]);
 
   if (!likedPosts) {
     return <LoadingSpinner />;
@@ -65,7 +66,7 @@ function LikedPosts(): JSX.Element {
 
   return (
     <ProfileRight>
-      <NavBar selectTab={selectTab} setSelectTab={setSelectTab} />
+      <NavBar />
       {likedPosts.results.map((content: { commonpost: IPost }) => (
         <PostWrapper
           key={content.commonpost.id}

@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
+import { useHistory, useLocation, Link } from 'react-router-dom';
 import { RootStateOrAny, useSelector } from 'react-redux';
-import { useLocation, Link } from 'react-router-dom';
 import SearchBar from '@components/SearchBar/SearchBar';
 import LoginDialog from '@components/LoginDialog/LoginDialog';
 import UserInfoButtons from '@components/UserInfoButtons/UserInfoButtons';
@@ -17,6 +17,7 @@ import {
 import ToggleMenu from './ToggleMenu';
 
 function Header(): JSX.Element {
+  const history = useHistory();
   const { pathname } = useLocation();
   const profileInfo = useSelector(
     (state: RootStateOrAny) => state.user.profileInfo,
@@ -32,6 +33,10 @@ function Header(): JSX.Element {
     setOpen(false);
   }, [open]);
 
+  const handleRouting = useCallback(() => {
+    return history.push('/', { from: pathname });
+  }, [pathname]);
+
   // 회원가입 페이지인 경우 header 감추기
   if (pathname === '/register') {
     return <div />;
@@ -44,6 +49,7 @@ function Header(): JSX.Element {
         {/* GetIt 로고 */}
         <LeftHeaderWrapper>
           <Link to='/'>
+            {/* <Logo onClick={handleRouting} /> */}
             <Logo />
           </Link>
         </LeftHeaderWrapper>
