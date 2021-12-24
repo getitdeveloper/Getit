@@ -70,9 +70,17 @@ function MyPosts(): JSX.Element {
       {myPosts.results.map((content: IPost) => (
         <PostWrapper
           key={content.id}
-          onClick={() => onHandlePost(content.id, content.category)}
+          onClick={() =>
+            onHandlePost(
+              content.id,
+              content.category ? content.category : 'recruit',
+            )
+          }
         >
-          <PostItem content={content} />
+          <PostItem
+            content={content}
+            boardType={content.category ? content.category : 'recruit'}
+          />
         </PostWrapper>
       ))}
       <Paging activePage={page} totalPage={myPosts.count} setPage={setPage} />

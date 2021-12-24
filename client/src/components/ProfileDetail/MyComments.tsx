@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useHistory } from 'react-router';
 import moment from 'moment';
 import 'moment/locale/ko';
-import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import { MY_COMMENT_LIST_REQUEST } from '@reducers/actions';
 import { IconButton } from '@assets/styles/commons';
@@ -15,6 +14,7 @@ import {
   CommentDate,
   CommentInfo,
   CommentText,
+  StyledNavigateNextIcon,
 } from './styles';
 
 function getOrderedComments(comments: any) {
@@ -95,7 +95,7 @@ function MyComments(): JSX.Element {
                   )
                 }
               >
-                <NavigateNextIcon htmlColor='#707070' />
+                <StyledNavigateNextIcon htmlColor='#707070' />
               </IconButton>
             </CommentWrapper>
           ))}

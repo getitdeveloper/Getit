@@ -3,7 +3,7 @@ import { useHistory } from 'react-router';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import { LIKED_POST_LIST_REQUEST } from '@reducers/actions';
 import PostItem from '@components/PostItem';
-import { ILikedPost, IPost } from '@types';
+import { ILikedPost, IPost, IRecruitPost } from '@types';
 import LoadingSpinner from '@components/LoadingSpinner';
 import NavBar from '@components/NavBar';
 import Paging from '@components/Paging';
@@ -67,16 +67,27 @@ function LikedPosts(): JSX.Element {
   return (
     <ProfileRight>
       <NavBar />
-      {likedPosts.results.map((content: { commonpost: IPost }) => (
-        <PostWrapper
-          key={content.commonpost.id}
-          onClick={() =>
-            onHandlePost(content.commonpost.id, content.commonpost.category)
-          }
-        >
-          <PostItem content={content.commonpost} />
-        </PostWrapper>
-      ))}
+      {likedPosts.results[0].recruitpost &&
+        likedPosts.results.map((content: { recruitpost: IRecruitPost }) => (
+          <PostWrapper
+            key={content.recruitpost.id}
+            onClick={() => onHandlePost(content.recruitpost.id, 'recruit')}
+          >
+            <PostItem content={content.recruitpost} boardType='recruit' />
+          </PostWrapper>
+        ))}
+
+      {likedPosts.results[0].commonpost &&
+        likedPosts.results.map((content: { commonpost: IPost }) => (
+          <PostWrapper
+            key={content.commonpost.id}
+            onClick={() =>
+              onHandlePost(content.commonpost.id, content.commonpost.category)
+            }
+          >
+            <PostItem content={content.commonpost} />
+          </PostWrapper>
+        ))}
       <Paging
         activePage={page}
         totalPage={likedPosts.count}

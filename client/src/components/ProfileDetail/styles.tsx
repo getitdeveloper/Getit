@@ -2,6 +2,13 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import CancelIcon from '@material-ui/icons/Cancel';
 import PersonIcon from '@material-ui/icons/Person';
+import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+
+export const StyledNavigateNextIcon = styled(NavigateNextIcon)`
+  && {
+    font-size: 2.5rem;
+  }
+`;
 
 export const Container = styled.div`
   display: flex;
