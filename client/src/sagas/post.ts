@@ -233,7 +233,7 @@ function* requestTeamProfilePostDetailSaga(action: ITeamProfileIdData): any {
       type: TEAM_PROFILE_POST_DETAIL_FAILURE,
       error,
     });
-    return alert('문제가 발생했습니다. 잠시 후 다시 시도해 주세요.');
+    // return alert('문제가 발생했습니다. 잠시 후 다시 시도해 주세요.');
   }
 }
 

@@ -10,6 +10,7 @@ import {
   TEAM_MEMBER_JOIN_REQUEST,
   TEAM_PROFILE_POST_DETAIL_REQUEST,
 } from '@reducers/actions';
+import LoadingSpinner from '@components/LoadingSpinner';
 import {
   Container,
   LeftContainer,
@@ -85,6 +86,10 @@ function TeamProfileDetail(): JSX.Element {
       },
     });
   }, []);
+
+  if (!profile) {
+    return <LoadingSpinner />;
+  }
 
   return (
     <ContentContainer>
