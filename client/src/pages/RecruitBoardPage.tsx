@@ -44,6 +44,10 @@ function RecruitBoardPage(): JSX.Element {
     });
   }, [page, filterStatus, recruitPostLikeStatus]);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [page]);
+
   if (!recruitPostList) {
     return <LoadingSpinner />;
   }

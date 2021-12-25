@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useState } from 'react';
+import React, { useLayoutEffect, useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import PostItem from '@components/PostItem';
@@ -44,6 +44,10 @@ function FreeBoardPage(): JSX.Element {
       },
     });
   }, [page, filterStatus, commonPostLikeStatus]);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [page]);
 
   if (!boardList) {
     return <LoadingSpinner />;
