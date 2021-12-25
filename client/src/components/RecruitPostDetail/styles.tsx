@@ -189,3 +189,20 @@ export const Stacks = styled.ul`
     height: 44px;
   }
 `;
+
+export const JoinButtonWrapper = styled.div`
+  margin: 2rem 0 0 0;
+  display: flex;
+  justify-content: center;
+`;
+
+export const JoinButton = styled.button`
+  margin: 2rem 0 0 0;
+  font-size: 1.8rem;
+  padding: 1rem 4rem;
+  background-color: ${({ theme }) => theme.colors.main};
+  border-style: none;
+  color: #ffffff;
+  border-radius: 10px;
+  cursor: pointer;
+`;

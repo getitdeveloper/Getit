@@ -1,5 +1,8 @@
-import React, { useEffect } from 'react';
-import { RECRUIT_POST_REQUEST } from '@reducers/actions';
+import React, { useEffect, useCallback } from 'react';
+import {
+  RECRUIT_POST_REQUEST,
+  TEAM_MEMBER_JOIN_REQUEST,
+} from '@reducers/actions';
 import { useDispatch, useSelector, RootStateOrAny } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import LoadingSpinner from '@components/LoadingSpinner';
@@ -26,6 +29,8 @@ import {
   IconContainer,
   MailIcon,
   LikeIcon,
+  JoinButtonWrapper,
+  JoinButton,
   HorizontalLine,
   StudyProfile,
   DefaultProfile,
@@ -36,6 +41,9 @@ function RecruitPostDetail(): JSX.Element {
   const { postId }: IPostId = useParams();
   const recruitPostDetail = useSelector(
     (state: RootStateOrAny) => state.post.recruitPost,
+  );
+  const userId = useSelector(
+    (state: RootStateOrAny) => state.user.profileInfo?.user_pk,
   );
 
   const worker = useSelector((state: RootStateOrAny) => {
@@ -63,6 +71,19 @@ function RecruitPostDetail(): JSX.Element {
       data: postId,
     });
   }, []);
+
+  const joinMember = useCallback(() => {
+    if (!userId) {
+      return alert('로그인이 필요합니다. 로그인 후 이용해 주세요.');
+    }
+    dispatch({
+      type: TEAM_MEMBER_JOIN_REQUEST,
+      data: {
+        teamProfile: postId,
+        userId,
+      },
+    });
+  }, [userId, postId]);
 
   if (!recruitPostDetail) {
     return <LoadingSpinner />;
@@ -96,12 +117,12 @@ function RecruitPostDetail(): JSX.Element {
 
           {/* 쪽지, 좋아요 아이콘 */}
           <IconWrapper>
-            <IconContainer>
+            {/* <IconContainer>
               <MailIcon />
             </IconContainer>
             <IconContainer>
               <LikeIcon />
-            </IconContainer>
+            </IconContainer> */}
           </IconWrapper>
           {/* 수평 구분선 */}
           <HorizontalLine />
@@ -150,6 +171,9 @@ function RecruitPostDetail(): JSX.Element {
             <Label>참여중인 Get Iter</Label>
             <ParticipantsList participants={participants} />
             <br />
+            <JoinButtonWrapper>
+              <JoinButton onClick={joinMember}>참여신청</JoinButton>
+            </JoinButtonWrapper>
           </ContentWrapper>
         </RightContainer>
       </Container>

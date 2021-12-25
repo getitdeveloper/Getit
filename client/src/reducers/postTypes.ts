@@ -1,4 +1,5 @@
-import { IPostItem, IRecruitPost, ITeamProfilePostDetail } from '../types';
+import { ITeamMemberJoinData } from '@sagas/postTypes';
+import { IPostItem, IRecruitPost, ITeamProfilePostDetail } from '@types';
 import {
   COMMON_POST_REQUEST,
   COMMON_POST_SUCCESS,
@@ -27,6 +28,9 @@ import {
   RECRUIT_POST_LIKE_SUCCESS,
   RECRUIT_POST_LIKE_FAILURE,
   RECRUIT_POST_LIKE_REQUEST,
+  TEAM_MEMBER_JOIN_REQUEST,
+  TEAM_MEMBER_JOIN_SUCCESS,
+  TEAM_MEMBER_JOIN_FAILURE,
 } from './actions';
 
 export interface InitialState {
@@ -60,6 +64,9 @@ export interface InitialState {
   teamProfilePostDetailRequest: boolean;
   teamProfilePostDetailSuccess: boolean;
   teamProfilePostDetailFailure: string | null;
+  teamMemberJoinRequest: boolean;
+  teamMemberJoinSuccess: boolean;
+  teamMemberJoinFailure: string | null;
 }
 
 // 자유/질문게시판 글 가져오기
@@ -196,6 +203,21 @@ export interface TeamProfilePostDetailFailure {
   error: string;
 }
 
+export interface TeamMemberJoinRequest {
+  type: typeof TEAM_MEMBER_JOIN_REQUEST;
+  data: ITeamMemberJoinData;
+}
+
+export interface TeamMemberJoinSuccess {
+  type: typeof TEAM_MEMBER_JOIN_SUCCESS;
+  data: any;
+}
+
+export interface TeamMemberJoinFailure {
+  type: typeof TEAM_MEMBER_JOIN_FAILURE;
+  error: string;
+}
+
 export type PostActions =
   | CommonPostRequest
   | CommonPostSuccess
@@ -223,4 +245,7 @@ export type PostActions =
   | TeamProfileRemoveFailure
   | TeamProfilePostDetailRequest
   | TeamProfilePostDetailSuccess
-  | TeamProfilePostDetailFailure;
+  | TeamProfilePostDetailFailure
+  | TeamMemberJoinRequest
+  | TeamMemberJoinSuccess
+  | TeamMemberJoinFailure;

@@ -27,6 +27,9 @@ import {
   RECRUIT_POST_LIKE_REQUEST,
   RECRUIT_POST_LIKE_SUCCESS,
   RECRUIT_POST_LIKE_FAILURE,
+  TEAM_MEMBER_JOIN_REQUEST,
+  TEAM_MEMBER_JOIN_SUCCESS,
+  TEAM_MEMBER_JOIN_FAILURE,
 } from '@reducers/actions';
 import { InitialState, PostActions } from './postTypes';
 
@@ -62,6 +65,9 @@ const initialState: InitialState = {
   teamProfilePostDetailRequest: false,
   teamProfilePostDetailSuccess: false,
   teamProfilePostDetailFailure: null,
+  teamMemberJoinRequest: false,
+  teamMemberJoinSuccess: false,
+  teamMemberJoinFailure: null,
 };
 
 const reducer = (state = initialState, action: PostActions): InitialState =>
@@ -206,6 +212,22 @@ const reducer = (state = initialState, action: PostActions): InitialState =>
         draft.teamProfilePostDetailSuccess = false;
         draft.teamProfilePostDetailFailure = action.error;
         break;
+      case TEAM_MEMBER_JOIN_REQUEST:
+        draft.teamMemberJoinRequest = true;
+        draft.teamMemberJoinSuccess = false;
+        draft.teamMemberJoinFailure = null;
+        break;
+      case TEAM_MEMBER_JOIN_SUCCESS:
+        draft.teamMemberJoinRequest = false;
+        draft.teamMemberJoinSuccess = true;
+        draft.teamMemberJoinFailure = null;
+        break;
+      case TEAM_MEMBER_JOIN_FAILURE:
+        draft.teamMemberJoinRequest = false;
+        draft.teamMemberJoinSuccess = false;
+        draft.teamMemberJoinFailure = action.error;
+        break;
+
       default:
         return state;
     }

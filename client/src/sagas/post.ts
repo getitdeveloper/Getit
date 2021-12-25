@@ -28,6 +28,9 @@ import {
   RECRUIT_POST_LIKE_REQUEST,
   RECRUIT_POST_LIKE_SUCCESS,
   RECRUIT_POST_LIKE_FAILURE,
+  TEAM_MEMBER_JOIN_REQUEST,
+  TEAM_MEMBER_JOIN_SUCCESS,
+  TEAM_MEMBER_JOIN_FAILURE,
 } from '@reducers/actions';
 import {
   ICommonPostData,
@@ -43,6 +46,8 @@ import {
   IRecruitPost,
   IRecruitPostLikeData,
   IRecruitPostLike,
+  ITeamMemberJoinData,
+  ITeamMemberJoin,
 } from '@sagas/postTypes';
 
 // 자유/질문 게시글 받아오기
@@ -237,7 +242,7 @@ const requestRecruitPostLike = ({ userId, postId }: IRecruitPostLikeData) => {
   return axios.post(`/api/${postId}/recruitlikes/`, { user: userId });
 };
 
-function* requestRecruitPostLikeRequest(action: IRecruitPostLike): any {
+function* requestRecruitPostLikeSaga(action: IRecruitPostLike): any {
   try {
     const response = yield call(requestRecruitPostLike, action.data);
     // console.log('모집게시판 좋아요 응답 ===> ', response);
@@ -251,6 +256,34 @@ function* requestRecruitPostLikeRequest(action: IRecruitPostLike): any {
       error,
     });
     return alert('문제가 발생했습니다. 잠시 후 다시 시도해 주세요.');
+  }
+}
+
+// 모집게시글 팀원 참가 신청
+const requestTeamMemberJoin = ({
+  teamProfile,
+  userId,
+}: ITeamMemberJoinData) => {
+  return axios.post(`/api/waitingmember/`, {
+    teamprofile: Number(teamProfile),
+    waiting_member: userId,
+  });
+};
+
+function* requestTeamMemberJoinSaga(action: ITeamMemberJoin): any {
+  try {
+    const response = yield call(requestTeamMemberJoin, action.data);
+    // console.log('모집게시글 팀원 참가 신청 응답 ===> ', response);
+    yield put({
+      type: TEAM_MEMBER_JOIN_SUCCESS,
+      data: response.data,
+    });
+  } catch (error) {
+    yield put({
+      type: TEAM_MEMBER_JOIN_FAILURE,
+      error,
+    });
+    // return alert('문제가 발생했습니다. 잠시 후 다시 시도해 주세요.');
   }
 }
 
@@ -296,7 +329,11 @@ function* watchRequestTeamProfilePostDetail() {
 }
 
 function* watchRequestRecruitPostLike() {
-  yield takeLatest(RECRUIT_POST_LIKE_REQUEST, requestRecruitPostLikeRequest);
+  yield takeLatest(RECRUIT_POST_LIKE_REQUEST, requestRecruitPostLikeSaga);
+}
+
+function* watchRequestJoinMember() {
+  yield takeLatest(TEAM_MEMBER_JOIN_REQUEST, requestTeamMemberJoinSaga);
 }
 
 function* postSaga(): Generator {
@@ -310,6 +347,7 @@ function* postSaga(): Generator {
     fork(watchRequestTeamProfilePostRemove),
     fork(watchRequestTeamProfilePostDetail),
     fork(watchRequestRecruitPostLike),
+    fork(watchRequestJoinMember),
   ]);
 }
 
