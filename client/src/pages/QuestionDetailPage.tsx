@@ -15,6 +15,9 @@ function QuestionDetailPage(): JSX.Element {
   const questionPost = useSelector(
     (state: RootStateOrAny) => state.post.commonPost,
   );
+  const commonPostLikeStatus = useSelector(
+    (state: RootStateOrAny) => state.post.commonPostLikeSuccess,
+  );
 
   useEffect(() => {
     dispatch({
@@ -23,7 +26,7 @@ function QuestionDetailPage(): JSX.Element {
         id: postId,
       },
     });
-  }, []);
+  }, [commonPostLikeStatus]);
 
   if (!questionPost) {
     return <LoadingSpinner />;

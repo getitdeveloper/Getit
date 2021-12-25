@@ -29,8 +29,6 @@ function LikedPosts(): JSX.Element {
   );
   const [page, setPage] = useState(1);
   const [currentCategory, setCurrentCategory] = useState('recruit');
-  const onHandlePost = (postId: number, category: string) =>
-    history.push(`/${category}Board/${postId}`);
 
   useLayoutEffect(() => {
     setCurrentCategory(CategoryType[selectedTab]);
@@ -69,23 +67,18 @@ function LikedPosts(): JSX.Element {
       <NavBar />
       {likedPosts.results[0]?.recruitpost &&
         likedPosts.results.map((content: { recruitpost: IRecruitPost }) => (
-          <PostWrapper
-            key={content.recruitpost.id}
-            onClick={() => onHandlePost(content.recruitpost.id, 'recruit')}
-          >
+          <PostWrapper key={content.recruitpost.id}>
             <PostItem content={content.recruitpost} boardType='recruit' />
           </PostWrapper>
         ))}
 
       {likedPosts.results[0]?.commonpost &&
         likedPosts.results.map((content: { commonpost: IPost }) => (
-          <PostWrapper
-            key={content.commonpost.id}
-            onClick={() =>
-              onHandlePost(content.commonpost.id, content.commonpost.category)
-            }
-          >
-            <PostItem content={content.commonpost} />
+          <PostWrapper key={content.commonpost.id}>
+            <PostItem
+              content={content.commonpost}
+              boardType={content.commonpost.category}
+            />
           </PostWrapper>
         ))}
       <Paging
