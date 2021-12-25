@@ -138,7 +138,7 @@ server
 
 ### 📃 API Descriptions
 
-- https://api.getit.best
+- 공개용 제작중
   <br>
 
 ### ▶ Execution

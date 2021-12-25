@@ -6,7 +6,7 @@
 
 ### Address
 - 플랫폼 : https://getit.best
-- API 명세서: https://api.getit.best/redoc/v1/
+- API 명세서: 공개용 제작중
 
 ### Get Started
 - server : https://github.com/getitdeveloper/Getit/tree/main/Server

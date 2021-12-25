@@ -15,6 +15,7 @@ class CommonBoard(models.Model):
     stack = models.ManyToManyField('tags.Tag')
     worker = models.ManyToManyField('boards.Worker')
 
+
     class Meta:
         ordering = ['-create_at']
 
@@ -33,6 +34,7 @@ class RecruitmentBoard(models.Model):
     status = models.BooleanField(default=0)
     stack = models.ManyToManyField('tags.Tag')
     create_at = models.DateTimeField(auto_now_add=True)
+
 
     class Meta:
         ordering = ['-create_at']
