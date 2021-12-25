@@ -11,3 +11,7 @@ class Member(models.Model):
 
     def __str__(self):
         return self.member
+
+class WaitingForMember(models.Model):
+    waitmember = models.CharField(max_length=4)
+    create_at = models.DateTimeField(auto_now_add=True)

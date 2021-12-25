@@ -179,6 +179,12 @@ class LikeCountPostAPIView(GenericAPIView):
             result_page = paginator.paginate_queryset(posts, request)
             serializer = CommonBoardLikePostSerializer(result_page, many=True, context={'request': request})
             return paginator.get_paginated_response(serializer.data)
+        elif category == 'recruit':
+            posts = CommonBoardLike.objects.filter(commonpost__category=category).order_by('commonpost__count')
+            paginator = LikePageNumberPagination()
+            result_page = paginator.paginate_queryset(posts, request)
+            serializer = CommonBoardLikePostSerializer(result_page, many=True, context={'request': request})
+            return paginator.get_paginated_response(serializer.data)
 
 
 class RecruitmentBoardLikeAPIView(GenericAPIView):
