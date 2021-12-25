@@ -67,7 +67,7 @@ function LikedPosts(): JSX.Element {
   return (
     <ProfileRight>
       <NavBar />
-      {likedPosts.results[0].recruitpost &&
+      {likedPosts.results[0]?.recruitpost &&
         likedPosts.results.map((content: { recruitpost: IRecruitPost }) => (
           <PostWrapper
             key={content.recruitpost.id}
@@ -77,7 +77,7 @@ function LikedPosts(): JSX.Element {
           </PostWrapper>
         ))}
 
-      {likedPosts.results[0].commonpost &&
+      {likedPosts.results[0]?.commonpost &&
         likedPosts.results.map((content: { commonpost: IPost }) => (
           <PostWrapper
             key={content.commonpost.id}

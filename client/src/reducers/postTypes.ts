@@ -67,6 +67,7 @@ export interface InitialState {
   teamMemberJoinRequest: boolean;
   teamMemberJoinSuccess: boolean;
   teamMemberJoinFailure: string | null;
+  teamMembserJoinStatus: null | string;
 }
 
 // 자유/질문게시판 글 가져오기

@@ -42,8 +42,14 @@ function RecruitPostDetail(): JSX.Element {
   const recruitPostDetail = useSelector(
     (state: RootStateOrAny) => state.post.recruitPost,
   );
+  const postUserId = useSelector(
+    (state: RootStateOrAny) => state.post.recruitPost?.user.id,
+  );
   const userId = useSelector(
     (state: RootStateOrAny) => state.user.profileInfo?.user_pk,
+  );
+  const joinRequestStatus = useSelector(
+    (state: RootStateOrAny) => state.post.teamMemberJoinSuccess,
   );
 
   const worker = useSelector((state: RootStateOrAny) => {
@@ -64,6 +70,9 @@ function RecruitPostDetail(): JSX.Element {
   const participants = useSelector(
     (state: RootStateOrAny) => state.post.recruitPost?.study?.members,
   );
+  const teamProfileId = useSelector(
+    (state: RootStateOrAny) => state.post.recruitPost?.study?.id,
+  );
 
   useEffect(() => {
     dispatch({
@@ -72,18 +81,34 @@ function RecruitPostDetail(): JSX.Element {
     });
   }, []);
 
+  useEffect(() => {
+    // 팀 모집 신청에 성공한 경우
+    if (joinRequestStatus === 'success') {
+      return alert('신청을 완료했습니다.');
+    }
+    // 이미 팀 모집 신청을 했는데 또 신청버튼을 클릭한 경우
+    if (joinRequestStatus === 'fail') {
+      return alert('이미 신청했습니다. 수락 대기중 입니다.');
+    }
+  }, [joinRequestStatus]);
+
   const joinMember = useCallback(() => {
     if (!userId) {
       return alert('로그인이 필요합니다. 로그인 후 이용해 주세요.');
     }
+
+    if (postUserId === userId) {
+      return alert('본인이 작성한 게시글 입니다.');
+    }
+
     dispatch({
       type: TEAM_MEMBER_JOIN_REQUEST,
       data: {
-        teamProfile: postId,
+        teamProfileId,
         userId,
       },
     });
-  }, [userId, postId]);
+  }, [userId, teamProfileId]);
 
   if (!recruitPostDetail) {
     return <LoadingSpinner />;

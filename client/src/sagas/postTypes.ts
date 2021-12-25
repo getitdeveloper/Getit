@@ -84,8 +84,9 @@ export interface IRecruitPostLike {
 }
 
 export interface ITeamMemberJoinData {
-  teamProfile: string;
+  teamProfileId: number;
   userId: number;
+  consent?: boolean;
 }
 export interface ITeamMemberJoin {
   type: string;

@@ -68,6 +68,7 @@ const initialState: InitialState = {
   teamMemberJoinRequest: false,
   teamMemberJoinSuccess: false,
   teamMemberJoinFailure: null,
+  teamMembserJoinStatus: null,
 };
 
 const reducer = (state = initialState, action: PostActions): InitialState =>
@@ -221,6 +222,7 @@ const reducer = (state = initialState, action: PostActions): InitialState =>
         draft.teamMemberJoinRequest = false;
         draft.teamMemberJoinSuccess = true;
         draft.teamMemberJoinFailure = null;
+        draft.teamMembserJoinStatus = action.data.message;
         break;
       case TEAM_MEMBER_JOIN_FAILURE:
         draft.teamMemberJoinRequest = false;

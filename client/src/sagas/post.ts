@@ -259,13 +259,23 @@ function* requestRecruitPostLikeSaga(action: IRecruitPostLike): any {
   }
 }
 
-// 모집게시글 팀원 참가 신청
+// 모집게시글 팀원 참가 신청 / 팀원 참가 신청 수락
 const requestTeamMemberJoin = ({
-  teamProfile,
+  teamProfileId,
   userId,
+  consent,
 }: ITeamMemberJoinData) => {
+  // 팀프로필 내부 팀원 참가 신청 승락
+  if (consent) {
+    return axios.post(`/api/waitingmember/`, {
+      teamprofile: teamProfileId,
+      member: userId,
+    });
+  }
+
+  // 모집 게시판 팀원 참가 신청
   return axios.post(`/api/waitingmember/`, {
-    teamprofile: Number(teamProfile),
+    teamprofile: teamProfileId,
     waiting_member: userId,
   });
 };
@@ -273,7 +283,7 @@ const requestTeamMemberJoin = ({
 function* requestTeamMemberJoinSaga(action: ITeamMemberJoin): any {
   try {
     const response = yield call(requestTeamMemberJoin, action.data);
-    // console.log('모집게시글 팀원 참가 신청 응답 ===> ', response);
+    console.log('모집게시글 팀원 참가 신청 응답 ===> ', response);
     yield put({
       type: TEAM_MEMBER_JOIN_SUCCESS,
       data: response.data,
@@ -283,7 +293,7 @@ function* requestTeamMemberJoinSaga(action: ITeamMemberJoin): any {
       type: TEAM_MEMBER_JOIN_FAILURE,
       error,
     });
-    // return alert('문제가 발생했습니다. 잠시 후 다시 시도해 주세요.');
+    return alert('문제가 발생했습니다. 잠시 후 다시 시도해 주세요.');
   }
 }
 
