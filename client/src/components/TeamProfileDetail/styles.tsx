@@ -182,10 +182,54 @@ export const Stacks = styled.ul`
     font-size: 1.5rem;
     display: flex;
     align-items: center;
-    margin: 0.4rem 1rem;
+    margin: 0.4rem 1rem 0.4rem 0rem;
     padding: 0 1.5rem;
     border-radius: 12px;
     width: fit-content;
     height: 44px;
   }
+`;
+
+export const JoinUsers = styled.ul`
+  display: flex;
+  min-height: 5rem;
+  list-style: none;
+  margin-bottom: 1.4rem;
+  flex-wrap: wrap;
+
+  li {
+    background-color: #f5f5f5;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    margin: 0.4rem 1rem 0.4rem 0rem;
+    padding: 0 1.5rem;
+    border-radius: 12px;
+    width: fit-content;
+    height: 44px;
+    @media ${({ theme }) => theme.mobile} {
+      width: 100%;
+      span {
+        width: 70%;
+        text-align: center;
+      }
+    }
+    button {
+      font-size: 1.6rem;
+      margin-left: 1rem;
+      padding: 0.3rem 0.8rem;
+      border-radius: 10px;
+      border: 1px double;
+      cursor: pointer;
+
+      @media ${({ theme }) => theme.mobile} {
+        width: 30%;
+      }
+    }
+  }
+`;
+
+export const Notification = styled.div`
+  font-size: 1.6rem;
+  margin: 2rem 1rem;
 `;

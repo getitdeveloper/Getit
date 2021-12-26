@@ -45,6 +45,10 @@ function QuestionBoardPage(): JSX.Element {
     });
   }, [page, filterStatus, commonPostLikeStatus]);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [page]);
+
   if (!boardList) {
     return <LoadingSpinner />;
   }

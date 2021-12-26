@@ -182,10 +182,27 @@ export const Stacks = styled.ul`
     font-size: 1.5rem;
     display: flex;
     align-items: center;
-    margin: 0.4rem 1rem;
+    margin: 0.4rem 1rem 0.4rem 0;
     padding: 0 1.5rem;
     border-radius: 12px;
     width: fit-content;
     height: 44px;
   }
+`;
+
+export const JoinButtonWrapper = styled.div`
+  margin: 2rem 0 0 0;
+  display: flex;
+  justify-content: center;
+`;
+
+export const JoinButton = styled.button`
+  margin: 2rem 0 0 0;
+  font-size: 1.8rem;
+  padding: 1rem 4rem;
+  background-color: ${({ theme }) => theme.colors.main};
+  border-style: none;
+  color: #ffffff;
+  border-radius: 10px;
+  cursor: pointer;
 `;

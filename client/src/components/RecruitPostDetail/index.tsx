@@ -1,5 +1,9 @@
-import React, { useEffect } from 'react';
-import { RECRUIT_POST_REQUEST } from '@reducers/actions';
+import React, { useEffect, useCallback } from 'react';
+import {
+  RECRUIT_POST_REQUEST,
+  TEAM_MEMBER_JOIN_REQUEST,
+  TEAM_MEMBER_JOIN_SUCCESS,
+} from '@reducers/actions';
 import { useDispatch, useSelector, RootStateOrAny } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import LoadingSpinner from '@components/LoadingSpinner';
@@ -26,6 +30,8 @@ import {
   IconContainer,
   MailIcon,
   LikeIcon,
+  JoinButtonWrapper,
+  JoinButton,
   HorizontalLine,
   StudyProfile,
   DefaultProfile,
@@ -36,6 +42,18 @@ function RecruitPostDetail(): JSX.Element {
   const { postId }: IPostId = useParams();
   const recruitPostDetail = useSelector(
     (state: RootStateOrAny) => state.post.recruitPost,
+  );
+  const postUserId = useSelector(
+    (state: RootStateOrAny) => state.post.recruitPost?.user.id,
+  );
+  const userId = useSelector(
+    (state: RootStateOrAny) => state.user.profileInfo?.user_pk,
+  );
+  const joinRequestStatus = useSelector(
+    (state: RootStateOrAny) => state.post.teamMembserJoinStatus,
+  );
+  const joinRequestSuccess = useSelector(
+    (state: RootStateOrAny) => state.post.teamMemberJoinSuccess,
   );
 
   const worker = useSelector((state: RootStateOrAny) => {
@@ -56,6 +74,9 @@ function RecruitPostDetail(): JSX.Element {
   const participants = useSelector(
     (state: RootStateOrAny) => state.post.recruitPost?.study?.members,
   );
+  const teamProfileId = useSelector(
+    (state: RootStateOrAny) => state.post.recruitPost?.study?.id,
+  );
 
   useEffect(() => {
     dispatch({
@@ -63,6 +84,43 @@ function RecruitPostDetail(): JSX.Element {
       data: postId,
     });
   }, []);
+
+  useEffect(() => {
+    // 팀 모집 신청에 성공한 경우
+    if (joinRequestStatus === 'success') {
+      dispatch({
+        type: TEAM_MEMBER_JOIN_SUCCESS,
+        data: { message: null },
+      });
+      return alert('신청을 완료했습니다.');
+    }
+    // 이미 팀 모집 신청을 했는데 또 신청버튼을 클릭한 경우
+    if (joinRequestStatus === 'fail') {
+      dispatch({
+        type: TEAM_MEMBER_JOIN_SUCCESS,
+        data: { message: null },
+      });
+      return alert('이미 신청했습니다. 수락 대기중 입니다.');
+    }
+  }, [joinRequestSuccess]);
+
+  const joinMember = useCallback(() => {
+    if (!userId) {
+      return alert('로그인이 필요합니다. 로그인 후 이용해 주세요.');
+    }
+
+    if (postUserId === userId) {
+      return alert('본인이 작성한 게시글 입니다.');
+    }
+
+    dispatch({
+      type: TEAM_MEMBER_JOIN_REQUEST,
+      data: {
+        teamProfileId,
+        userId,
+      },
+    });
+  }, [userId, teamProfileId]);
 
   if (!recruitPostDetail) {
     return <LoadingSpinner />;
@@ -96,12 +154,12 @@ function RecruitPostDetail(): JSX.Element {
 
           {/* 쪽지, 좋아요 아이콘 */}
           <IconWrapper>
-            <IconContainer>
+            {/* <IconContainer>
               <MailIcon />
             </IconContainer>
             <IconContainer>
               <LikeIcon />
-            </IconContainer>
+            </IconContainer> */}
           </IconWrapper>
           {/* 수평 구분선 */}
           <HorizontalLine />
@@ -150,6 +208,9 @@ function RecruitPostDetail(): JSX.Element {
             <Label>참여중인 Get Iter</Label>
             <ParticipantsList participants={participants} />
             <br />
+            <JoinButtonWrapper>
+              <JoinButton onClick={joinMember}>참여신청</JoinButton>
+            </JoinButtonWrapper>
           </ContentWrapper>
         </RightContainer>
       </Container>

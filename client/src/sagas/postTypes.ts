@@ -82,3 +82,13 @@ export interface IRecruitPostLike {
   type: string;
   data: IRecruitPostLikeData;
 }
+
+export interface ITeamMemberJoinData {
+  teamProfileId: number;
+  userId: number;
+  consent?: boolean;
+}
+export interface ITeamMemberJoin {
+  type: string;
+  data: ITeamMemberJoinData;
+}

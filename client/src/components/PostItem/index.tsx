@@ -56,22 +56,24 @@ function PostItem({
       return setWorker(workerObj);
     }
     // 자유/질문 게시판
-    content.worker?.map((job: string) => {
-      switch (job) {
-        case '개발자':
-          workerObj.set('developer', 1);
-          break;
-        case '디자이너':
-          workerObj.set('designer', 1);
-          break;
-        case '기획자':
-          workerObj.set('pm', 1);
-          break;
-        default:
-          break;
-      }
-      return setWorker(workerObj);
-    });
+    if (boardType === 'free' || boardType === 'question') {
+      content.worker?.map((job: string) => {
+        switch (job) {
+          case '개발자':
+            workerObj.set('developer', 1);
+            break;
+          case '디자이너':
+            workerObj.set('designer', 1);
+            break;
+          case '기획자':
+            workerObj.set('pm', 1);
+            break;
+          default:
+            break;
+        }
+        return setWorker(workerObj);
+      });
+    }
   }, [content]);
 
   const onHandleWirterProfile = () => console.log('글쓴이의 프로필로 이동');

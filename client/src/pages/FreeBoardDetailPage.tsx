@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import { PageWrapper, PageTitle, PageBackground } from '@assets/styles/page';
@@ -15,15 +15,18 @@ function FreeBoardDetailPage(): JSX.Element {
   const freePost = useSelector(
     (state: RootStateOrAny) => state.post.commonPost,
   );
+  const commonPostLikeStatus = useSelector(
+    (state: RootStateOrAny) => state.post.commonPostLikeSuccess,
+  );
 
-  React.useEffect(() => {
+  useEffect(() => {
     dispatch({
       type: COMMON_POST_REQUEST,
       data: {
         id: postId,
       },
     });
-  }, []);
+  }, [commonPostLikeStatus]);
 
   if (!freePost) {
     return <LoadingSpinner />;
