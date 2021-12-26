@@ -11,6 +11,8 @@ class Member(models.Model):
 
     def __str__(self):
         return self.member
+    class Meta:
+        ordering = ['-create_at']
 
 class WaitingForMember(models.Model):
     waitmember = models.CharField(max_length=4)
@@ -18,3 +20,5 @@ class WaitingForMember(models.Model):
 
     def __str__(self):
         return self.waitmember
+    class Meta:
+        ordering = ['-create_at']
