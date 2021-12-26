@@ -2,6 +2,7 @@ from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from accounts.models import User
+from members.models import Member, WaitingForMember
 
 
 class Profile(models.Model):
@@ -53,4 +54,4 @@ class TeamProfile(models.Model):
     stack = models.ManyToManyField('tags.Tag')
     created_at = models.DateTimeField(auto_now_add=True)
     members = models.ManyToManyField('members.Member')
-    waiting_members = models.ManyToManyField('members.WatingForMember')
+    waiting_members = models.ManyToManyField(WaitingForMember)
