@@ -1,5 +1,4 @@
-import * as React from 'react';
-import { useEffect, useState, useLayoutEffect } from 'react';
+import React, { useEffect, useState, useLayoutEffect } from 'react';
 import { useHistory } from 'react-router';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import PostItem from '@components/PostItem';
@@ -21,23 +20,25 @@ function MyPosts(): JSX.Element {
   const userId = useSelector(
     (state: RootStateOrAny) => state.user.profileInfo?.user_pk,
   );
+  const selectedTab = useSelector(
+    (state: RootStateOrAny) => state.navbarTab.selectTab,
+  );
   const myPosts = useSelector(
     (state: RootStateOrAny) => state.postList.myPostList,
   );
   const dispatch = useDispatch();
   const [page, setPage] = useState(1);
-  const [selectTab, setSelectTab] = useState(0);
   const [currentCategory, setCurrentCategory] = useState('question');
   const onHandlePost = (postId: number, category: string) =>
     history.push(`/${category}Board/${postId}`);
 
   useLayoutEffect(() => {
-    setCurrentCategory(CategoryType[selectTab]);
-  }, [selectTab]);
+    setCurrentCategory(CategoryType[selectedTab]);
+  }, [selectedTab]);
 
   useEffect(() => {
     // 질문/자유 게시글 목록 요청
-    if (selectTab === 1 || selectTab === 2) {
+    if (selectedTab === 1 || selectedTab === 2) {
       dispatch({
         type: MY_POST_LIST_REQUEST,
         data: {
@@ -57,7 +58,7 @@ function MyPosts(): JSX.Element {
         },
       });
     }
-  }, [currentCategory, page, selectTab]);
+  }, [currentCategory, page, selectedTab]);
 
   if (!myPosts) {
     return <LoadingSpinner />;
@@ -65,13 +66,21 @@ function MyPosts(): JSX.Element {
 
   return (
     <ProfileRight>
-      <NavBar selectTab={selectTab} setSelectTab={setSelectTab} />
+      <NavBar />
       {myPosts.results.map((content: IPost) => (
         <PostWrapper
           key={content.id}
-          onClick={() => onHandlePost(content.id, content.category)}
+          onClick={() =>
+            onHandlePost(
+              content.id,
+              content.category ? content.category : 'recruit',
+            )
+          }
         >
-          <PostItem content={content} />
+          <PostItem
+            content={content}
+            boardType={content.category ? content.category : 'recruit'}
+          />
         </PostWrapper>
       ))}
       <Paging activePage={page} totalPage={myPosts.count} setPage={setPage} />

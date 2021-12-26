@@ -28,6 +28,9 @@ import {
   RECRUIT_POST_LIKE_REQUEST,
   RECRUIT_POST_LIKE_SUCCESS,
   RECRUIT_POST_LIKE_FAILURE,
+  TEAM_MEMBER_JOIN_REQUEST,
+  TEAM_MEMBER_JOIN_SUCCESS,
+  TEAM_MEMBER_JOIN_FAILURE,
 } from '@reducers/actions';
 import {
   ICommonPostData,
@@ -43,6 +46,8 @@ import {
   IRecruitPost,
   IRecruitPostLikeData,
   IRecruitPostLike,
+  ITeamMemberJoinData,
+  ITeamMemberJoin,
 } from '@sagas/postTypes';
 
 // 자유/질문 게시글 받아오기
@@ -201,7 +206,7 @@ function* requestTeamProfilePostRemoveSaga(action: ITeamProfileIdData): any {
       type: TEAM_PROFILE_REMOVE_SUCCESS,
       data: response.data,
     });
-    alert('팀 프로필 삭제 완료');
+    return alert('팀 프로필 삭제 완료');
   } catch (error) {
     yield put({
       type: TEAM_PROFILE_REMOVE_FAILURE,
@@ -219,6 +224,7 @@ const requestTeamProfilePostDetail = (data: ITeamProfileIdApiData) => {
 function* requestTeamProfilePostDetailSaga(action: ITeamProfileIdData): any {
   try {
     const response = yield call(requestTeamProfilePostDetail, action.data);
+    // console.log('팀 프로필 상세내용 응답 ===> ', response);
     yield put({
       type: TEAM_PROFILE_POST_DETAIL_SUCCESS,
       data: response.data,
@@ -228,7 +234,7 @@ function* requestTeamProfilePostDetailSaga(action: ITeamProfileIdData): any {
       type: TEAM_PROFILE_POST_DETAIL_FAILURE,
       error,
     });
-    return alert('문제가 발생했습니다. 잠시 후 다시 시도해 주세요.');
+    // return alert('문제가 발생했습니다. 잠시 후 다시 시도해 주세요.');
   }
 }
 
@@ -237,7 +243,7 @@ const requestRecruitPostLike = ({ userId, postId }: IRecruitPostLikeData) => {
   return axios.post(`/api/${postId}/recruitlikes/`, { user: userId });
 };
 
-function* requestRecruitPostLikeRequest(action: IRecruitPostLike): any {
+function* requestRecruitPostLikeSaga(action: IRecruitPostLike): any {
   try {
     const response = yield call(requestRecruitPostLike, action.data);
     // console.log('모집게시판 좋아요 응답 ===> ', response);
@@ -248,6 +254,44 @@ function* requestRecruitPostLikeRequest(action: IRecruitPostLike): any {
   } catch (error) {
     yield put({
       type: RECRUIT_POST_LIKE_FAILURE,
+      error,
+    });
+    return alert('문제가 발생했습니다. 잠시 후 다시 시도해 주세요.');
+  }
+}
+
+// 모집게시글 팀원 참가 신청 / 팀원 참가 신청 수락
+const requestTeamMemberJoin = ({
+  teamProfileId,
+  userId,
+  consent,
+}: ITeamMemberJoinData) => {
+  // 팀프로필 내부 팀원 참가 신청 승락
+  if (consent) {
+    return axios.post(`/api/member/`, {
+      teamprofile: teamProfileId,
+      member: userId,
+    });
+  }
+
+  // 모집 게시판 팀원 참가 신청
+  return axios.post(`/api/waitingmember/`, {
+    teamprofile: teamProfileId,
+    waiting_member: userId,
+  });
+};
+
+function* requestTeamMemberJoinSaga(action: ITeamMemberJoin): any {
+  try {
+    const response = yield call(requestTeamMemberJoin, action.data);
+    console.log('모집게시글 팀원 참가 신청 응답 ===> ', response);
+    yield put({
+      type: TEAM_MEMBER_JOIN_SUCCESS,
+      data: response.data,
+    });
+  } catch (error) {
+    yield put({
+      type: TEAM_MEMBER_JOIN_FAILURE,
       error,
     });
     return alert('문제가 발생했습니다. 잠시 후 다시 시도해 주세요.');
@@ -296,7 +340,11 @@ function* watchRequestTeamProfilePostDetail() {
 }
 
 function* watchRequestRecruitPostLike() {
-  yield takeLatest(RECRUIT_POST_LIKE_REQUEST, requestRecruitPostLikeRequest);
+  yield takeLatest(RECRUIT_POST_LIKE_REQUEST, requestRecruitPostLikeSaga);
+}
+
+function* watchRequestJoinMember() {
+  yield takeLatest(TEAM_MEMBER_JOIN_REQUEST, requestTeamMemberJoinSaga);
 }
 
 function* postSaga(): Generator {
@@ -310,6 +358,7 @@ function* postSaga(): Generator {
     fork(watchRequestTeamProfilePostRemove),
     fork(watchRequestTeamProfilePostDetail),
     fork(watchRequestRecruitPostLike),
+    fork(watchRequestJoinMember),
   ]);
 }
 

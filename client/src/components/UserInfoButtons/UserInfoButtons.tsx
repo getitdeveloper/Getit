@@ -1,5 +1,7 @@
 import React, { useCallback } from 'react';
+import { useDispatch } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
+import { MY_PROFILE_SELECT_MENU } from '@reducers/actions';
 import { Nickname } from './types';
 import {
   UserInfoWrapper,
@@ -9,10 +11,21 @@ import {
 
 function UserInfoButtons({ nickname }: Nickname): JSX.Element {
   const history = useHistory();
+  const dispatch = useDispatch();
   const { pathname } = useLocation();
 
   const handleRouting = useCallback(() => {
+    dispatch({
+      type: MY_PROFILE_SELECT_MENU,
+      data: {
+        selected: 0,
+      },
+    });
     return history.push('/myprofile');
+  }, []);
+
+  const handleAlert = useCallback(() => {
+    return alert('서비스 준비중 입니다.');
   }, []);
 
   const checkPath = ['recruitBoard', 'questionBoard', 'freeBoard', 'myprofile'];
@@ -31,7 +44,7 @@ function UserInfoButtons({ nickname }: Nickname): JSX.Element {
         <StyledPersonIcon fontSize='large' />
       </button>
       <button type='button' className='icon-button'>
-        <StyledNotificationsIcon fontSize='large' />
+        <StyledNotificationsIcon fontSize='large' onClick={handleAlert} />
       </button>
     </UserInfoWrapper>
   );

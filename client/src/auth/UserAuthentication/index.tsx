@@ -21,7 +21,7 @@ const auth = (
         axios
           .get('/api/auth/')
           .then((response) => {
-            console.log('서버와 쿠키 공유 상태 response ===> ', response);
+            // console.log('서버와 쿠키 공유 상태 response ===> ', response);
             dispatch({
               type: USER_PROFILE_REQUEST,
               data: {
@@ -30,7 +30,7 @@ const auth = (
             });
           })
           .catch((error) => {
-            console.log('서버와 쿠키 공유 상태 error ===>', error);
+            console.error(error);
           });
       }, []);
     } else {

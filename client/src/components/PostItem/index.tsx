@@ -7,7 +7,7 @@ import { COMMON_POST_LIKE_REQUEST } from '@reducers/actions';
 import MemberType from '@components/RecruitMembers/index';
 import UserImg from '@assets/images/user.svg';
 import { IPostId } from '@types';
-import { IPostItem } from './types';
+import { IPostItem, IRecruitPostItem } from './types';
 import {
   WriterInfo,
   WriterInfoMobile,
@@ -35,7 +35,7 @@ function PostItem({
   boardType = '',
   index = 0,
   length = 0,
-}: IPostItem): JSX.Element {
+}: IPostItem | IRecruitPostItem): JSX.Element {
   const history = useHistory();
   const { postId }: IPostId = useParams();
   const { pathname } = useLocation();
@@ -48,23 +48,33 @@ function PostItem({
 
   useEffect(() => {
     const workerObj = new Map();
-    content.worker?.map((job: string) => {
-      switch (job) {
-        case '개발자':
-          workerObj.set('developer', 1);
-          break;
-        case '디자이너':
-          workerObj.set('designer', 1);
-          break;
-        case '기획자':
-          workerObj.set('pm', 1);
-          break;
-        default:
-          break;
-      }
+    // 모집 게시판
+    if (boardType === 'recruit') {
+      workerObj.set('developer', content.developer);
+      workerObj.set('designer', content.designer);
+      workerObj.set('pm', content.pm);
       return setWorker(workerObj);
-    });
-  }, []);
+    }
+    // 자유/질문 게시판
+    if (boardType === 'free' || boardType === 'question') {
+      content.worker?.map((job: string) => {
+        switch (job) {
+          case '개발자':
+            workerObj.set('developer', 1);
+            break;
+          case '디자이너':
+            workerObj.set('designer', 1);
+            break;
+          case '기획자':
+            workerObj.set('pm', 1);
+            break;
+          default:
+            break;
+        }
+        return setWorker(workerObj);
+      });
+    }
+  }, [content]);
 
   const onHandleWirterProfile = () => console.log('글쓴이의 프로필로 이동');
   const onHandlePost = () => history.push(`/${boardType}Board/${content.id}`);
@@ -117,7 +127,7 @@ function PostItem({
 
               <div>
                 <IconButton type='button' onClick={onHandleLike}>
-                  {content.is_like.find((like) => like.user === userId) ? (
+                  {content.is_like.find((like: any) => like.user === userId) ? (
                     <StyledFavoriteIcon />
                   ) : (
                     <StyledFavoriteBorderIcon />

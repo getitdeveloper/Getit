@@ -1,10 +1,11 @@
 import React, { useCallback, useState } from 'react';
-import { RootStateOrAny, useSelector } from 'react-redux';
-import { useLocation, Link } from 'react-router-dom';
+import { useHistory, useLocation, Link } from 'react-router-dom';
+import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import SearchBar from '@components/SearchBar/SearchBar';
 import LoginDialog from '@components/LoginDialog/LoginDialog';
 import UserInfoButtons from '@components/UserInfoButtons/UserInfoButtons';
 import HeaderNav from '@components/Header/HeaderNav';
+import { SELECT_TAB } from '@reducers/actions';
 import {
   LoginButton,
   HeaderWrapper,
@@ -17,6 +18,8 @@ import {
 import ToggleMenu from './ToggleMenu';
 
 function Header(): JSX.Element {
+  const history = useHistory();
+  const dispatch = useDispatch();
   const { pathname } = useLocation();
   const profileInfo = useSelector(
     (state: RootStateOrAny) => state.user.profileInfo,
@@ -32,6 +35,15 @@ function Header(): JSX.Element {
     setOpen(false);
   }, [open]);
 
+  const handleRouting = useCallback(() => {
+    // 로고 클릭해서 메인페이지로 이동시 navbar 선택탭 스터디 모집으로 변경
+    dispatch({
+      type: SELECT_TAB,
+      data: 0,
+    });
+    return history.push('/');
+  }, [pathname]);
+
   // 회원가입 페이지인 경우 header 감추기
   if (pathname === '/register') {
     return <div />;
@@ -43,9 +55,7 @@ function Header(): JSX.Element {
         <ToggleMenu />
         {/* GetIt 로고 */}
         <LeftHeaderWrapper>
-          <Link to='/'>
-            <Logo />
-          </Link>
+          <Logo onClick={handleRouting} />
         </LeftHeaderWrapper>
 
         {/* 전체 검색창 또는 navigation */}
