@@ -1,7 +1,9 @@
 <!-- ![title](./Getit.png) -->
 
 <div align='center'>
-  <img src='./Getit.png'>
+  <a href='https://getit.best' target="_blank" rel="noopener noreferrer">
+    <img src='./Getit.png'>
+  </a>
 </div>
 
 # Getit
@@ -23,11 +25,11 @@
 
 ### Authors
 
-- 이형준 : server developer
-- 김건우 : server developer
-- 이승원 : client developer
-- 박지수 : client developer
-- 정유미 : designer
+- <a href='https://github.com/leeceo97' target="_blank" rel="noopener noreferrer">이형준 : server developer</a>
+- <a href='https://github.com/kgw7401' target="_blank" rel="noopener noreferrer">김건우 : server developer</a>
+- <a href='https://github.com/seungwonleee' target="_blank" rel="noopener noreferrer">이승원 : client developer</a>
+- <a href='https://github.com/alyssa1996' target="_blank" rel="noopener noreferrer">박지수 : client developer</a>
+- <a href='https://www.instagram.com/youme1802/' target="_blank" rel="noopener noreferrer">정유미 : designer</a>
 
 ### Contact
 
