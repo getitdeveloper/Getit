@@ -67,10 +67,9 @@ class MemberWaitingView(GenericAPIView):
         teamprofile_id = requestData['teamprofile']
         waiting_member = requestData['waiting_member']
         teamprofile = TeamProfile.objects.get(id=teamprofile_id)
-        print(teamprofile)
         _member, _ = WaitingForMember.objects.get_or_create(waitmember=waiting_member)
 
-        teamprofile.waitingmember.add(_member)
+        teamprofile.waiting_members.add(_member)
         res = {
             "message": "success",
             'teamprofile': teamprofile_id,
