@@ -2,6 +2,7 @@ import React, { useEffect, useCallback } from 'react';
 import {
   RECRUIT_POST_REQUEST,
   TEAM_MEMBER_JOIN_REQUEST,
+  TEAM_MEMBER_JOIN_SUCCESS,
 } from '@reducers/actions';
 import { useDispatch, useSelector, RootStateOrAny } from 'react-redux';
 import { useParams } from 'react-router-dom';
@@ -49,6 +50,9 @@ function RecruitPostDetail(): JSX.Element {
     (state: RootStateOrAny) => state.user.profileInfo?.user_pk,
   );
   const joinRequestStatus = useSelector(
+    (state: RootStateOrAny) => state.post.teamMembserJoinStatus,
+  );
+  const joinRequestSuccess = useSelector(
     (state: RootStateOrAny) => state.post.teamMemberJoinSuccess,
   );
 
@@ -84,13 +88,21 @@ function RecruitPostDetail(): JSX.Element {
   useEffect(() => {
     // 팀 모집 신청에 성공한 경우
     if (joinRequestStatus === 'success') {
+      dispatch({
+        type: TEAM_MEMBER_JOIN_SUCCESS,
+        data: { message: null },
+      });
       return alert('신청을 완료했습니다.');
     }
     // 이미 팀 모집 신청을 했는데 또 신청버튼을 클릭한 경우
     if (joinRequestStatus === 'fail') {
+      dispatch({
+        type: TEAM_MEMBER_JOIN_SUCCESS,
+        data: { message: null },
+      });
       return alert('이미 신청했습니다. 수락 대기중 입니다.');
     }
-  }, [joinRequestStatus]);
+  }, [joinRequestSuccess]);
 
   const joinMember = useCallback(() => {
     if (!userId) {

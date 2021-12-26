@@ -182,7 +182,7 @@ export const Stacks = styled.ul`
     font-size: 1.5rem;
     display: flex;
     align-items: center;
-    margin: 0.4rem 1rem;
+    margin: 0.4rem 1rem 0.4rem 0;
     padding: 0 1.5rem;
     border-radius: 12px;
     width: fit-content;

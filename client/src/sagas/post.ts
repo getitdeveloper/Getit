@@ -206,7 +206,7 @@ function* requestTeamProfilePostRemoveSaga(action: ITeamProfileIdData): any {
       type: TEAM_PROFILE_REMOVE_SUCCESS,
       data: response.data,
     });
-    alert('팀 프로필 삭제 완료');
+    return alert('팀 프로필 삭제 완료');
   } catch (error) {
     yield put({
       type: TEAM_PROFILE_REMOVE_FAILURE,
@@ -224,6 +224,7 @@ const requestTeamProfilePostDetail = (data: ITeamProfileIdApiData) => {
 function* requestTeamProfilePostDetailSaga(action: ITeamProfileIdData): any {
   try {
     const response = yield call(requestTeamProfilePostDetail, action.data);
+    // console.log('팀 프로필 상세내용 응답 ===> ', response);
     yield put({
       type: TEAM_PROFILE_POST_DETAIL_SUCCESS,
       data: response.data,
@@ -267,7 +268,7 @@ const requestTeamMemberJoin = ({
 }: ITeamMemberJoinData) => {
   // 팀프로필 내부 팀원 참가 신청 승락
   if (consent) {
-    return axios.post(`/api/waitingmember/`, {
+    return axios.post(`/api/member/`, {
       teamprofile: teamProfileId,
       member: userId,
     });

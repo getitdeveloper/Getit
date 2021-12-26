@@ -182,7 +182,7 @@ export const Stacks = styled.ul`
     font-size: 1.5rem;
     display: flex;
     align-items: center;
-    margin: 0.4rem 1rem;
+    margin: 0.4rem 1rem 0.4rem 0rem;
     padding: 0 1.5rem;
     border-radius: 12px;
     width: fit-content;
@@ -202,7 +202,7 @@ export const JoinUsers = styled.ul`
     font-size: 1.5rem;
     display: flex;
     align-items: center;
-    margin: 0.4rem 1rem;
+    margin: 0.4rem 1rem 0.4rem 0rem;
     padding: 0 1.5rem;
     border-radius: 12px;
     width: fit-content;
@@ -227,4 +227,9 @@ export const JoinUsers = styled.ul`
       }
     }
   }
+`;
+
+export const Notification = styled.div`
+  font-size: 1.6rem;
+  margin: 2rem 1rem;
 `;

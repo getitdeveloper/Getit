@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback, MouseEvent } from 'react';
 import UserImg from '@assets/images/user.svg';
 import { ContentContainer } from '@assets/styles/page';
 import ParticipantsList from '@components/ParticipantsList/index';
@@ -27,6 +27,7 @@ import {
   StudyProfile,
   DefaultProfile,
   JoinUsers,
+  Notification,
 } from './styles';
 import { ITeamProfileDetail } from './types';
 
@@ -35,6 +36,9 @@ function TeamProfileDetail(): JSX.Element {
   const { postId }: IPostId = useParams();
   const userId = useSelector(
     (state: RootStateOrAny) => state.user.profileInfo?.user,
+  );
+  const joinRequestSuccess = useSelector(
+    (state: RootStateOrAny) => state.post.teamMemberJoinSuccess,
   );
 
   const profile = useSelector((state: ITeamProfileDetail) => {
@@ -45,18 +49,7 @@ function TeamProfileDetail(): JSX.Element {
     const stacks = state.post.teamProfilePostDetail?.stack;
     const members = state.post.teamProfilePostDetail?.members;
     const createdAt = state.post.teamProfilePostDetail?.created_at;
-    // const waitingMember = state.post.teamProfilePostDetail?.waiting
-    const waitingMember = [
-      { id: 1, nickname: '1안녕하세요' },
-      { id: 1, nickname: '2유저닉네임유저닉네임' },
-      { id: 1, nickname: '3유저네임ad' },
-      { id: 1, nickname: '4123456' },
-      { id: 1, nickname: '5일이삼육칠팔구십' },
-      { id: 1, nickname: '6유저닉네임네임' },
-      { id: 1, nickname: '7ㅂㅁㅈㄴㄷㅇㅅㅎ' },
-      { id: 1, nickname: '8안녕하세요' },
-    ];
-
+    const waitingMember = state.post.teamProfilePostDetail?.waiting_members;
     return {
       id,
       image,
@@ -74,18 +67,22 @@ function TeamProfileDetail(): JSX.Element {
       type: TEAM_PROFILE_POST_DETAIL_REQUEST,
       data: { userId, postId },
     });
-  }, []);
+  }, [joinRequestSuccess]);
 
-  const handleConsent = useCallback(() => {
-    dispatch({
-      type: TEAM_MEMBER_JOIN_REQUEST,
-      data: {
-        teamProfileId: profile.id,
-        userId,
-        consent: true,
-      },
-    });
-  }, []);
+  const handleConsent = useCallback(
+    (event: MouseEvent<HTMLButtonElement>) => {
+      const { id } = event.target as HTMLButtonElement;
+      dispatch({
+        type: TEAM_MEMBER_JOIN_REQUEST,
+        data: {
+          teamProfileId: profile.id,
+          userId: id,
+          consent: true,
+        },
+      });
+    },
+    [profile, userId],
+  );
 
   if (!profile) {
     return <LoadingSpinner />;
@@ -145,16 +142,24 @@ function TeamProfileDetail(): JSX.Element {
 
             <Label>팀원 신청 목록</Label>
             <JoinUsers>
-              {profile.waitingMember.map((user) => {
-                return (
-                  <li key={user.nickname}>
-                    <span>{user.nickname}</span>
-                    <button type='button' onClick={handleConsent}>
-                      수락
-                    </button>
-                  </li>
-                );
-              })}
+              {profile.waitingMember?.length >= 1 ? (
+                profile.waitingMember?.map((user) => {
+                  return (
+                    <li key={user.nickname}>
+                      <span>{user.nickname}</span>
+                      <button
+                        type='button'
+                        id={user.waitmember}
+                        onClick={handleConsent}
+                      >
+                        수락
+                      </button>
+                    </li>
+                  );
+                })
+              ) : (
+                <Notification>팀원 참여 신청한 인원이 없습니다.</Notification>
+              )}
             </JoinUsers>
           </ContentWrapper>
         </RightContainer>

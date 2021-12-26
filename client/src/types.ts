@@ -151,10 +151,10 @@ export interface ITeamProfilePostDetail {
   title: string;
   content: string;
   status: boolean;
-  image: string;
-  stack: Array<string>;
+  image: string | null;
+  stack: Array<string> | [];
   created_at: string;
-  members: Array<{ member: string; nickname: string }>;
+  waiting_members: Array<{ waitmember: string; nickname: string }>;
 }
 
 export interface IPostId {

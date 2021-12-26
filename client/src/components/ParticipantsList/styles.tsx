@@ -8,6 +8,7 @@ export const BoxContainer = styled.ul`
   border-radius: 1.2rem;
   list-style: none;
   flex-wrap: wrap;
+  margin: 1rem 0rem;
 `;
 
 export const UserContainer = styled.li`

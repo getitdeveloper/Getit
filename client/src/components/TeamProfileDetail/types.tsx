@@ -8,6 +8,7 @@ export interface ITeamProfileDetail {
       stack: Array<string> | [];
       members: Array<{ member: string; nickname: string }>;
       created_at: string;
+      waiting_members: Array<{ waitmember: string; nickname: string }>;
     };
   };
 }
