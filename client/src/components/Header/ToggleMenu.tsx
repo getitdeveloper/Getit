@@ -137,6 +137,10 @@ export default function ToggleMenu(): JSX.Element {
     });
   }, []);
 
+  const handleAlert = useCallback(() => {
+    return alert('서비스 준비중 입니다.');
+  }, []);
+
   const toggleDrawer =
     (anchor: Anchor, open: boolean) => (event: KeyboardEvent | MouseEvent) => {
       if (
@@ -170,7 +174,11 @@ export default function ToggleMenu(): JSX.Element {
                   button
                   key={item.text}
                   className={item.text}
-                  onClick={() => handleSelectMenu(item.text)}
+                  onClick={
+                    item.text === '알림' || item.text === '쪽지'
+                      ? handleAlert
+                      : () => handleSelectMenu(item.text)
+                  }
                 >
                   <StyledListItemIcon>{item.icon}</StyledListItemIcon>
                   <StyledListItemText disableTypography primary={item.text} />

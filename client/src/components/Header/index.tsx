@@ -55,10 +55,7 @@ function Header(): JSX.Element {
         <ToggleMenu />
         {/* GetIt 로고 */}
         <LeftHeaderWrapper>
-          {/* <Link to='/'> */}
           <Logo onClick={handleRouting} />
-          {/* <Logo /> */}
-          {/* </Link> */}
         </LeftHeaderWrapper>
 
         {/* 전체 검색창 또는 navigation */}

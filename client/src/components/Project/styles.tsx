@@ -31,6 +31,7 @@ export const ProjectContent = styled.div`
 
   @media ${({ theme }) => theme.mobile} {
     width: 100%;
+    margin: 1rem 0rem;
   }
 `;
 
