@@ -662,7 +662,6 @@ class WorkerFilterView(GenericAPIView):
                     paginator = BoardPageNumberPagination()
                     result_page = paginator.paginate_queryset(posts, request)
                     serializer = CommonBoardSerializer(result_page, many=True, context={'request': request})
-
                     return paginator.get_paginated_response(serializer.data)
                 else:
                     posts = CommonBoard.objects.filter(worker=3, category='free').distinct()

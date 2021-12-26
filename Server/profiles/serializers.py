@@ -7,7 +7,10 @@ from portfolios.models import Portfolio
 from tags.models import Tag
 from .models import Profile, TeamProfile
 from members.models import Member
-from members.serializers import MemberSerializer
+from members.serializers import MemberSerializer, WaitingMemberSerializer
+
+from members.models import WaitingForMember
+
 
 
 class TagSerializer(serializers.ModelSerializer):
@@ -71,12 +74,10 @@ class ProfileSerializer(serializers.ModelSerializer):
         return serializers.data
 
 
-
-
 class TeamProfileSerializer(serializers.ModelSerializer):
     stack = TagSerializer(read_only=True, many=True)
     members = MemberSerializer(read_only=True, many=True)
-
+    waiting_members = WaitingMemberSerializer(read_only=True, many=True)
     class Meta:
         model = TeamProfile
         fields = (
@@ -88,7 +89,9 @@ class TeamProfileSerializer(serializers.ModelSerializer):
             'image',
             'stack',
             'created_at',
-            'members'
+            'members',
+            'waiting_members',
         )
+
 
 

@@ -20,15 +20,16 @@ class MemberAddView(GenericAPIView):
 
         ---
                 {
-                    'teamprofile': 2
+                    'teamprofile': 2,
+                    'member': 3
                 }
         """
         requestData = json.loads(request.body)
         teamprofile_id = requestData['teamprofile']
+        member_id = requestData['member']
         profile = TeamProfile.objects.get(id=teamprofile_id)
-        member = request.user.id
-        _member, _ = Member.objects.get_or_create(member=member)
-        profile.members.add(member)
+        _member, _ = Member.objects.get_or_create(member=member_id)
+        profile.members.add(_member)
         res = {
             "message": "sucess"
         }
@@ -36,7 +37,7 @@ class MemberAddView(GenericAPIView):
 
 class MemberWaitingView(GenericAPIView):
 
-    def get(self, request):
+    def get(self, request, teamprofile):
         """
                 프로젝트 지원 대기 멤버 조회(GET)
 
@@ -66,17 +67,13 @@ class MemberWaitingView(GenericAPIView):
         teamprofile_id = requestData['teamprofile']
         waiting_member = requestData['waiting_member']
         teamprofile = TeamProfile.objects.get(id=teamprofile_id)
-
+        print(teamprofile)
         _member, _ = WaitingForMember.objects.get_or_create(waitmember=waiting_member)
-        if waiting_member in teamprofile.waitingmember:
-            res = {
-                "messege": "fail",
-            }
-        else:
-            teamprofile.waitingmember.add(_member)
-            res = {
-                "message": "success",
-                'teamprofile': teamprofile_id,
-                'waiting_member': waiting_member
-            }
+
+        teamprofile.waitingmember.add(_member)
+        res = {
+            "message": "success",
+            'teamprofile': teamprofile_id,
+            'waiting_member': waiting_member
+        }
         return JsonResponse(res)
