@@ -3,7 +3,7 @@ from rest_framework import serializers
 from members.models import Member
 from profiles.models import Profile
 
-from Getit.Server.members.models import WaitingForMember
+from members.models import WaitingForMember
 
 
 class MemberSerializer(serializers.ModelSerializer):

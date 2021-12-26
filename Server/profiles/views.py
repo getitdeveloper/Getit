@@ -45,7 +45,7 @@ def status_check(request):
     }
     return JsonResponse(context)
 
-@method_decorator(csrf_exempt, name='dispatch')
+
 class ProfileDetail(GenericAPIView):
     serializer_class = ProfileSerializer
     permission_classes = [IsOwnerOrReadOnly]

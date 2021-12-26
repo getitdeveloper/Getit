@@ -53,4 +53,4 @@ class TeamProfile(models.Model):
     stack = models.ManyToManyField('tags.Tag')
     created_at = models.DateTimeField(auto_now_add=True)
     members = models.ManyToManyField('members.Member')
-    em = models.ManyToManyField('members.Wating')
+    waiting_members = models.ManyToManyField('members.WatingForMember')
