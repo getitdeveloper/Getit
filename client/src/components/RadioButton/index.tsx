@@ -11,7 +11,7 @@ function RadioButton({ item, onClick, onChange }: IRadioButton): JSX.Element {
       {item.map((obj, index) => {
         return (
           <>
-            <div>
+            <div key={obj.value}>
               <StyledRadioInput
                 type='radio'
                 id={`radio-${obj.value}`}
