@@ -31,7 +31,7 @@ class MemberAddView(GenericAPIView):
         _member, _ = Member.objects.get_or_create(member=member_id)
         profile.members.add(_member)
         res = {
-            "message": "sucess"
+            "message": "success"
         }
         return JsonResponse(res)
 
@@ -66,13 +66,24 @@ class MemberWaitingView(GenericAPIView):
         requestData = json.loads(request.body)
         teamprofile_id = requestData['teamprofile']
         waiting_member = requestData['waiting_member']
-        teamprofile = TeamProfile.objects.get(id=teamprofile_id)
-        _member, _ = WaitingForMember.objects.get_or_create(waitmember=waiting_member)
 
-        teamprofile.waiting_members.add(_member)
-        res = {
-            "message": "success",
-            'teamprofile': teamprofile_id,
-            'waiting_member': waiting_member
-        }
+        try:
+            teamprofile = TeamProfile.objects.get(id=teamprofile_id, waiting_members=waiting_member)
+            if teamprofile is None:
+                raise Exception
+            res = {
+                "message": "fail"
+            }
+        except:
+            teamprofile = TeamProfile.objects.get(id=teamprofile_id)
+            waiting_members = WaitingForMember.objects.create()
+            waiting_members.waitmember = waiting_member
+            waiting_members.save()
+            teamprofile.waiting_members.add(waiting_members.waitmember)
+            res = {
+                "message": "success",
+                'teamprofile': teamprofile_id,
+                'waiting_member': waiting_member
+            }
+
         return JsonResponse(res)
