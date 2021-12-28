@@ -7,7 +7,7 @@ function index(): JSX.Element {
       <Container>
         <Notice>
           <h3>공지사항</h3>
-          <a href='http://localhost:3000'>공지사항 없음</a>
+          <a href='https://getit.best'>공지사항 없음</a>
         </Notice>
         <Participants>
           <h3>Developers</h3>

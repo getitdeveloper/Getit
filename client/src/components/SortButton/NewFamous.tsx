@@ -18,6 +18,7 @@ export default function NewFamous(): JSX.Element {
 
   const handlePostSort = useCallback(
     (event: any) => {
+      return alert('서비스 준비중 입니다.');
       setSelectTab(event.target.innerHTML);
       setAnchorEl(null);
     },

@@ -51,7 +51,7 @@ export const ContentContainer = styled.div`
   border-radius: 10px;
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
   margin-bottom: 4.5rem;
-  margin-top: 1rem;
+  /* margin-top: 1rem; */
 
   @media ${({ theme }) => theme.tablet} {
     /* padding: 3rem 0; */

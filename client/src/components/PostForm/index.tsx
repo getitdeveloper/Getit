@@ -7,7 +7,9 @@ import StackInput from '@components/StackInput';
 import RadioButton from '@components/RadioButton/index';
 import { ContentContainer } from '@assets/styles/page';
 import {
+  TitleInputWrapper,
   TitleInput,
+  TextFormWrapper,
   TextForm,
   TextFormTab,
   FormButton,
@@ -16,6 +18,7 @@ import {
   WorkerWrapper,
   QuestionTypeNotification,
   RadioButtonWrapper,
+  StackInputWrapper,
 } from './styles';
 
 function PostForm(): JSX.Element {
@@ -161,14 +164,16 @@ function PostForm(): JSX.Element {
   return (
     <ContentContainer>
       <form>
-        <TitleInput
-          name='postTitle'
-          onChange={onChange}
-          type='text'
-          placeholder='제목'
-          required
-          value={postTitle}
-        />
+        <TitleInputWrapper>
+          <TitleInput
+            name='postTitle'
+            onChange={onChange}
+            type='text'
+            placeholder='제목'
+            required
+            value={postTitle}
+          />
+        </TitleInputWrapper>
         <WorkerWrapper>
           <QuestionTypeNotification>
             작성하시는 글과 연관된 직무를 선택해주세요.
@@ -177,39 +182,47 @@ function PostForm(): JSX.Element {
             <RadioButton item={questionType} onClick={onHandleWorker} />
           </RadioButtonWrapper>
         </WorkerWrapper>
-        <TextFormTab
-          id='edit'
-          type='button'
-          onClick={(e) => onHidden(false, e)}
-          defaultChecked={currentTab === 'edit'}
-        >
-          작성하기
-        </TextFormTab>
-        <TextFormTab
-          id='preview'
-          type='button'
-          onClick={(e) => onHidden(true, e)}
-          defaultChecked={currentTab === 'preview'}
-        >
-          미리보기
-        </TextFormTab>
-        <TextForm
-          name='text'
-          onChange={onChange}
-          placeholder='질문 내용을 작성해주세요. (코드 Markdown 사용 가능)'
-          required
-          value={text}
-          hidden={hidden}
-        />
-        <MarkdownWrapper open={hidden}>
-          <MarkdownRenderer text={text} open={hidden} />
-        </MarkdownWrapper>
+        <TextFormWrapper>
+          <TextFormTab
+            id='edit'
+            type='button'
+            onClick={(e) => onHidden(false, e)}
+            defaultChecked={currentTab === 'edit'}
+          >
+            작성하기
+          </TextFormTab>
+          <TextFormTab
+            id='preview'
+            type='button'
+            onClick={(e) => onHidden(true, e)}
+            defaultChecked={currentTab === 'preview'}
+          >
+            미리보기
+          </TextFormTab>
+          <TextForm
+            name='text'
+            onChange={onChange}
+            placeholder='질문 내용을 작성해주세요. (코드 Markdown 사용 가능)'
+            required
+            value={text}
+            hidden={hidden}
+          />
+          <MarkdownWrapper open={hidden}>
+            <MarkdownRenderer text={text} open={hidden} />
+          </MarkdownWrapper>
+        </TextFormWrapper>
 
-        <StackInput
-          initialStacks={stacks}
-          setInitialStacks={setStacks}
-          placeHolder='관련 기술 스택을 입력하세요.'
-        />
+        <StackInputWrapper>
+          <StackInput
+            initialStacks={stacks}
+            setInitialStacks={setStacks}
+            placeHolder={
+              boardType === 'question'
+                ? '관련 기술 스택을 입력하세요.'
+                : '관련 해시태그를 입력하세요.'
+            }
+          />
+        </StackInputWrapper>
 
         <ButtonWrapper>
           <FormButton type='button' onClick={() => history.push('/')}>

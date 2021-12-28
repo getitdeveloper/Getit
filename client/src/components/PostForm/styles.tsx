@@ -3,6 +3,9 @@ import styled from 'styled-components';
 interface OpenHandler {
   open?: boolean;
 }
+export const TitleInputWrapper = styled.div`
+  margin: 0rem 1rem;
+`;
 
 export const TitleInput = styled.input`
   width: 100%;
@@ -20,8 +23,7 @@ export const TitleInput = styled.input`
 export const WorkerWrapper = styled.div`
   display: flex;
   align-items: center;
-  margin-left: 0.4rem;
-  margin-bottom: 1rem;
+  margin: 0rem 2rem 1rem 2rem;
   @media ${({ theme }) => theme.mobile} {
     flex-direction: column;
     align-items: initial;
@@ -30,6 +32,10 @@ export const WorkerWrapper = styled.div`
 
 export const RadioButtonWrapper = styled.div`
   margin-top: 0.5rem;
+`;
+
+export const TextFormWrapper = styled.div`
+  margin: 0rem 1rem;
 `;
 
 export const TextForm = styled.textarea`
@@ -90,4 +96,8 @@ export const MarkdownWrapper = styled.div`
 
 export const QuestionTypeNotification = styled.span`
   font-size: 1.5rem;
+`;
+
+export const StackInputWrapper = styled.div`
+  margin: 0rem 1rem;
 `;

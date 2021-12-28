@@ -130,6 +130,7 @@ export const Date = styled.p`
 export const MobileDate = styled.p`
   display: none;
   @media ${({ theme }) => theme.mobile} {
+    display: initial;
     font-size: 1.4rem;
   }
 `;
