@@ -26,6 +26,6 @@ export const UserContainer = styled.li`
   }
   span {
     font-size: 1.5rem;
-    margin-left: 0.5rem;
+    margin: 0rem 0.5rem;
   }
 `;
