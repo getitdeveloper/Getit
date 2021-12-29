@@ -26,10 +26,11 @@ class MemberAddView(GenericAPIView):
         requestData = json.loads(request.body)
         teamprofile_id = requestData['teamprofile']
         member_id = requestData['member']
-
+        print(requestData)
         profile = TeamProfile.objects.get(id=teamprofile_id)
         member = Member.objects.create(member=member_id)
-        wait_member = WaitingForMember.objects.get(teammember__id=teamprofile_id, teammember__waiting_members=member_id)
+        wait_member = WaitingForMember.objects.get(teammember__id=teamprofile_id, waitmember=member.member)
+
         wait_member.delete()
         profile.members.add(member)
         res = {
