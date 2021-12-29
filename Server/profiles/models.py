@@ -53,5 +53,5 @@ class TeamProfile(models.Model):
     image = models.ImageField(upload_to='group', null=True, blank=True)
     stack = models.ManyToManyField('tags.Tag')
     created_at = models.DateTimeField(auto_now_add=True)
-    members = models.ManyToManyField('members.Member')
-    waiting_members = models.ManyToManyField(WaitingForMember,db_constraint=False)
+    members = models.ManyToManyField('members.Member', db_constraint=False)
+    waiting_members = models.ManyToManyField(WaitingForMember,db_constraint=False, related_name="teammember")
