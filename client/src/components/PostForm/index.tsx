@@ -28,6 +28,9 @@ function PostForm(): JSX.Element {
   const userId = useSelector(
     (state: RootStateOrAny) => state.user.profileInfo?.user_pk,
   );
+  const commonPostRegisterRequest = useSelector(
+    (state: RootStateOrAny) => state.post.commonPostRegisterRequest,
+  );
 
   const [postTitle, setTitle] = useState('');
   const [text, setText] = useState('');
@@ -137,6 +140,9 @@ function PostForm(): JSX.Element {
     if (!userId) {
       return alert('로그인이 필요합니다. 로그인 후 이용해 주세요.');
     }
+    if (commonPostRegisterRequest) {
+      return alert('요청을 처리중 입니다. 잠시만 기다려주세요.');
+    }
     if (postTitle === '' || text === '') {
       return alert('제목과 내용을 입력해주세요.');
     }
@@ -159,7 +165,15 @@ function PostForm(): JSX.Element {
       history,
       boardType,
     });
-  }, [postTitle, text, workers, boardType, userId, stacks]);
+  }, [
+    postTitle,
+    text,
+    workers,
+    boardType,
+    userId,
+    stacks,
+    commonPostRegisterRequest,
+  ]);
 
   return (
     <ContentContainer>
