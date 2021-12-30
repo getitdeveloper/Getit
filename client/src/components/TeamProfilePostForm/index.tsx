@@ -38,6 +38,10 @@ function TeamProfilePostForm(): JSX.Element {
     (state: RootStateOrAny) => state.user.profileInfo?.user_pk,
   );
 
+  const teamProfileRegisterRequest = useSelector(
+    (state: RootStateOrAny) => state.post.teamProfileRegisterRequest,
+  );
+
   const [profile, setProfile] = useState<FormData | null>(null);
   const [preview, setPreview] = useState('');
   const [title, setTitle] = useState('');
@@ -68,6 +72,10 @@ function TeamProfilePostForm(): JSX.Element {
 
       if (!userId) {
         return alert('로그인 후 이용 가능합니다.');
+      }
+
+      if (teamProfileRegisterRequest) {
+        return alert('요청을 처리중 입니다. 잠시만 기다려주세요.');
       }
 
       if (title === '' || introduce === '' || stacks.length === 0) {
@@ -101,7 +109,7 @@ function TeamProfilePostForm(): JSX.Element {
         history,
       });
     },
-    [profile, title, introduce, stacks, userId],
+    [profile, title, introduce, stacks, userId, teamProfileRegisterRequest],
   );
 
   const handleProfileImage = useCallback(

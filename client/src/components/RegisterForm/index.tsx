@@ -45,8 +45,12 @@ function RegisterForm(): JSX.Element {
   const nickDoubleCheck: string = useSelector(
     (state: RootStateOrAny) => state.user.nickDoubleCheck.duplicate,
   );
-  const user = useSelector((state: RootStateOrAny) => state.user);
-  const userId = user.profileInfo?.user_pk;
+  const userId = useSelector(
+    (state: RootStateOrAny) => state.user.profileInfo?.user_pk,
+  );
+  const userProfileRegisterRequest = useSelector(
+    (state: RootStateOrAny) => state.user.userProfileRegisterRequest,
+  );
 
   const [nickname, setNickname] = useState('');
   const [nicknameError, setNicknameError] = useState(false);
@@ -94,6 +98,11 @@ function RegisterForm(): JSX.Element {
   const handleSubmit = useCallback(
     (event) => {
       event.preventDefault();
+
+      if (userProfileRegisterRequest) {
+        return alert('요청을 처리중 입니다. 잠시만 기다려주세요.');
+      }
+
       // 닉네임 길이 체크
       if (nickname.length < 6 || nickname.length > 10) {
         setNicknameError(true);
@@ -162,7 +171,7 @@ function RegisterForm(): JSX.Element {
         stack: stacks,
       };
 
-      console.log(data);
+      // console.log(data);
 
       // 회원 가입 요청
 
@@ -187,6 +196,7 @@ function RegisterForm(): JSX.Element {
       introduceError,
       stacks,
       stacksError,
+      userProfileRegisterRequest,
     ],
   );
 
