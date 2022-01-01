@@ -63,7 +63,9 @@ class ProfileSerializer(serializers.ModelSerializer):
         )
     def get_teamprofiles(self,obj):
         id = obj.id
-        teamprofiles = TeamProfile.objects.filter(user=id)
+        member = Member.objects.get(member=id)
+        teamprofiles = TeamProfile.objects.filter(members=member)
+
         serializer = TeamProfileReadSerializer(teamprofiles, many=True)
         return serializer.data
 
