@@ -81,8 +81,7 @@ function PostForm(): JSX.Element {
         case '개발자': {
           setQuestionType([
             {
-              text: '개발자',
-              value: '개발자',
+              ...questionType[0],
               checked: !questionType[0].checked,
             },
             questionType[1],
@@ -99,8 +98,7 @@ function PostForm(): JSX.Element {
           setQuestionType([
             questionType[0],
             {
-              text: '디자이너',
-              value: '디자이너',
+              ...questionType[1],
               checked: !questionType[1].checked,
             },
             questionType[2],
@@ -117,8 +115,7 @@ function PostForm(): JSX.Element {
             questionType[0],
             questionType[1],
             {
-              text: '기획자',
-              value: '기획자',
+              ...questionType[2],
               checked: !questionType[2].checked,
             },
           ]);

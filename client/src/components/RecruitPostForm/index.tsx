@@ -112,8 +112,7 @@ function RecruitPostForm(): JSX.Element {
         case 'developer': {
           setRecruitList([
             {
-              text: '개발자',
-              value: 'developer',
+              ...recruitList[0],
               checked: !recruitList[0].checked,
               count: 0,
             },
@@ -126,8 +125,7 @@ function RecruitPostForm(): JSX.Element {
           setRecruitList([
             recruitList[0],
             {
-              text: '디자이너',
-              value: 'designer',
+              ...recruitList[1],
               checked: !recruitList[1].checked,
               count: 0,
             },
@@ -140,8 +138,7 @@ function RecruitPostForm(): JSX.Element {
             recruitList[0],
             recruitList[1],
             {
-              text: '기획자',
-              value: 'pm',
+              ...recruitList[2],
               checked: !recruitList[2].checked,
               count: 0,
             },
