@@ -106,7 +106,7 @@ const requestCommonPostLike = ({ postId, userId }: ICommonLikePostData) => {
 function* requestCommonPostLikeSaga(action: ICommonLikePost): any {
   try {
     const response = yield call(requestCommonPostLike, action.data);
-    console.log('자유/질문 게시글 좋아요 정보 응답 ===>', response);
+    // console.log('자유/질문 게시글 좋아요 정보 응답 ===>', response);
     yield put({
       type: COMMON_POST_LIKE_SUCCESS,
       data: response.data,
@@ -284,7 +284,7 @@ const requestTeamMemberJoin = ({
 function* requestTeamMemberJoinSaga(action: ITeamMemberJoin): any {
   try {
     const response = yield call(requestTeamMemberJoin, action.data);
-    console.log('모집게시글 팀원 참가 신청 응답 ===> ', response);
+    // console.log('모집게시글 팀원 참가 신청 응답 ===> ', response);
     yield put({
       type: TEAM_MEMBER_JOIN_SUCCESS,
       data: response.data,

@@ -40,14 +40,14 @@ const requestMyCommentList = (data: any) => {
 function* requestMyCommentListSaga(action: any): any {
   try {
     const response = yield call(requestMyCommentList, action.data);
-    console.log('내가 쓴 댓글 정보 응답 ===>', response);
+    // console.log('내가 쓴 댓글 정보 응답 ===>', response);
 
     yield put({
       type: MY_COMMENT_LIST_SUCCESS,
       data: response.data,
     });
   } catch (error) {
-    console.error(error);
+    // console.error(error);
     yield put({
       type: MY_COMMENT_LIST_FAILURE,
       error,

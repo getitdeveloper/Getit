@@ -47,6 +47,9 @@ function RecruitPostForm(): JSX.Element {
   const teamProfileList = useSelector(
     (state: RootStateOrAny) => state.postList.teamProfileList,
   );
+  const recruitPostingRequest = useSelector(
+    (state: RootStateOrAny) => state.post.recruitPostingRequest,
+  );
 
   const [recruitList, setRecruitList] = useState([
     { text: '개발자', value: 'developer', checked: false, count: 0 },
@@ -109,8 +112,7 @@ function RecruitPostForm(): JSX.Element {
         case 'developer': {
           setRecruitList([
             {
-              text: '개발자',
-              value: 'developer',
+              ...recruitList[0],
               checked: !recruitList[0].checked,
               count: 0,
             },
@@ -123,8 +125,7 @@ function RecruitPostForm(): JSX.Element {
           setRecruitList([
             recruitList[0],
             {
-              text: '디자이너',
-              value: 'designer',
+              ...recruitList[1],
               checked: !recruitList[1].checked,
               count: 0,
             },
@@ -137,8 +138,7 @@ function RecruitPostForm(): JSX.Element {
             recruitList[0],
             recruitList[1],
             {
-              text: '기획자',
-              value: 'pm',
+              ...recruitList[2],
               checked: !recruitList[2].checked,
               count: 0,
             },
@@ -204,9 +204,12 @@ function RecruitPostForm(): JSX.Element {
 
   const handleSubmit = useCallback(() => {
     // 폼 제출 목록 체크
-
     if (!userId) {
       return alert('로그인이 필요합니다. 로그인 후 이용해 주세요.');
+    }
+
+    if (recruitPostingRequest) {
+      return alert('요청을 처리중 입니다. 잠시만 기다려주세요.');
     }
 
     if (selectTeamProfileId === null) {
@@ -291,6 +294,7 @@ function RecruitPostForm(): JSX.Element {
     startDate,
     endDate,
     stacks,
+    recruitPostingRequest,
   ]);
 
   const handleTeamProfile = useCallback((event) => {

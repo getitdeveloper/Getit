@@ -59,8 +59,7 @@ export default function JobType({ boardType }: IBoardType): JSX.Element {
         case 'developer': {
           filtered = [
             {
-              text: '개발자',
-              value: 'developer',
+              ...filterList[0],
               checked: !filterList[0].checked,
             },
             filterList[1],
@@ -74,8 +73,7 @@ export default function JobType({ boardType }: IBoardType): JSX.Element {
           filtered = [
             filterList[0],
             {
-              text: '디자이너',
-              value: 'designer',
+              ...filterList[1],
               checked: !filterList[1].checked,
             },
             filterList[2],
@@ -88,7 +86,10 @@ export default function JobType({ boardType }: IBoardType): JSX.Element {
           filtered = [
             filterList[0],
             filterList[1],
-            { text: '기획자', value: 'pm', checked: !filterList[2].checked },
+            {
+              ...filterList[2],
+              checked: !filterList[2].checked,
+            },
           ];
           setFilterList(filtered);
           handleFilterPostList(filtered);
