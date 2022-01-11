@@ -69,3 +69,4 @@ Traceback (most recent call last):
 AttributeError: 'list' object has no attribute 'split'
 2021-12-16 15:14:38,165 [INFO] django.utils.autoreload: C:\Users\hp\Desktop\Getit\Server\apis\settings.py changed, reloading.
 2021-12-16 18:41:48,259 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2022-01-07 17:14:35,261 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
