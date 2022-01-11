@@ -2,12 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="14847226-151c-4591-a157-0243461eac9c" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/Getit.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Getit.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/apis/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/Server/apis/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/apis/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/Server/apis/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/logs/mysite.log" beforeDir="false" afterPath="$PROJECT_DIR$/Server/logs/mysite.log" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
