@@ -48,7 +48,7 @@ def status_check(request):
 
 class ProfileDetail(GenericAPIView):
     serializer_class = ProfileSerializer
-    permission_classes = [IsOwnerOrReadOnly]
+
     # parser_classes = (MultiPartParser,)
 
     def get_object(self, user_pk):
@@ -92,7 +92,6 @@ class ProfileDetail(GenericAPIView):
                     "info": "저는 이형준입니다. 백엔드 개발자가 될껍니다.",
                     "git": "leeceo97",
                     "stack": ["django","drf","mysql","postgre","docker","k8s","aws","gcp","nginx"]
-                    --> image의경우 일단은 값은 넣지 말아주세요!
                 }
         """
         profile = self.get_object(user_pk)
@@ -132,9 +131,7 @@ class ProfileDetail(GenericAPIView):
         serializer = ProfileSerializer(profile, data=request.data)
 
         if serializer.is_valid():
-            print('serializer')
             serializer.save()
-            print('save complete')
             names = request.data['stack']
             profile.stack.clear()
             for name in names:
@@ -197,7 +194,6 @@ class TeamProfileCreate(GenericAPIView):
         """
 
         serializer = TeamProfileSerializer(data=request.data)
-        print(request.data)
         if serializer.is_valid():
             serializer.save()
             profile = TeamProfile.objects.get(id=serializer.data['id'])
