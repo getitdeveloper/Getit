@@ -14,7 +14,7 @@ from pathlib import Path
 from datetime import timedelta
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 import environ
-from apis.MY_SETTINGS import AWS_REGION, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_STORAGE_BUCKET_NAME
+from apis.MY_SETTINGS import AWS_REGION, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_STORAGE_BUCKET_NAME, DATABASES
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -162,23 +162,14 @@ WSGI_APPLICATION = 'apis.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
+
+
 DATABASES = {
      'default': {
          'ENGINE': 'django.db.backends.sqlite3',
          'NAME': BASE_DIR / 'db.sqlite3',
      }
 }
-
-#DATABASES = {
-#    'default': {
-#        'ENGINE': 'django.db.backends.mysql',
-#        'NAME': 'getit',
-#        'USER': 'getit',
-#        'PASSWORD': '1234',
-#        'HOST': 'mariadb',
-#        'PORT': '3306',
-#    }
-#}
 
 # # Password validation
 # # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators

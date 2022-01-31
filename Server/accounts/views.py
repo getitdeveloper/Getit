@@ -29,6 +29,7 @@ class google_callback(APIView):
             ---
             "accsess_token" : "abc.def.ghi"
         """
+        print(request.body)
         accessToken = json.loads(request.body)
         access_token = accessToken['access_token']
         """
@@ -235,7 +236,7 @@ class kakao_callback(APIView):
             data = {'access_token': access_token, 'code': code}
 
             accept = requests.post(
-                f"https://api.getit.best/api/token_accept/kakao/", data=data)
+                f"http://127.0.0.1:8000/api/token_accept/kakao/", data=data)
             logger.error(accept)
 
             accept_status = accept.status_code
@@ -259,7 +260,7 @@ class kakao_callback(APIView):
         except:
             data = {'access_token': access_token, 'code': code}
             accept = requests.post(
-                f"https://api.getit.best/api/token_accept/kakao/", data=data)
+                f"http://127.0.0.1:8000/api/token_accept/kakao/", data=data)
 
             accept_status = accept.status_code
             if accept_status != 200:
