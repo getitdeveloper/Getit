@@ -73,3 +73,18 @@ AttributeError: 'list' object has no attribute 'split'
 2022-01-27 16:56:11,649 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
 2022-01-27 16:58:45,304 [INFO] django.utils.autoreload: C:\Users\hp\Desktop\Getit\Server\accounts\views.py changed, reloading.
 2022-01-27 16:58:48,221 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2022-01-27 17:13:45,514 [INFO] django.utils.autoreload: C:\Users\hp\Desktop\Getit\Server\accounts\views.py changed, reloading.
+2022-01-27 17:53:42,082 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2022-01-29 17:08:56,235 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2022-01-29 17:09:02,872 [WARNING] django.request: Not Found: /static/admin/css/base.css
+2022-01-29 17:09:02,881 [WARNING] django.request: Not Found: /static/admin/css/nav_sidebar.css
+2022-01-29 17:09:02,884 [WARNING] django.request: Not Found: /static/admin/css/dashboard.css
+2022-01-29 17:09:02,887 [WARNING] django.request: Not Found: /static/admin/css/responsive.css
+2022-01-29 17:09:02,936 [WARNING] django.request: Not Found: /static/admin/js/nav_sidebar.js
+2022-01-29 17:09:03,313 [WARNING] django.request: Not Found: /favicon.ico
+2022-01-29 17:12:48,573 [INFO] django.utils.autoreload: C:\Users\hp\Desktop\Getit\Server\apis\MY_SETTINGS.py changed, reloading.
+2022-01-29 17:12:51,054 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2022-01-29 17:13:26,760 [INFO] django.utils.autoreload: C:\Users\hp\Desktop\Getit\Server\apis\MY_SETTINGS.py changed, reloading.
+2022-01-29 17:13:28,892 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2022-01-29 17:14:47,795 [INFO] django.utils.autoreload: C:\Users\hp\Desktop\Getit\Server\apis\settings.py changed, reloading.
+2022-01-29 17:14:49,631 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
